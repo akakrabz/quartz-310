@@ -1,82 +1,98 @@
 ---
-title: "ECE 329 · Fields and Waves"
-description: "Teaching notes for ECE 329 (Fields and Waves I): lectures rewritten as narratives, a concept glossary that links everything, worked exam-style problems, and interactive demos."
+title: "ECE 310 · Digital Signal Processing"
+description: "Teaching notes for ECE 310 (Digital Signal Processing, UIUC Fall 2026): lectures rewritten as narratives, a concept glossary that links everything, exam problem families with recipes, past exams and homework with folded solutions, and interactive demos — built for Midterm 1."
 ---
 
-Notes for **ECE 329 — Fields and Waves I** (University of Illinois), written to *teach* the material rather than to summarize it. The source material is the course itself — Prof. Kudeki's lecture notes, the lecture slides with their in-class annotations, the homework and exams — digested and rewritten in one consistent notation, with the connections made explicit.
+Notes for **ECE 310 — Digital Signal Processing** (University of Illinois, Fall 2026, Profs. Snyder and Kamalabadi), written to *teach* the material rather than to summarize it. The source material is the course itself — Prof. Snyder's lecture notes, the lecture slides with their in-class annotations, the homework and the past exams — digested and rewritten in one consistent notation, with the connections made explicit and every number checked.
 
-> [!tip] How this site is organized — three layers, one graph
-> - **Lectures** (the spine, in course order) tell the story: motivation → definition → derivation → worked example → what goes wrong → what the exam does with it.
-> - **Concepts** are the glossary: one short page per idea (Gauss's law, curl, flux, …) with the key equation, when it applies, the traps, and links to every lecture and problem that uses it.
-> - **Problems** and **demos** are where the ideas get exercised — exam-style problems worked in full (with the numbers changed), and interactive pages you can drag things around in.
+> [!exam] Midterm 1 is today — Wednesday, September 30, 7:00–9:00 pm
+> Lectures 1–11 and HW1–HW4 (no DTFT). Start here:
+> - [[0-midterm-1/index|Survival guide]] — scope, format, how often each problem type appears, a plan for today, the fifteen traps, and the review lecture's problems with solutions
+> - [[0-midterm-1/cheat-sheet|Cheat sheet]] — what to put on your one handwritten two-sided sheet
+> - [[0-midterm-1/practice-drills|Practice drills]] — randomized, autograded convolution / z-transform / PFE drills
+> - [[0-midterm-1/true-false-bank|True/False bank]] and [[0-midterm-1/system-property-bank|system-property bank]] — every T/F statement and every property-table system from seven past exams
+> - [[0-midterm-1/past-exams/index|Past exams]] — FA2025, SP2025, FA2024, FA2023, SP2023, SP2021, FA2019, with folded solutions
+
+> [!tip] How this site is organized — layers, one graph
+> - **Lectures** (the spine, in course order) tell the story: motivation → definition → worked example → what goes wrong → what the exam does with it.
+> - **Concepts** are the glossary hubs: one short page per idea (convolution, ROC, BIBO stability, …) with the key formula, the traps, and links to every lecture and problem that uses it.
+> - **Problem families** are the exam recipes: each page is one kind of exam problem — how to recognise it, the procedure, the traps, and every past-exam instance.
+> - **Past exams and homework** are the practice: every problem with its solution folded, so you can try first.
+> - **Demos** are interactive: drag signals, poles and zeros, and watch convolutions, ROCs and difference equations respond.
 >
-> Every page links to its neighbours; hover a link for a preview, and use the **graph view** at the top right of any page to see what connects to what. Fields and Waves is a web of ideas, not a list — the site is built the same way.
+> Hover any link for a preview; open the **graph view** (top right of every page) to see what connects to what; use **search** for any term. The [[0-midterm-1/concept-map.canvas|concept map]] lays the whole Midterm 1 story out on one canvas, and the problem-family table on [[problems/index|problem families]] maps every past-exam problem to its recipe.
 
 ## Course map
 
 ### [[0-toolkit/index|Toolkit]] — the mathematics assumed
-[[0-toolkit/01-coordinates-and-differential-elements|Coordinates and differential elements]] · [[0-toolkit/02-vector-calculus-cheatsheet|Vector calculus cheat sheet]] · [[0-toolkit/03-units-and-constants|Units and constants]] · [[0-toolkit/04-errata-in-the-course-materials|Errata in the course materials]] · [[0-toolkit/04-errata-in-the-course-materials|Errata in the course materials]]
+[[0-toolkit/01-complex-numbers|Complex numbers]] · [[0-toolkit/02-geometric-series|Geometric series]] · [[0-toolkit/03-sketching-and-transforming-signals|Sketching and transforming signals]] · [[0-toolkit/04-factoring-and-long-division|Factoring and long division]] · [[0-toolkit/05-errata|Errata in the course materials]]
 
-### [[1-electrostatics/index|Unit 1 · Electrostatics]] — Lectures 1–11 (Exam 1: L1–10)
-1. [[1-electrostatics/01-fields-forces-and-the-maxwell-roadmap|Fields, forces, and the Maxwell roadmap]]
-2. [[1-electrostatics/02-coulombs-law-superposition-and-gauss|Coulomb's law, superposition, and the birth of Gauss's law]]
-3. [[1-electrostatics/03-gauss-law-at-work|Gauss's law at work: flux, symmetry, and charge densities]]
-4. [[1-electrostatics/04-divergence-and-curl|Divergence and curl: Maxwell's equations at a point]]
-5. [[1-electrostatics/05-curl-free-fields-and-the-electrostatic-potential|Curl-free fields and the electrostatic potential]]
-6. [[1-electrostatics/06-circulation-and-boundary-conditions|Circulation and boundary conditions]]
-7. [[1-electrostatics/07-poisson-and-laplace|Poisson's and Laplace's equations]]
-8. [[1-electrostatics/08-conductors-dielectrics-and-polarization|Conductors, dielectrics, and polarization]]
-9. [[1-electrostatics/09-static-fields-in-dielectric-media|Static fields in dielectric media]]
-10. [[1-electrostatics/10-capacitance-and-conductance|Capacitance and conductance]]
-11. Lorentz–Drude models for conductivity and susceptibility — *coming (not on Exam 1)*
+### [[1-signals-and-systems/index|Unit 1 · Signals and systems]] — Lectures 1–5 (Midterm 1)
+1. [[1-signals-and-systems/01-digital-signals|Introduction to digital signals]]
+2. [[1-signals-and-systems/02-complex-numbers-and-elementary-signals|Math preliminaries: complex numbers and elementary signals]]
+3. [[1-signals-and-systems/03-system-properties|Discrete-time systems: linearity, time-invariance, causality, stability]]
+4. [[1-signals-and-systems/04-impulse-response-and-convolution|The impulse response and convolution]]
+5. [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Difference equations and block diagrams]]
 
-### [[2-magnetostatics/index|Unit 2 · Magnetostatics]] — Lectures 12–15
-Magnetic force and Ampère's law · current sheets, solenoids, vector potential · Faraday's law · inductance — *planned*
+### [[2-z-transform/index|Unit 2 · The z-transform and LTI systems]] — Lectures 6–11 (Midterm 1)
+6. [[2-z-transform/06-the-z-transform|The z-transform]]
+7. [[2-z-transform/07-z-transform-properties|Properties of the z-transform]]
+8. [[2-z-transform/08-inverse-z-transform|The inverse z-transform]]
+9. [[2-z-transform/09-transfer-functions|Transfer functions and LTI system response, part 1]]
+10. [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Improper transfer functions and system algebra, part 2]]
+11. [[2-z-transform/11-bibo-stability-and-causality|BIBO stability and causality]]
 
-### [[3-maxwell-and-waves/index|Unit 3 · Maxwell's equations and waves]] — Lectures 16–26
-Displacement current and the full Maxwell equations · plane TEM waves · Poynting · phasors · lossy media · polarization · reflection and standing waves — *planned*
-
-### [[4-transmission-lines/index|Unit 4 · Transmission lines]] — Lectures 27–38
-Guided TEM waves · bounce diagrams · sinusoidal steady state and input impedance · quarter-wave transformers · the Smith chart · impedance matching — *planned*
+### [[3-beyond-midterm-1/index|Beyond Midterm 1]] — Lectures 12–14 (not on Midterm 1)
+Convolution as template matching (not tested) · Fourier analysis: from Fourier series to the DTFT · DTFT properties — *outlined*
 
 ### Cross-cutting
-[[concepts/index|Concept glossary]] · [[problems/index|Worked problems]] · [[demos/index|Interactive demos]]
+[[concepts/index|Concept glossary]] · [[problems/index|Exam problem families]] · [[homework/index|Homework]] ([[homework/hw1|HW1]] · [[homework/hw2|HW2]] · [[homework/hw3|HW3]] · [[homework/hw4|HW4]]) · [[demos/index|Interactive demos]] · [[supplements/index|Supplements]] (course summary, transform tables, Singer & Munson notes, notation, demo notebooks)
 
 ## Conventions used throughout
 
 | | this site writes | you may also see |
 |---|---|---|
-| vectors | bold: $\mathbf{E}$, $\mathbf{r}$ | $\vec{E}$ on the slides |
-| unit vectors | $\hat{x},\hat{y},\hat{z}$, $\hat{r},\hat{\phi},\hat{\theta}$ | $\hat{a}_x$ on the slides |
-| permittivity of free space | $\epsilon_0$ | $\epsilon_o$ in the course notes |
-| charge densities | $\rho$ [C/m³], $\rho_s$ [C/m²], $\rho_l$ [C/m] | $\lambda$ for line charge |
-| electric flux density | $\mathbf{D} = \epsilon_0\mathbf{E}$ (vacuum), $\epsilon_0\mathbf{E}+\mathbf{P}$ (matter) | "displacement flux density" |
-| differential elements | $d\mathbf{l}$, $d\mathbf{S}$ (outward on closed surfaces), $dV$ | $d\mathbf{L}$, $d\mathbf{s}$ |
-| Gauss's law | $\oint_S\mathbf{D}\cdot d\mathbf{S} = Q_{\text{enc}}$ | $\nabla\cdot\mathbf{E} = \rho/\epsilon_0$ (same thing in vacuum) |
-| the constant | $\dfrac{1}{4\pi\epsilon_0}$, never "$k$" | $9\times10^9$ |
-
-This follows the Midterm 1 formula sheet (the exam papers themselves write $\lambda$ for line charge and overbar vectors). Units go in square brackets after every result.
+| signals | input $x[n]$, impulse response $h[n]$, output $y[n]$ — square brackets, integer $n$ | $\{x[n]\}$ for the whole sequence; $x(t)$ is continuous time |
+| elementary signals | $\delta[n]$ (Kronecker delta, unit impulse), $u[n]$ (unit step) | "unit pulse response" for $h[n]$ on older exams |
+| where $n = 0$ is | an up-arrow under that sample: $\{1,\ \underset{\uparrow}{2},\ 3\}$ means $x[0] = 2$ | a bold or underlined sample |
+| convolution | $x[n]*h[n]$ | $(x*h)[n]$ on the exams and in the course summary |
+| system class | LTI (linear time-invariant) | LSI (linear shift-invariant) on older exams — the same thing |
+| z-transforms | in powers of $z^{-1}$: $\dfrac{1}{1-az^{-1}}$ | $\dfrac{z}{z-a}$ — the same function |
+| region of convergence | always stated: "ROC: $\lvert z\rvert>a$" | |
+| LCCDE (Lecture 9 form) | $y[n]+\sum_k a_k\,y[n-k] = \sum_k b_k\,x[n-k]$, $\;H(z) = \dfrac{\sum_k b_kz^{-k}}{1+\sum_k a_kz^{-k}}$ (= `lfilter(b, a)`) | Lecture 5: $y[n] = \sum_i b_i\,y[n-i]+\sum_j c_j\,x[n-j]$ — the feedback signs are flipped |
+| partial fractions | $X(z) = \sum_k \dfrac{A_k}{1-p_kz^{-1}}$, $A_k$ by cover-up ($z = p_k$) | `residuez` returns the same $A_k$, $p_k$ |
+| DTFT (after Midterm 1) | $X_d(\omega)$ | $X(e^{j\omega})$ in the textbook |
 
 ## Callouts
 
 The notes use a few recurring boxes, so you can skim for what you need:
 
 > [!key] Key
-> The result to remember — a law, a boxed formula, a final answer.
+> The result to remember — e.g. an LTI system is BIBO stable if and only if the ROC of $H(z)$ contains the unit circle.
 
 > [!recipe] Recipe
-> A procedure: how to actually do the calculation, step by step.
+> A procedure, step by step — e.g. inverse z: factor, long-divide if improper, cover-up for each $A_k$, choose each term's direction from the ROC.
 
 > [!trap] Trap
-> A mistake that costs points, and how to avoid it. Several are taken from real exam keys.
+> A mistake that costs points — e.g. the left-sided pair is $-a^nu[-n-1] \leftrightarrow \dfrac{1}{1-az^{-1}}$, $\lvert z\rvert<\lvert a\rvert$, minus sign included. Several traps come from real exam keys.
 
 > [!exam] Exam
-> How the idea shows up on exams, with the FA26 Exam 1 mapping.
+> How the idea shows up on exams, citing term and problem — e.g. FA2025 #8b hides a pole at $e^{j2/3}$, not $e^{j2\pi/3}$.
 
 > [!intuition] Intuition
-> The picture or analogy behind the mathematics.
+> The picture behind the mathematics — e.g. convolution is a sum of shifted, scaled copies of $h[n]$, one per input sample.
 
 > [!derivation]- Derivation (click to expand)
 > Longer derivations are folded so the narrative stays readable. Expand when you want the details.
 
-*Status: Unit 1 through the Exam 1 scope (Toolkit, Lectures 1–10, 25 concept pages, one worked problem per Exam 1 problem) is written; Lecture 11 and the remaining units are outlined. Sources: E. Kudeki, ECE 329 Lecture Notes (2026); lecture slides (Shao, adapted from Goddard and Cunningham); FA26 homework and Exam 1; N. N. Rao, Fundamentals of Electromagnetics for Electrical and Computer Engineering.*
+> [!question] Question
+> A problem statement, taken from a past exam or homework — try it before opening the answer below it.
+
+> [!success]- Answer (click to expand)
+> Solutions are folded, so you can test yourself first. Every number in them was checked numerically.
+
+*Status (September 30, 2026): everything in the Midterm 1 scope — Lectures 1–11, HW1–HW4 and seven past exams — is covered; Lectures 12–14 are outlined. Sources: C. Snyder, ECE 310 lecture notes and slides, Fall 2026 (with the annotated in-class slides and the Midterm 1 Review); homework HW1–HW4 with official solutions; past Midterm 1 exams FA2019–FA2025 with keys; the ECE 310 course summary and transform tables; A. C. Singer and D. C. Munson, ECE 310 course notes (2019).*
+
+### Sources for this page
+
+The course calendar and titles on the Fall 2026 lecture slides (Lectures 1–11, Aug 24 – Sep 18), the Midterm 1 exam instructions, and the notation supplement of the course (class vs. textbook notation).

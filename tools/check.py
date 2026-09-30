@@ -11,6 +11,7 @@
 """
 import os, re, sys, json, subprocess, unicodedata, yaml
 
+# .canvas / .base files count as link targets (they are rendered by the canvas-page and bases-page plugins).
 # usage: python3 tools/check.py [content-dir] [path/to/katex.min.js]
 #   default content dir: ../content relative to this script; KaTeX path: node_modules/katex/dist/katex.min.js
 #   (present after `npm ci`), or set KATEX env var. Without KaTeX the math check is skipped.
@@ -50,6 +51,13 @@ for root, _, files in os.walk(ROOT):
             pages[rel.lower()] = {"path": rel, "text": text}
 
 errors, warnings = [], []
+
+# non-markdown pages rendered by page-type plugins (canvas-page, bases-page): valid link/embed targets
+other_pages = set()
+for root, _, files in os.walk(ROOT):
+    for fn in files:
+        if fn.endswith((".canvas", ".base")):
+            other_pages.add(os.path.relpath(os.path.join(root, fn), ROOT).replace(os.sep, "/").lower())
 
 def strip_code(text):
     text = re.sub(r"```.*?```", "", text, flags=re.S)
@@ -122,6 +130,8 @@ for slug, pg in pages.items():
         if target == "" and anchor:   # same-page anchor
             a = anchor[1:].lower()
             if a not in pg["headings"]: errors.append(f"{slug}: anchor {anchor} not found on same page")
+            continue
+        if target.strip().lower() in other_pages:
             continue
         r = resolve(target, slug)
         if r is None:

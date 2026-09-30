@@ -1,0 +1,43 @@
+filters:
+  and:
+    - file.hasTag("problem-family")
+formulas:
+  first_lecture: note.lectures[0]
+properties:
+  title:
+    displayName: Problem family
+  note.family_frequency:
+    displayName: On past exams
+  note.typical_points:
+    displayName: Typical points
+  note.lectures:
+    displayName: Lectures
+  formula.first_lecture:
+    displayName: First lecture
+views:
+  - type: table
+    name: Problem families
+    order:
+      - file.name
+      - title
+      - note.family_frequency
+      - note.typical_points
+      - note.lectures
+    sort:
+      - property: title
+        direction: ASC
+    columnSize:
+      file.name: 220
+      note.title: 300
+  - type: list
+    name: By lecture
+    order:
+      - file.name
+      - note.lectures
+      - note.family_frequency
+      - note.typical_points
+    sort:
+      - property: formula.first_lecture
+        direction: ASC
+      - property: title
+        direction: ASC

@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pole-zero and ROC explorer — ECE 310</title>
+<style>
+  :root {
+    --bg:#fbfaf7; --fg:#23211d; --muted:#7a766e; --line:#e0ddd5; --panel:#f1efe9;
+    --accent:#0e6b73; --accent2:#b5632a; --hi:#d1495b;
+    --roc:rgba(14,107,115,.15); --rocrow:rgba(14,107,115,.12);
+  }
+  :root[data-theme="dark"] {
+    --bg:#161719; --fg:#eceef1; --muted:#9a9ea6; --line:#2f3238; --panel:#1f2125;
+    --accent:#6cc4c9; --accent2:#e8a066; --hi:#f0907c;
+    --roc:rgba(108,196,201,.17); --rocrow:rgba(108,196,201,.14);
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 "Source Sans 3", system-ui, sans-serif; }
+  .wrap { display:grid; grid-template-columns:minmax(0,1fr); gap:8px; padding:8px; }
+  .bar { display:flex; flex-wrap:wrap; gap:6px 8px; align-items:flex-end; }
+  .fld { display:flex; flex-direction:column; gap:2px; flex:1 1 170px; min-width:0; }
+  .fld.preset { flex:2 1 250px; }
+  .fld > span { font-size:12px; color:var(--muted); }
+  .fld > select, .fld > input { width:100%; }
+  input[type=text], select, button { font:inherit; color:var(--fg); background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:5px 8px; min-width:0; }
+  input[type=text]:focus, select:focus { outline:2px solid var(--accent); outline-offset:-1px; }
+  input[type=text].bad { border-color:var(--hi); }
+  button { cursor:pointer; padding:5px 12px; }
+  button:hover { border-color:var(--accent); }
+  .tf { font-size:15px; display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; }
+  .frac > span:first-child { border-bottom:1px solid currentColor; padding:0 4px 1px; }
+  .frac > span:last-child { padding:1px 4px 0; }
+  .note { color:var(--muted); font-size:13px; }
+  .msgs { display:grid; gap:4px; }
+  .msgs:empty { display:none; }
+  .msg { font-size:13px; padding:4px 8px; border-left:3px solid var(--accent2); background:var(--panel); border-radius:4px; }
+  .msg.err { border-left-color:var(--hi); }
+  .main { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.12fr); gap:10px; align-items:start; }
+  @media (max-width:640px) { .main { grid-template-columns:minmax(0,1fr); } }
+  canvas { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:6px; background:var(--bg); }
+  #stem { touch-action:pan-y; }
+  .side { display:grid; gap:8px; min-width:0; }
+  .card { background:var(--panel); border-radius:6px; padding:7px 10px; min-width:0; }
+  .card h3 { margin:0 0 4px; font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .rocs { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:4px; }
+  .rocs button { display:flex; flex-direction:column; align-items:flex-start; line-height:1.25; padding:4px 10px; background:var(--bg); text-align:left; }
+  .rocs button small { color:var(--muted); font-size:11.5px; }
+  .rocs button.sel { border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent); background:var(--rocrow); }
+  .yes { color:var(--accent); font-weight:600; }
+  .no { color:var(--hi); font-weight:600; }
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; font-size:12.5px; width:100%; margin-top:4px; }
+  @media (max-width:480px) { table { font-size:12px; } th, td { padding:2px 4px; } }
+  th, td { text-align:left; padding:2px 6px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th { color:var(--muted); font-weight:600; white-space:normal; vertical-align:bottom; }
+  tr.on td { background:var(--rocrow); font-weight:600; }
+  .formula { font-size:15px; overflow-wrap:anywhere; line-height:1.75; }
+  .formula .lbl { color:var(--muted); font-size:12.5px; margin-right:4px; }
+  table.vals td, table.vals th { text-align:right; font-variant-numeric:tabular-nums; }
+  .readout { font-size:13px; color:var(--muted); min-height:1.4em; }
+  .legend { font-size:12px; color:var(--muted); display:flex; flex-wrap:wrap; gap:2px 14px; margin-top:4px; }
+  .legend b { font-weight:700; }
+  label.chk { display:inline-flex; gap:6px; align-items:center; font-size:13px; }
+  sup, sub { font-size:.72em; line-height:0; }
+  p.t { margin:2px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <label class="fld preset"><span>Preset (homework, lectures, past exams)</span><select id="preset"></select></label>
+    <label class="fld"><span>b — numerator: coefficients of z<sup>0</sup>, z<sup>−1</sup>, z<sup>−2</sup>, …</span><input id="b" type="text" spellcheck="false" autocomplete="off"></label>
+    <label class="fld"><span>a — denominator (a[0] = 1)</span><input id="a" type="text" spellcheck="false" autocomplete="off"></label>
+    <button id="go" type="button">Analyze</button>
+  </div>
+  <div class="note">Comma-separated; 1/3, −7/3, sqrt(2)/2, exp(j*pi/4) all work. A product of factors such as (1, −1/2)(1, 2) means (1 − ½z<sup>−1</sup>)(1 + 2z<sup>−1</sup>).</div>
+  <div class="tf" id="tf"></div>
+  <div class="note" id="pnote"></div>
+  <div class="msgs" id="msgs"></div>
+  <div class="main">
+    <div>
+      <canvas id="zp" width="560" height="560" aria-label="pole-zero plot with the selected ROC shaded"></canvas>
+      <div class="legend"><span><b style="color:var(--hi)">×</b> pole</span><span><b style="color:var(--accent2)">○</b> zero</span><span><b style="color:var(--muted)">⊗</b> cancelled pair</span><span>shaded = selected ROC</span><span>dashed = unit circle</span></div>
+    </div>
+    <div class="side">
+      <div class="card"><h3>Poles and zeros</h3><div id="pz"></div></div>
+      <div class="card"><h3>Every possible ROC — pick one</h3><div class="rocs" id="rocs"></div><div class="note" id="rocsum"></div></div>
+      <div class="card"><h3>This ROC</h3><div id="cls"></div><div class="scroll"><table id="l11"></table></div></div>
+      <div class="card"><h3>Partial fractions (Lectures 8 and 10)</h3><div id="pfe"></div></div>
+    </div>
+  </div>
+  <div class="card"><h3>Impulse response h[n] for this ROC</h3><div class="formula" id="hform"></div></div>
+  <canvas id="stem" width="960" height="300" aria-label="stem plot of h[n] for n from -15 to 15"></canvas>
+  <div class="bar"><label class="chk"><input type="checkbox" id="zoom"> scale to the samples at −5 ≤ n ≤ 5 (larger ones are clipped, marked ▲▼)</label><span class="readout" id="readout">Hover or tap the plot to read h[n].</span></div>
+  <div class="scroll"><table class="vals" id="vals"></table></div>
+</div>
+
+<script id="pz-core">
+/* ===================== shared core: pure math, no DOM =====================
+   Complex arithmetic, a small expression parser (so fields accept 1/3, -7/3,
+   sqrt(2)/2, exp(j*pi/4) ...), number formatting, polynomial roots (Aberth)
+   and the transfer-function analysis used by the z-domain demos.
+   verify/demos/pz_dump.js loads this whole <script id="pz-core"> block in Node. */
+const MINUS = '−';
+
+const Cx = (() => {
+  const C = (re, im = 0) => ({ re, im });
+  const add = (a, b) => C(a.re + b.re, a.im + b.im);
+  const sub = (a, b) => C(a.re - b.re, a.im - b.im);
+  const mul = (a, b) => C(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re);
+  const div = (a, b) => {                       // Smith's algorithm
+    if (Math.abs(b.re) >= Math.abs(b.im)) {
+      if (b.re === 0) return C(NaN, NaN);
+      const r = b.im / b.re, d = b.re + b.im * r;
+      return C((a.re + a.im * r) / d, (a.im - a.re * r) / d);
+    }
+    const r = b.re / b.im, d = b.re * r + b.im;
+    return C((a.re * r + a.im) / d, (a.im * r - a.re) / d);
+  };
+  const neg = a => C(-a.re, -a.im);
+  const scale = (a, s) => C(a.re * s, a.im * s);
+  const abs = a => Math.hypot(a.re, a.im);
+  const arg = a => Math.atan2(a.im, a.re);
+  const conj = a => C(a.re, -a.im);
+  const exp = a => { const m = Math.exp(a.re); return C(m * Math.cos(a.im), m * Math.sin(a.im)); };
+  const log = a => C(Math.log(abs(a)), arg(a));
+  const sqrt = a => {
+    const r = abs(a); if (r === 0) return C(0);
+    const t = Math.sqrt((r + Math.abs(a.re)) / 2);
+    return a.re >= 0 ? C(t, a.im / (2 * t)) : C(Math.abs(a.im) / (2 * t), a.im >= 0 ? t : -t);
+  };
+  const powInt = (a, n) => {
+    let r = C(1), b = a, k = Math.abs(n);
+    while (k) { if (k & 1) r = mul(r, b); b = mul(b, b); k = Math.floor(k / 2); }
+    return n < 0 ? div(C(1), r) : r;
+  };
+  const pow = (a, b) => {
+    if (b.im === 0 && Number.isInteger(b.re) && Math.abs(b.re) <= 1e6) return powInt(a, b.re);
+    if (a.re === 0 && a.im === 0) return C(0);
+    return exp(mul(b, log(a)));
+  };
+  const cos = a => scale(add(exp(C(-a.im, a.re)), exp(C(a.im, -a.re))), 0.5);
+  const sin = a => div(sub(exp(C(-a.im, a.re)), exp(C(a.im, -a.re))), C(0, 2));
+  return { C, add, sub, mul, div, neg, scale, abs, arg, conj, exp, log, sqrt, powInt, pow, cos, sin };
+})();
+
+/* ---- expression / list parser ------------------------------------------ */
+const Parse = (() => {
+  const { C, add, sub, mul, div, neg, exp, sqrt, pow, cos, sin, abs } = Cx;
+  const NAMES = ['sqrt', 'exp', 'cos', 'sin', 'pi', 'π', 'j', 'i', 'e'];
+  function tokenize(src) {
+    const s = src.replace(/[−–]/g, '-').replace(/[·×]/g, '*').replace(/√/g, 'sqrt');
+    const toks = [];
+    let i = 0;
+    while (i < s.length) {
+      const ch = s[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      const m = /^(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?/.exec(s.slice(i));
+      if (m) { toks.push({ t: 'num', v: parseFloat(m[0]), s: m[0] }); i += m[0].length; continue; }
+      if ('+-*/^()'.includes(ch)) { toks.push({ t: ch }); i++; continue; }
+      const w = /^[a-zA-Zπ]+/.exec(s.slice(i));
+      if (w) {
+        let word = w[0].toLowerCase(); i += w[0].length;
+        while (word.length) {                 // "jpi" -> j, pi
+          const nm = NAMES.filter(n => word.startsWith(n)).sort((a, b) => b.length - a.length)[0];
+          if (!nm) throw new Error(`unknown name "${w[0]}"`);
+          toks.push({ t: 'id', v: nm }); word = word.slice(nm.length);
+        }
+        continue;
+      }
+      throw new Error(`unexpected character "${ch}"`);
+    }
+    return toks;
+  }
+  function expr(src) {
+    const toks = tokenize(src);
+    if (!toks.length) throw new Error('empty entry');
+    let p = 0;
+    const peek = () => toks[p], next = () => toks[p++];
+    const isFn = t => t && t.t === 'id' && ['sqrt', 'exp', 'cos', 'sin'].includes(t.v);
+    function sum() {
+      let v = product();
+      while (peek() && (peek().t === '+' || peek().t === '-')) { const op = next().t; const r = product(); v = op === '+' ? add(v, r) : sub(v, r); }
+      return v;
+    }
+    function product() {
+      let v = unary();
+      for (;;) {
+        const t = peek(); if (!t) break;
+        if (t.t === '*' || t.t === '/') { next(); const r = unary(); v = t.t === '*' ? mul(v, r) : div(v, r); continue; }
+        if (t.t === 'id' || t.t === '(') { v = mul(v, power()); continue; }          // 2j, 3pi, 2(1+j)
+        if (t.t === 'num') throw new Error('two numbers in a row — separate the entries with commas');
+        break;
+      }
+      return v;
+    }
+    function unary() {
+      const t = peek();
+      if (t && (t.t === '-' || t.t === '+')) { next(); const v = unary(); return t.t === '-' ? neg(v) : v; }
+      return power();
+    }
+    function power() { const b = atom(); if (peek() && peek().t === '^') { next(); return pow(b, unary()); } return b; }
+    function atom() {
+      const t = next();
+      if (!t) throw new Error('incomplete expression');
+      if (t.t === 'num') return C(t.v);
+      if (t.t === '(') { const v = sum(); const c = next(); if (!c || c.t !== ')') throw new Error('missing ")"'); return v; }
+      if (t.t === 'id') {
+        if (t.v === 'pi' || t.v === 'π') return C(Math.PI);
+        if (t.v === 'j' || t.v === 'i') return C(0, 1);
+        if (t.v === 'e') return C(Math.E);
+        if (isFn(t)) {
+          const o = next(); if (!o || o.t !== '(') throw new Error(`${t.v} needs parentheses, e.g. ${t.v}(2)`);
+          const v = sum(); const c = next(); if (!c || c.t !== ')') throw new Error('missing ")"');
+          return { sqrt, exp, cos, sin }[t.v](v);
+        }
+      }
+      throw new Error(`unexpected "${t.t === 'id' ? t.v : t.t}"`);
+    }
+    const v = sum();
+    if (p < toks.length) { const t = toks[p]; throw new Error(`unexpected "${t.t === 'num' ? t.s : t.t === 'id' ? t.v : t.t}"`); }
+    if (!isFinite(v.re) || !isFinite(v.im)) throw new Error('value is not finite');
+    return v;
+  }
+  function splitTop(s) {
+    const out = []; let d = 0, cur = '';
+    for (const ch of s) {
+      if (ch === '(') d++;
+      if (ch === ')') d--;
+      if ((ch === ',' || ch === ';') && d === 0) { out.push(cur); cur = ''; } else cur += ch;
+    }
+    out.push(cur);
+    return out;
+  }
+  const hasTopComma = s => splitTop(s).length > 1;
+  function list(s) {
+    if (!s || !s.trim()) throw new Error('empty list');
+    return splitTop(s).map((x, i) => {
+      if (!x.trim()) throw new Error(`entry ${i + 1} is empty`);
+      try { return expr(x); } catch (e) { throw new Error(`entry ${i + 1} ("${x.trim()}"): ${e.message}`); }
+    });
+  }
+  function realList(s) {
+    return list(s).map((c, i) => {
+      if (Math.abs(c.im) > 1e-12 * Math.max(1, abs(c))) throw new Error(`entry ${i + 1} is complex — this field needs real numbers`);
+      return c.re;
+    });
+  }
+  // polynomial field: "1, 3, 2"  or a product of factors "(1, 1)(1, 2)"
+  function poly(s, polyMul) {
+    const t = (s || '').trim();
+    if (!t) throw new Error('empty list');
+    if (hasTopComma(t)) return { coefs: list(t), factors: null };
+    const groups = [];
+    let i = 0, ok = true;
+    while (i < t.length) {
+      if (/[\s*·]/.test(t[i])) { i++; continue; }
+      if (t[i] !== '(') { ok = false; break; }
+      let d = 0, j = i;
+      for (; j < t.length; j++) { if (t[j] === '(') d++; else if (t[j] === ')') { d--; if (d === 0) break; } }
+      if (d !== 0) throw new Error('unbalanced parentheses');
+      groups.push(t.slice(i + 1, j)); i = j + 1;
+    }
+    if (ok && groups.length && groups.every(hasTopComma)) {
+      const fs = groups.map(list);
+      return { coefs: fs.reduce((acc, f) => polyMul(acc, f)), factors: fs };
+    }
+    return { coefs: list(t), factors: null };
+  }
+  return { expr, list, realList, poly, splitTop };
+})();
+
+/* ---- formatting -------------------------------------------------------- */
+const Fmt = (() => {
+  const { abs, arg } = Cx;
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻', '+': '⁺', 'n': 'ⁿ' };
+  const sup = s => String(s).split('').map(c => SUP[c] || c).join('');
+  const sgn = s => String(s).replace(/-/g, MINUS);
+  function rat(x, maxDen = 64, tol = 1e-9) {          // continued fractions
+    if (!isFinite(x)) return null;
+    const s = x < 0 ? -1 : 1, ax = Math.abs(x);
+    let h0 = 0, h1 = 1, k0 = 1, k1 = 0, b = ax;
+    for (let it = 0; it < 40; it++) {
+      const a = Math.floor(b), h2 = a * h1 + h0, k2 = a * k1 + k0;
+      if (k2 > maxDen) break;
+      h0 = h1; h1 = h2; k0 = k1; k1 = k2;
+      if (Math.abs(ax - h1 / k1) <= tol * Math.max(1, ax)) return { p: s * h1, q: k1 };
+      const f = b - a; if (f < 1e-12) break;
+      b = 1 / f;
+    }
+    return null;
+  }
+  function dec(x, sig = 5) {
+    if (!isFinite(x)) return x > 0 ? '∞' : x < 0 ? MINUS + '∞' : 'NaN';
+    if (Math.abs(x) < 1e-12) return '0';
+    const ax = Math.abs(x);
+    if (ax >= 1e6 || ax < 1e-4) {
+      const [m, e] = x.toExponential(Math.max(0, sig - 3)).split('e');
+      return sgn(m.replace(/\.?0+$/, '')) + '×10' + sup(e.replace('+', ''));
+    }
+    return sgn(parseFloat(x.toPrecision(sig)).toString());
+  }
+  function num(x, o = {}) {                            // integer, small fraction, or decimal
+    const { frac = true, maxDen = 64, sig = 5 } = o;
+    if (!isFinite(x)) return dec(x);
+    if (Math.abs(x) < 1e-12) return '0';
+    const r = Math.round(x);
+    if (Math.abs(x - r) <= 1e-9 * Math.max(1, Math.abs(x))) return sgn(String(r));
+    if (frac) { const q = rat(x, maxDen); if (q) return sgn(`${q.p}/${q.q}`); }
+    return dec(x, sig);
+  }
+  function isNice(x, maxDen = 64) { return Math.abs(x) < 1e-12 || !!rat(x, maxDen); }
+  function cnum(z, o = {}) {
+    const tol = 1e-10 * Math.max(1, abs(z));
+    if (Math.abs(z.im) <= tol) return num(z.re, o);
+    const im = Math.abs(z.im), im0 = Math.abs(im - 1) <= 1e-12 ? '' : num(im, o);
+    const imS = im0.includes('/') ? '(' + im0 + ')' : im0;          // (3/2)j, never the ambiguous 3/2j
+    if (Math.abs(z.re) <= tol) return (z.im < 0 ? MINUS : '') + imS + 'j';
+    return num(z.re, o) + (z.im < 0 ? ' ' + MINUS + ' ' : ' + ') + imS + 'j';
+  }
+  function angle(th, maxDen = 24) {                   // radians -> "π/3", "−2π/3" or decimal
+    const q = rat(th / Math.PI, maxDen, 1e-9);
+    if (q) {
+      if (q.p === 0) return '0';
+      const p = Math.abs(q.p);
+      return (q.p < 0 ? MINUS : '') + (p === 1 ? '' : p) + 'π' + (q.q === 1 ? '' : '/' + q.q);
+    }
+    return dec(th, 4);
+  }
+  function polar(z) {                                  // "e^{jπ/3}" style (plain text)
+    const r = abs(z), th = arg(z);
+    const rs = Math.abs(r - 1) < 1e-9 ? '' : num(r) + '·';
+    return rs + 'e^(j' + angle(th) + ')';
+  }
+  return { rat, dec, num, cnum, angle, polar, sup, sgn, isNice };
+})();
+
+/* ---- polynomials (ascending powers of w = z^-1, complex coefficients) ---- */
+const Poly = (() => {
+  const { C, add, sub, mul, div, neg, scale, abs } = Cx;
+  const maxAbs = p => p.reduce((m, c) => Math.max(m, abs(c)), 0);
+  function trim(p, rel = 1e-13) {                     // drop highest-order (trailing) zeros
+    const m = maxAbs(p); let n = p.length;
+    while (n > 0 && abs(p[n - 1]) <= rel * m) n--;
+    return p.slice(0, n);
+  }
+  function mulP(p, q) {
+    if (!p.length || !q.length) return [];
+    const r = Array.from({ length: p.length + q.length - 1 }, () => C(0));
+    p.forEach((a, i) => q.forEach((b, j) => { r[i + j] = add(r[i + j], mul(a, b)); }));
+    return r;
+  }
+  function evalAsc(p, w) { let r = C(0); for (let k = p.length - 1; k >= 0; k--) r = add(mul(r, w), p[k]); return r; }
+  function derivAsc(p) { return p.slice(1).map((c, k) => scale(c, k + 1)); }
+  function deflate(p, c) {                            // p(w) / (1 - c w), remainder dropped
+    const d = p.length - 1; if (d < 1) return p.slice();
+    const q = new Array(d);
+    if (abs(c) <= 1) { let prev = C(0); for (let k = 0; k < d; k++) { prev = add(p[k], mul(c, prev)); q[k] = prev; } }
+    else { let nxt = C(0); for (let k = d; k >= 1; k--) { nxt = div(sub(nxt, p[k]), c); q[k - 1] = nxt; } }
+    return q;
+  }
+  function longDiv(B, A) {                            // B = Q A + R, deg R < deg A (Lecture 10)
+    const M = B.length - 1, N = A.length - 1;
+    if (M < N) return { Q: [], R: B.slice() };
+    const r = B.slice(), Q = Array.from({ length: M - N + 1 }, () => C(0));
+    for (let i = M; i >= N; i--) {
+      const c = div(r[i], A[N]); Q[i - N] = c;
+      for (let j = 0; j <= N; j++) r[i - N + j] = sub(r[i - N + j], mul(c, A[j]));
+    }
+    return { Q, R: r.slice(0, N) };
+  }
+  // roots of a polynomial given in DESCENDING powers (leading coefficient non-zero)
+  function roots(desc) {
+    let c = desc.slice();
+    while (c.length && abs(c[0]) === 0) c.shift();
+    const n = c.length - 1;
+    if (n < 1) return [];
+    const a0 = c[0]; c = c.map(x => div(x, a0));
+    if (n === 1) return [neg(c[1])];
+    if (n === 2) {                                    // stable quadratic formula
+      const b = c[1], cc = c[2];
+      let s = Cx.sqrt(sub(mul(b, b), scale(cc, 4)));
+      if (b.re * s.re + b.im * s.im < 0) s = neg(s);
+      const q = scale(add(b, s), -0.5);
+      if (abs(q) === 0) return [C(0), C(0)];
+      return [q, div(cc, q)];
+    }
+    const f = z => { let p = C(1), dp = C(0); for (let k = 1; k <= n; k++) { dp = add(mul(dp, z), p); p = add(mul(p, z), c[k]); } return [p, dp]; };
+    const r0 = abs(c[n]) > 0 ? Math.pow(abs(c[n]), 1 / n) : 1;
+    let z = Array.from({ length: n }, (_, k) => { const t = 2 * Math.PI * k / n + 0.4; return C(r0 * Math.cos(t), r0 * Math.sin(t)); });
+    for (let it = 0; it < 800; it++) {                // Aberth–Ehrlich
+      let maxStep = 0;
+      for (let i = 0; i < n; i++) {
+        const [p, dp] = f(z[i]);
+        if (abs(p) === 0) continue;
+        const ratio = div(p, dp);
+        let s = C(0);
+        for (let j = 0; j < n; j++) if (j !== i) s = add(s, div(C(1), sub(z[i], z[j])));
+        const w = div(ratio, sub(C(1), mul(ratio, s)));
+        if (!isFinite(w.re) || !isFinite(w.im)) { z[i] = add(z[i], C(1e-3 * r0, 7e-4 * r0)); maxStep = Infinity; continue; }
+        z[i] = sub(z[i], w);
+        maxStep = Math.max(maxStep, abs(w) / Math.max(1, abs(z[i])));
+      }
+      if (maxStep < 1e-16) break;
+    }
+    for (let i = 0; i < n; i++) {                     // Newton polish on the full polynomial
+      for (let k = 0; k < 4; k++) {
+        const [p, dp] = f(z[i]); if (abs(dp) === 0 || abs(p) === 0) break;
+        const zn = sub(z[i], div(p, dp));
+        if (abs(f(zn)[0]) < abs(p)) z[i] = zn; else break;
+      }
+    }
+    return z;
+  }
+  function cluster(rs, tol = 1e-4) {                  // merge (near-)repeated roots
+    const used = rs.map(() => false), out = [];
+    for (let i = 0; i < rs.length; i++) {
+      if (used[i]) continue;
+      const g = [i]; used[i] = true;
+      for (let q = 0; q < g.length; q++) for (let j = 0; j < rs.length; j++) {
+        if (!used[j] && abs(sub(rs[g[q]], rs[j])) <= tol * Math.max(1, abs(rs[g[q]]))) { used[j] = true; g.push(j); }
+      }
+      const s = g.reduce((acc, k) => add(acc, rs[k]), C(0));
+      out.push({ z: scale(s, 1 / g.length), m: g.length });
+    }
+    return out;
+  }
+  return { trim, mul: mulP, evalAsc, derivAsc, deflate, longDiv, roots, cluster, maxAbs };
+})();
+
+/* ---- transfer function H(z) = B(z^-1)/A(z^-1): poles, zeros, cancellations,
+        PFE (Lecture 8/10 form), every ROC with its Lecture 11 classification ---- */
+const TF = (() => {
+  const { C, add, sub, mul, div, neg, abs } = Cx;
+  const TOL_CANCEL = 1e-7, TOL_NEAR = 1e-3, TOL_MAG = 1e-9;
+  function analyze(bIn, aIn) {
+    const notes = [];
+    if (!aIn.length || abs(aIn[0]) === 0) throw new Error('a[0] must be non-zero');
+    let b = bIn.slice(), a = aIn.slice();
+    if (abs(sub(a[0], C(1))) > 1e-15) { const a0 = a[0]; b = b.map(c => div(c, a0)); a = a.map(c => div(c, a0)); notes.push('normalized'); }
+    b = Poly.trim(b); a = Poly.trim(a);
+    const real = [...b, ...a].every(c => Math.abs(c.im) <= 1e-13 * Math.max(1, abs(c)));
+    if (real) { b = b.map(c => C(c.re)); a = a.map(c => C(c.re)); }
+    if (!b.length) return { zeroTF: true, b, a, real, notes };
+    const M = b.length - 1, N = a.length - 1;
+    const bmax = Poly.maxAbs(b);
+    let L = 0; while (L < b.length && abs(b[L]) <= 1e-14 * bmax) L++;
+    // (near-)multiple roots come back from the root finder slightly split; snap their mean harder
+    const snap = (z, m = 1) => (real && Math.abs(z.im) <= (m > 1 ? 1e-6 : 1e-9) * Math.max(1, abs(z))) ? C(z.re) : z;
+    const zc = Poly.cluster(Poly.roots(b.slice(L)).map(z => snap(z))).map(o => ({ z: snap(o.z, o.m), m: o.m }));
+    const pc = Poly.cluster(Poly.roots(a).map(z => snap(z))).map(o => ({ z: snap(o.z, o.m), m: o.m }));
+    const zerosAll = zc.map(o => ({ ...o })), polesAll = pc.map(o => ({ ...o }));
+    const originZ = Math.max(0, N - M), originP = Math.max(0, M - N);
+    const cancels = [];
+    for (const zq of zc) for (const pp of pc) {
+      if (!zq.m || !pp.m) continue;
+      if (abs(sub(zq.z, pp.z)) <= TOL_CANCEL * Math.max(1, abs(pp.z))) {
+        const k = Math.min(zq.m, pp.m); zq.m -= k; pp.m -= k;
+        cancels.push({ z: pp.z, m: k });
+      }
+    }
+    const nearCancel = [];
+    for (const zq of zc) for (const pp of pc) {
+      if (!zq.m || !pp.m) continue;
+      const d = abs(sub(zq.z, pp.z));
+      if (d <= TOL_NEAR * Math.max(1, abs(pp.z))) nearCancel.push({ z: zq.z, p: pp.z, d });
+    }
+    let bR = b, aR = a;
+    for (const c of cancels) for (let k = 0; k < c.m; k++) { bR = Poly.deflate(bR, c.z); aR = Poly.deflate(aR, c.z); }
+    if (real) { bR = bR.map(c => C(c.re)); aR = aR.map(c => C(c.re)); }
+    const poles = pc.filter(o => o.m > 0), zeros = zc.filter(o => o.m > 0);
+    const repeated = poles.filter(o => o.m > 1);
+    const nearPairs = list => {
+      const out = [];
+      for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
+        const d = abs(sub(list[i].z, list[j].z));
+        if (d <= 1e-2 * Math.max(1, abs(list[i].z))) out.push({ p: list[i].z, q: list[j].z, d });
+      }
+      return out;
+    };
+    const nearRepeated = nearPairs(poles), nearRepeatedZ = nearPairs(zeros);
+    // polynomial part C_k by long division (Lecture 10) — valid with or without repeated poles
+    const ld = Poly.longDiv(bR, aR);
+    let Q = real ? ld.Q.map(c => C(c.re)) : ld.Q, terms = [];
+    if (!repeated.length) {
+      const dA = Poly.derivAsc(aR);
+      terms = poles.map(o => {
+        const w = div(C(1), o.z);
+        let A = neg(div(mul(o.z, Poly.evalAsc(ld.R, w)), Poly.evalAsc(dA, w)));
+        if (real && Math.abs(o.z.im) === 0) A = C(A.re);
+        return { p: o.z, A };
+      });
+      if (real) {                                    // exact conjugate symmetry for display
+        for (const t of terms) if (t.p.im > 0) {
+          const u = terms.find(s => s !== t && abs(sub(s.p, Cx.conj(t.p))) <= 1e-8 * Math.max(1, abs(t.p)));
+          if (u) { u.p = Cx.conj(t.p); u.A = Cx.conj(t.A); }
+        }
+      }
+    }
+    const qScale = Math.max(1e-300, Poly.maxAbs(b));
+    const hasQ = Q.some(c => abs(c) > 1e-12 * qScale);
+    // ROCs: annuli between consecutive distinct pole magnitudes (poles after cancellation)
+    const mags = [];
+    for (const o of poles) { const r = abs(o.z); if (!mags.some(m => Math.abs(m - r) <= TOL_MAG * Math.max(1, r))) mags.push(r); }
+    mags.sort((x, y) => x - y);
+    const bounds = [0, ...mags, Infinity];
+    const onUnit = poles.filter(o => Math.abs(abs(o.z) - 1) <= TOL_MAG);
+    const rocs = [];
+    for (let i = 0; i < bounds.length - 1; i++) {
+      const rin = bounds[i], rout = bounds[i + 1];
+      const inner = i === 0, outer = i === bounds.length - 2;
+      const right = poles.filter(o => abs(o.z) <= rin * (1 + TOL_MAG));
+      const left = poles.filter(o => abs(o.z) >= rout * (1 - TOL_MAG));
+      let kind, row;
+      if (!left.length) { kind = right.length ? 'causal' : 'fir'; row = 0; }
+      else if (!right.length) { kind = hasQ ? 'left-noncausal' : 'anticausal'; row = hasQ && originP ? 3 : 1; }
+      else { kind = 'two-sided'; row = 4; }
+      let label;
+      const R = x => Fmt.num(x);
+      if (!mags.length) label = originP ? 'z ≠ 0' : 'all z';
+      else if (inner) label = (originP ? '0 < ' : '') + '|z| < ' + R(rout);
+      else if (outer) label = '|z| > ' + R(rin);
+      else label = R(rin) + ' < |z| < ' + R(rout);
+      const stable = rin < 1 - TOL_MAG && rout > 1 + TOL_MAG;
+      const touches = Math.abs(rin - 1) <= TOL_MAG || Math.abs(rout - 1) <= TOL_MAG;
+      rocs.push({ rin, rout, inner, outer, label, kind, row, stable, touches, rightPoles: right.map(o => o.z), leftPoles: left.map(o => o.z), excludesOrigin: inner && originP > 0 });
+    }
+    return { b, a, bR, aR, M, N, L, real, zerosAll, polesAll, zeros, poles, originZ, originP, cancels, nearCancel,
+             repeated, nearRepeated, nearRepeatedZ, onUnit, Q, hasQ, terms, rocs, notes };
+  }
+  // h[n] for the ROC with index r (closed form: C_k δ[n-k] + right-sided A p^n u[n] − left-sided A p^n u[−n−1])
+  function hAt(an, r, n) {
+    const roc = an.rocs[r];
+    let v = C(0);
+    if (n >= 0 && n < an.Q.length) v = add(v, an.Q[n]);
+    for (const t of an.terms) {
+      const right = abs(t.p) <= roc.rin * (1 + TOL_MAG);
+      if (right && n >= 0) v = add(v, mul(t.A, Cx.powInt(t.p, n)));
+      if (!right && n <= -1) v = sub(v, mul(t.A, Cx.powInt(t.p, n)));
+    }
+    return v;
+  }
+  return { analyze, hAt, TOL_MAG };
+})();
+/* ===================== end of shared core ===================== */
+
+/* ---- pole-zero demo: closed-form text, contour fallback, presets (pure, no DOM) ---- */
+const PZ = (() => {
+  const { C, add, mul, div, neg, abs, arg, scale } = Cx;
+  const M_ = MINUS;
+  const isReal = z => Math.abs(z.im) <= 1e-12 * Math.max(1, abs(z));
+  const near = (x, y, t = 1e-9) => Math.abs(x - y) <= t * Math.max(1, Math.abs(y));
+  // a coefficient standing in front of something: {s: ±1, t: text}; magnitude 1 -> '' unless keepOne
+  function coef(c, keepOne = false) {
+    if (isReal(c)) {
+      const x = c.re, s = x < 0 ? -1 : 1, m = Math.abs(x);
+      if (!keepOne && near(m, 1, 1e-12)) return { s, t: '' };
+      const str = Fmt.num(m);
+      return { s, t: str.includes('/') ? '(' + str + ')' : str };
+    }
+    if (Math.abs(c.re) <= 1e-12 * Math.max(1, abs(c))) {        // pure imaginary: ±(3/2)j
+      const m = Math.abs(c.im), str = Fmt.num(m);
+      return { s: c.im < 0 ? -1 : 1, t: (near(m, 1, 1e-12) ? '' : str.includes('/') ? '(' + str + ')' : str) + 'j\u2009' };
+    }
+    return { s: 1, t: '(' + Fmt.cnum(c) + ')' };
+  }
+  function joinTerms(ts) {
+    if (!ts.length) return '0';
+    return ts.map((t, i) => (i === 0 ? (t.s < 0 ? M_ : '') : (t.s < 0 ? ' ' + M_ + ' ' : ' + ')) + t.body).join('');
+  }
+  const tiny = (c, p) => abs(c) <= 1e-13 * Math.max(1e-300, Poly.maxAbs(p));
+  function polyHTML(p) {                           // ascending powers of z^-1
+    const ts = [];
+    p.forEach((c, k) => {
+      if (tiny(c, p)) return;
+      const cf = coef(c, k === 0);
+      ts.push({ s: cf.s, body: cf.t + (k ? 'z<sup>' + M_ + k + '</sup>' : '') });
+    });
+    return joinTerms(ts);
+  }
+  function sideHTML(p, v) {                        // Σ c_k v[n−k]
+    const ts = [];
+    p.forEach((c, k) => {
+      if (tiny(c, p)) return;
+      const cf = coef(c);
+      ts.push({ s: cf.s, body: cf.t + v + '[n' + (k ? M_ + k : '') + ']' });
+    });
+    return joinTerms(ts);
+  }
+  const lccdeHTML = (b, a) => sideHTML(a, 'y') + ' = ' + sideHTML(b, 'x');
+  function angN(th) {                              // θ·n as text: "πn/3", "2πn/3", "0.6667n"
+    const q = Fmt.rat(th / Math.PI, 24, 1e-9);
+    if (q) {
+      if (q.p === 0) return '0';
+      const p = Math.abs(q.p);
+      return (q.p < 0 ? M_ : '') + (p === 1 ? '' : p) + 'πn' + (q.q === 1 ? '' : '/' + q.q);
+    }
+    return Fmt.dec(th, 4) + 'n';
+  }
+  function polarHTML(z, pm = false) {              // r·e^{jθ}; pm -> e^{±jθ}
+    const r = abs(z), th = arg(z);
+    const rs = near(r, 1) ? '' : Fmt.num(r);
+    const sg = pm ? '±' : th < 0 ? M_ : '';
+    return rs + 'e<sup>' + sg + 'j' + Fmt.angle(Math.abs(th)) + '</sup>';
+  }
+  function baseHTML(p) {                           // p^n
+    if (isReal(p)) return near(p.re, 1) ? '' : '(' + Fmt.num(p.re) + ')<sup>n</sup>';
+    const r = abs(p), th = arg(p);
+    return (near(r, 1) ? '' : '(' + Fmt.num(r) + ')<sup>n</sup>') + 'e<sup>' + (th < 0 ? M_ : '') + 'j' + angN(Math.abs(th)) + '</sup>';
+  }
+  function trig(th, ph) {                          // cos(θn + φ) with the special phases simplified
+    const n = angN(th), P = Math.PI, tol = 1e-9;
+    if (Math.abs(ph) < tol) return { s: 1, t: 'cos(' + n + ')' };
+    if (Math.abs(Math.abs(ph) - P) < tol) return { s: -1, t: 'cos(' + n + ')' };
+    if (Math.abs(ph + P / 2) < tol) return { s: 1, t: 'sin(' + n + ')' };
+    if (Math.abs(ph - P / 2) < tol) return { s: -1, t: 'sin(' + n + ')' };
+    return { s: 1, t: 'cos(' + n + (ph < 0 ? ' ' + M_ + ' ' : ' + ') + Fmt.angle(Math.abs(ph)) + ')' };
+  }
+  const isRight = (an, r, p) => abs(p) <= an.rocs[r].rin * (1 + TF.TOL_MAG);
+  const sortedTerms = an => an.terms.slice().sort((x, y) => (abs(x.p) - abs(y.p)) || (Math.abs(arg(x.p)) - Math.abs(arg(y.p))) || (arg(y.p) - arg(x.p)));
+  // closed form for ROC r: {expo, real (null unless a conjugate pair was combined), cancelledPairs}
+  function closedForm(an, r) {
+    if (an.repeated.length) return null;
+    const qs = an.Q.map((c, k) => ({ c, k })).filter(o => !tiny(o.c, an.b)).map(({ c, k }) => {
+      const cf = coef(c);
+      return { s: cf.s, body: cf.t + 'δ[n' + (k ? M_ + k : '') + ']' };
+    });
+    const expo = [], realT = [];
+    let paired = false;
+    for (const t of sortedTerms(an)) {
+      const right = isRight(an, r, t.p);
+      const A = right ? t.A : neg(t.A);
+      const step = right ? 'u[n]' : 'u[' + M_ + 'n' + M_ + '1]';
+      const cf = coef(A), base = baseHTML(t.p);
+      const one = { s: cf.s, body: cf.t + base + (base ? ' ' : '') + step };
+      expo.push(one);
+      if (an.real && !isReal(t.p)) {
+        if (t.p.im < 0) { paired = true; continue; }   // folded into its partner
+        const amp = 2 * abs(A), tr = trig(arg(t.p), arg(A)), rr = abs(t.p);
+        const ac = coef(C(amp));
+        realT.push({ s: tr.s, body: [ac.t, near(rr, 1) ? '' : '(' + Fmt.num(rr) + ')<sup>n</sup>', tr.t, step].filter(Boolean).join(' ') });
+      } else realT.push(one);
+    }
+    return { expo: joinTerms([...qs, ...expo]), real: paired ? joinTerms([...qs, ...realT]) : null };
+  }
+  // numerical inverse z-transform on |z| = ρ inside the ROC (trapezoidal rule = exact up to aliasing
+  // terms of size q^K, q < 1): used only when a repeated pole rules out the simple-pole closed form
+  // Two radii keep the relative error small at both ends: n ≥ 0 uses a circle just outside the inner
+  // boundary, n < 0 one just inside the outer boundary (both strictly inside the ROC).
+  function contour(an, r, ns) {
+    const { rin, rout } = an.rocs[r];
+    const mid = rout === Infinity ? (rin > 0 ? 2 * rin : 1) : rin === 0 ? rout / 2 : Math.sqrt(rin * rout);
+    const rhoP = rin > 0 ? Math.min(1.1 * rin, mid) : mid;          // for n >= 0
+    const rhoM = rout < Infinity ? Math.max(rout / 1.1, mid) : mid; // for n < 0
+    let need = 0;
+    for (const rho of [rhoP, rhoM]) {
+      if (rin > 0) need = Math.max(need, 36 / Math.log(rho / rin));
+      if (rout < Infinity) need = Math.max(need, 36 / Math.log(rout / rho));
+    }
+    if (!(need <= 65536)) return null;                               // annulus too thin to sample
+    let K = 1024; while (K < need) K *= 2;
+    const samples = rho => {
+      const Hk = new Array(K);
+      for (let k = 0; k < K; k++) {
+        const th = 2 * Math.PI * (k + 0.5) / K, w = C(Math.cos(th) / rho, -Math.sin(th) / rho);   // w = z^-1
+        Hk[k] = div(Poly.evalAsc(an.bR, w), Poly.evalAsc(an.aR, w));
+      }
+      return Hk;
+    };
+    const HP = samples(rhoP), HM = rhoM === rhoP ? HP : samples(rhoM);
+    return ns.map(n => {
+      const rho = n >= 0 ? rhoP : rhoM, Hk = n >= 0 ? HP : HM;
+      let s = C(0);
+      for (let k = 0; k < K; k++) { const th = 2 * Math.PI * (((k * n) % K) + 0.5 * n) / K; s = add(s, mul(Hk[k], C(Math.cos(th), Math.sin(th)))); }
+      return scale(s, Math.pow(rho, n) / K);
+    });
+  }
+  function hValues(an, r, ns) {
+    if (!an.repeated.length) return { vals: ns.map(n => TF.hAt(an, r, n)), method: 'closed' };
+    const v = contour(an, r, ns);
+    return v ? { vals: v, method: 'contour' } : { vals: null, method: 'none' };
+  }
+  const PRESETS = [
+    { id: 'hw4-1a', g: 'Homework', name: 'HW4 #1(a) — all possible ROCs', b: '1, -1', a: '(1, 1)(1, 2)', sel: 'outer',
+      note: 'H(z) = (z² − z)/(z² + 3z + 2): poles −1 and −2, three ROCs. The pole at −1 sits on the unit circle, so no ROC contains |z| = 1 — none of the three systems is stable.' },
+    { id: 'hw3-4', g: 'Homework', name: 'HW3 #4 — right-sided system', b: '1, -3', a: '1, 1/6, -1/3', sel: 'outer',
+      note: '“Right-sided” picks the ROC outside the outermost pole: |z| > 2/3. Poles 1/2 and −2/3, zeros 3 and 0.' },
+    { id: 'l8-1', g: 'Lectures', name: 'Lecture 8, Exercise 1 — PFE by cover-up', b: '2, -1', a: '1, -7/3, 2/3', sel: 'outer',
+      note: 'Factor 1 − (7/3)z⁻¹ + (2/3)z⁻² = (1 − (1/3)z⁻¹)(1 − 2z⁻¹); cover-up gives A₁ = 1/5 (pole 1/3) and A₂ = 9/5 (pole 2). The notes give the all-right-sided and all-left-sided answers; the annulus 1/3 < |z| < 2 is the third option.' },
+    { id: 'l8-2', g: 'Lectures', name: 'Lecture 8, Exercise 2 — complex poles', b: '3, -3/2', a: '1, -1, 1', sel: 'outer',
+      note: 'Poles e^{±jπ/3} (on the unit circle). A₁ = A₂ = 3/2, and Euler turns the pair into 3 cos(πn/3) u[n] for the causal ROC.' },
+    { id: 'l10', g: 'Lectures', name: 'Lecture 10 — improper H(z), long division first', b: '1, -3, 1, 4', a: '1, -2, -3', sel: 'outer',
+      note: 'Numerator degree 3 ≥ denominator degree 2: long division gives C₀ = 5/9, C₁ = −4/3, then cover-up on the remainder gives A₁ = 7/36 (pole 3) and A₂ = 1/4 (pole −1).' },
+    { id: 'fa23-6', g: 'Past exams', name: 'FA2023 #6 — all possible ROCs', b: '1, -1', a: '(1, -1/2)(1, -2)', sel: 'stable',
+      note: 'A = 1/3 at the pole 1/2 and 2/3 at the pole 2. Three ROCs; only 1/2 < |z| < 2 contains the unit circle.' },
+    { id: 'fa25-7', g: 'Past exams', name: 'FA2025 #7 — the BIBO-stable system', b: '1, -1', a: '(1, 2)(1, 2/3)', sel: 'stable',
+      note: '“BIBO stable” forces the ROC 2/3 < |z| < 2: h[n] = −(9/4)(−2)ⁿ u[−n−1] − (5/4)(−2/3)ⁿ u[n]. Part (b) runs the anti-causal piece as a backward recursion.' },
+    { id: 'sp25-8', g: 'Past exams', name: 'SP2025 #8 — stable ROC of H(z)', b: '2, -3', a: '(1, -1/2)(1, 3/2)', sel: 'stable',
+      note: 'Poles 1/2 and −3/2; the stable ROC is 1/2 < |z| < 3/2 with h[n] = −(1/2)ⁿ u[n] − 3(−3/2)ⁿ u[−n−1].' },
+    { id: 'sp25-8y', g: 'Pole-zero cancellation', name: 'SP2025 #8 — output Y(z) for x = δ[n] + (3/2)δ[n−1]', b: '(2, -3)(1, 3/2)', a: '(1, -1/2)(1, 3/2)', sel: 'outer',
+      note: 'X(z) = 1 + (3/2)z⁻¹ has a zero at −3/2 that cancels the pole of H there. Y(z) = (2 − 3z⁻¹)/(1 − ½z⁻¹) keeps only the pole 1/2, so there are just two possible outputs (|z| > 1/2 or |z| < 1/2).' },
+    { id: 'fa25-6y', g: 'Pole-zero cancellation', name: 'FA2025 #6 — output for x = 3δ[n] + 2δ[n−1]', b: '(1, 0, -1)(3, 2)', a: '(1, -2)(1, 2/3)', sel: 'outer',
+      note: 'X(z) = 3 + 2z⁻¹ cancels the pole at −2/3. What is left, 3(1 − z⁻²)/(1 − 2z⁻¹), is improper: y[n] = (3/4)δ[n] + (3/2)δ[n−1] + (9/4)(2)ⁿ u[n], which is the key’s 3(2)ⁿ u[n] − 3(2)ⁿ⁻² u[n−2] written differently.' },
+    { id: 'fa19-10', g: 'Pole-zero cancellation', name: 'FA2019 #10(d) — cascade with 2ⁿu[n]', b: '1, -2', a: '(1, -1/2)(1, -1/4)(1, -2)', sel: 'outer',
+      note: 'H(z) = (1 − 2z⁻¹)/((1 − ½z⁻¹)(1 − ¼z⁻¹)) in series with 2ⁿu[n] = 1/(1 − 2z⁻¹): the zero at 2 cancels the unstable pole, the cascade is causal with ROC |z| > 1/2 — still stable (so (d) is False).' },
+    { id: 'ma4', g: 'Pole-zero cancellation', name: 'Moving average as a recursion (cancellation → FIR)', b: '1/4, 0, 0, 0, -1/4', a: '1, -1', sel: 'outer',
+      note: 'y[n] = y[n−1] + ¼(x[n] − x[n−4]) looks recursive (IIR), but its pole at z = 1 is cancelled by a zero: H(z) = ¼(1 + z⁻¹ + z⁻² + z⁻³), an FIR filter, stable.' },
+    { id: 'sp21-5', g: 'Marginal stability', name: 'SP2021 #5 — 3z⁻¹/(1 + z⁻²)', b: '0, 3', a: '1, 0, 1', sel: 'outer',
+      note: 'Poles ±j on the unit circle: h[n] = 3 sin(πn/2) u[n]. Marginally stable — j^n u[n], cos(πn/2)u[n] and sin(πn/2)u[n] give unbounded outputs.' },
+    { id: 'fa25-8b', g: 'Marginal stability', name: 'FA2025 #8(b) — poles 3/4, j, e^{j2/3}', b: '1', a: '(1, -3/4)(1, -j)(1, -exp(2j/3))', sel: 'outer',
+      note: 'Complex coefficients: no conjugate partners, so h[n] is complex (the plot shows Re h[n]). The third pole has angle 2/3 rad ≈ 38°, not 2π/3 — which is why cos(2πn/3)u[n] does not resonate.' },
+    { id: 'rep', g: 'Special cases', name: 'Repeated pole: 1/(1 − ½z⁻¹)²', b: '1', a: '(1, -1/2)(1, -1/2)', sel: 'outer',
+      note: 'A double pole: the simple-pole form A/(1 − pz⁻¹) cannot represent it — you need n pⁿ u[n] (Lecture 7, differentiation). Here h[n] = (n + 1)(1/2)ⁿ u[n] for the causal ROC.' },
+  ];
+  // parse two fields and analyze; throws Error with a readable message
+  function run(bStr, aStr) {
+    let pb, pa;
+    try { pb = Parse.poly(bStr, Poly.mul); } catch (e) { const x = new Error('b: ' + e.message); x.field = 'b'; throw x; }
+    try { pa = Parse.poly(aStr, Poly.mul); } catch (e) { const x = new Error('a: ' + e.message); x.field = 'a'; throw x; }
+    if (pb.coefs.length > 25 || pa.coefs.length > 25) throw new Error('at most 25 coefficients per polynomial');
+    const an = TF.analyze(pb.coefs, pa.coefs);
+    return { an, fb: pb.factors, fa: pa.factors };
+  }
+  function pickROC(an, how) {
+    if (!an.rocs || !an.rocs.length) return 0;
+    if (how === 'stable') { const i = an.rocs.findIndex(r => r.stable); if (i >= 0) return i; }
+    if (how === 'inner') return 0;
+    if (typeof how === 'number' && how >= 0 && how < an.rocs.length) return how;
+    return an.rocs.length - 1;
+  }
+  return { coef, joinTerms, polyHTML, lccdeHTML, angN, polarHTML, baseHTML, trig, closedForm, contour, hValues, sortedTerms, isRight, isReal, PRESETS, run, pickROC };
+})();
+</script>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const { C, abs, arg } = Cx;
+  const M_ = MINUS;
+  const NS = Array.from({ length: 31 }, (_, i) => i - 15);          // n = −15 … 15
+  const state = { res: null, roc: 0, hv: null, hover: null, preset: null };
+
+  // ---- theme: follow the embedding Quartz page if same-origin, else the OS
+  function syncTheme() {
+    let t = null;
+    try { t = window.parent && window.parent !== window ? window.parent.document.documentElement.getAttribute('saved-theme') : null; } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') !== t) document.documentElement.setAttribute('data-theme', t);
+  }
+  syncTheme();
+  try {
+    if (window.parent && window.parent !== window) {
+      new MutationObserver(syncTheme).observe(window.parent.document.documentElement, { attributes: true, attributeFilter: ['saved-theme'] });
+    }
+  } catch (e) {}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+  // ---- grow the embedding iframe to fit (same-origin only; harmless otherwise)
+  function fitFrame() {
+    try {
+      const fe = window.frameElement;
+      if (fe) { const h = Math.ceil(document.documentElement.scrollHeight) + 2; if (Math.abs(parseFloat(fe.style.height || 0) - h) > 3) fe.style.height = h + 'px'; }
+    } catch (e) {}
+  }
+
+  // ---- helpers
+  const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const sub = k => '<sub>' + k + '</sub>';
+  const isR = PZ.isReal;
+  function rootText(z) {                         // value, plus polar form for complex roots
+    if (isR(z)) return Fmt.num(z.re);
+    return Fmt.cnum(z) + ' <span class="note">(= ' + PZ.polarHTML(z) + ')</span>';
+  }
+  function rootsHTML(list, originCount, real) {  // group conjugate pairs of a real system as a ± bj
+    const out = [], used = new Set();
+    list.forEach((o, i) => {
+      if (used.has(i)) return;
+      const mult = o.m > 1 ? ' <b>(×' + o.m + ')</b>' : '';
+      if (real && !isR(o.z)) {
+        const j = list.findIndex((u, k) => k !== i && !used.has(k) && abs(Cx.sub(u.z, Cx.conj(o.z))) <= 1e-8 * Math.max(1, abs(o.z)));
+        if (j >= 0) {
+          used.add(j);
+          const zz = o.z.im > 0 ? o.z : Cx.conj(o.z);
+          const imS = Math.abs(zz.im - 1) < 1e-12 ? '' : Fmt.num(zz.im);
+          out.push((Math.abs(zz.re) < 1e-12 ? '' : Fmt.num(zz.re) + ' ') + '± ' + (imS.includes('/') ? '(' + imS + ')' : imS) + 'j <span class="note">(= ' + PZ.polarHTML(zz, true) + ')</span>' + mult);
+          return;
+        }
+      }
+      out.push(rootText(o.z) + mult);
+    });
+    if (originCount) out.push('0' + (originCount > 1 ? ' <b>(×' + originCount + ')</b>' : ''));
+    return out.length ? out.join(', &nbsp;') : '<span class="note">none</span>';
+  }
+  const kindText = { causal: 'causal', anticausal: 'anti-causal', 'left-noncausal': 'left-sided, non-causal', 'two-sided': 'two-sided', fir: 'FIR' };
+
+  // ---- presets
+  (function buildPresets() {
+    const sel = $('preset');
+    const groups = {};
+    PZ.PRESETS.forEach((p, i) => {
+      if (!groups[p.g]) { groups[p.g] = document.createElement('optgroup'); groups[p.g].label = p.g; sel.appendChild(groups[p.g]); }
+      const o = document.createElement('option'); o.value = String(i); o.textContent = p.name; groups[p.g].appendChild(o);
+    });
+    const custom = document.createElement('option'); custom.value = 'custom'; custom.textContent = 'Your own H(z)…'; sel.appendChild(custom);
+  })();
+  function loadPreset(i) {
+    const p = PZ.PRESETS[i]; if (!p) return;
+    state.preset = p;
+    $('preset').value = String(i);
+    $('b').value = p.b; $('a').value = p.a;
+    analyze(p.sel);
+  }
+
+  // ---- analysis
+  function analyze(how) {
+    $('b').classList.remove('bad'); $('a').classList.remove('bad');
+    let res;
+    try { res = PZ.run($('b').value, $('a').value); }
+    catch (e) {
+      if (e.field) $(e.field).classList.add('bad');
+      $('msgs').innerHTML = '<div class="msg err">' + esc(e.message) + '</div>';
+      fitFrame();
+      return;
+    }
+    state.res = res;
+    if (res.an.zeroTF) { state.roc = 0; render(); return; }
+    state.roc = PZ.pickROC(res.an, how);
+    render();
+  }
+  function selectROC(i) { state.roc = i; state.hover = null; render(); }
+
+  // ---- rendering: text panels
+  function renderTF() {
+    const { an, fb, fa } = state.res;
+    const num = fb ? fb.map(f => f.length > 1 ? '(' + PZ.polyHTML(f) + ')' : PZ.polyHTML(f)).join('') : PZ.polyHTML(an.b.length ? an.b : [C(0)]);
+    const den = fa ? fa.map(f => f.length > 1 ? '(' + PZ.polyHTML(f) + ')' : PZ.polyHTML(f)).join('') : PZ.polyHTML(an.a);
+    const normed = an.notes.includes('normalized');
+    let html = '<span>H(z) = <span class="frac"><span>' + (normed ? PZ.polyHTML(an.b) : num) + '</span><span>' + (normed ? PZ.polyHTML(an.a) : den) + '</span></span></span>';
+    if (!an.zeroTF) html += '<span class="note">LCCDE (Lecture 9 form): ' + PZ.lccdeHTML(an.b, an.a) + '</span>';
+    $('tf').innerHTML = html;
+    const custom = !state.preset || state.preset.b !== $('b').value || state.preset.a !== $('a').value;
+    $('pnote').innerHTML = custom ? '' : esc(state.preset.note);
+    if (custom) $('preset').value = 'custom';
+  }
+  function renderMsgs() {
+    const an = state.res.an, m = [];
+    const cn = z => Fmt.cnum(z);
+    if (an.notes.includes('normalized')) m.push(['', 'a[0] was not 1, so b and a were divided by a[0] (the course form has a[0] = 1).']);
+    if (!an.real) m.push(['', 'Complex coefficients: poles need not come in conjugate pairs and h[n] is complex — the stem plot shows Re h[n].']);
+    for (const c of an.cancels) m.push(['', 'Pole-zero cancellation at z = ' + cn(c.z) + (c.m > 1 ? ' (×' + c.m + ')' : '') + ': the zero removes the pole, so H(z) is reduced first and the ROCs are bounded only by the remaining poles.']);
+    for (const c of an.nearCancel) m.push(['err', 'Near-cancellation: zero ' + cn(c.z) + ' and pole ' + cn(c.p) + ' differ by ' + Fmt.dec(c.d, 2) + ' — treated as NOT cancelled. If they should cancel, type exact values (e.g. 1/3, not 0.333).']);
+    for (const o of an.repeated) m.push(['err', 'Repeated pole at z = ' + cn(o.z) + ' (×' + o.m + '): the simple-pole PFE Σ A/(1 − pz⁻¹) does not apply (a double pole needs an n·pⁿ term, Lecture 7). ROCs, causality and stability below are still right; h[n] is computed numerically.']);
+    for (const o of an.nearRepeated) m.push(['err', 'Poles ' + cn(o.p) + ' and ' + cn(o.q) + ' nearly coincide (distance ' + Fmt.dec(o.d, 2) + '): the A_k are large and nearly cancel. If they are meant to be equal, enter them exactly.']);
+    for (const o of an.nearRepeatedZ) m.push(['', 'Zeros ' + cn(o.p) + ' and ' + cn(o.q) + ' nearly coincide (distance ' + Fmt.dec(o.d, 2) + ').']);
+    const multiZ = an.zeros.filter(o => o.m > 1);
+    if (multiZ.length) m.push(['', 'Repeated zero(s): ' + multiZ.map(o => cn(o.z) + ' (×' + o.m + ')').join(', ') + '.']);
+    $('msgs').innerHTML = m.map(([c, t]) => '<div class="msg ' + c + '">' + esc(t) + '</div>').join('');
+  }
+  function renderPZ() {
+    const an = state.res.an;
+    let h = '<p class="t"><b>Poles:</b> ' + rootsHTML(an.poles, an.originP, an.real) + '</p>';
+    h += '<p class="t"><b>Zeros:</b> ' + rootsHTML(an.zeros, an.originZ, an.real) + '</p>';
+    if (an.cancels.length) h += '<p class="t"><b>Cancelled:</b> ' + an.cancels.map(c => Fmt.cnum(c.z)).join(', ') + ' <span class="note">(pole and zero at the same point)</span></p>';
+    const pm = an.poles.map(o => abs(o.z));
+    if (pm.length) h += '<p class="t note">Pole magnitudes (the only possible ROC boundaries): ' + [...new Set(an.rocs.slice(1).map(r => Fmt.num(r.rin)))].join(', ') + '</p>';
+    $('pz').innerHTML = h;
+  }
+  function renderROCs() {
+    const an = state.res.an;
+    $('rocs').innerHTML = an.rocs.map((r, i) => '<button type="button" data-i="' + i + '" class="' + (i === state.roc ? 'sel' : '') + '" aria-pressed="' + (i === state.roc) + '">' +
+      '<span>' + esc(r.label) + '</span><small>' + kindText[r.kind] + ' · ' + (r.stable ? '<span class="yes">stable</span>' : '<span class="no">unstable</span>') + '</small></button>').join('');
+    $('rocs').querySelectorAll('button').forEach(b => b.addEventListener('click', () => selectROC(+b.dataset.i)));
+    const ns = an.rocs.filter(r => r.stable).length;
+    const n = an.rocs.length;
+    $('rocsum').innerHTML = (n === 1 ? 'Only one ROC is possible.' : n + ' possible ROCs: the regions between consecutive pole circles, plus the inside of the smallest and the outside of the largest.') + ' ' +
+      (ns ? 'Exactly one of them contains the unit circle — that one is the BIBO-stable system.' : 'None contains the unit circle (a pole lies on |z| = 1), so no choice of ROC gives a stable system.');
+  }
+  function renderCls() {
+    const an = state.res.an, r = an.rocs[state.roc];
+    const pmaxR = r.rightPoles.length ? Fmt.num(r.rin) : null, pminL = r.leftPoles.length ? Fmt.num(r.rout) : null;
+    let t = '';
+    switch (r.kind) {
+      case 'causal': t = '<b>Causal</b> (right-sided): the ROC is the outside of the largest pole circle, |z| > ' + pmaxR + ', and it includes z = ∞, so h[n] = 0 for n &lt; 0.'; break;
+      case 'fir': t = '<b>FIR</b>: no poles except possibly at z = 0, so the ROC is ' + esc(r.label) + '. h[n] is finite-length and causal — always BIBO stable.'; break;
+      case 'anticausal': t = '<b>Anti-causal</b> (left-sided): the ROC is the inside of the smallest pole circle, |z| < ' + pminL + ', and includes z = 0, so h[n] = 0 for n ≥ 0.'; break;
+      case 'left-noncausal': t = r.row === 3
+        ? '<b>Non-causal, left-sided</b>: inside the smallest pole circle, but z = 0 is excluded because the polynomial part C' + sub('k') + 'z' + '<sup>' + M_ + 'k</sup> puts samples at n = 1, …, ' + (an.Q.length - 1) + '.'
+        : '<b>Non-causal, left-sided</b>: the ROC |z| < ' + pminL + ' includes z = 0, but h[0] = C' + sub(0) + ' ≠ 0 and h[n] ≠ 0 for n &lt; 0 (Lecture 11: “n₀ = 0 … is still non-causal”).'; break;
+      case 'two-sided': t = '<b>Two-sided, non-causal</b>: an annulus. Poles inside it (|p| ≤ ' + pmaxR + ') give right-sided terms A pⁿ u[n]; poles outside it (|p| ≥ ' + pminL + ') give left-sided terms −A pⁿ u[−n−1].'; break;
+    }
+    let s;
+    if (r.stable) s = '<span class="yes">BIBO stable ✓</span> — the unit circle |z| = 1 lies inside the ROC.';
+    else if (r.touches) {
+      const onU = an.poles.filter(o => Math.abs(abs(o.z) - 1) <= 1e-9);
+      const simple = onU.every(o => o.m === 1);
+      s = '<span class="no">Not BIBO stable ✗</span> — the ROC stops at the unit circle: pole(s) at ' + onU.map(o => isR(o.z) ? Fmt.num(o.z.re) : PZ.polarHTML(o.z)).join(', ') + ' lie on |z| = 1.';
+      if (r.kind === 'causal' && simple) s += ' This causal system is <b>marginally stable</b> (Lecture 11 §1.2.1): h[n] stays bounded but is not absolutely summable, and a bounded input that oscillates at a pole’s angle (e.g. e<sup>jωn</sup>u[n] with e<sup>jω</sup> a pole) produces an output that grows like n.';
+    } else s = '<span class="no">Not BIBO stable ✗</span> — the ROC ' + esc(r.label) + ' does not contain |z| = 1' + (r.rin >= 1 ? ' (it lies entirely outside the unit circle).' : ' (it lies entirely inside the unit circle).');
+    $('cls').innerHTML = '<p class="t">' + t + '</p><p class="t">' + s + '</p>';
+    const rows = [
+      ['|z| > |p<sub>max</sub>|', 'causal', 'right', '|p<sub>max</sub>| &lt; 1'],
+      ['|z| &lt; |p<sub>min</sub>|', 'anti-causal', 'left', '|p<sub>min</sub>| &gt; 1'],
+      ['|p<sub>max</sub>| &lt; |z| &lt; ∞', 'non-causal', 'right', '|p<sub>max</sub>| &lt; 1'],
+      ['0 &lt; |z| &lt; |p<sub>min</sub>|', 'non-causal', 'left', '|p<sub>min</sub>| &gt; 1'],
+      ['a &lt; |z| &lt; b', 'non-causal', 'both', 'a &lt; 1 &lt; b'],
+    ];
+    const on = r.kind === 'fir' ? 0 : r.row;
+    $('l11').innerHTML = '<tr><th>ROC shape (Lecture 11, Table 1)</th><th>type</th><th>sided</th><th>stable iff</th></tr>' +
+      rows.map((c, i) => '<tr class="' + (i === on ? 'on' : '') + '">' + c.map(x => '<td>' + x + '</td>').join('') + '</tr>').join('');
+  }
+  function renderPFE() {
+    const an = state.res.an, r = state.roc;
+    let h = '';
+    if (an.hasQ) {
+      h += '<p class="t">Improper: numerator degree ' + (an.bR.length - 1) + ' ≥ denominator degree ' + (an.aR.length - 1) + ' in z<sup>−1</sup>, so long-divide first (Lecture 10): ' +
+        an.Q.map((c, k) => 'C' + sub(k) + ' = ' + Fmt.cnum(c)).join(', &nbsp;') + '.</p>';
+    }
+    if (an.repeated.length) {
+      h += '<p class="t no">Repeated pole — no simple-pole A<sub>k</sub> to show.</p>';
+      $('pfe').innerHTML = h; return;
+    }
+    if (!an.terms.length) { h += '<p class="t note">No poles away from z = 0: H(z) is a polynomial in z<sup>−1</sup> and h[n] can be read off its coefficients.</p>'; $('pfe').innerHTML = h; return; }
+    h += '<p class="t">H(z) = ' + (an.hasQ ? 'Σ C' + sub('k') + 'z<sup>−k</sup> + ' : '') + 'Σ A' + sub('k') + ' / (1 − p' + sub('k') + 'z<sup>−1</sup>), A' + sub('k') + ' by cover-up at z = p' + sub('k') + ':</p>';
+    h += '<div class="scroll"><table><tr><th>k</th><th>pole p<sub>k</sub></th><th>|p<sub>k</sub>|</th><th>A<sub>k</sub></th><th>in this ROC</th></tr>' +
+      PZ.sortedTerms(an).map((t, i) => {
+        const right = PZ.isRight(an, r, t.p);
+        return '<tr><td>' + (i + 1) + '</td><td>' + (isR(t.p) ? Fmt.num(t.p.re) : Fmt.cnum(t.p)) + '</td><td>' + Fmt.num(abs(t.p)) + '</td><td>' + Fmt.cnum(t.A) + '</td><td>' +
+          (right ? 'inside → A pⁿ u[n]' : 'outside → −A pⁿ u[−n−1]') + '</td></tr>';
+      }).join('') + '</table></div>';
+    $('pfe').innerHTML = h;
+  }
+  function renderH() {
+    const an = state.res.an, r = an.rocs[state.roc];
+    const cf = PZ.closedForm(an, state.roc);
+    let h = '';
+    if (cf) {
+      h += '<div><span class="lbl">ROC ' + esc(r.label) + ':</span> h[n] = ' + cf.expo + '</div>';
+      if (cf.real) h += '<div><span class="lbl">conjugate pairs combined (Euler):</span> h[n] = ' + cf.real + '</div>';
+    } else {
+      h += '<div class="no">No simple-pole closed form (repeated pole). The plot and the values below come from a numerical inverse z-transform on a circle inside the ROC.</div>';
+    }
+    state.hv = PZ.hValues(an, state.roc, NS);
+    const cplx = state.hv.vals && state.hv.vals.some(v => Math.abs(v.im) > 1e-9 * Math.max(1, abs(v)));
+    state.cplx = cplx;
+    if (cplx) h += '<div class="note">h[n] is complex here — the plot shows the real part Re h[n]; the table shows full values.</div>';
+    $('hform').innerHTML = h;
+    // values table n = −6 … 8
+    const v = state.hv.vals;
+    if (v) {
+      const ks = NS.filter(n => n >= -6 && n <= 8);
+      $('vals').innerHTML = '<tr><th>n</th>' + ks.map(n => '<th>' + Fmt.sgn(n) + '</th>').join('') + '</tr><tr><th>h[n]</th>' +
+        ks.map(n => '<td>' + (() => { const z = v[n + 15]; return Math.abs(z.re) < 1e-10 && Math.abs(z.im) < 1e-10 ? '0' : Fmt.cnum(z); })() + '</td>').join('') + '</tr>';
+    } else $('vals').innerHTML = '';
+  }
+
+  // ---- canvases are sized to their CSS width × devicePixelRatio; drawing happens in CSS pixels
+  function prep(cv, hOf) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const w = Math.max(240, Math.round(cv.clientWidth || cv.parentElement.clientWidth || 560));
+    const h = Math.round(hOf(w));
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, W: w, H: h };
+  }
+  // ---- drawing: z-plane
+  function niceStep(R) { const raw = R / 3, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; }
+  function drawZ() {
+    const an = state.res.an, { ctx, W, H } = prep($('zp'), w => w);
+    const fg = css('--fg'), muted = css('--muted'), line = css('--line'), accent = css('--accent'), accent2 = css('--accent2'), hi = css('--hi'), roc = css('--roc');
+    ctx.clearRect(0, 0, W, H);
+    const pm = an.poles.map(o => abs(o.z)), cz = an.cancels.map(c => abs(c.z)), zm = an.zeros.map(o => abs(o.z));
+    const maxP = Math.max(0, ...pm, ...cz);
+    const zCap = 3 * Math.max(1, maxP);
+    let R = Math.max(1.3, 1.18 * maxP, 1.15 * Math.min(zCap, Math.max(0, ...zm)));
+    const cx = W / 2, cy = H / 2, s = (W / 2 - 30) / R;
+    const X = x => cx + x * s, Y = y => cy - y * s;
+    // screen positions of all markers, so axis labels can stay out of their way
+    const marks = [...an.poles, ...an.zeros, ...an.cancels].map(o => o.z).concat(an.originP || an.originZ ? [C(0)] : [])
+      .map(z => { const m = abs(z), lim = R * 0.97, f = m > lim ? lim / m : 1; return [X(z.re * f), Y(z.im * f)]; });
+    const clear = (x, y) => marks.every(([mx, my]) => Math.hypot(mx - x, my - y) > 15);
+    // ROC shading
+    const r = an.rocs[state.roc];
+    if (r && !an.zeroTF) {
+      ctx.save(); ctx.beginPath();
+      if (r.rout === Infinity) ctx.rect(0, 0, W, H); else ctx.arc(cx, cy, r.rout * s, 0, 2 * Math.PI);
+      if (r.rin > 0) { ctx.moveTo(cx + r.rin * s, cy); ctx.arc(cx, cy, r.rin * s, 0, 2 * Math.PI); }
+      ctx.fillStyle = roc; ctx.fill('evenodd'); ctx.restore();
+    }
+    // grid + axes
+    const st = niceStep(R);
+    ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.font = '12px system-ui, sans-serif'; ctx.fillStyle = muted;
+    ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(W, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
+    for (let k = -Math.floor(R / st); k <= Math.floor(R / st); k++) {
+      if (!k) continue;
+      const v = k * st, lab = Fmt.dec(v, 3), labj = Math.abs(v) === 1 ? (v < 0 ? M_ : '') + 'j' : lab + 'j';
+      ctx.beginPath(); ctx.moveTo(X(v), cy - 4); ctx.lineTo(X(v), cy + 4); ctx.moveTo(cx - 4, Y(v)); ctx.lineTo(cx + 4, Y(v)); ctx.stroke();
+      ctx.textAlign = 'center'; if (clear(X(v), cy + 12)) ctx.fillText(lab, X(v), cy + 17);
+      ctx.textAlign = 'left'; if (clear(cx + 12, Y(v))) ctx.fillText(labj, cx + 7, Y(v) + 4);
+    }
+    ctx.textAlign = 'right'; ctx.fillText('Re z', W - 6, cy - 7); ctx.textAlign = 'left'; ctx.fillText('Im z', cx + 7, 14);
+    // pole circles (possible ROC boundaries)
+    const mags = [...new Set(an.rocs.slice(1).map(q => q.rin))];
+    ctx.setLineDash([2, 4]); ctx.strokeStyle = muted; ctx.lineWidth = 1;
+    for (const m of mags) { ctx.beginPath(); ctx.arc(cx, cy, m * s, 0, 2 * Math.PI); ctx.stroke(); }
+    ctx.setLineDash([]);
+    if (r) {
+      ctx.strokeStyle = accent; ctx.lineWidth = 1.8;
+      for (const m of [r.rin, r.rout]) if (m > 0 && m !== Infinity) { ctx.beginPath(); ctx.arc(cx, cy, m * s, 0, 2 * Math.PI); ctx.stroke(); }
+    }
+    // unit circle
+    ctx.setLineDash([7, 5]); ctx.strokeStyle = fg; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(cx, cy, s, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.fillText('|z| = 1', X(Math.SQRT1_2) + 4, Y(Math.SQRT1_2) - 4);
+    // markers
+    const clampPt = z => { const m = abs(z), lim = R * 0.97; return m > lim ? { x: z.re * lim / m, y: z.im * lim / m, off: true } : { x: z.re, y: z.im, off: false }; };
+    const labelOf = z => isR(z) ? Fmt.num(z.re) : Fmt.cnum(z);
+    const nLabels = an.poles.length + an.zeros.length;
+    function label(t, x, y) {                    // right of the marker, or left of it near the right edge
+      const w = ctx.measureText(t).width;
+      if (x + 9 + w > W - 4) { ctx.textAlign = 'right'; ctx.fillText(t, x - 9, y); } else { ctx.textAlign = 'left'; ctx.fillText(t, x + 9, y); }
+    }
+    function mult(x, y, m, col) { if (m > 1) { ctx.fillStyle = col; ctx.font = 'bold 13px system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.fillText(String(m), x + 8, y - 7); } }
+    function xMark(x, y, col, w = 2.4, sz = 7) { ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x - sz, y - sz); ctx.lineTo(x + sz, y + sz); ctx.moveTo(x - sz, y + sz); ctx.lineTo(x + sz, y - sz); ctx.stroke(); }
+    function oMark(x, y, col, w = 2.2, rr = 6.5) { ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(x, y, rr, 0, 2 * Math.PI); ctx.stroke(); }
+    for (const c of an.cancels) {
+      const q = clampPt(c.z), x = X(q.x), y = Y(q.y);
+      oMark(x, y, muted, 1.6, 8); xMark(x, y, muted, 1.6, 5.5);
+      ctx.fillStyle = muted; ctx.font = '11.5px system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.fillText('cancelled', x + 10, y + 16);
+    }
+    const zs = an.zeros.map(o => ({ z: o.z, m: o.m }));
+    if (an.originZ) zs.push({ z: C(0), m: an.originZ });
+    for (const o of zs) {
+      const q = clampPt(o.z), x = X(q.x), y = Y(q.y);
+      oMark(x, y, accent2); mult(x, y, o.m, accent2);
+      if (q.off || nLabels <= 8) { ctx.fillStyle = accent2; ctx.font = '12px system-ui, sans-serif'; label((q.off ? '→ ' : '') + labelOf(o.z), x, y + 17); }
+    }
+    const ps = an.poles.map(o => ({ z: o.z, m: o.m }));
+    if (an.originP) ps.push({ z: C(0), m: an.originP });
+    for (const o of ps) {
+      const q = clampPt(o.z), x = X(q.x), y = Y(q.y);
+      xMark(x, y, hi); mult(x, y, o.m, hi);
+      if (nLabels <= 8 || q.off) { ctx.fillStyle = hi; ctx.font = '12px system-ui, sans-serif'; label(labelOf(o.z), x, y - 9); }
+    }
+    // caption
+    if (r) {
+      ctx.font = '600 13px system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = accent;
+      ctx.fillText('ROC: ' + r.label + (r.rout === Infinity && r.rin > 0 ? '  (extends to ∞)' : ''), 8, H - 10);
+    }
+  }
+
+  // ---- drawing: stem plot of h[n]
+  function drawStem() {
+    const { ctx, W, H } = prep($('stem'), w => Math.max(210, Math.min(300, w * 0.3)));
+    const fg = css('--fg'), muted = css('--muted'), line = css('--line'), accent = css('--accent'), hi = css('--hi');
+    ctx.clearRect(0, 0, W, H);
+    const Rm = 12, T = 26, B = 30;
+    ctx.font = '13px system-ui, sans-serif';
+    const hv = state.hv;
+    if (!hv || !hv.vals) { state.stemGeom = null; ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.fillText('h[n] not available for this input', W / 2, H / 2); return; }
+    const y = hv.vals.map(v => v.re);
+    const zoom = $('zoom').checked;
+    let win = zoom ? y.filter((_, i) => Math.abs(NS[i]) <= 5) : y;
+    if (!win.some(v => Math.abs(v) > 1e-12)) win = y;
+    let hiV = Math.max(0, ...win), loV = Math.min(0, ...win);
+    const span = Math.max(hiV - loV, 1e-300);
+    if (hiV - loV < 1e-12) { hiV = 1; loV = -1; }
+    if (hiV < 0.06 * span) hiV = 0; if (-loV < 0.06 * span) loV = 0;     // ignore negligible lobes
+    const top = hiV > 0 ? hiV + 0.12 * (hiV - loV) : 0.1 * (hiV - loV), bot = loV < 0 ? loV - 0.12 * (hiV - loV) : -0.1 * (hiV - loV);
+    const ticks = [hiV, 0, loV].filter((v, i) => i === 1 || Math.abs(v) > 0);
+    const L = Math.max(40, 12 + Math.max(...ticks.map(v => ctx.measureText(Fmt.dec(v, 3)).width)));
+    state.stemGeom = { L, Rm, W };
+    const xs = n => L + (n + 15) * (W - L - Rm) / 30;
+    const ys = v => T + (top - v) * (H - T - B) / (top - bot);
+    // axes and labels
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(L, ys(0)); ctx.lineTo(W - Rm, ys(0)); ctx.stroke();
+    ctx.fillStyle = muted; ctx.textAlign = 'right';
+    for (const v of ticks) { ctx.fillText(Fmt.dec(v, 3), L - 6, ys(v) + 4); ctx.beginPath(); ctx.moveTo(L - 3, ys(v)); ctx.lineTo(L, ys(v)); ctx.stroke(); }
+    const ymax = Math.max(Math.abs(hiV), Math.abs(loV));
+    ctx.textAlign = 'center';
+    for (let n = -15; n <= 15; n += 5) ctx.fillText(Fmt.sgn(n), xs(n), H - B + 19);
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(xs(0), T - 6); ctx.lineTo(xs(0), H - B + 4); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = muted; ctx.textAlign = 'left';
+    const r = state.res.an.rocs[state.roc];
+    ctx.fillText((state.cplx ? 'Re h[n]' : 'h[n]') + ' for the ROC ' + r.label + (hv.method === 'contour' ? '  (numerical inverse z-transform)' : ''), L, 16);
+    ctx.textAlign = 'right'; ctx.fillText('n', W - 2, ys(0) - 7);
+    // stems
+    y.forEach((v, i) => {
+      const n = NS[i], x = xs(n);
+      const clipped = v > top || v < bot, vv = Math.max(bot, Math.min(top, v));
+      const isZero = Math.abs(v) <= 1e-12 * Math.max(1, ymax);
+      ctx.strokeStyle = state.hover === n ? hi : accent; ctx.fillStyle = ctx.strokeStyle; ctx.lineWidth = W < 500 ? 1.6 : 2;
+      if (isZero) { ctx.fillStyle = state.hover === n ? hi : muted; ctx.beginPath(); ctx.arc(x, ys(0), 2.5, 0, 2 * Math.PI); ctx.fill(); return; }
+      ctx.beginPath(); ctx.moveTo(x, ys(0)); ctx.lineTo(x, ys(vv)); ctx.stroke();
+      if (clipped) {
+        const up = v > 0, yy = ys(vv);
+        ctx.beginPath(); ctx.moveTo(x, up ? yy - 2 : yy + 2); ctx.lineTo(x - 6, up ? yy + 8 : yy - 8); ctx.lineTo(x + 6, up ? yy + 8 : yy - 8); ctx.closePath(); ctx.fill();
+      } else { ctx.beginPath(); ctx.arc(x, ys(vv), W < 500 ? 3.2 : 4.2, 0, 2 * Math.PI); ctx.fill(); }
+    });
+  }
+  function hoverAt(clientX) {
+    const g = state.stemGeom; if (!g) return;
+    const rect = $('stem').getBoundingClientRect();
+    const x = (clientX - rect.left) * g.W / rect.width;
+    const n = Math.round((x - g.L) * 30 / (g.W - g.L - g.Rm) - 15);
+    if (n < -15 || n > 15 || !state.hv || !state.hv.vals) return;
+    state.hover = n;
+    const v = state.hv.vals[n + 15];
+    $('readout').textContent = 'h[' + Fmt.sgn(n) + '] = ' + (Math.abs(v.re) < 1e-10 && Math.abs(v.im) < 1e-10 ? '0' : Fmt.cnum(v));
+    drawStem();
+  }
+  $('stem').addEventListener('mousemove', e => hoverAt(e.clientX));
+  $('stem').addEventListener('touchstart', e => { if (e.touches[0]) hoverAt(e.touches[0].clientX); }, { passive: true });
+  $('stem').addEventListener('touchmove', e => { if (e.touches[0]) hoverAt(e.touches[0].clientX); }, { passive: true });
+  $('stem').addEventListener('mouseleave', () => { state.hover = null; drawStem(); });
+
+  function render() {
+    const an = state.res.an;
+    renderTF();
+    if (an.zeroTF) {
+      $('msgs').innerHTML = '<div class="msg err">The numerator is zero: H(z) = 0, nothing to analyze.</div>';
+      ['pz', 'rocs', 'rocsum', 'cls', 'l11', 'pfe', 'hform', 'vals'].forEach(id => { $(id).innerHTML = ''; });
+      state.hv = null;
+      const c1 = $('zp'); c1.getContext('2d').clearRect(0, 0, c1.width, c1.height);
+      drawStem(); fitFrame(); return;
+    }
+    renderMsgs(); renderPZ(); renderROCs(); renderCls(); renderPFE(); renderH();
+    drawZ(); drawStem();
+    fitFrame();
+  }
+
+  // ---- wiring
+  $('preset').addEventListener('change', e => { if (e.target.value !== 'custom') loadPreset(+e.target.value); });
+  $('go').addEventListener('click', () => analyze('outer'));
+  for (const id of ['b', 'a']) $(id).addEventListener('keydown', e => { if (e.key === 'Enter') analyze('outer'); });
+  let tmr = null;
+  for (const id of ['b', 'a']) $(id).addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(() => analyze('outer'), 500); });
+  $('zoom').addEventListener('change', drawStem);
+  new MutationObserver(() => { if (state.res && !state.res.an.zeroTF) { drawZ(); drawStem(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  let rz = null;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (state.res && !state.res.an.zeroTF) { drawZ(); drawStem(); } fitFrame(); }, 80); });
+  if (window.ResizeObserver) new ResizeObserver(fitFrame).observe(document.body);
+  loadPreset(0);
+})();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# ECE 329 notes site — self-hosted Quartz for Docker standalone / Portainer.
+# ECE 310 notes site — self-hosted Quartz for Docker standalone / Portainer.
 #
 #   builder  clones the GitHub repo into the `repo` volume, checks it every
 #            SYNC_INTERVAL seconds and, whenever the branch has moved, rebuilds
@@ -8,8 +8,8 @@
 #   web      nginx serving the `site` volume with Quartz's extensionless URLs.
 #
 # Deploy: Portainer › Stacks › Add stack › Web editor (paste this file), or
-# `docker compose up -d`. Point the reverse proxy for pl-ece329.vops.ch at
-# port 8329. Publishing: `git push` — the site follows within SYNC_INTERVAL.
+# `docker compose up -d`. Point the reverse proxy for quartz-310.vops.ch at
+# port 8310. Publishing: `git push` — the site follows within SYNC_INTERVAL.
 # Needs Docker Compose ≥ 2.23.1 (inline `configs.content`).
 
 services:
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
     init: true # so `docker stop` ends the sync loop promptly
     environment:
-      REPO_URL: https://github.com/akakrabz/quartz-329.git
+      REPO_URL: https://github.com/akakrabz/quartz-310.git
       BRANCH: master
       SYNC_INTERVAL: "300" # seconds between checks for new commits
     volumes:
@@ -78,7 +78,7 @@ services:
     image: nginx:1-alpine
     restart: unless-stopped
     ports:
-      - "8329:80"
+      - "8310:80"
     volumes:
       - site:/site:ro
     configs:
