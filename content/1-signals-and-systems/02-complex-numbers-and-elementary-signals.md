@@ -46,7 +46,8 @@ $$
 
 > [!key] Magnitude and phase of $x = a + jb = Re^{j\theta}$
 > $$
-> \lvert x\rvert = \sqrt{a^2 + b^2} = \sqrt{x\,x^*} = R \ge 0, \qquad
+> \begin{gathered}
+> \lvert x\rvert = \sqrt{a^2 + b^2} = \sqrt{x\,x^*} = R \ge 0, \\[4pt]
 > \angle x = \theta =
 > \begin{cases}
 > \tan^{-1}\!\left(\frac{b}{a}\right), & a \ge 0\\[4pt]
@@ -54,6 +55,7 @@ $$
 > \tan^{-1}\!\left(\frac{b}{a}\right) - \pi, & a < 0,\ b < 0
 > \end{cases}
 > \quad \in [-\pi, \pi].
+> \end{gathered}
 > $$
 > Real numbers have phase $0$ (positive) or $\pm\pi$ (negative).
 
@@ -125,8 +127,10 @@ Where roots show up later: the poles of $y[n] = y[n-3] + x[n]$ are the three cub
 
 > [!key] Geometric sums
 > $$
-> \sum_{k=0}^{N-1} a^k = \frac{1 - a^N}{1 - a}\ \ (a \ne 1;\ \text{the sum is } N \text{ if } a = 1), \qquad
+> \begin{gathered}
+> \sum_{k=0}^{N-1} a^k = \frac{1 - a^N}{1 - a}\ \ (a \ne 1;\ \text{the sum is } N \text{ if } a = 1), \\[4pt]
 > \sum_{k=0}^{\infty} a^k = \frac{1}{1 - a}\ \ (\lvert a\rvert < 1).
+> \end{gathered}
 > $$
 > $a$ may be complex. With $a = e^{j2\pi/N}$ (so $a^N = 1$) the first formula shows that the $N$-th roots of unity **sum to zero**.
 

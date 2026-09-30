@@ -26,8 +26,9 @@ Exponentials pass through unchanged in shape, scaled by $H(z)$, the z-transform 
 > [!example] Lecture 6, Exercise 1: $u[n]$ versus $-u[-n-1]$
 > $$
 > \begin{aligned}
-> u[n]: &\quad X(z) = \sum_{n=0}^{\infty} z^{-n} = \frac{1}{1-z^{-1}}, && |z^{-1}|<1 \iff |z|>1,\\
-> -u[-n-1]: &\quad X(z) = -\sum_{n=-\infty}^{-1} z^{-n} = -\sum_{m=0}^{\infty} z^{m+1} = \frac{-z}{1-z} = \frac{1}{1-z^{-1}}, && |z|<1 .
+> u[n]: &\quad X(z) = \sum_{n=0}^{\infty} z^{-n} = \frac{1}{1-z^{-1}}, & |z^{-1}|<1 \iff |z|>1,\\
+> -u[-n-1]: &\quad X(z) = -\sum_{n=-\infty}^{-1} z^{-n} = -\sum_{m=0}^{\infty} z^{m+1}\\
+> &\quad\phantom{X(z)} = \frac{-z}{1-z} = \frac{1}{1-z^{-1}}, & |z|<1 .
 > \end{aligned}
 > $$
 > Identical formulas, disjoint ROCs: a z-transform is unique **only with its ROC**.

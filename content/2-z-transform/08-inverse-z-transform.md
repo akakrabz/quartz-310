@@ -17,11 +17,13 @@ lecture: 8
 **Infinite-length signals** from the table give **rational** functions, a ratio of polynomials in $z^{-1}$, written three ways:
 
 $$
+\begin{gathered}
 \underbrace{X(z)=\frac{\sum_{k=0}^{N-1}b_kz^{-k}}{1+\sum_{k=1}^{M}a_kz^{-k}}}_{(1)\ \text{polynomials}}
 \qquad
 \underbrace{X(z)=\frac{\prod_{k=1}^{N-1}\left(1-q_kz^{-1}\right)}{\prod_{k=1}^{M}\left(1-p_kz^{-1}\right)}}_{(2)\ \text{factored: zeros } q_k,\ \text{poles } p_k}
-\qquad
+\\[8pt]
 \underbrace{X(z)=\sum_{k=1}^{M}\frac{A_k}{1-p_kz^{-1}}}_{(3)\ \text{partial fractions}}
+\end{gathered}
 $$
 
 ($N$ feed-forward coefficients, $M$ feedback coefficients; form (2) is drawn with $b_0=1$, otherwise a constant $b_0$ multiplies it.) The expression is **proper** when the numerator degree is less than the denominator degree ($N-1<M$). Form (3) is the goal, because each of its terms is a table entry.
@@ -32,9 +34,11 @@ The formal inverse is a contour integral, $x[n]=\frac{1}{j2\pi}\oint_C X(z)\,z^{
 
 > [!key] Everything is built from three facts
 > $$
+> \begin{gathered}
 > \delta[n-k]\ \leftrightarrow\ z^{-k},\qquad
-> a^nu[n]\ \leftrightarrow\ \frac{1}{1-az^{-1}}\ \ (|z|>|a|),\qquad
+> a^nu[n]\ \leftrightarrow\ \frac{1}{1-az^{-1}}\ \ (|z|>|a|),\\[4pt]
 > -a^nu[-n-1]\ \leftrightarrow\ \frac{1}{1-az^{-1}}\ \ (|z|<|a|),
+> \end{gathered}
 > $$
 > plus the time-shift property $x[n-k]\leftrightarrow z^{-k}X(z)$ from [[2-z-transform/07-z-transform-properties|Lecture 7]]. A factor $z^{-k}$ in front of a term delays that term by $k$.
 

@@ -74,7 +74,7 @@ y[3] = -3
 ```
 
 > [!trap]
-> - **The $n=0$ arrow.** `np.convolve` and the matrix method return values only; the start index is $n_s+m_s$. Even two official keys mislabel the rows ([[0-toolkit/05-errata|errata]]).
+> - **The $n=0$ arrow.** `np.convolve` and the matrix method return values only; the start index is $n_s+m_s$. Even an official key boxed the wrong values once — SP2025 #4(a) — and the sum check catches it ([[0-toolkit/05-errata|errata]]).
 > - **Length counts interior zeros**: $\{1,2,3,0,-1,-2,-3\}$ has length 7, so with a length-3 $h$ the answer has 9 samples ([[0-midterm-1/past-exams/fall-2025|FA2025 #3a]]).
 > - **Flip one signal, not both**, and sum products (not a product of sums).
 > - **$*$ is not $\times$**: $x[n]*\delta[n-k]=x[n-k]$ (the whole signal shifts) but $x[n]\,\delta[n-k]=x[k]\,\delta[n-k]$ (one sample survives).

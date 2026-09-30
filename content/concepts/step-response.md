@@ -11,7 +11,9 @@ aliases: ["step response", "unit step response", "g[n]", "s[n]"]
 > g[n]=h[n]*u[n]=\sum_{k=-\infty}^{n}h[k]\qquad(\text{the running sum of } h),
 > $$
 > $$
-> h[n]=g[n]-g[n-1],\qquad y[n]=g[n]*\big(x[n]-x[n-1]\big),\qquad G(z)=\frac{H(z)}{1-z^{-1}}.
+> \begin{gathered}
+> h[n]=g[n]-g[n-1],\qquad y[n]=g[n]*\big(x[n]-x[n-1]\big),\\[4pt] G(z)=\frac{H(z)}{1-z^{-1}}.
+> \end{gathered}
 > $$
 > All three follow from $\delta[n]=u[n]-u[n-1]$ ([[concepts/unit-step|unit step]]); the middle one is [[homework/hw2|HW2]] #3.
 

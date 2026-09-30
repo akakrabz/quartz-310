@@ -7,11 +7,13 @@ aliases: ["u[n]", "step", "unit step", "unit-step", "step function"]
 
 > [!key] Definition and identities (Lecture 2)
 > $$
+> \begin{gathered}
 > u[n]=\begin{cases}1, & n\ge0\\ 0, & n<0\end{cases}
 > \qquad
-> u[n]=\sum_{k=-\infty}^{n}\delta[k]=\sum_{k=0}^{\infty}\delta[n-k],
-> \qquad
-> \delta[n]=u[n]-u[n-1].
+> \delta[n]=u[n]-u[n-1],
+> \\[4pt]
+> u[n]=\sum_{k=-\infty}^{n}\delta[k]=\sum_{k=0}^{\infty}\delta[n-k].
+> \end{gathered}
 > $$
 > $z$-domain: $u[n]\leftrightarrow\dfrac{1}{1-z^{-1}}$, ROC $\lvert z\rvert>1$; and $-u[-n-1]\leftrightarrow\dfrac{1}{1-z^{-1}}$, ROC $\lvert z\rvert<1$ ([[concepts/z-transform-pairs|pairs]]).
 

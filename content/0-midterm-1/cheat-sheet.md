@@ -29,11 +29,13 @@ tags: [midterm-1, exam]
 **Geometric sums** — the engine of every z-transform and every stability check:
 
 $$
+\begin{gathered}
 \sum_{n=0}^{N-1} a^n = \begin{cases}\dfrac{1-a^N}{1-a}, & a\neq 1\\[4pt] N, & a = 1\end{cases}
 \qquad
 \sum_{n=N_1}^{N_2} a^n = \frac{a^{N_1}-a^{N_2+1}}{1-a}
-\qquad
-\sum_{n=0}^{\infty} a^n = \frac{1}{1-a},\quad \sum_{n=0}^{\infty} n\,a^n = \frac{a}{(1-a)^2}\quad(\lvert a\rvert<1)
+\\[6pt]
+\sum_{n=0}^{\infty} a^n = \frac{1}{1-a},\qquad \sum_{n=0}^{\infty} n\,a^n = \frac{a}{(1-a)^2}\qquad(\lvert a\rvert<1)
+\end{gathered}
 $$
 
 ## 2. System properties — tests and fast rules
@@ -41,12 +43,12 @@ $$
 | property | test | fails when you see … | holds even with … |
 |---|---|---|---|
 | [[concepts/linearity\|linear]] | $T\{ax_1+bx_2\} = aT\{x_1\}+bT\{x_2\}$; quick necessary check $T\{0\} = 0$ | an **additive constant** ($x[n]+3$, $2x[\lvert n\rvert]+10$); a nonlinear function of $x$: $x^2$, $\lvert x\rvert$, $e^{x}$, $\log x$, $\sin x$, $x[n]x[n+1]$, $x[3]\,x[n]$, $x[n]/x[2]$, clipping, median | coefficients depending on $n$ ($\lvert n\rvert x[n]$, $\cos^2(\tfrac{\pi}{2}n)\,x[n]$); index warps $x[\lvert n\rvert]$, $x[2n]$; any convolution |
-| [[concepts/time-invariance\|time-invariant]] | compare $y[n-n_0]$ (replace **every** $n$) with $T\{x[n-n_0]\}$ (shift only inside $x$) | **$n$ outside the brackets** ($n\,x[n]$, $\cos(\tfrac{\pi(n-2)}{3})x[n]$, $(0.8+0.8j)^n x[n]$); index warps $x[2n]$, $x[-n]$, $x[\lvert n\rvert]$, $x[\lvert n\rvert+n]$; fixed samples $x[0]$, $x[2]$, $x[3]$ | constant coefficients + shifts; memoryless maps with no $n$ ($\lvert x[n]-x[n-1]\rvert$, $e^{x[n]+1}$, $x[n]+3$); convolution with a fixed $h$ (e.g. $x[n]*2^nu[-n]$) |
+| [[concepts/time-invariance\|time-invariant]] | compare $y[n-n_0]$ (replace **every** $n$) with $T\{x[n-n_0]\}$ (shift only inside $x$) | **$n$ outside the brackets** ($n\,x[n]$, $\cos(\tfrac{\pi(n-2)}{3})x[n]$, $(0.8+0.8j)^n x[n]$); index warps $x[2n]$, $x[-n]$, $x[\lvert n\rvert]$, $x[\lvert n\rvert+n]$; fixed samples $x[0]$, $x[2]$, $x[3]$ | constant coefficients + shifts; maps with no explicit $n$ and only fixed shifts ($\lvert x[n]-x[n-1]\rvert$, $e^{x[n]+1}$, $x[n]+3$); convolution with a fixed $h$ (e.g. $x[n]*2^nu[-n]$) |
 | [[concepts/causality\|causal]] | $y[n]$ uses only $x[m]$ with $m \le n$, **for every $n$** | a future sample; a warp that looks ahead at **negative $n$** ($x[\lvert n\rvert]$ at $n=-3$ needs $x[3]$; $x[-n]$, $x[\lvert n\rvert+n]$); a warp that looks ahead at positive $n$ ($x[2n]$, $n\,x[3n]$); a fixed later sample ($x[2]$ at $n = 0$) | LTI: causal ⇔ $h[n] = 0$ for $n<0$ ($x*2^nu[-n]$ and $x*u[n+1]$ are not) |
 | [[concepts/bibo-stability\|BIBO stable]] | every bounded input gives a bounded output | growing coefficients ($n\,x[n]$, $\log(\lvert n\rvert+1)\,x[n]$, $(0.8+0.8j)^n x[n]$ since $\lvert 0.8+0.8j\rvert\approx1.13$); division by $x$, $\log x$ (bounded $x$ can approach $0$); running sums; LTI with $\sum\lvert h\rvert = \infty$ ($x*j^nu[n]$, $x*(-1)^nu[n]$) | bounded coefficients ($\cos^2(\cdot)$, $(\tfrac12)^{\lvert n\rvert}$, $\tfrac{1}{\lvert n\rvert+1}$); bounded nonlinear maps ($e^{x}$, $\lvert\cdot\rvert$, $\sin x$); FIR |
 
 > [!trap] Property-table point losers
-> Answer each column **independently** — a nonlinear system can still be time-invariant, causal and stable ($x[n]+3$: N Y Y Y). For causality of $x[f(n)]$, test negative $n$, not just $n = 0$. "$x[3]\,x[n]$" and "$x[n]/x[2]$" reference fixed samples: time-varying *and* non-causal. Every system from the seven past tables is worked in the [[0-midterm-1/system-property-bank|property bank]].
+> Answer each column **independently** — a nonlinear system can still be time-invariant, causal and stable ($x[n]+3$: N Y Y Y). For causality of $x[f(n)]$, test negative **and** positive $n$, not just $n = 0$ ($x[2n]$ fails only at $n>0$: $y[1]=x[2]$). "$x[3]\,x[n]$" and "$x[n]/x[2]$" reference fixed samples: time-varying *and* non-causal. Every system from the seven past tables is worked in the [[0-midterm-1/system-property-bank|property bank]].
 
 ## 3. Convolution
 
@@ -79,9 +81,13 @@ $$
 
 > [!key] Standard form (Lecture 9) — matches `scipy.signal.lfilter(b, a, x)` with `a[0] = 1`
 > $$
+> \begin{gathered}
 > y[n] + \sum_{k=1}^{N} a_k\,y[n-k] = \sum_{k=0}^{M-1} b_k\,x[n-k]
-> \quad\Longleftrightarrow\quad
+> \\[4pt]
+> \Big\Updownarrow
+> \\[4pt]
 > H(z) = \frac{Y(z)}{X(z)} = \frac{\sum_{k=0}^{M-1} b_k z^{-k}}{1+\sum_{k=1}^{N} a_k z^{-k}}
+> \end{gathered}
 > $$
 
 - **LCCDE → H:** transform each term with $x[n-k] \leftrightarrow z^{-k}X(z)$ (zero initial conditions), collect, divide.
@@ -106,7 +112,7 @@ $X(z) = \sum_n x[n]\,z^{-n}$; the ROC is where the sum converges absolutely. **A
 | 7 | $n\,a^n u[n]$ | $\dfrac{az^{-1}}{(1-az^{-1})^2}$ | $\lvert z\rvert>\lvert a\rvert$ | from $-z\,\frac{d}{dz}$ |
 | 8 | $-n\,a^n u[-n-1]$ | $\dfrac{az^{-1}}{(1-az^{-1})^2}$ | $\lvert z\rvert<\lvert a\rvert$ | |
 | 9 | $(n+1)\,a^n u[n]$ | $\dfrac{1}{(1-az^{-1})^2}$ | $\lvert z\rvert>\lvert a\rvert$ | $= a^nu*a^nu$; left-sided twin: $-(n+1)a^nu[-n-1]$, $\lvert z\rvert<\lvert a\rvert$ |
-| 10 | $a^{n-k}\,u[n-k]$ | $\dfrac{z^{-k}}{1-az^{-1}}$ | $\lvert z\rvert>\lvert a\rvert$ | shifted #5 |
+| 10 | $a^{n-k}\,u[n-k]$ | $\dfrac{z^{-k}}{1-az^{-1}}$ | $\lvert z\rvert>\lvert a\rvert$ (also $\ne\infty$ if $k<0$) | shifted #5 |
 | 11 | $a^{n}\,u[n-k]$ | $\dfrac{a^{k}z^{-k}}{1-az^{-1}}$ | $\lvert z\rvert>\lvert a\rvert$ | **write $a^n = a^k\,a^{n-k}$ first** |
 | 12 | $b^n u[-n]$ | $\dfrac{1}{1-b^{-1}z} = \dfrac{-bz^{-1}}{1-bz^{-1}}$ | $\lvert z\rvert<\lvert b\rvert$ | FA24 #5c ($b = 3$) |
 | 13 | $a^n\big(u[n]-u[n-N]\big)$ | $\dfrac{1-a^Nz^{-N}}{1-az^{-1}}$ | $z\neq0$ | finite: the pole at $a$ is cancelled |

@@ -7,9 +7,11 @@ aliases: ["z-transform table", "transform pairs"]
 
 > [!key] The two pairs everything else is built from
 > $$
+> \begin{gathered}
 > a^n u[n] \;\longleftrightarrow\; \frac{1}{1-az^{-1}},\ \ |z|>|a|
-> \qquad\qquad
+> \\[4pt]
 > -a^n u[-n-1] \;\longleftrightarrow\; \frac{1}{1-az^{-1}},\ \ |z|<|a|
+> \end{gathered}
 > $$
 > Same formula, opposite ROCs. Both are one [[0-toolkit/02-geometric-series|geometric series]]; $a$ may be complex (e.g. $a = e^{j\omega_0}$ gives $e^{j\omega_0 n}u[n] \leftrightarrow \frac{1}{1-e^{j\omega_0}z^{-1}}$, $|z|>1$).
 

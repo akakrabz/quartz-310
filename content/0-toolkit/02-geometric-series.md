@@ -14,9 +14,12 @@ A z-transform $X(z) = \sum_n x[n]z^{-n}$ of an exponential signal *is* a geometr
 > $$
 > \begin{aligned}
 > \sum_{k=0}^{N-1} a^k &= \frac{1-a^N}{1-a}\quad (a\neq1;\ \text{equals } N \text{ if } a=1) \\
-> \sum_{k=k_1}^{k_2} a^k &= \frac{a^{k_1}-a^{k_2+1}}{1-a} \qquad \text{("first term minus first omitted term, over one minus ratio")} \\
-> \sum_{k=0}^{\infty} a^k &= \frac{1}{1-a}\quad\text{iff } \lvert a\rvert<1, \qquad \sum_{k=k_0}^{\infty} a^k = \frac{a^{k_0}}{1-a}\quad\text{iff } \lvert a\rvert<1 \\
-> \sum_{k=0}^{\infty} k\,a^k &= \frac{a}{(1-a)^2}\quad\text{iff } \lvert a\rvert<1 \qquad \Big(\text{finite: } \sum_{k=0}^{N-1} k\,a^k = \frac{a\big(1-Na^{N-1}+(N-1)a^N\big)}{(1-a)^2}\Big)
+> \sum_{k=k_1}^{k_2} a^k &= \frac{a^{k_1}-a^{k_2+1}}{1-a} \qquad \\
+> &\text{("first term minus first omitted term, over one minus ratio")} \\
+> \sum_{k=0}^{\infty} a^k &= \frac{1}{1-a}\quad\text{iff } \lvert a\rvert<1, \qquad \\
+> \sum_{k=k_0}^{\infty} a^k &= \frac{a^{k_0}}{1-a}\quad\text{iff } \lvert a\rvert<1 \\
+> \sum_{k=0}^{\infty} k\,a^k &= \frac{a}{(1-a)^2}\quad\text{iff } \lvert a\rvert<1 \qquad \\
+> &\Big(\text{finite: } \sum_{k=0}^{N-1} k\,a^k = \frac{a\big(1-Na^{N-1}+(N-1)a^N\big)}{(1-a)^2}\Big)
 > \end{aligned}
 > $$
 > An infinite geometric series with $\lvert a\rvert\ge1$ diverges — its terms do not even go to zero. That single fact is where every ROC comes from.
@@ -36,7 +39,10 @@ A finite-length signal gives a finite sum: it converges for every $z$ except pos
 ## Infinite sums → right-sided signals
 
 $$
-x[n] = \alpha^n u[n]:\qquad X(z) = \sum_{n=0}^{\infty}(\alpha z^{-1})^n = \frac{1}{1-\alpha z^{-1}}\quad\text{iff } \lvert\alpha z^{-1}\rvert<1 \iff \lvert z\rvert>\lvert\alpha\rvert .
+\begin{aligned}
+x[n] = \alpha^n u[n]:\qquad X(z) &= \sum_{n=0}^{\infty}(\alpha z^{-1})^n \\
+&= \frac{1}{1-\alpha z^{-1}}\quad\text{iff } \lvert\alpha z^{-1}\rvert<1 \iff \lvert z\rvert>\lvert\alpha\rvert .
+\end{aligned}
 $$
 
 **Starting later:** pull out the first term. [[homework/hw3|HW3 #1(b)]]: $x[n] = (\tfrac34)^{n+3}u[n-2]$, so with $k = n-2$,
@@ -60,7 +66,12 @@ and $(n+1)a^n u[n]$ when $a=b$. This is the time-domain route of [[problems/infi
 Substitute $m = -n$ so the sum runs over positive powers of $z/\alpha$:
 
 $$
--\alpha^n u[-n-1]:\qquad X(z) = -\sum_{n=-\infty}^{-1}\alpha^n z^{-n} = -\sum_{m=1}^{\infty}\Big(\frac{z}{\alpha}\Big)^m = -\frac{z/\alpha}{1-z/\alpha} = \frac{1}{1-\alpha z^{-1}}\quad\text{iff } \lvert z\rvert<\lvert\alpha\rvert .
+\begin{aligned}
+-\alpha^n u[-n-1]:\qquad X(z) &= -\sum_{n=-\infty}^{-1}\alpha^n z^{-n} \\
+&= -\sum_{m=1}^{\infty}\Big(\frac{z}{\alpha}\Big)^m \\
+&= -\frac{z/\alpha}{1-z/\alpha} \\
+&= \frac{1}{1-\alpha z^{-1}}\quad\text{iff } \lvert z\rvert<\lvert\alpha\rvert .
+\end{aligned}
 $$
 
 > [!trap] Same formula, different signal

@@ -60,7 +60,10 @@ Close relatives: the cancellation idea is the same as in [[problems/unbounded-ou
 
 > [!success]- Solution
 > $$
-> H(z) = \frac{2+\alpha z^{-1}}{1+\frac76z^{-1}-\frac12z^{-2}} = \frac{2+\alpha z^{-1}}{(1+\frac32z^{-1})(1-\frac13z^{-1})},\qquad \text{poles } -\tfrac32,\ \tfrac13;\ \text{zero at } z=-\tfrac{\alpha}{2}.
+> \begin{gathered}
+> H(z) = \frac{2+\alpha z^{-1}}{1+\frac76z^{-1}-\frac12z^{-2}} = \frac{2+\alpha z^{-1}}{(1+\frac32z^{-1})(1-\frac13z^{-1})},\\
+> \text{poles } -\tfrac32,\ \tfrac13;\ \text{zero at } z=-\tfrac{\alpha}{2}.
+> \end{gathered}
 > $$
 > **(a) Causal**, ROC $\lvert z\rvert>\tfrac32$: the bad pole is $-\tfrac32$. Zero there: $-\tfrac{\alpha}{2}=-\tfrac32$, so $\boxed{\alpha=3}$. Check: $2+3z^{-1} = 2(1+\tfrac32z^{-1})$ ✓, leaving $H=\dfrac{2}{1-\frac13z^{-1}}$, ROC $\lvert z\rvert>\tfrac13$, $h[n]=2(\tfrac13)^nu[n]$.
 >

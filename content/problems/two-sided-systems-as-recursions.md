@@ -44,11 +44,17 @@ flowchart LR
 > 2. **Split by pole magnitude.** $H_c(z) = \sum_{\lvert p_k\rvert<1}\dfrac{A_k}{1-p_kz^{-1}}$ (plus any $C_kz^{-k}$ terms), and $H_a(z) = \sum_{\lvert p_k\rvert>1}\dfrac{A_k}{1-p_kz^{-1}}$. A group with several poles, or a conjugate pair, is combined over its common denominator into one higher-order recursion.
 > 3. **Causal part:** cross-multiply, $y_c[n]-p\,y_c[n-1] = A\,x[n]$, solve for the **newest** sample:
 > $$
-> y_c[n] = p\,y_c[n-1] + A\,x[n],\qquad n = \dots,0,1,2,\dots\ \ (\text{at rest before the input starts}).
+> \begin{gathered}
+> y_c[n] = p\,y_c[n-1] + A\,x[n],\\
+> n = \dots,0,1,2,\dots\ \ (\text{at rest before the input starts}).
+> \end{gathered}
 > $$
 > 4. **Anti-causal part:** the same cross-multiplication, $y_a[n]-p\,y_a[n-1] = A\,x[n]$, but solve for the **oldest** sample:
 > $$
-> y_a[n-1] = \frac1p\,y_a[n] - \frac{A}{p}\,x[n],\qquad n = \dots,2,1,0,-1,\dots\ \ (\text{at rest after the input ends}).
+> \begin{gathered}
+> y_a[n-1] = \frac1p\,y_a[n] - \frac{A}{p}\,x[n],\\
+> n = \dots,2,1,0,-1,\dots\ \ (\text{at rest after the input ends}).
+> \end{gathered}
 > $$
 > Shifted by one, this is $y_a[n] = \frac1p\,y_a[n+1]-\frac{A}{p}\,x[n+1]$: the output depends on *future* samples only.
 > 5. **Add:** $y[n] = y_c[n] + y_a[n]$ (a parallel connection).
@@ -114,7 +120,8 @@ flowchart LR
 > $$
 > \begin{aligned}
 > y_c[n] &= \tfrac13\,y_c[n-1] - \tfrac18\,x[n] &&\text{(causal, forward)}\\
-> y_a[n-1] &= \tfrac13\,y_a[n] - \tfrac38\,x[n] &&\text{(anti-causal, backward; from } y_a[n]-3y_a[n-1]=\tfrac98x[n])\\
+> y_a[n-1] &= \tfrac13\,y_a[n] - \tfrac38\,x[n] &&\text{(anti-causal, backward; from }\\
+> &&& y_a[n]-3y_a[n-1]=\tfrac98x[n])\\
 > y[n] &= y_c[n]+y_a[n].
 > \end{aligned}
 > $$

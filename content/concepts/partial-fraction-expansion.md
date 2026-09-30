@@ -7,9 +7,11 @@ aliases: ["PFE", "partial fractions", "partial fraction decomposition"]
 
 > [!key] The form (proper $X(z)$, distinct poles)
 > $$
+> \begin{gathered}
 > X(z) = \frac{\sum_{k=0}^{M-1} b_k z^{-k}}{\prod_{k=1}^{N}\left(1-p_k z^{-1}\right)} = \sum_{k=1}^{N} \frac{A_k}{1-p_k z^{-1}},
-> \qquad
+> \\[4pt]
 > A_k = \Big[\left(1-p_k z^{-1}\right)X(z)\Big]_{z=p_k}
+> \end{gathered}
 > $$
 > "Proper" here means the numerator's highest power of $z^{-1}$ is **lower** than the denominator's. Each term then inverts by the [[concepts/z-transform-pairs|table]]: $A_k p_k^n u[n]$ if the ROC lies outside $|p_k|$, $-A_k p_k^n u[-n-1]$ if it lies inside.
 

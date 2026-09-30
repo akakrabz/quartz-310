@@ -30,8 +30,11 @@ Keep $h_2 = 0$ in mind. The median filter is obviously not the "output is always
 Each sample of $x[n]$ is an impulse placed at $n = k$ with height $x[k]$. The slides' example, one period of a cosine:
 
 $$
-x[n] = \cos\!\left(\tfrac{\pi}{4}n\right)\big(u[n] - u[n-8]\big) = \Big\{\underset{\uparrow}{1},\ \tfrac{\sqrt2}{2},\ 0,\ -\tfrac{\sqrt2}{2},\ -1,\ -\tfrac{\sqrt2}{2},\ 0,\ \tfrac{\sqrt2}{2}\Big\}
-= \delta[n] + \tfrac{\sqrt2}{2}\delta[n-1] - \tfrac{\sqrt2}{2}\delta[n-3] - \delta[n-4] - \tfrac{\sqrt2}{2}\delta[n-5] + \tfrac{\sqrt2}{2}\delta[n-7].
+\begin{aligned}
+x[n] &= \cos\!\left(\tfrac{\pi}{4}n\right)\big(u[n] - u[n-8]\big) \\
+&= \Big\{\underset{\uparrow}{1},\ \tfrac{\sqrt2}{2},\ 0,\ -\tfrac{\sqrt2}{2},\ -1,\ -\tfrac{\sqrt2}{2},\ 0,\ \tfrac{\sqrt2}{2}\Big\} \\
+&= \delta[n] + \tfrac{\sqrt2}{2}\delta[n-1] - \tfrac{\sqrt2}{2}\delta[n-3] - \delta[n-4] - \tfrac{\sqrt2}{2}\delta[n-5] + \tfrac{\sqrt2}{2}\delta[n-7].
+\end{aligned}
 $$
 
 In general (the **sifting** identity):
@@ -185,16 +188,22 @@ sum check: 18 = 9 * 2
 **Notes: $x[n] = u[n]$, $h[n] = (-\tfrac34)^n u[n]$.**
 
 $$
-y[n] = \sum_{k} \left(-\tfrac34\right)^k u[k]\,u[n-k] = \sum_{k=0}^{n}\left(-\tfrac34\right)^k = \frac{1 - (-\frac34)^{n+1}}{\frac74}
-= \left(\frac47 - \frac47\left(-\frac34\right)^{n+1}\right)u[n].
+\begin{aligned}
+y[n] &= \sum_{k} \left(-\tfrac34\right)^k u[k]\,u[n-k] \\
+&= \sum_{k=0}^{n}\left(-\tfrac34\right)^k \\
+&= \frac{1 - (-\frac34)^{n+1}}{\frac74} \\
+&= \left(\frac47 - \frac47\left(-\frac34\right)^{n+1}\right)u[n].
+\end{aligned}
 $$
 
 **Slides: $x[n] = (\tfrac12)^n u[n]$, $h[n] = (-\tfrac34)^n u[n]$.** For $n \ge 0$, factor $(-\frac34)^n$ out and combine $(\frac12)^k(-\frac34)^{-k} = (-\frac23)^k$:
 
 $$
-y[n] = \left(-\tfrac34\right)^n \sum_{k=0}^{n} \left(-\tfrac23\right)^k
-= \frac35\left(-\frac34\right)^n\left(1 - \left(-\frac23\right)^{n+1}\right)u[n]
-= \left[\frac35\left(-\frac34\right)^n + \frac25\left(\frac12\right)^n\right]u[n].
+\begin{aligned}
+y[n] &= \left(-\tfrac34\right)^n \sum_{k=0}^{n} \left(-\tfrac23\right)^k \\
+&= \frac35\left(-\frac34\right)^n\left(1 - \left(-\frac23\right)^{n+1}\right)u[n] \\
+&= \left[\frac35\left(-\frac34\right)^n + \frac25\left(\frac12\right)^n\right]u[n].
+\end{aligned}
 $$
 
 Check: $y[0] = 1 = x[0]h[0]$ and $y[1] = -\tfrac34 + \tfrac12 = -\tfrac14$ ✓. The last form (a combination of the two input "modes") is what the z-transform will produce directly in [[2-z-transform/09-transfer-functions|Lecture 9]].
@@ -204,7 +213,12 @@ Check: $y[0] = 1 = x[0]h[0]$ and $y[1] = -\tfrac34 + \tfrac12 = -\tfrac14$ ✓. 
 > [!success]- Answers
 > **Slides:** $u[k-4]\,u[n-k]$ keeps $4 \le k \le n$, so $y[n] = 0$ for $n < 4$ and, with $m = k-4$,
 > $$
-> y[n] = \sum_{k=4}^{n}\left(\tfrac23\right)^{k-2} = \left(\tfrac23\right)^{2}\sum_{m=0}^{n-4}\left(\tfrac23\right)^{m} = \frac49\cdot\frac{1-(\frac23)^{n-3}}{\frac13} = \frac43\left(1 - \left(\frac23\right)^{n-3}\right)u[n-4].
+> \begin{aligned}
+> y[n] &= \sum_{k=4}^{n}\left(\tfrac23\right)^{k-2} \\
+> &= \left(\tfrac23\right)^{2}\sum_{m=0}^{n-4}\left(\tfrac23\right)^{m} \\
+> &= \frac49\cdot\frac{1-(\frac23)^{n-3}}{\frac13} \\
+> &= \frac43\left(1 - \left(\frac23\right)^{n-3}\right)u[n-4].
+> \end{aligned}
 > $$
 > Check: $y[4] = \tfrac43\cdot\tfrac13 = \tfrac49 = h[4]$ ✓, and $y[n] \to \tfrac43 = \sum_n h[n]$ ✓.
 > **SP2023 #3(b):** here the step $u[n-k-1]$ from $h$ gives $0 \le k \le n-1$, so the output starts at $n = 1$:
@@ -219,7 +233,10 @@ Write the finite one as a sum of shifted impulses and use $h[n] * a\,\delta[n-k]
 **Notes:** $x[n] = \{\underset{\uparrow}{1}, 0, 2, 0, -3\} = \delta[n] + 2\delta[n-2] - 3\delta[n-4]$ and $h[n] = \sin^3(\frac{\pi}{4}n)\,u[n]$:
 
 $$
-y[n] = h[n] + 2h[n-2] - 3h[n-4] = \sin^3\!\left(\tfrac{\pi}{4}n\right)u[n] + 2\sin^3\!\left(\tfrac{\pi}{4}(n-2)\right)u[n-2] - 3\sin^3\!\left(\tfrac{\pi}{4}(n-4)\right)u[n-4].
+\begin{aligned}
+y[n] &= h[n] + 2h[n-2] - 3h[n-4] \\
+&= \sin^3\!\left(\tfrac{\pi}{4}n\right)u[n] + 2\sin^3\!\left(\tfrac{\pi}{4}(n-2)\right)u[n-2] - 3\sin^3\!\left(\tfrac{\pi}{4}(n-4)\right)u[n-4].
+\end{aligned}
 $$
 
 **Slides:** $x[n] = \{-2, 0, \underset{\uparrow}{0}, 3, 0, 1\} = -2\delta[n+2] + 3\delta[n-1] + \delta[n-3]$ and $h[n] = e^{-n}u[n]$:

@@ -61,7 +61,10 @@ One sequence (or both) is infinitely long: an exponential times a shifted step, 
 Two identities cover most exam cases (both right-sided, starting at 0); shifted versions follow by pulling the shift out *with its constant* — $\left(\tfrac12\right)^n u[n-3] = \tfrac18\left(\tfrac12\right)^{n-3}u[n-3]$:
 
 $$
-a^n u[n] * b^n u[n]=\frac{a^{n+1}-b^{n+1}}{a-b}\,u[n]\ \ (a\neq b),\qquad a^n u[n]*a^n u[n]=(n+1)\,a^n u[n].
+\begin{aligned}
+a^n u[n] * b^n u[n] &= \frac{a^{n+1}-b^{n+1}}{a-b}\,u[n]\ \ (a\neq b),\\
+a^n u[n]*a^n u[n] &= (n+1)\,a^n u[n].
+\end{aligned}
 $$
 
 For SP2025 #4b this gives, with $g[n]=\left(-\tfrac13\right)^n u[n]*\left(\tfrac12\right)^n u[n]=\left[\tfrac35\left(\tfrac12\right)^n+\tfrac25\left(-\tfrac13\right)^n\right]u[n]$, the answer $y[n]=\tfrac18\,g[n-3]$ — the key's result above, with first sample $y[3]=\tfrac18=x[0]\,h[3]$ ✓.
@@ -121,8 +124,10 @@ For SP2025 #4b this gives, with $g[n]=\left(-\tfrac13\right)^n u[n]*\left(\tfrac
 > $$
 > **z-domain.** $X(z)=\sum_{n\ge-1}\left(\tfrac13\right)^n z^{-n}=\dfrac{3z}{1-\frac13z^{-1}}$ ($\tfrac13<\lvert z\rvert<\infty$), $H(z)=\dfrac{\frac12z^{-1}}{1-\frac12z^{-1}}$ ($\lvert z\rvert>\tfrac12$), so
 > $$
-> Y(z)=\frac{3/2}{\left(1-\frac13z^{-1}\right)\left(1-\frac12z^{-1}\right)},\quad \lvert z\rvert>\tfrac12;\qquad
+> \begin{gathered}
+> Y(z)=\frac{3/2}{\left(1-\frac13z^{-1}\right)\left(1-\frac12z^{-1}\right)},\quad \lvert z\rvert>\tfrac12;\\
 > A_{1/2}=\frac{3/2}{1-\frac13\cdot2}=\tfrac92,\quad A_{1/3}=\frac{3/2}{1-\frac12\cdot3}=-3\ \checkmark
+> \end{gathered}
 > $$
 
 > [!question] Practice 2 — a finite sequence in disguise

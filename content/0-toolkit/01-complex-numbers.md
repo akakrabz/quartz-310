@@ -94,9 +94,11 @@ $$
 ## Squares and products of cosines
 
 $$
+\begin{gathered}
 \cos^2\theta = \tfrac12 + \tfrac14 e^{j2\theta} + \tfrac14 e^{-j2\theta},\qquad
-\sin^2\theta = \tfrac12 - \tfrac14 e^{j2\theta} - \tfrac14 e^{-j2\theta},\qquad
+\sin^2\theta = \tfrac12 - \tfrac14 e^{j2\theta} - \tfrac14 e^{-j2\theta},\\[4pt]
 \cos A\cos B = \tfrac12\big[\cos(A-B)+\cos(A+B)\big].
+\end{gathered}
 $$
 
 > [!exam] FA2025 #5(c): z-transform of $\cos^2(\tfrac{\pi}{4}n)u[n]$

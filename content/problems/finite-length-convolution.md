@@ -46,15 +46,21 @@ Two short sequences written as lists with an arrow under the $n=0$ sample; compu
 > 1. **Index both sequences.** Write the first index and length of each: $x$ starts at $n_x$ with $N$ samples, $h$ starts at $n_h$ with $M$ samples. Count interior zeros as samples ($\{1,0,1\}$ has length 3).
 > 2. **Predict the frame before computing.**
 > $$
-> \text{start} = n_x+n_h,\qquad \text{end} = (n_x+N-1)+(n_h+M-1),\qquad \text{length} = N+M-1,
+> \begin{aligned}
+> \text{start} &= n_x+n_h,\\
+> \text{end} &= (n_x+N-1)+(n_h+M-1),\\
+> \text{length} &= N+M-1,
+> \end{aligned}
 > $$
 > and the two end samples are free: $y[\text{start}] = x[n_x]\,h[n_h]$, $y[\text{end}]$ = (last of $x$)(last of $h$).
 > 3. **Compute with one of the three layouts below** — use the one with the fewest multiplications: shifted copies when one sequence has only two or three nonzero samples, the table otherwise, the matrix if you like linear algebra.
 > 4. **Place the arrow**: the first sample of $y$ is at the start index from step 2; count forward to $n=0$.
 > 5. **Check** (10 seconds each):
 > $$
-> \sum_n y[n] = \Big(\sum_n x[n]\Big)\Big(\sum_n h[n]\Big),\qquad
-> \sum_n (-1)^n y[n] = \Big(\sum_n (-1)^n x[n]\Big)\Big(\sum_n (-1)^n h[n]\Big).
+> \begin{aligned}
+> \sum_n y[n] &= \Big(\sum_n x[n]\Big)\Big(\sum_n h[n]\Big),\\
+> \sum_n (-1)^n y[n] &= \Big(\sum_n (-1)^n x[n]\Big)\Big(\sum_n (-1)^n h[n]\Big).
+> \end{aligned}
 > $$
 > These are $Y(1)=X(1)H(1)$ and $Y(-1)=X(-1)H(-1)$. The first catches arithmetic slips; the second also catches a misplaced arrow (shifting the answer by an odd number of samples flips its sign).
 
@@ -129,11 +135,14 @@ Two short sequences written as lists with an arrow under the $n=0$ sample; compu
 >
 > $y$ starts at $0+(-1)=-1$ and has $4+4-1=7$ samples. Columns of the Toeplitz matrix are copies of $h$ shifted down one row each:
 > $$
+> \begin{gathered}
 > \begin{bmatrix} 1&0&0&0\\ -2&1&0&0\\ 0&-2&1&0\\ 3&0&-2&1\\ 0&3&0&-2\\ 0&0&3&0\\ 0&0&0&3 \end{bmatrix}
 > \begin{bmatrix} 1\\3\\-1\\2 \end{bmatrix}
 > = \begin{bmatrix} 1\\1\\-7\\7\\5\\-3\\6 \end{bmatrix}
-> \quad\Longrightarrow\quad
+> \\
+> \Longrightarrow\quad
 > y[n]=\{1,\ \underset{\uparrow}{1},\ -7,\ 7,\ 5,\ -3,\ 6\}.
+> \end{gathered}
 > $$
 > The first row is $n=-1$, so the arrow goes on the second entry. Shifted-copies cross-check: $y[2]=x[3]-2x[2]+3x[0]=2+2+3=7$ ✓. Sum check: $10 = 5\cdot2$ ✓.
 
@@ -161,4 +170,4 @@ All three solutions (and every instance above) are verified in `verify/problems/
 
 ### Sources for this page
 
-Lecture 4 notes §2 (start/end/length rules, shift-and-overlap table, Toeplitz matrix, example $\{3,1,0,3,1,1\}*\{2,-1,1\}$) and slides; HW2 #5(a) and solution; FA2025 #3a, SP2025 #4a, FA2024 #4a, FA2023 #3a, SP2023 #3a, SP2021 #2, FA2019 #4 with keys (SP2025 #4a box and the FA2019/SP2021 row labels corrected, see [[0-toolkit/05-errata|errata]]); Midterm 1 review slides (FA2023 #3). Verification: `verify/problems/finite_convolution.py`, `verify/exams/*.py`.
+Lecture 4 notes §2 (start/end/length rules, shift-and-overlap table, Toeplitz matrix, example $\{3,1,0,3,1,1\}*\{2,-1,1\}$) and slides; HW2 #5(a) and solution; FA2025 #3a, SP2025 #4a, FA2024 #4a, FA2023 #3a, SP2023 #3a, SP2021 #2, FA2019 #4 with keys (SP2025 #4a box corrected, see [[0-toolkit/05-errata|errata]]); Midterm 1 review slides (FA2023 #3). Verification: `verify/problems/finite_convolution.py`, `verify/exams/*.py`.

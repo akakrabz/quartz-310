@@ -8,7 +8,10 @@ aliases: ["complex exponential", "Euler's formula", "Euler's identities", "compl
 > [!key] The signal and the identities (Lecture 2)
 > **Exponential signal:** $x[n]=B\,a^n$ with $B,a\in\mathbb{C}$. Writing $a=r\,e^{j\omega}$,
 > $$
-> x[n]=B\,r^n\,e^{j\omega n}:\qquad \lvert x[n]\rvert=\lvert B\rvert\,r^n\ \ (\text{decays if } r<1,\ \text{constant if } r=1,\ \text{grows if } r>1),
+> \begin{gathered}
+> x[n]=B\,r^n\,e^{j\omega n}:\qquad \lvert x[n]\rvert=\lvert B\rvert\,r^n\\[2pt]
+> (\text{decays if } r<1,\ \text{constant if } r=1,\ \text{grows if } r>1),
+> \end{gathered}
 > $$
 > while the angle advances $\omega$ radians per sample.
 > **Euler:** $e^{j\theta}=\cos\theta+j\sin\theta$, $\quad\cos\theta=\dfrac{e^{j\theta}+e^{-j\theta}}{2}$, $\quad\sin\theta=\dfrac{e^{j\theta}-e^{-j\theta}}{2j}$.

@@ -205,7 +205,7 @@ z, n = -2..3: [0, 4, 0, 5, 3, 0]
 > **(a)** Here $x[n] = n$ for $\lvert n\rvert \le 4$. Samples inside the band $-2 < x < 2$ pass unchanged; the others are pinned to the nearest limit:
 >
 > $$
-> y[n] = \{-2,\ -2,\ -2,\ -1,\ \underset{\uparrow}{0},\ 1,\ 2,\ 2,\ 2\}\quad(-4 \le n \le 4), \qquad y[n] = 0 \ \text{elsewhere}.
+> y[n] = \{-2,\ -2,\ -2,\ -1,\ \underset{\uparrow}{0},\ 1,\ 2,\ 2,\ 2\}\ \ (-4 \le n \le 4),\ \ y[n] = 0 \ \text{elsewhere}.
 > $$
 >
 > Outside $\lvert n\rvert \le 4$ the input is 0, which lies inside the band, so the output is 0 there too.

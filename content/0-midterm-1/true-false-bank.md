@@ -225,12 +225,12 @@ The ROC never contains a pole; it is a ring bounded by poles; a stable system's 
 **Q36** · [[0-midterm-1/past-exams/fall-2024|FA2024 #1(f)]] · An LTI system with transfer function $H(z) = \dfrac{1}{1-0.5z^{-1}} + \dfrac{1}{1-2z^{-1}}$ must **not** be BIBO stable.
 
 > [!success]- Answer
-> **False.** No ROC is given. With $\tfrac12 < \lvert z\rvert < 2$ the ROC contains the unit circle, and $h[n] = (\tfrac12)^n u[n] - 2^n u[-n-1]$ is stable (two-sided). Only the *causal* choice would be unstable.
+> **False.** No ROC is given. With $\tfrac12 < \lvert z\rvert < 2$ the ROC contains the unit circle, and $h[n] = (\tfrac12)^n u[n] - 2^n u[-n-1]$ is stable (two-sided). The other two ROCs ($\lvert z\rvert>2$, causal, and $\lvert z\rvert<\tfrac12$, anti-causal) both miss the unit circle and are unstable.
 
 **Q37** · [[0-midterm-1/past-exams/spring-2021|SP2021 #1(a)]] · An LTI system with transfer function $H(z) = \dfrac{1-z^{-1}}{1-2z^{-1}}$ cannot be stable.
 
 > [!success]- Answer
-> **False.** The pole is at 2. The ROC $\lvert z\rvert < 2$ contains the unit circle, which gives a stable (anti-causal) system. "Causal and stable" is what is impossible here.
+> **False.** The pole is at 2. The ROC $\lvert z\rvert < 2$ contains the unit circle, which gives a stable left-sided (non-causal) system. "Causal and stable" is what is impossible here.
 
 ## 6. LCCDE, FIR and IIR
 

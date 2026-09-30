@@ -17,8 +17,10 @@ After Lecture 5 we can compute the output of any LTI system to any input (convol
 Try $x[n]=z_0^{\,n}$ for all $n$, with $z_0$ any complex number (the slide's example: $z_0=1+j2$, a spiral). Because $z_0^{\,n-k}=z_0^{\,n}z_0^{-k}$ splits into an $n$-part and a $k$-part, the convolution sum factors:
 
 $$
-y[n]=\sum_{k=-\infty}^{\infty}h[k]\,x[n-k]=\sum_{k=-\infty}^{\infty}h[k]\,z_0^{\,n-k}
-= z_0^{\,n}\underbrace{\sum_{k=-\infty}^{\infty}h[k]\,z_0^{-k}}_{H(z_0)} = H(z_0)\,z_0^{\,n}\qquad\text{for all } n .
+\begin{aligned}
+y[n]&=\sum_{k=-\infty}^{\infty}h[k]\,x[n-k]=\sum_{k=-\infty}^{\infty}h[k]\,z_0^{\,n-k}\\
+&= z_0^{\,n}\underbrace{\sum_{k=-\infty}^{\infty}h[k]\,z_0^{-k}}_{H(z_0)} = H(z_0)\,z_0^{\,n}\qquad\text{for all } n .
+\end{aligned}
 $$
 
 > [!key] Complex exponentials are eigenfunctions of LTI systems
@@ -76,7 +78,10 @@ $$
 **Left-sided (negated) step.** $-u[-n-1]$ is $-1$ for $n\le -1$ and $0$ for $n\ge 0$. Substitute $m=-n-1$ (so $n=-1,-2,\dots$ becomes $m=0,1,\dots$):
 
 $$
-X(z)=\sum_{n=-\infty}^{-1}(-1)\,z^{-n}=-\sum_{m=0}^{\infty}z^{m+1}=-z\sum_{m=0}^{\infty}z^{m}=\frac{-z}{1-z}\cdot\frac{-z^{-1}}{-z^{-1}}=\frac{1}{1-z^{-1}},\qquad \text{ROC: } |z|<1 .
+\begin{aligned}
+X(z)&=\sum_{n=-\infty}^{-1}(-1)\,z^{-n}=-\sum_{m=0}^{\infty}z^{m+1}=-z\sum_{m=0}^{\infty}z^{m}\\
+&=\frac{-z}{1-z}\cdot\frac{-z^{-1}}{-z^{-1}}=\frac{1}{1-z^{-1}},\qquad \text{ROC: } |z|<1 .
+\end{aligned}
 $$
 
 > [!key] The z-transform is unique only together with its ROC

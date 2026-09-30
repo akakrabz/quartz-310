@@ -13,7 +13,7 @@ tags: [exam, midterm-1]
 
 | exam | date | instructors | problems / points | notes |
 |---|---|---|---|---|
-| [[0-midterm-1/past-exams/fall-2025\|Fall 2025]] | Wed Oct 1, 2025, 7–9 pm | Do, Snyder | 8 / 100 | same instructor as this term; handwritten key (2 errata) |
+| [[0-midterm-1/past-exams/fall-2025\|Fall 2025]] | Wed Oct 1, 2025, 7–9 pm | Do, Snyder | 8 / 100 | same instructor as this term; handwritten key (1 erratum) |
 | [[0-midterm-1/past-exams/spring-2025\|Spring 2025]] | Wed Feb 26, 2025, 7–9 pm | Liang, Snyder | 8 / 100 | T/F scored +2/−1/0; key's boxed #4(a) is wrong |
 | [[0-midterm-1/past-exams/fall-2024\|Fall 2024]] | Wed Oct 2, 2024, 7–9 pm | Do, Shomorony, Snyder | 8 / 100 | typed key |
 | [[0-midterm-1/past-exams/fall-2023\|Fall 2023]] | Wed Sep 27, 2023, 7–9 pm | Do, Snyder, Moustakides | 8 / 100 | typed key, no errors found |
@@ -67,7 +67,7 @@ Recent Fall exams (Snyder) spend roughly: T/F 12 points · property table 12 · 
 
 The official keys are mostly right; where they are not, the exam page gives the correct answer in a warning box. Full list with the lecture-note typos: [[0-toolkit/05-errata|errata]].
 
-- **Fall 2025** #5(a): stray $n$ in the handwritten denominator — correct $X(z) = \dfrac{e^{-j4\pi/3}z^4}{1 - e^{j\pi/3}z^{-1}}$, $1 < \lvert z\rvert < \infty$. #1(d): "True" presumes "left-sided" means "extends to $-\infty$" ($\delta[n]$ is technically left-sided *and* causal).
+- **Fall 2025** #5(a): stray $n$ in the handwritten denominator — correct $X(z) = \dfrac{e^{-j4\pi/3}z^4}{1 - e^{j\pi/3}z^{-1}}$, $1 < \lvert z\rvert < \infty$. (#1(d) is not an erratum: "left-sided" means an infinite-length sequence extending to $-\infty$, so True is right.)
 - **Spring 2025** #4(a): the boxed $\{2,-5,\underset{\uparrow}{6},0,-5,10,-4,3\}$ is wrong; correct $\{2,-5,\underset{\uparrow}{5},0,-5,12,-4,3\}$ (the key's own matrix column).
 - **Fall 2024** #8(a): "$\lvert a\rvert > 1$" means $\lvert\alpha\rvert > 1$. #4(b): the boxed line is labelled $x[n]$ but is $y[n]$.
 - **Fall 2023**: none found.

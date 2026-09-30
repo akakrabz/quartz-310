@@ -18,7 +18,7 @@ tags: [midterm-1, exam, demo]
 ## How to use it on exam day
 
 > [!recipe] A 45-minute warm-up
-> 1. **True/False** — one pass through all 42 statements, skipping whenever you would guess (that is what the −1 is for). Reread the reason of every miss.
+> 1. **True/False** — one pass through all 42 statements (the bank's 43 minus FA2019 #10(d)). Under +2/−1/0 a coin flip is still worth +0.5 on average, so skip only when you are worse than one-in-three. Reread the reason of every miss.
 > 2. **System properties** — ten systems, first try only. The one-line reasons are the arguments you write on the exam.
 > 3. **Convolution** — three variants, writing the start index down *before* computing any sample.
 > 4. **PFE & inverse z** and **ROC → stable/causal** — until two in a row are fully right, including a two-sided ROC.
@@ -100,7 +100,7 @@ Exam record: 6/7 past exams ([[0-midterm-1/past-exams/fall-2025|FA2025 #5]], [[0
 $H(z)$ has two to four poles — real ones, sometimes a pair $\pm jr$ hidden in a factor $(1 + r^2 z^{-2})$ — and often a zero, which has nothing to do with the ROC (a deliberate distractor). You are told one fact: *the system is causal*, *BIBO stable*, or *$h[n]$ is left-sided / right-sided / two-sided*. **(a)** Pick the ROC among all the rings the pole circles allow (2 points), then say **(b)** stable? and **(c)** causal? (1 point each). The worked solution tabulates every possible ROC with its sidedness and stability — the "all possible ROCs" question of [[0-midterm-1/past-exams/fall-2019|FA2019 #7]].
 
 > [!key] Read everything off the ring
-> Causal (for $H$ written in powers of $z^{-1}$) $\iff$ ROC outside the outermost pole. Left-sided $\iff$ inside the innermost pole. Two-sided $\iff$ a ring between two poles. BIBO stable $\iff$ the ring contains $\lvert z\rvert = 1$. So "causal **and** stable" $\iff$ every pole inside the unit circle.
+> Causal $\iff$ ROC outside the outermost pole **and** $H$ proper in $z^{-1}$ (numerator degree ≤ denominator degree, so the ROC includes $\infty$). Left-sided $\iff$ inside the innermost pole. Two-sided $\iff$ a ring between two poles. BIBO stable $\iff$ the ring contains $\lvert z\rvert = 1$. So "causal **and** stable" $\iff$ every pole inside the unit circle.
 
 Recipe: [[problems/all-possible-rocs|all possible ROCs]], [[problems/parameters-for-stability|parameters for stability]]. Theory: [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]], [[concepts/poles-and-zeros|poles and zeros]], [[concepts/bibo-stability|BIBO stability]], [[concepts/causality|causality]].
 
@@ -141,7 +141,7 @@ Exam record: 7/7 past exams ([[0-midterm-1/past-exams/fall-2025|FA2025 #8]], [[0
 
 ### 7 · True/False rapid fire
 
-All **42** True/False statements from the seven past exams (the two DTFT statements of SP2023 left out), one at a time, with the official answer and a one-line reason after you commit. Scoring is the exam's: **+2** right, **−1** wrong, **0** skipped — so the right move on a coin-flip is Skip. Each statement is answered once; the deck runs through all 42 before reshuffling. Keyboard: `T`, `F`, `S`, then `N` for the next one.
+All **42** True/False statements from the seven past exams (the two DTFT statements of SP2023 left out), one at a time, with the official answer and a one-line reason after you commit. Scoring is the exam's: **+2** right, **−1** wrong, **0** skipped — a guess with success probability $p$ is worth $3p-1$, so a coin flip ($+0.5$) beats skipping; skip only when you are worse than one-in-three. Each statement is answered once; the deck runs through all 42 before reshuffling. Keyboard: `T`, `F`, `S`, then `N` for the next one.
 
 > [!tip] Where the points go
 > Most of the 42 turn on four facts: LTI systems are the only ones $h[n]$ describes; BIBO stable $\iff \sum\lvert h[n]\rvert < \infty$ (bounded $h$ is not enough, FIR is always enough); stable $\iff$ the ROC contains the unit circle; poles can cancel (in sums, cascades, and against input zeros). One statement, FA2025 #1(d), is keyed True under the reading "left-sided = extends to $-\infty$" — $\delta[n]$ is the pedantic exception.

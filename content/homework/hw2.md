@@ -79,7 +79,8 @@ Every solution below is folded: read the question, answer it on paper, then open
 > $$
 > \begin{aligned}
 > T\{\alpha x_1 + \beta x_2\}[n] &= \sum_{k}\big(\alpha x_1[k] + \beta x_2[k]\big)\,h[n-k]\\
-> &= \alpha\sum_k x_1[k]\,h[n-k] + \beta\sum_k x_2[k]\,h[n-k] = \alpha\,y_1[n] + \beta\,y_2[n].
+> &= \alpha\sum_k x_1[k]\,h[n-k] + \beta\sum_k x_2[k]\,h[n-k]\\
+> &= \alpha\,y_1[n] + \beta\,y_2[n].
 > \end{aligned}
 > $$
 >

@@ -16,7 +16,10 @@ For an LTI system with impulse response $h[n]$, the output is $y[n] = x[n] * h[n
 
 > [!key] Transfer function
 > $$
-> Y(z) = H(z)\,X(z), \qquad \text{ROC at least } R_x \cap R_h, \qquad\qquad H(z) = \frac{Y(z)}{X(z)} = \mathcal{Z}\{h[n]\} .
+> \begin{aligned}
+> Y(z) &= H(z)\,X(z), \qquad \text{ROC at least } R_x \cap R_h, \qquad\qquad \\
+> H(z) &= \frac{Y(z)}{X(z)} = \mathcal{Z}\{h[n]\} .
+> \end{aligned}
 > $$
 > Two routes to any output: the convolution sum ([[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]]), or multiply in $z$ and take the inverse z-transform ([[2-z-transform/08-inverse-z-transform|Lecture 8]]).
 
@@ -38,9 +41,11 @@ $$
 
 > [!key] LCCDE ⇄ transfer function
 > $$
-> H(z) = \frac{Y(z)}{X(z)} = \frac{\displaystyle\sum_{k=0}^{M-1} b_k z^{-k}}{\displaystyle 1 + \sum_{k=1}^{N} a_k z^{-k}}
+> \begin{aligned}
+> &H(z) = \frac{Y(z)}{X(z)} = \frac{\displaystyle\sum_{k=0}^{M-1} b_k z^{-k}}{\displaystyle 1 + \sum_{k=1}^{N} a_k z^{-k}} \\
 > \qquad\Longleftrightarrow\qquad
-> y[n] + \sum_{k=1}^{N} a_k\,y[n-k] = \sum_{k=0}^{M-1} b_k\,x[n-k] .
+> &y[n] + \sum_{k=1}^{N} a_k\,y[n-k] = \sum_{k=0}^{M-1} b_k\,x[n-k] .
+> \end{aligned}
 > $$
 > Numerator ↔ input taps, denominator ↔ feedback taps, $z^{-k}$ ↔ "delay by $k$". This is the form `scipy.signal.lfilter(b, a, x)` expects, with `a[0] = 1`.
 
@@ -66,7 +71,10 @@ This buys two things: the impulse response of *any* LCCDE (compute $H$, invert i
 > [!success]- Answers (checked against `lfilter` on $\delta[n]$)
 > **(2)** $H(z) = \dfrac{1-3z^{-1}+z^{-2}}{1-\frac13 z^{-1}} = \dfrac{1}{1-\frac13 z^{-1}} - \dfrac{3z^{-1}}{1-\frac13 z^{-1}} + \dfrac{z^{-2}}{1-\frac13 z^{-1}}$, $|z| > \tfrac13$. Linearity and time shifts give
 > $$
-> h[n] = \left(\tfrac13\right)^n u[n] - 3\left(\tfrac13\right)^{n-1} u[n-1] + \left(\tfrac13\right)^{n-2} u[n-2] = \left(\tfrac13\right)^n u[n] - 3\,\delta[n-1],
+> \begin{aligned}
+> h[n] &= \left(\tfrac13\right)^n u[n] - 3\left(\tfrac13\right)^{n-1} u[n-1] + \left(\tfrac13\right)^{n-2} u[n-2] \\
+> &= \left(\tfrac13\right)^n u[n] - 3\,\delta[n-1],
+> \end{aligned}
 > $$
 > ($h = \{\underset{\uparrow}{1}, -\tfrac83, \tfrac19, \tfrac1{27}, \dots\}$). The short form is what long division gives: $H = -3z^{-1} + \dfrac{1}{1-\frac13 z^{-1}}$ — this $H$ is *improper* (numerator degree 2 ≥ denominator degree 1), the subject of [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]].
 > **(3)** $H(z) = \dfrac{1-3z^{-1}}{1-\frac12 z^{-1}-\frac{3}{16}z^{-2}} = \dfrac{1-3z^{-1}}{(1+\frac14 z^{-1})(1-\frac34 z^{-1})} = \dfrac{A_1}{1+\frac14 z^{-1}} + \dfrac{A_2}{1-\frac34 z^{-1}}$. Cover-up: $A_1 = \dfrac{1-3z^{-1}}{1-\frac34 z^{-1}}\Big|_{z=-1/4} = \dfrac{1+12}{1+3} = \dfrac{13}{4}$, $A_2 = \dfrac{1-3z^{-1}}{1+\frac14 z^{-1}}\Big|_{z=3/4} = \dfrac{1-4}{1+\frac13} = -\dfrac94$. Causal, so
@@ -135,11 +143,17 @@ flowchart TD
 > [!success]- Solution (exact rational arithmetic check over 40 samples)
 > **(a)** $Y(z)\bigl(1 - \tfrac43 z^{-1} - \tfrac43 z^{-2}\bigr) = X(z)\bigl(1 - z^{-2}\bigr)$. The roots of $z^2 - \tfrac43 z - \tfrac43$ are $2$ and $-\tfrac23$, so
 > $$
-> H(z) = \frac{(1-z^{-1})(1+z^{-1})}{(1-2z^{-1})(1+\frac23 z^{-1})}, \qquad \text{zeros } \pm1,\quad \text{poles } 2,\ -\tfrac23,\quad \text{ROC } |z| > 2 \ (\text{causal}).
+> \begin{gathered}
+> H(z) = \frac{(1-z^{-1})(1+z^{-1})}{(1-2z^{-1})(1+\frac23 z^{-1})}, \qquad \\
+> \text{zeros } \pm1,\quad \text{poles } 2,\ -\tfrac23,\quad \text{ROC } |z| > 2 \ (\text{causal}).
+> \end{gathered}
 > $$
 > **(b)** $X(z) = 3 + 2z^{-1} = 3\bigl(1 + \tfrac23 z^{-1}\bigr)$ — a zero exactly on the pole $-\tfrac23$. It cancels:
 > $$
-> Y(z) = \frac{3(1-z^{-2})}{1-2z^{-1}} = \frac{3}{1-2z^{-1}} - \frac{3z^{-2}}{1-2z^{-1}},\ |z| > 2 \quad\Longrightarrow\quad y[n] = 3(2)^n u[n] - 3(2)^{n-2}u[n-2] .
+> \begin{aligned}
+> Y(z) &= \frac{3(1-z^{-2})}{1-2z^{-1}} = \frac{3}{1-2z^{-1}} - \frac{3z^{-2}}{1-2z^{-1}},\ |z| > 2 \\
+> \quad\Longrightarrow\quad y[n] &= 3(2)^n u[n] - 3(2)^{n-2}u[n-2] .
+> \end{aligned}
 > $$
 > (Equivalently $y = 3h[n] + 2h[n-1]$, the key's alternative; or $3\delta[n] + 6\delta[n-1] + \tfrac94\,2^n u[n-2]$.)
 

@@ -63,7 +63,10 @@ Inside the ROC the partial sums settle on the formula's value; outside they run 
 
 > [!key] Time shift
 > $$
-> x[n-k]\ \longleftrightarrow\ z^{-k}X(z),\qquad k\in\mathbb{Z},\qquad \text{ROC}=R_x\ \text{except possibly } z=0 \text{ or } z=\infty .
+> \begin{gathered}
+> x[n-k]\ \longleftrightarrow\ z^{-k}X(z),\qquad k\in\mathbb{Z},\qquad \\
+> \text{ROC}=R_x\ \text{except possibly } z=0 \text{ or } z=\infty .
+> \end{gathered}
 > $$
 
 Derivation (notes): with $y[n]=x[n-k]$, substitute $n=m+k$:
@@ -102,8 +105,10 @@ The fine print is about the new factor: a **delay** ($k>0$) adds $z^{-k}$, which
 
 > [!key] Linearity and convolution
 > $$
-> a\,x_1[n]+b\,x_2[n]\ \longleftrightarrow\ a\,X_1(z)+b\,X_2(z),\qquad
-> x_1[n]*x_2[n]\ \longleftrightarrow\ X_1(z)\,X_2(z),
+> \begin{aligned}
+> a\,x_1[n]+b\,x_2[n]&\ \longleftrightarrow\ a\,X_1(z)+b\,X_2(z),\qquad \\
+> x_1[n]*x_2[n]&\ \longleftrightarrow\ X_1(z)\,X_2(z),
+> \end{aligned}
 > $$
 > both with $\text{ROC}\supseteq R_{x_1}\cap R_{x_2}$ ("at least the intersection").
 
@@ -113,8 +118,10 @@ The intersection is natural: one divergent sum is enough to make the whole thing
 > With $y[n]=x_1[n]*x_2[n]$, split $z^{-n}=z^{-k}z^{-(n-k)}$ and substitute $n=m+k$:
 > $$
 > \begin{aligned}
-> Y(z)&=\sum_{n}\Big(\sum_{k}x_1[k]\,x_2[n-k]\Big)z^{-n}=\sum_{n}\sum_{k}x_1[k]z^{-k}\,x_2[n-k]z^{-(n-k)}\\
-> &=\sum_{m}\sum_{k}x_1[k]z^{-k}\,x_2[m]z^{-m}=\Big(\sum_{k}x_1[k]z^{-k}\Big)\Big(\sum_{m}x_2[m]z^{-m}\Big)=X_1(z)X_2(z).
+> Y(z)&=\sum_{n}\Big(\sum_{k}x_1[k]\,x_2[n-k]\Big)z^{-n}\\
+> &=\sum_{n}\sum_{k}x_1[k]z^{-k}\,x_2[n-k]z^{-(n-k)}\\
+> &=\sum_{m}\sum_{k}x_1[k]z^{-k}\,x_2[m]z^{-m}\\
+> &=\Big(\sum_{k}x_1[k]z^{-k}\Big)\Big(\sum_{m}x_2[m]z^{-m}\Big)=X_1(z)X_2(z).
 > \end{aligned}
 > $$
 > Convolution in time is multiplication in $z$. With $x_2=h$ this is $Y(z)=H(z)X(z)$, the foundation of [[2-z-transform/09-transfer-functions|Lecture 9]].
@@ -124,7 +131,10 @@ The intersection is natural: one divergent sum is enough to make the whole thing
 >
 > The second term of $x_1$ is the first one delayed by one sample and scaled by $c$, so
 > $$
-> X_1(z)=\frac{1}{1-\frac12z^{-1}}-\frac{c\,z^{-1}}{1-\frac12z^{-1}}=\frac{1-cz^{-1}}{1-\frac12z^{-1}},\ |z|>\tfrac12;\qquad X_2(z)=\frac{1}{1+z^{-1}},\ |z|>1;
+> \begin{aligned}
+> X_1(z)&=\frac{1}{1-\frac12z^{-1}}-\frac{c\,z^{-1}}{1-\frac12z^{-1}}=\frac{1-cz^{-1}}{1-\frac12z^{-1}},\ |z|>\tfrac12;\qquad \\
+> X_2(z)&=\frac{1}{1+z^{-1}},\ |z|>1;
+> \end{aligned}
 > $$
 > $$
 > Y(z)=X_1(z)X_2(z)=\frac{1-cz^{-1}}{\left(1-\frac12z^{-1}\right)\left(1+z^{-1}\right)} .
@@ -192,7 +202,11 @@ $$
 > [!success]- Answer
 > $\cos^2\theta=\tfrac12+\tfrac12\cos2\theta$, and $\cos(\tfrac\pi2n)=\tfrac12\left(e^{j\frac\pi2n}+e^{-j\frac\pi2n}\right)=\tfrac12(j^n+(-j)^n)$:
 > $$
-> x[n]=\left(\tfrac12+\tfrac14j^n+\tfrac14(-j)^n\right)u[n]\ \longleftrightarrow\ \frac{\frac12}{1-z^{-1}}+\frac{\frac14}{1-jz^{-1}}+\frac{\frac14}{1+jz^{-1}}=\frac{\frac12}{1-z^{-1}}+\frac{\frac12}{1+z^{-2}},\qquad |z|>1 .
+> \begin{aligned}
+> x[n]&=\left(\tfrac12+\tfrac14j^n+\tfrac14(-j)^n\right)u[n]\\
+> &\ \longleftrightarrow\ \frac{\frac12}{1-z^{-1}}+\frac{\frac14}{1-jz^{-1}}+\frac{\frac14}{1+jz^{-1}}\\
+> &=\frac{\frac12}{1-z^{-1}}+\frac{\frac12}{1+z^{-2}},\qquad |z|>1 .
+> \end{aligned}
 > $$
 > All three poles ($1,\ \pm j$) are on the unit circle, so the ROC is $|z|>1$. ([[0-midterm-1/past-exams/fall-2025|FA2025]] #5c.)
 

@@ -176,7 +176,10 @@ All exam answers above are checked against the keys on the past-exam pages.
 > $$
 > (improper, so divide: $-5(1+\frac12z^{-1})+7 = 2-\frac52z^{-1}$ ✓). One pole left, so two possible outputs:
 > $$
-> y_1[n] = -5\delta[n] + 7\left(-\tfrac12\right)^n u[n]\ \ (\lvert z\rvert>\tfrac12),\qquad y_2[n] = -5\delta[n] - 7\left(-\tfrac12\right)^n u[-n-1]\ \ (\lvert z\rvert<\tfrac12).
+> \begin{aligned}
+> y_1[n] &= -5\delta[n] + 7\left(-\tfrac12\right)^n u[n]\ \ (\lvert z\rvert>\tfrac12),\\
+> y_2[n] &= -5\delta[n] - 7\left(-\tfrac12\right)^n u[-n-1]\ \ (\lvert z\rvert<\tfrac12).
+> \end{aligned}
 > $$
 > ROC$_Y$ must contain ROC$_H\cap$ROC$_X$ (and ROC$_X$ is $z\neq0$). For the causal system ($\lvert z\rvert>3$) and the stable one ($\frac12<\lvert z\rvert<3$) the only pole-bounded region containing that is $\lvert z\rvert>\frac12$, so **both give $y_1$**: the input removed the one pole in which they differ. The anti-causal system gives $y_2$. Check: $y_1[0] = 2 = Y(\infty)$ and $y_1[1]=-\frac72$, matching the recursion $y[n]=\frac52y[n-1]+\frac32y[n-2]+2x[n]-\frac52x[n-1]$ run forward.
 

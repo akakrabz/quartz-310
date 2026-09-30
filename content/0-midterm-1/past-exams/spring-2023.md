@@ -167,7 +167,10 @@ tags: [exam, midterm-1]
 > [!success]- Solution
 > **(a)** $(1-z^{-1})$ cancels:
 > $$
-> H(z) = \frac{Y(z)}{X(z)} = \frac{(1-2z^{-1})(1-z^{-1})}{(1-\frac12 z^{-1})(1-z^{-1})(1-\frac14 z^{-1})} = \boxed{\frac{1-2z^{-1}}{(1-\frac12 z^{-1})(1-\frac14 z^{-1})},\quad \lvert z\rvert > \tfrac12}
+> \begin{aligned}
+> H(z) &= \frac{Y(z)}{X(z)} = \frac{(1-2z^{-1})(1-z^{-1})}{(1-\frac12 z^{-1})(1-z^{-1})(1-\frac14 z^{-1})}\\
+> &= \boxed{\frac{1-2z^{-1}}{(1-\frac12 z^{-1})(1-\frac14 z^{-1})},\quad \lvert z\rvert > \tfrac12}
+> \end{aligned}
 > $$
 > The ROC is causal (outside the largest pole). It contains $\lvert z\rvert = 1$, which is consistent with "stable".
 >
@@ -209,7 +212,10 @@ tags: [exam, midterm-1]
 >
 > **(b)** Choose $X = 1/H$: $X(z) = \dfrac{z-4}{z-3} = \dfrac{1-4z^{-1}}{1-3z^{-1}}$, $\lvert z\rvert > 3$, so
 > $$
-> x[n] = 3^n u[n] - 4\cdot3^{n-1}u[n-1] = \delta[n] - 3^{n-1}u[n-1]\ \ (\text{unbounded}),\qquad \boxed{y[n] = \delta[n]}.
+> \begin{gathered}
+> x[n] = 3^n u[n] - 4\cdot3^{n-1}u[n-1] = \delta[n] - 3^{n-1}u[n-1]\ \ (\text{unbounded}),\\
+> \boxed{y[n] = \delta[n]}.
+> \end{gathered}
 > $$
 >
 > **(c)** Cancel the pole with a finite input: $X(z) = 1 - 4z^{-1}$, i.e. $x[n] = \delta[n] - 4\delta[n-1]$, gives $Y = 1-3z^{-1}$:

@@ -33,8 +33,10 @@ aliases: ["z-transform properties", "properties of the z-transform"]
 > $$
 > with $G'(z) = -\dfrac{1}{(z-\frac13)^2}$ and $G''(z) = \dfrac{2}{(z-\frac13)^3}$. Since $n(n-2)g[n] = n^2g[n] - 2n\,g[n]$:
 > $$
-> X_4(z) = 3zG'(z) + z^2G''(z) = \frac{-3z}{(z-\frac13)^2} + \frac{2z^2}{(z-\frac13)^3}
-> = \frac{z-z^2}{(z-\frac13)^3} = \frac{z^{-2}-z^{-1}}{\left(1-\frac13 z^{-1}\right)^3}, \qquad |z|>\tfrac13 .
+> \begin{aligned}
+> X_4(z) &= 3zG'(z) + z^2G''(z) = \frac{-3z}{(z-\frac13)^2} + \frac{2z^2}{(z-\frac13)^3}\\[4pt]
+> &= \frac{z-z^2}{(z-\frac13)^3} = \frac{z^{-2}-z^{-1}}{\left(1-\frac13 z^{-1}\right)^3}, \qquad |z|>\tfrac13 .
+> \end{aligned}
 > $$
 > A triple pole at $\frac13$: each factor of $n$ raises the pole order by one. Check the first samples: $y[1] = 1\cdot(-1)\,x[0] = -1$, and the series of $\frac{z^{-2}-z^{-1}}{(1-\frac13 z^{-1})^3}$ starts $-z^{-1}+\dots$ ✓.
 

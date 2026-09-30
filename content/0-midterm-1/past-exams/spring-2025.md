@@ -127,11 +127,16 @@ tags: [exam, midterm-1]
 > [!success]- Solution 4(b)
 > z-domain route: $X(z) = \dfrac{1}{1+\frac13 z^{-1}}$, $h[n] = \tfrac18\left(\tfrac12\right)^{n-3}u[n-3] \Rightarrow H(z) = \dfrac{\frac18 z^{-3}}{1 - \frac12 z^{-1}}$. Partial fractions of the rational part:
 > $$
-> \frac{1}{(1+\frac13 z^{-1})(1-\frac12 z^{-1})} = \frac{2/5}{1+\frac13 z^{-1}} + \frac{3/5}{1-\frac12 z^{-1}},\qquad
-> Y(z) = \tfrac18 z^{-3}\left[\frac{2/5}{1+\frac13 z^{-1}} + \frac{3/5}{1-\frac12 z^{-1}}\right]
+> \begin{aligned}
+> \frac{1}{(1+\frac13 z^{-1})(1-\frac12 z^{-1})} &= \frac{2/5}{1+\frac13 z^{-1}} + \frac{3/5}{1-\frac12 z^{-1}},\\
+> Y(z) &= \tfrac18 z^{-3}\left[\frac{2/5}{1+\frac13 z^{-1}} + \frac{3/5}{1-\frac12 z^{-1}}\right]
+> \end{aligned}
 > $$
 > $$
-> \boldsymbol{y[n] = \tfrac{1}{20}\left(-\tfrac13\right)^{n-3}u[n-3] + \tfrac{3}{40}\left(\tfrac12\right)^{n-3}u[n-3]} = \left[-\tfrac{27}{20}\left(-\tfrac13\right)^n + \tfrac35\left(\tfrac12\right)^n\right]u[n-3].
+> \begin{gathered}
+> \boldsymbol{y[n] = \tfrac{1}{20}\left(-\tfrac13\right)^{n-3}u[n-3] + \tfrac{3}{40}\left(\tfrac12\right)^{n-3}u[n-3]}\\
+> = \left[-\tfrac{27}{20}\left(-\tfrac13\right)^n + \tfrac35\left(\tfrac12\right)^n\right]u[n-3].
+> \end{gathered}
 > $$
 > (Time-domain route: $y[n] = \left(-\tfrac13\right)^n\sum_{k=3}^{n}\left(-\tfrac32\right)^k$ for $n \ge 3$, a finite geometric sum — same answer.)
 
@@ -268,8 +273,10 @@ sum check: 8 = 2 * 4
 > No ROC was given for $H$ ($\lvert z\rvert > \tfrac32$, $\tfrac12 < \lvert z\rvert < \tfrac32$ or $\lvert z\rvert < \tfrac12$). $Y$ has a single pole at $\tfrac12$, so the first two choices give ROC$_Y$ $\lvert z\rvert > \tfrac12$ and the third gives $\lvert z\rvert < \tfrac12$ — **two** possible outputs:
 > $$
 > \begin{aligned}
-> \#1\ (\lvert z\rvert > \tfrac12):&\quad \boldsymbol{y[n] = 2\left(\tfrac12\right)^n u[n] - 3\left(\tfrac12\right)^{n-1}u[n-1]} = 2\delta[n] - 4\left(\tfrac12\right)^n u[n-1]\\
-> \#2\ (\lvert z\rvert < \tfrac12):&\quad \boldsymbol{y[n] = -2\left(\tfrac12\right)^n u[-n-1] + 3\left(\tfrac12\right)^{n-1}u[-n]} = 6\delta[n] + 4\left(\tfrac12\right)^n u[-n-1]
+> \#1\ (\lvert z\rvert > \tfrac12):&\quad \boldsymbol{y[n] = 2\left(\tfrac12\right)^n u[n] - 3\left(\tfrac12\right)^{n-1}u[n-1]}\\
+> &\qquad\quad = 2\delta[n] - 4\left(\tfrac12\right)^n u[n-1]\\
+> \#2\ (\lvert z\rvert < \tfrac12):&\quad \boldsymbol{y[n] = -2\left(\tfrac12\right)^n u[-n-1] + 3\left(\tfrac12\right)^{n-1}u[-n]}\\
+> &\qquad\quad = 6\delta[n] + 4\left(\tfrac12\right)^n u[-n-1]
 > \end{aligned}
 > $$
 

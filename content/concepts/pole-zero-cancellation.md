@@ -34,8 +34,11 @@ aliases: ["pole-zero cancellation", "cancellation"]
 > $h_1[n] = 2u[n]-2\left(\frac12\right)^nu[n] \leftrightarrow \dfrac{z^{-1}}{(1-z^{-1})(1-\frac12 z^{-1})}$, $|z|>1$ — unstable (pole on the unit circle).
 > $h_2[n] = \delta[n]-3\left(\frac14\right)^nu[n-1] \leftrightarrow \dfrac{1-z^{-1}}{1-\frac14 z^{-1}}$, $|z|>\frac14$ — stable.
 > $$
+> \begin{gathered}
 > H_1(z)H_2(z) = \frac{z^{-1}}{(1-\frac12 z^{-1})(1-\frac14 z^{-1})},\quad |z|>\tfrac12
-> \quad\Longrightarrow\quad h[n] = 4\left(\tfrac12\right)^n u[n] - 4\left(\tfrac14\right)^n u[n].
+> \\[4pt]
+> \Longrightarrow\quad h[n] = 4\left(\tfrac12\right)^n u[n] - 4\left(\tfrac14\right)^n u[n].
+> \end{gathered}
 > $$
 > The ROC is $|z|>\frac12$, strictly larger than $R_1\cap R_2 = \{|z|>1\}$, and it contains the unit circle: **the cascade is stable** although $h_1$ is not.
 

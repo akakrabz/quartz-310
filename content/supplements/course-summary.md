@@ -45,7 +45,10 @@ These four definitions are the whole of the [[problems/classifying-system-proper
 **LCCDE** (linear constant-coefficient difference equation):
 
 $$
-y[n] = -a_1y[n-1] - \dots - a_Ky[n-K] + b_0x[n] + \dots + b_Lx[n-L],\qquad n = 0,1,2,\dots
+\begin{gathered}
+y[n] = -a_1y[n-1] - \dots - a_Ky[n-K] + b_0x[n] + \dots + b_Lx[n-L],\\
+n = 0,1,2,\dots
+\end{gathered}
 $$
 
 Equivalently, in the z-domain (zero initial conditions): $Y(z) = H(z)X(z)$ with

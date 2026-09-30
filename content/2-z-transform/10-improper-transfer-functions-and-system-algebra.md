@@ -48,8 +48,10 @@ with $M = 4$ input terms and $N = 2$ feedback terms: improper, with $M - N = 2$ 
 **Approach #2 — long division, then PFE.** Divide starting from the **highest** power of $z^{-1}$:
 $$
 \begin{aligned}
-&4z^{-3} \div (-3z^{-2}) = -\tfrac43 z^{-1}: && \bigl(1 - 3z^{-1} + z^{-2} + 4z^{-3}\bigr) - \left(-\tfrac43 z^{-1}\right)\bigl(1 - 2z^{-1} - 3z^{-2}\bigr) = 1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\\
-&-\tfrac53 z^{-2} \div (-3z^{-2}) = \tfrac59: && \bigl(1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\bigr) - \tfrac59\bigl(1 - 2z^{-1} - 3z^{-2}\bigr) = \tfrac49 - \tfrac59 z^{-1}
+&4z^{-3} \div (-3z^{-2}) = -\tfrac43 z^{-1}: \\
+&\bigl(1 - 3z^{-1} + z^{-2} + 4z^{-3}\bigr) - \left(-\tfrac43 z^{-1}\right)\bigl(1 - 2z^{-1} - 3z^{-2}\bigr) = 1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\\
+&-\tfrac53 z^{-2} \div (-3z^{-2}) = \tfrac59: \\
+&\bigl(1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\bigr) - \tfrac59\bigl(1 - 2z^{-1} - 3z^{-2}\bigr) = \tfrac49 - \tfrac59 z^{-1}
 \end{aligned}
 $$
 So $C_0 = \tfrac59$, $C_1 = -\tfrac43$ and
@@ -66,7 +68,10 @@ Cover-up on the **remainder**: $A_1 = \dfrac{\frac49 - \frac59\cdot\frac13}{1 + 
 
 **Approach #1 — numerator 1 first, then shift.** Factor out the numerator:
 $$
-H(z) = \bigl(1 - 3z^{-1} + z^{-2} + 4z^{-3}\bigr)\,G(z), \qquad G(z) = \frac{1}{(1-3z^{-1})(1+z^{-1})} = \frac{\frac34}{1-3z^{-1}} + \frac{\frac14}{1+z^{-1}} ,
+\begin{aligned}
+H(z) &= \bigl(1 - 3z^{-1} + z^{-2} + 4z^{-3}\bigr)\,G(z), \qquad \\
+G(z) &= \frac{1}{(1-3z^{-1})(1+z^{-1})} = \frac{\frac34}{1-3z^{-1}} + \frac{\frac14}{1+z^{-1}} ,
+\end{aligned}
 $$
 so $g[n] = \tfrac34\,3^n u[n] + \tfrac14(-1)^n u[n]$ and, by linearity and time shifting,
 $$
@@ -114,11 +119,17 @@ $0.1944 = \tfrac{7}{36}$, $0.5556 = \tfrac59$, $-1.3333 = -\tfrac43$.
 
 Two LTI systems **in parallel** see the same input and their outputs are added:
 $$
-y[n] = x[n]*h_1[n] + x[n]*h_2[n] = x[n]*\bigl(h_1[n] + h_2[n]\bigr) \quad(\text{distributivity}) \;\Longrightarrow\; H(z) = H_1(z) + H_2(z).
+\begin{aligned}
+y[n] &= x[n]*h_1[n] + x[n]*h_2[n] = x[n]*\bigl(h_1[n] + h_2[n]\bigr) \quad(\text{distributivity}) \\
+\;\Longrightarrow\; H(z) &= H_1(z) + H_2(z).
+\end{aligned}
 $$
 **In series** (cascade) the output of one is the input of the next:
 $$
-y[n] = \bigl(x[n]*h_1[n]\bigr)*h_2[n] = x[n]*\bigl(h_1[n]*h_2[n]\bigr) \quad(\text{associativity}) \;\Longrightarrow\; H(z) = H_1(z)\,H_2(z).
+\begin{aligned}
+y[n] &= \bigl(x[n]*h_1[n]\bigr)*h_2[n] = x[n]*\bigl(h_1[n]*h_2[n]\bigr) \quad(\text{associativity}) \\
+\;\Longrightarrow\; H(z) &= H_1(z)\,H_2(z).
+\end{aligned}
 $$
 
 <figure class="ece-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" role="img" style="font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:14px;max-width:100%;height:auto"><defs><marker id="l10ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs><text x="170.0" y="24.0" text-anchor="middle" fill="currentColor" style="font-size:14px;font-weight:600;">series (cascade)</text><text x="22.0" y="65.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M55.0,60.0 L88.0,60.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="88.0" y="42.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="125.0" y="65.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z)</text><path d="M162.0,60.0 L196.0,60.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="196.0" y="42.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="233.0" y="65.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₂(z)</text><path d="M270.0,60.0 L300.0,60.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="305.0" y="65.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="170.0" y="104.0" text-anchor="middle" fill="currentColor" style="font-size:20px;">≡</text><text x="22.0" y="147.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M55.0,142.0 L110.0,142.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="112.0" y="124.0" width="134" height="36" rx="4" fill="var(--accent2)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="179.0" y="147.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z) H₂(z)</text><path d="M246.0,142.0 L300.0,142.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="305.0" y="147.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="170.0" y="190.0" text-anchor="middle" fill="currentColor" style="font-size:13.5px;">h[n] = h₁[n] ∗ h₂[n]</text><text x="170.0" y="210.0" text-anchor="middle" fill="var(--muted)" style="font-size:12.5px;">ROC ⊇ ROC₁ ∩ ROC₂</text><text x="170.0" y="228.0" text-anchor="middle" fill="var(--muted)" style="font-size:12.5px;">order does not matter (commutative)</text><text x="510.0" y="24.0" text-anchor="middle" fill="currentColor" style="font-size:14px;font-weight:600;">parallel</text><text x="368.0" y="85.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M400.0,80.0 L420.0,80.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="420" cy="80" r="3" fill="currentColor"/><path d="M420.0,48.0 L420.0,112.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M420.0,48.0 L466.0,48.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="466.0" y="30.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="503.0" y="53.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z)</text><path d="M540.0,48.0 L590.0,48.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M590.0,48.0 L590.0,68.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><path d="M420.0,112.0 L466.0,112.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="466.0" y="94.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="503.0" y="117.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₂(z)</text><path d="M540.0,112.0 L590.0,112.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M590.0,112.0 L590.0,92.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><circle cx="590" cy="80" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M584.0,80.0 L596.0,80.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M590.0,74.0 L590.0,86.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M601.0,80.0 L632.0,80.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="636.0" y="85.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="510.0" y="158.0" text-anchor="middle" fill="currentColor" style="font-size:20px;">≡</text><text x="368.0" y="195.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M400.0,190.0 L448.0,190.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="448.0" y="172.0" width="140" height="36" rx="4" fill="var(--accent2)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="518.0" y="195.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z) + H₂(z)</text><path d="M588.0,190.0 L632.0,190.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="636.0" y="195.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="510.0" y="238.0" text-anchor="middle" fill="currentColor" style="font-size:13.5px;">h[n] = h₁[n] + h₂[n]</text><text x="510.0" y="258.0" text-anchor="middle" fill="var(--muted)" style="font-size:12.5px;">ROC ⊇ ROC₁ ∩ ROC₂</text><path d="M340.0,20.0 L340.0,280.0" fill="none" stroke="var(--muted)" stroke-width="1" stroke-linejoin="round"/></svg><figcaption><strong>System algebra (notes Table 1, slides 9–10).</strong> Two LTI systems in series collapse to one LTI system with h = h₁ ∗ h₂ and H = H₁H₂ (associativity of convolution); in parallel to h = h₁ + h₂ and H = H₁ + H₂ (distributivity). The combined ROC contains the intersection of the two ROCs, and can be larger when a pole of one factor is cancelled by a zero of the other.</figcaption></figure>
@@ -138,7 +149,10 @@ $$
 > [!success]- Answer (checked by simulating the diagram with random stable blocks)
 > Track the z-transform on every wire: after $H_1$ the signal is $XH_1$; after $H_2$ it is $XH_1H_2$; the three wires into the adder carry $XH_1H_5$, $XH_1H_2H_3$, $XH_1H_2H_4$. So
 > $$
-> Y = X\,H_1\bigl(H_5 + H_2(H_3 + H_4)\bigr) \quad\Longrightarrow\quad H(z) = H_1(z)\Bigl[H_5(z) + H_2(z)\bigl(H_3(z) + H_4(z)\bigr)\Bigr].
+> \begin{aligned}
+> Y &= X\,H_1\bigl(H_5 + H_2(H_3 + H_4)\bigr) \\
+> \quad\Longrightarrow\quad H(z) &= H_1(z)\Bigl[H_5(z) + H_2(z)\bigl(H_3(z) + H_4(z)\bigr)\Bigr].
+> \end{aligned}
 > $$
 
 > [!note]- Feedback loops (not in the Lecture 10 notes — for completeness)
@@ -156,7 +170,10 @@ For $H_1 + H_2$ and for $H_1H_2$ the ROC is **at least** $\text{ROC}_1 \cap \tex
 - **Unstable + unstable can be stable**, but only through cancellation. Parallel: $u[n]$ and $\delta[n] - u[n]$ are both unstable, their sum is $\delta[n]$ (FA2025 1(f), "always unstable": **False**). Series: $\dfrac{1-2z^{-1}}{1-3z^{-1}}\cdot\dfrac{1-3z^{-1}}{1-2z^{-1}} = 1$ (SP2021 1(c): **False**).
 - **Unstable in series with stable can be stable**: $u[n] * (\delta[n] - \delta[n-1]) = \delta[n]$ (FA2019 1(d): **False**). HW4 #5 is the graded version: $h_1 = 2u[n] - 2(\tfrac12)^n u[n] \leftrightarrow \dfrac{z^{-1}}{(1-z^{-1})(1-\frac12 z^{-1})}$ has a pole at $1$ (unstable), $h_2 = \delta[n] - 3(\tfrac14)^n u[n-1] \leftrightarrow \dfrac{1-z^{-1}}{1-\frac14 z^{-1}}$ has a zero there, so
 $$
-H_1H_2 = \frac{z^{-1}}{(1-\frac12 z^{-1})(1-\frac14 z^{-1})}, \quad |z| > \tfrac12, \qquad h[n] = 4\Bigl[\left(\tfrac12\right)^n - \left(\tfrac14\right)^n\Bigr]u[n] \quad(\text{stable}).
+\begin{aligned}
+H_1H_2 &= \frac{z^{-1}}{(1-\frac12 z^{-1})(1-\frac14 z^{-1})}, \quad |z| > \tfrac12, \qquad \\
+h[n] &= 4\Bigl[\left(\tfrac12\right)^n - \left(\tfrac14\right)^n\Bigr]u[n] \quad(\text{stable}).
+\end{aligned}
 $$
 FA2019 #10(d) is the same idea: the zero of $H$ at $2$ cancels the pole of the unstable $2^n u[n]$ it is cascaded with, so "the overall system is unstable" is **False**.
 

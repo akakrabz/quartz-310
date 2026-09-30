@@ -76,8 +76,11 @@ $$
 > $H(z) = \dfrac{1-3z^{-1}+z^{-2}+4z^{-3}}{1-2z^{-1}-3z^{-2}}$ — numerator degree 3, denominator degree 2, so two quotient terms $C_0 + C_1 z^{-1}$.
 > $$
 > \begin{aligned}
-> \frac{4z^{-3}}{-3z^{-2}} = -\tfrac43 z^{-1}:&\quad (1-3z^{-1}+z^{-2}+4z^{-3}) - \big(-\tfrac43 z^{-1}\big)(1-2z^{-1}-3z^{-2}) = 1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\\
-> \frac{-\tfrac53 z^{-2}}{-3z^{-2}} = \tfrac59:&\quad \big(1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\big) - \tfrac59\,(1-2z^{-1}-3z^{-2}) = \tfrac49 - \tfrac59 z^{-1}
+> &\text{step 1: } \frac{4z^{-3}}{-3z^{-2}} = -\tfrac43 z^{-1},\\
+> &\quad (1-3z^{-1}+z^{-2}+4z^{-3}) - \big(-\tfrac43 z^{-1}\big)(1-2z^{-1}-3z^{-2})\\
+> &\qquad = 1 - \tfrac53 z^{-1} - \tfrac53 z^{-2};\\[4pt]
+> &\text{step 2: } \frac{-\tfrac53 z^{-2}}{-3z^{-2}} = \tfrac59,\\
+> &\quad \big(1 - \tfrac53 z^{-1} - \tfrac53 z^{-2}\big) - \tfrac59\,(1-2z^{-1}-3z^{-2}) = \tfrac49 - \tfrac59 z^{-1}.
 > \end{aligned}
 > $$
 > So $C_1 = -\tfrac43$, $C_0 = \tfrac59$, remainder $\tfrac49 - \tfrac59 z^{-1}$. Cover-up on $\dfrac{\tfrac49 - \tfrac59 z^{-1}}{(1-3z^{-1})(1+z^{-1})}$: at $z=3$, $A_1 = \dfrac{\tfrac49 - \tfrac{5}{27}}{1+\tfrac13} = \dfrac{7}{36}$; at $z=-1$, $A_2 = \dfrac{\tfrac49 + \tfrac59}{1+3} = \dfrac14$. Check: $\tfrac59 + \tfrac{7}{36} + \tfrac14 = 1 = b_0/a_0$. ✓

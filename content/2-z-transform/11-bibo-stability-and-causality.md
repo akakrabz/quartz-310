@@ -20,7 +20,11 @@ By now we have three ways to decide whether a system is bounded-input bounded-ou
 
 > [!key] BIBO stability in the z-domain
 > $$
-> \text{LTI system BIBO stable} \iff \sum_{n=-\infty}^{\infty}|h[n]| < \infty \iff \text{ROC of } H(z) \text{ contains the unit circle } |z| = 1 .
+> \begin{aligned}
+> &\text{LTI system BIBO stable} \\
+> &\iff \sum_{n=-\infty}^{\infty}|h[n]| < \infty \\
+> &\iff \text{ROC of } H(z) \text{ contains the unit circle } |z| = 1 .
+> \end{aligned}
 > $$
 > "Contains" is strict: an ROC $|z| > 1$ *touches* the unit circle but does not contain it — that system is **not** stable (it is marginally stable, §6).
 
@@ -104,7 +108,10 @@ Slide 11 asks: can an LTI FIR system be unstable? No. Let $h[n] = \{\underset{\u
 
 **A pole strictly outside the unit circle (causal case).** Take $h[n] = 3^n u[n]$, $H(z) = \dfrac{1}{1-3z^{-1}}$, $|z| > 3$. Already $x[n] = \delta[n]$ gives $y[n] = 3^n u[n]$; so do $u[n]$, $(\tfrac13)^n u[n]$ — *almost any* bounded input. The only way out is to **cancel the pole with a zero of $X(z)$**:
 $$
-X(z) = 1 - 3z^{-1} \;\leftrightarrow\; x[n] = \delta[n] - 3\delta[n-1] \quad\Longrightarrow\quad Y(z) = \frac{1-3z^{-1}}{1-3z^{-1}} = 1,\qquad y[n] = \delta[n] ,
+\begin{aligned}
+X(z) &= 1 - 3z^{-1} \;\leftrightarrow\; x[n] = \delta[n] - 3\delta[n-1] \\
+\quad\Longrightarrow\quad Y(z) &= \frac{1-3z^{-1}}{1-3z^{-1}} = 1,\qquad y[n] = \delta[n] ,
+\end{aligned}
 $$
 and any scaled or shifted copy of this $x[n]$ works too.
 
@@ -124,9 +131,12 @@ and any scaled or shifted copy of this $x[n]$ works too.
 - $|b| < 1$: $Y(z) = \dfrac{1}{(1-bz^{-1})(1-az^{-1})} = \dfrac{A_1}{1-bz^{-1}} + \dfrac{A_2}{1-az^{-1}}$, so $y[n] = A_1 b^n u[n] + A_2 a^n u[n]$: one term decays, the other has constant magnitude. **Bounded.**
 - $|b| = 1$: write $a = e^{j\theta}$, $b = e^{j\phi}$. Then
 $$
-y[n] = \sum_{k=0}^{n} e^{j\theta k}e^{j\phi(n-k)} = e^{j\phi n}\sum_{k=0}^{n} e^{j(\theta-\phi)k}
-= \begin{cases} e^{j\phi n}\,(n+1)\,u[n], & \theta = \phi \quad\text{(unbounded)}\\[4pt]
+\begin{aligned}
+y[n] &= \sum_{k=0}^{n} e^{j\theta k}e^{j\phi(n-k)} \\
+&= e^{j\phi n}\sum_{k=0}^{n} e^{j(\theta-\phi)k} \\
+&= \begin{cases} e^{j\phi n}\,(n+1)\,u[n], & \theta = \phi \quad\text{(unbounded)}\\[4pt]
 e^{j\phi n}\,\dfrac{1-e^{j(\theta-\phi)(n+1)}}{1-e^{j(\theta-\phi)}}\,u[n], & \theta \ne \phi \quad\text{(bounded by } \tfrac{2}{|1-e^{j(\theta-\phi)}|}\text{)} \end{cases}
+\end{aligned}
 $$
 
 With $a = b = 1$ this is the notes' example: $h = u[n]$, $x = u[n]$ gives $y = (n+1)u[n]$, while a decaying input $c^n u[n]$ ($|c| < 1$) gives the bounded $y[n] = \sum_{k=0}^n c^k$.

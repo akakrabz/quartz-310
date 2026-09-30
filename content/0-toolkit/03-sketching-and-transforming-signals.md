@@ -56,7 +56,10 @@ Downsampling throws samples away, so it cannot be undone; the upsampled $x[n/M]$
 Every signal splits uniquely as $x[n] = x_e[n] + x_o[n]$ with
 
 $$
-x_e[n] = \tfrac12\big(x[n]+x[-n]\big)\ \ (\text{even: } x_e[-n]=x_e[n]),\qquad x_o[n] = \tfrac12\big(x[n]-x[-n]\big)\ \ (\text{odd: } x_o[0]=0).
+\begin{aligned}
+x_e[n] &= \tfrac12\big(x[n]+x[-n]\big)\ \ (\text{even: } x_e[-n]=x_e[n]),\\
+x_o[n] &= \tfrac12\big(x[n]-x[-n]\big)\ \ (\text{odd: } x_o[0]=0).
+\end{aligned}
 $$
 
 Example: $x = \{\underset{\uparrow}{1},2,3\}$ gives $x_e = \{\tfrac32,1,\underset{\uparrow}{1},1,\tfrac32\}$ and $x_o = \{-\tfrac32,-1,\underset{\uparrow}{0},1,\tfrac32\}$; add them back to check.

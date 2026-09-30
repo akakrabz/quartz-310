@@ -121,7 +121,11 @@ lectures: [4, 8, 9]
 > $$
 > Apply the same combination to the outputs:
 > $$
-> h[n]=y_1[n]-2y_2[n-1]=\{2,\ 3-4,\ -5+6,\ 16-16,\ -8+8,\ 6-6\}=\{\underset{\uparrow}{2},-1,1\}.
+> \begin{aligned}
+> h[n]&=y_1[n]-2y_2[n-1]\\
+> &=\{2,\ 3-4,\ -5+6,\ 16-16,\ -8+8,\ 6-6\}\\
+> &=\{\underset{\uparrow}{2},-1,1\}.
+> \end{aligned}
 > $$
 > **(b)** $h[n]=g[n]-g[n-1]=\big(\delta[n+1]-\delta[n]\big)+3\big(u[n]-u[n-1]\big)-2\big(u[n-2]-u[n-3]\big)$:
 > $$
@@ -134,7 +138,12 @@ lectures: [4, 8, 9]
 
 > [!success]- Solution
 > $$
-> Y(z)=\frac{10}{1-\frac13z^{-1}}-\frac{9}{1-\frac12z^{-1}}=\frac{10\left(1-\frac12z^{-1}\right)-9\left(1-\frac13z^{-1}\right)}{\left(1-\frac13z^{-1}\right)\left(1-\frac12z^{-1}\right)}=\frac{1-2z^{-1}}{\left(1-\frac13z^{-1}\right)\left(1-\frac12z^{-1}\right)},\qquad X(z)=\frac{1}{1-\frac12z^{-1}} .
+> \begin{aligned}
+> Y(z)&=\frac{10}{1-\frac13z^{-1}}-\frac{9}{1-\frac12z^{-1}}\\
+> &=\frac{10\left(1-\frac12z^{-1}\right)-9\left(1-\frac13z^{-1}\right)}{\left(1-\frac13z^{-1}\right)\left(1-\frac12z^{-1}\right)}\\
+> &=\frac{1-2z^{-1}}{\left(1-\frac13z^{-1}\right)\left(1-\frac12z^{-1}\right)},\\
+> X(z)&=\frac{1}{1-\frac12z^{-1}} .
+> \end{aligned}
 > $$
 > $$
 > H(z)=\frac{Y(z)}{X(z)}=\frac{1-2z^{-1}}{1-\frac13z^{-1}},\qquad \text{ROC } \lvert z\rvert>\tfrac13\ \text{(causal)}.

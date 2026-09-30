@@ -50,7 +50,8 @@ Speech recognition, photo editing, trading algorithms and de-noising filters all
 $$
 \begin{aligned}
 T(v[n]) &= v[n] - v[n-1] = \big(a\,x_1[n] + b\,x_2[n]\big) - \big(a\,x_1[n-1] + b\,x_2[n-1]\big)\\
-&= a\big(x_1[n] - x_1[n-1]\big) + b\big(x_2[n] - x_2[n-1]\big) = a\,T(x_1[n]) + b\,T(x_2[n]). \ \checkmark
+&= a\big(x_1[n] - x_1[n-1]\big) + b\big(x_2[n] - x_2[n-1]\big)\\
+&= a\,T(x_1[n]) + b\,T(x_2[n]). \ \checkmark
 \end{aligned}
 $$
 
@@ -212,7 +213,7 @@ $$
 > - (g) $y[n] = x[n]/x[2]$ (SP2023)
 > - (h) $y[n] = x[\lvert n\rvert + n]$ (FA2019)
 
-> [!success]- Answers (official keys, re-checked numerically)
+> [!success]- Answers (official keys where the exam asked, re-checked numerically; FA2019 #2 had no stability column)
 > | system | L | TI | C | S | the deciding observation |
 > |---|---|---|---|---|---|
 > | (a) $\lvert n\rvert\,x[n]$ | Y | N | Y | N | coefficient $\lvert n\rvert$: time-varying, and $x = 1$ gives $y = \lvert n\rvert$ |

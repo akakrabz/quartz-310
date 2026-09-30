@@ -153,7 +153,10 @@ The pairs and properties you need (all from [[2-z-transform/06-the-z-transform|L
 > [!success]- Solution
 > **(a)** First $v[m]=\left(\tfrac45\right)^{\lvert m\rvert}=\left(\tfrac45\right)^m u[m]+\left(\tfrac54\right)^m u[-m-1]$, so $V(z)=\dfrac{1}{1-\frac45z^{-1}}-\dfrac{1}{1-\frac54z^{-1}}$ on $\tfrac45<\lvert z\rvert<\tfrac54$. Then $x[n]=v[n-2]$:
 > $$
-> X(z)=z^{-2}\left[\frac{1}{1-0.8z^{-1}}-\frac{1}{1-1.25z^{-1}}\right]=\frac{-0.45\,z^{-3}}{\left(1-0.8z^{-1}\right)\left(1-1.25z^{-1}\right)},\qquad 0.8<\lvert z\rvert<1.25 .
+> \begin{aligned}
+> X(z)&=z^{-2}\left[\frac{1}{1-0.8z^{-1}}-\frac{1}{1-1.25z^{-1}}\right]\\
+> &=\frac{-0.45\,z^{-3}}{\left(1-0.8z^{-1}\right)\left(1-1.25z^{-1}\right)},\qquad 0.8<\lvert z\rvert<1.25 .
+> \end{aligned}
 > $$
 > Check at $z=1$: $5-(-4)=9$, and $\sum_n(0.8)^{\lvert n-2\rvert}=1+2\cdot\frac{0.8}{0.2}=9$ ✓.
 >

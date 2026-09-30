@@ -31,7 +31,7 @@ Homework: [[homework/hw1|HW1]] · [[homework/hw2|HW2]] · [[homework/hw3|HW3]] �
 | allowed | **one handwritten two-sided 8.5″ × 11″ sheet** — no books, **no calculators**, no other notes |
 | answers | "calculate", "determine", "find" mean **closed form** — no $\sum$ or $\int$ left in the answer |
 | grading | "Show all your work to receive full credit"; "Neatness counts" |
-| True/False scoring | **read the instructions on the day**: SP2023 and SP2025 scored T/F as +2 right / −1 wrong / 0 blank (FA2019 did the same on its property questions); FA2023–FA2025 printed no penalty. With a penalty, leave a pure coin-flip blank; without one, answer everything |
+| True/False scoring | **read the instructions on the day**: SP2023 and SP2025 scored T/F as +2 right / −1 wrong / 0 blank (FA2019 did the same on its property questions); FA2023–FA2025 printed no penalty. Even with the −1 penalty a coin flip is worth $+0.5$ on average ($2p-(1-p)>0$ whenever $p>\tfrac13$), so answer everything unless you are worse than one-in-three |
 
 These are the instructions printed on the cover of every past Midterm 1 since FA2019 (FA2025 quoted; SP2021 was online). The review slides (Sep 28) contain no format slide — they are six worked problems (§6). Typical point split on recent Fall exams: T/F 12 · property table 12 · convolution 8–10 · short LTI problem 5–10 · z-transforms 9–15 · LCCDE / transfer function 15–20 · PFE / ROC / stability 15–20 · pole matching or parameter problem 10.
 

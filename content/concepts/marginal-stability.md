@@ -12,9 +12,11 @@ aliases: ["marginally stable"]
 
 **Why only matching inputs.** Take $h[n] = e^{j\omega_1 n}u[n]$ and $x[n] = e^{j\omega_2 n}u[n]$:
 $$
-y[n] = \sum_{k=0}^{n} e^{j\omega_1 k}e^{j\omega_2(n-k)} = e^{j\omega_2 n}\sum_{k=0}^{n} e^{j(\omega_1-\omega_2)k}
-= \begin{cases} (n+1)\,e^{j\omega_2 n}, & \omega_1 = \omega_2 \ \ (\text{unbounded})\\[4pt]
+\begin{aligned}
+y[n] &= \sum_{k=0}^{n} e^{j\omega_1 k}e^{j\omega_2(n-k)} = e^{j\omega_2 n}\sum_{k=0}^{n} e^{j(\omega_1-\omega_2)k}\\[4pt]
+&= \begin{cases} (n+1)\,e^{j\omega_2 n}, & \omega_1 = \omega_2 \ \ (\text{unbounded})\\[4pt]
 e^{j\omega_2 n}\,\dfrac{1-e^{j(\omega_1-\omega_2)(n+1)}}{1-e^{j(\omega_1-\omega_2)}}, & \omega_1\neq\omega_2 \ \ (\text{bounded, oscillates}) \end{cases}
+\end{aligned}
 $$
 The input "resonates" with the system. In the z-domain, $\frac{1}{(1-e^{j\omega}z^{-1})^2} \leftrightarrow (n+1)e^{j\omega n}u[n]$, $|z|>1$ — the [[concepts/z-transform-pairs|derived pair]] $(n+1)a^nu[n]$ with $|a|=1$.
 

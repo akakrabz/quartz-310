@@ -89,7 +89,11 @@ A causal system is given as a difference equation (or as $H(z)$, or through one 
 >
 > **(c)** $X(z) = \dfrac{1}{1-z^{-1}}$, $\lvert z\rvert>1$, so $Y(z) = \dfrac{1+2z^{-1}}{(1+\frac12z^{-1})(1-\frac13z^{-1})(1-z^{-1})}$, ROC $\lvert z\rvert>1$. Cover-up:
 > $$
-> A = \frac{1-4}{(1+\frac23)(1+2)} = -\tfrac35,\qquad B = \frac{1+6}{(1+\frac32)(1-3)} = -\tfrac75,\qquad C = \frac{1+2}{(1+\frac12)(1-\frac13)} = 3,
+> \begin{aligned}
+> A &= \frac{1-4}{(1+\frac23)(1+2)} = -\tfrac35,\\
+> B &= \frac{1+6}{(1+\frac32)(1-3)} = -\tfrac75,\\
+> C &= \frac{1+2}{(1+\frac12)(1-\frac13)} = 3,
+> \end{aligned}
 > $$
 > $$
 > y[n] = \left[-\tfrac35\left(-\tfrac12\right)^n - \tfrac75\left(\tfrac13\right)^n + 3\right]u[n] .

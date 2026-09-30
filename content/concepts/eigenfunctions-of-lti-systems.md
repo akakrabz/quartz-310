@@ -8,8 +8,10 @@ aliases: ["eigenfunction", "eigenfunctions", "eigenvalue", "eigensequence", "eig
 > [!key] $z^n$ in, $H(z)\,z^n$ out (Lecture 6 §1)
 > For an LTI system with impulse response $h$ and any $z_0$ in the ROC of $H(z)$:
 > $$
-> x[n]=z_0^n\ \ (-\infty<n<\infty)\quad\Longrightarrow\quad
+> \begin{gathered}
+> x[n]=z_0^n\ \ (-\infty<n<\infty)\quad\Longrightarrow\\[4pt]
 > y[n]=\sum_k h[k]\,z_0^{\,n-k}=\Big(\sum_k h[k]\,z_0^{-k}\Big)z_0^n=H(z_0)\,z_0^n .
+> \end{gathered}
 > $$
 > The input keeps its shape; only the complex number $H(z_0)$, the **eigenvalue**, multiplies it. Sums pass term by term: $x=\sum_k b_k z_k^n\Rightarrow y=\sum_k H(z_k)\,b_k z_k^n$. On the unit circle, $z_0=e^{j\omega}$ gives $e^{j\omega n}\mapsto H(e^{j\omega})\,e^{j\omega n}$: the frequency response, which is DTFT material after the midterm ([[3-beyond-midterm-1/index|beyond Midterm 1]]).
 

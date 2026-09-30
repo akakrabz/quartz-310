@@ -103,7 +103,10 @@ tags: [homework, midterm-1, z-transform, roc, stability, lccde]
 > [!success]- Solution — two directions
 > **Sufficiency ($\sum\lvert h\rvert \le B$ ⇒ BIBO stable).** Let $\lvert x[n]\rvert \le M$ for all $n$. Then for every $n$
 > $$
-> \lvert y[n]\rvert = \Big\lvert \sum_{k=-\infty}^{\infty} h[k]\,x[n-k]\Big\rvert \le \sum_{k=-\infty}^{\infty}\lvert h[k]\rvert\,\lvert x[n-k]\rvert \le M\sum_{k=-\infty}^{\infty}\lvert h[k]\rvert \le MB < \infty ,
+> \begin{aligned}
+> \lvert y[n]\rvert &= \Big\lvert \sum_{k=-\infty}^{\infty} h[k]\,x[n-k]\Big\rvert \le \sum_{k=-\infty}^{\infty}\lvert h[k]\rvert\,\lvert x[n-k]\rvert\\
+> &\le M\sum_{k=-\infty}^{\infty}\lvert h[k]\rvert \le MB < \infty ,
+> \end{aligned}
 > $$
 > a bound that does not depend on $n$: every bounded input gives a bounded output.
 >
