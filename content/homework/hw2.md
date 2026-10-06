@@ -64,7 +64,7 @@ Every solution below is folded: read the question, answer it on paper, then open
 > [!trap] "It has an n in it, so it's time-varying"
 > The $n$ inside $x[n-1]$ or $y[n-5]$ is just the time index. It is an $n$ *outside* the brackets — the $\cos(\tfrac{\pi}{6}n)$ in (b), the $(1/2)^{\lvert n\rvert}$ in (c) — that makes a system time-varying.
 
-**On the exam:** the property table, on 7/7 past midterms ([[problems/classifying-system-properties|classifying system properties]]). Gains like (c): $\lvert n\rvert\,x[n]$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #2]], Y N Y **N**: that gain grows, so unlike (c) it is unstable), $\log(\lvert n\rvert + 1)\,x[n]$ ([[0-midterm-1/past-exams/fall-2023|FA2023 #2]], Y N Y N), $(0.8+0.8j)^n x[n]$ ([[0-midterm-1/past-exams/spring-2021|SP2021 #3]], Y N Y N). Recursions like (a) appear in T/F: [[0-midterm-1/past-exams/fall-2024|FA2024 1(e)]], $y[n] = y[n-3] + x[n]$ has three distinct poles (True). Every row: [[0-midterm-1/system-property-bank|system-property bank]].
+**On the exam:** the property table, on 7/7 past midterms ([[problems/classifying-system-properties|classifying system properties]]). Gains like (c): $\lvert n\rvert\,x[n]$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #2]], Y N Y **N**: that gain grows, so unlike (c) it is unstable), $\log(\lvert n\rvert + 1)\,x[n]$ ([[exams/midterm-1/past-exams/fall-2023|FA2023 #2]], Y N Y N), $(0.8+0.8j)^n x[n]$ ([[exams/midterm-1/past-exams/spring-2021|SP2021 #3]], Y N Y N). Recursions like (a) appear in T/F: [[exams/midterm-1/past-exams/fall-2024|FA2024 1(e)]], $y[n] = y[n-3] + x[n]$ has three distinct poles (True). Every row: [[exams/midterm-1/system-property-bank|system-property bank]].
 
 ## Problem 2 · Every convolution system is LSI
 
@@ -97,7 +97,7 @@ Every solution below is folded: read the question, answer it on paper, then open
 > [!key] Both directions
 > Convolution ⇒ LTI is this problem. LTI ⇒ convolution with $h[n] = T\{\delta[n]\}$ is [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]]: write $x[n] = \sum_k x[k]\,\delta[n-k]$ and use linearity and shift invariance. So "LTI" and "a convolution with some $h$" are the same statement, and an impulse response characterizes a system **only** when the system is LTI.
 
-**On the exam:** in the property table, any row written as a convolution is automatically **L = Y, TI = Y**; then read causality off "$h[n] = 0$ for $n < 0$" and stability off $\sum\lvert h[n]\rvert < \infty$: $x[n] * 2^n u[-n]$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #2]], Y Y N Y), $x[n] * j^n u[n]$ ([[0-midterm-1/past-exams/spring-2025|SP2025 #2]], Y Y Y N), $x[n] * u[n+1]$ ([[0-midterm-1/past-exams/fall-2023|FA2023 #2]], Y Y N N). The converse is a favorite T/F: "the output to any input is determined by $h[n]$" is **False** for a general system ([[0-midterm-1/past-exams/fall-2024|FA2024 1(a)]], [[0-midterm-1/past-exams/fall-2023|FA2023 1(d)]]), and so is "$\sum\lvert h[n]\rvert < \infty$ implies BIBO stable whether or not the system is LSI" ([[0-midterm-1/past-exams/spring-2025|SP2025 1(b)]]: $y[n] = n\,x[n]$ maps $\delta[n]$ to $0$, yet it is unstable).
+**On the exam:** in the property table, any row written as a convolution is automatically **L = Y, TI = Y**; then read causality off "$h[n] = 0$ for $n < 0$" and stability off $\sum\lvert h[n]\rvert < \infty$: $x[n] * 2^n u[-n]$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #2]], Y Y N Y), $x[n] * j^n u[n]$ ([[exams/midterm-1/past-exams/spring-2025|SP2025 #2]], Y Y Y N), $x[n] * u[n+1]$ ([[exams/midterm-1/past-exams/fall-2023|FA2023 #2]], Y Y N N). The converse is a favorite T/F: "the output to any input is determined by $h[n]$" is **False** for a general system ([[exams/midterm-1/past-exams/fall-2024|FA2024 1(a)]], [[exams/midterm-1/past-exams/fall-2023|FA2023 1(d)]]), and so is "$\sum\lvert h[n]\rvert < \infty$ implies BIBO stable whether or not the system is LSI" ([[exams/midterm-1/past-exams/spring-2025|SP2025 1(b)]]: $y[n] = n\,x[n]$ maps $\delta[n]$ to $0$, yet it is unstable).
 
 ## Problem 3 · The output from the step response
 
@@ -131,7 +131,7 @@ Every solution below is folded: read the question, answer it on paper, then open
 > [!key] Step response ↔ impulse response
 > $g[n] = \sum_{k=-\infty}^{n} h[k]$ (running sum) and $h[n] = g[n] - g[n-1]$ (first difference).
 
-**On the exam:** [[0-midterm-1/past-exams/fall-2023|FA2023 #4]] (5 pts): the response to $u[n]$ is $\delta[n] + \delta[n-1]$; which $h$? Take the first difference: $h[n] = g[n] - g[n-1] = \delta[n] - \delta[n-2] = \{\underset{\uparrow}{1}, 0, -1\}$, option (b). [[0-midterm-1/past-exams/fall-2019|FA2019 #3]] asks the other direction (the step response is the running sum of $h$), and [[0-midterm-1/past-exams/fall-2019|FA2019 T/F 1(j)]] rests on the hint itself: $u[n] * (\delta[n] - \delta[n-1]) = \delta[n]$ is a bounded output from an unstable system, so "any nonzero input gives an unbounded output" is False. See also [[concepts/step-response|step response]].
+**On the exam:** [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]] (5 pts): the response to $u[n]$ is $\delta[n] + \delta[n-1]$; which $h$? Take the first difference: $h[n] = g[n] - g[n-1] = \delta[n] - \delta[n-2] = \{\underset{\uparrow}{1}, 0, -1\}$, option (b). [[exams/midterm-1/past-exams/fall-2019|FA2019 #3]] asks the other direction (the step response is the running sum of $h$), and [[exams/midterm-1/past-exams/fall-2019|FA2019 T/F 1(j)]] rests on the hint itself: $u[n] * (\delta[n] - \delta[n-1]) = \delta[n]$ is a bounded output from an unstable system, so "any nonzero input gives an unbounded output" is False. See also [[concepts/step-response|step response]].
 
 ## Problem 4 · The impulse response from one input–output pair
 
@@ -174,7 +174,7 @@ Every solution below is folded: read the question, answer it on paper, then open
 > *Rubric (22 pts):* 16 for a minor math mistake with correct LTI reasoning; 8 for relating $\delta[n]$ and $u[n]$ correctly but failing to apply superposition.
 
 > [!recipe] Finding h from one input–output pair
-> 1. Find constants with $\sum_k c_k\,x[n-k] = \delta[n]$. For $x = a^n u[n]$: $x[n] - a\,x[n-1] = \delta[n]$. For finite sequences, solve for the $c_k$ as in [[0-midterm-1/past-exams/spring-2023|SP2023 #4]].
+> 1. Find constants with $\sum_k c_k\,x[n-k] = \delta[n]$. For $x = a^n u[n]$: $x[n] - a\,x[n-1] = \delta[n]$. For finite sequences, solve for the $c_k$ as in [[exams/midterm-1/past-exams/spring-2023|SP2023 #4]].
 > 2. Then $h[n] = \sum_k c_k\,y[n-k]$.
 > 3. Or in the z-domain: $H(z) = Y(z)/X(z)$, with the ROC fixed by what you are told (causal, stable, …).
 
@@ -201,7 +201,7 @@ True
 True
 ```
 
-**On the exam:** [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]] is on 7/7 past midterms. [[0-midterm-1/past-exams/spring-2023|SP2023 #4]] uses two pairs: $x_1[n] - 3x_2[n-1] = \delta[n]$, so $h = y_1[n] - 3y_2[n-1]$ — exactly this problem's two steps. [[0-midterm-1/past-exams/fall-2024|FA2024 #3]] peels a known $h_2$ off a cascade to get $h_1 = 2\delta[n+1]$, and FA2024 #6 gives $y = \{\underset{\uparrow}{1}, \tfrac12\}$ from $x = \{\underset{\uparrow}{1}, \tfrac13\}$, so $H = Y/X$. More: [[0-midterm-1/past-exams/spring-2025|SP2025 #3]], [[0-midterm-1/past-exams/fall-2019|FA2019 #3]].
+**On the exam:** [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]] is on 7/7 past midterms. [[exams/midterm-1/past-exams/spring-2023|SP2023 #4]] uses two pairs: $x_1[n] - 3x_2[n-1] = \delta[n]$, so $h = y_1[n] - 3y_2[n-1]$ — exactly this problem's two steps. [[exams/midterm-1/past-exams/fall-2024|FA2024 #3]] peels a known $h_2$ off a cascade to get $h_1 = 2\delta[n+1]$, and FA2024 #6 gives $y = \{\underset{\uparrow}{1}, \tfrac12\}$ from $x = \{\underset{\uparrow}{1}, \tfrac13\}$, so $H = Y/X$. More: [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #3]].
 
 ## Problem 5 · Five convolutions
 
@@ -296,7 +296,7 @@ y starts at n = -1 : [-1 -2 -2 -2 -2  4  5]
 sum check: 0 = 0 * 15
 ```
 
-**On the exam:** a finite convolution is on every past midterm ([[problems/finite-length-convolution|finite-length convolution]], 7/7, e.g. [[0-midterm-1/past-exams/fall-2025|FA2025 #3a]], [[0-midterm-1/past-exams/spring-2021|SP2021 #2]]) and an infinite or mixed one on 5 of 7 ([[problems/infinite-length-convolution|infinite-length convolution]], e.g. [[0-midterm-1/past-exams/fall-2025|FA2025 #3b]], [[0-midterm-1/past-exams/spring-2025|SP2025 #4b]]). Always run the sum check: the official key of [[0-midterm-1/past-exams/spring-2025|SP2025 #4(a)]] boxed an answer whose samples add to 7 instead of $(\sum x)(\sum h) = 8$ (see [[0-toolkit/05-errata|errata]]).
+**On the exam:** a finite convolution is on every past midterm ([[problems/finite-length-convolution|finite-length convolution]], 7/7, e.g. [[exams/midterm-1/past-exams/fall-2025|FA2025 #3a]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #2]]) and an infinite or mixed one on 5 of 7 ([[problems/infinite-length-convolution|infinite-length convolution]], e.g. [[exams/midterm-1/past-exams/fall-2025|FA2025 #3b]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #4b]]). Always run the sum check: the official key of [[exams/midterm-1/past-exams/spring-2025|SP2025 #4(a)]] boxed an answer whose samples add to 7 instead of $(\sum x)(\sum h) = 8$ (see [[0-toolkit/05-errata|errata]]).
 
 ## What the rubric teaches
 

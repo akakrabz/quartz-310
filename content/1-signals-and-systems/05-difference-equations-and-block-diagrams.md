@@ -141,7 +141,7 @@ First samples: $-1,\ -\tfrac14,\ \tfrac{7}{16},\ \tfrac{7}{64},\ \dots$, matchin
 
 For second-order feedback ($y[n-2]$ terms) this trick needs the impulse response of a 2nd-order recursion, which is exactly what the z-transform and partial fractions deliver in [[2-z-transform/09-transfer-functions|Lecture 9]]. Until then you can always run the recursion by hand for a few samples:
 
-> [!question] [[0-midterm-1/past-exams/spring-2021|SP2021 #6]]: a causal LTI system at rest satisfies $y[n] = 2y[n-3] - x[n] + x[n-3]$. Find $h[0]$, $h[1]$, $h[3]$, $h[4]$.
+> [!question] [[exams/midterm-1/past-exams/spring-2021|SP2021 #6]]: a causal LTI system at rest satisfies $y[n] = 2y[n-3] - x[n] + x[n-3]$. Find $h[0]$, $h[1]$, $h[3]$, $h[4]$.
 
 > [!success]- Answer (the official key gets the sign wrong)
 > Run $h[n] = 2h[n-3] - \delta[n] + \delta[n-3]$ with $h[n] = 0$ for $n < 0$:
@@ -170,10 +170,10 @@ Iterating the example from rest gives $h = \{\underset{\uparrow}{3}, -\tfrac12, 
 ## 6. On the exam
 
 > [!exam] Where Lecture 5 shows up
-> - **LCCDE ↔ $H(z)$ ↔ response, on 7 of 7 exams (15–20 points):** [[0-midterm-1/past-exams/fall-2025|FA2025 #6]], [[0-midterm-1/past-exams/spring-2025|SP2025 #8]], [[0-midterm-1/past-exams/fall-2024|FA2024 #6]], [[0-midterm-1/past-exams/fall-2023|FA2023 #6–7]], [[0-midterm-1/past-exams/spring-2023|SP2023 #5–6]], [[0-midterm-1/past-exams/spring-2021|SP2021 #6]], [[0-midterm-1/past-exams/fall-2019|FA2019 #10]]. These are solved with the z-transform (Lecture 9), but they start and end with a difference equation written in the **Lecture 9 sign convention**: read it off $H(z)$ and do not flip signs twice. Recipe: [[problems/lccde-to-transfer-function-and-response]].
-> - **FIR ⇒ stable:** [[0-midterm-1/past-exams/fall-2025|FA2025 #4]] (the modified moving average $y[n] = \frac1L\sum_{k=0}^{L-1}x[n-Sk]$ has $h = \tfrac13(\delta[n] + \delta[n-4] + \delta[n-8])$ for $L = 3$, $S = 4$, always stable) and [[0-midterm-1/past-exams/fall-2019|FA2019 #1(e)]] ("an FIR system can be stable or unstable": False).
-> - **An LCCDE alone does not fix the system:** [[0-midterm-1/past-exams/fall-2019|FA2019 #1(a)]] (True): $y[n] - \tfrac12 y[n-1] = x[n]$ is satisfied by the causal $h = (\tfrac12)^n u[n]$ *and* by the anti-causal $h = -(\tfrac12)^n u[-n-1]$. Initial rest / causality is an extra assumption; in the z-domain it is the choice of ROC.
-> - **Recursions that run backwards:** an anti-causal system is still a recursion, run from the future to the past, e.g. $y_1[n-1] = -\tfrac12 y_1[n] + \tfrac98 x[n]$ in [[0-midterm-1/past-exams/fall-2025|FA2025 #7(b)]]. See [[problems/two-sided-systems-as-recursions]].
+> - **LCCDE ↔ $H(z)$ ↔ response, on 7 of 7 exams (15–20 points):** [[exams/midterm-1/past-exams/fall-2025|FA2025 #6]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #8]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #6]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #6–7]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #5–6]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #6]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #10]]. These are solved with the z-transform (Lecture 9), but they start and end with a difference equation written in the **Lecture 9 sign convention**: read it off $H(z)$ and do not flip signs twice. Recipe: [[problems/lccde-to-transfer-function-and-response]].
+> - **FIR ⇒ stable:** [[exams/midterm-1/past-exams/fall-2025|FA2025 #4]] (the modified moving average $y[n] = \frac1L\sum_{k=0}^{L-1}x[n-Sk]$ has $h = \tfrac13(\delta[n] + \delta[n-4] + \delta[n-8])$ for $L = 3$, $S = 4$, always stable) and [[exams/midterm-1/past-exams/fall-2019|FA2019 #1(e)]] ("an FIR system can be stable or unstable": False).
+> - **An LCCDE alone does not fix the system:** [[exams/midterm-1/past-exams/fall-2019|FA2019 #1(a)]] (True): $y[n] - \tfrac12 y[n-1] = x[n]$ is satisfied by the causal $h = (\tfrac12)^n u[n]$ *and* by the anti-causal $h = -(\tfrac12)^n u[-n-1]$. Initial rest / causality is an extra assumption; in the z-domain it is the choice of ROC.
+> - **Recursions that run backwards:** an anti-causal system is still a recursion, run from the future to the past, e.g. $y_1[n-1] = -\tfrac12 y_1[n] + \tfrac98 x[n]$ in [[exams/midterm-1/past-exams/fall-2025|FA2025 #7(b)]]. See [[problems/two-sided-systems-as-recursions]].
 > - Block diagrams have not been tested on the seven past exams or in HW1–HW4; know the three blocks and how to read a diagram back into an LCCDE.
 
 ## Related

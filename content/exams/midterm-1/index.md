@@ -1,17 +1,17 @@
 ---
-title: "Midterm 1 survival guide"
-description: "Everything for ECE 310 Midterm 1 (Wed Sep 30, 2026, 7–9 pm): scope, format, how often each problem type has appeared, a plan for the remaining hours, the fifteen traps that cost the most points, and the review lecture's six problems with folded, verified solutions."
+title: "Midterm 1 review guide"
+description: "The review guide for ECE 310 Midterm 1 (held Wed Sep 30, 2026, 7–9 pm; Lectures 1–11, HW1–HW4): scope, format, how often each problem type appeared on seven past exams, a plan for the last day before the exam, the fifteen traps that cost the most points, and the review lecture's six problems with folded, verified solutions."
 tags: [midterm-1, exam]
 ---
 
-*Midterm 1 · Wednesday, September 30, 2026 · 7:00–9:00 pm · Lectures 1–11 · HW1–HW4 · review lecture Monday Sep 28*
+*Midterm 1 · held Wednesday, September 30, 2026, 7:00–9:00 pm · Lectures 1–11 · HW1–HW4 · review lecture Monday Sep 28 · part of [[exams/index|Exams]]*
 
 > [!abstract] In one breath
-> Two hours, about eight problems, 100 points, one handwritten two-sided sheet, no calculator, answers in closed form. Every past exam has the same skeleton: **True/False → the linear / time-invariant / causal / stable table → convolution → z-transforms with ROC → an LCCDE / transfer-function problem → PFE with the right ROC → a stability or unbounded-output problem.** The review lecture walked through exactly that sequence. Today: write your sheet, take FA2025 and SP2025 under exam conditions, repair every miss with the matching problem-family page, and stop learning new material an hour before the exam.
+> Two hours, about eight problems, 100 points, one handwritten two-sided sheet, no calculator, answers in closed form. Every past exam has the same skeleton: **True/False → the linear / time-invariant / causal / stable table → convolution → z-transforms with ROC → an LCCDE / transfer-function problem → PFE with the right ROC → a stability or unbounded-output problem.** The review lecture walked through exactly that sequence. To prepare: write your sheet, take FA2025 and SP2025 under exam conditions, repair every miss with the matching problem-family page, and stop learning new material an hour before the exam. After the exam the page stays useful as a review of Units 1–2: the scope table is a checklist, the trap list a summary, and the review problems a self-test.
 
 ## 1. Scope
 
-**On the exam: Lectures 1–11 and HW1–HW4.**
+**Covered: Lectures 1–11 and HW1–HW4.**
 
 | unit | lectures | what you must be able to do |
 |---|---|---|
@@ -20,7 +20,7 @@ tags: [midterm-1, exam]
 
 Homework: [[homework/hw1|HW1]] · [[homework/hw2|HW2]] · [[homework/hw3|HW3]] · [[homework/hw4|HW4]].
 
-**Not on the exam:** the DTFT (Lectures 13–14, HW5) and Lecture 12 (convolution as template matching — "will not be tested on homeworks or exams"); see [[3-beyond-midterm-1/index|Beyond Midterm 1]]. Old exams contain DTFT problems — skip them: SP2023 #1(d)–(e), #8, #9 and FA2019 #8, #9.
+**Not on Midterm 1:** the DTFT (Lectures 13–14, HW5) and Lecture 12 (convolution as template matching — "will not be tested on homeworks or exams"); they open [[3-fourier-analysis/index|Unit 3]]. Two old Midterm 1 exams contain DTFT problems — SP2023 #1(d)–(e), #8, #9 and FA2019 #8, #9 — which make good self-tests for Unit 3 instead.
 
 ## 2. Format
 
@@ -41,8 +41,8 @@ Each row is an exam recipe. Seven of the eleven families appeared on **all seven
 
 | problem family | FA25 | SP25 | FA24 | FA23 | SP23 | SP21 | FA19 | count |
 |---|---|---|---|---|---|---|---|---|
-| True/False → [[0-midterm-1/true-false-bank\|T/F bank]] | #1 | #1 | #1 | #1 | #1 | #1 | #1 | 7/7 |
-| [[problems/classifying-system-properties\|System-property table]] → [[0-midterm-1/system-property-bank\|property bank]] | #2 | #2 | #2 | #2 | #2 | #3 | #2 | 7/7 |
+| True/False → [[exams/midterm-1/true-false-bank\|T/F bank]] | #1 | #1 | #1 | #1 | #1 | #1 | #1 | 7/7 |
+| [[problems/classifying-system-properties\|System-property table]] → [[exams/midterm-1/system-property-bank\|property bank]] | #2 | #2 | #2 | #2 | #2 | #3 | #2 | 7/7 |
 | [[problems/finite-length-convolution\|Finite-length convolution]] | #3a | #4a | #4a | #3a | #3a | #2 | #4 | 7/7 |
 | [[problems/infinite-length-convolution\|Infinite / mixed convolution]] | #3b | #4b | #4b | #3b | #3b,#3c | — | — | 5/7 |
 | [[problems/finding-h-from-input-output-pairs\|Finding h (or H) from input–output data]] | #4 | #3 | #3,#6 | #4 | #4,#6 | #7 | #3 | 7/7 |
@@ -53,28 +53,28 @@ Each row is an exam recipe. Seven of the eleven families appeared on **all seven
 | [[problems/parameters-for-stability\|Parameters for stability]] | — | #7 | #8 | #8 | — | — | — | 3/7 |
 | [[problems/two-sided-systems-as-recursions\|Two-sided systems as recursions]] | #7b | — | #8a | — | — | — | — | 2/7 |
 
-Every problem of every past exam, mapped to its family and lectures: [[0-midterm-1/past-exams/index|past exams]] (each exam page has the problems with folded solutions).
+Every problem of every past exam, mapped to its family and lectures: [[exams/midterm-1/past-exams/index|past exams]] (each exam page has the problems with folded solutions).
 
 > [!exam] Read the table as a to-do list
 > The seven 7/7 families are worth well over half the points on every exam. If you can do those cold — with ROCs stated and $n = 0$ marked — you have passed. The three problem slots that change between exams (infinite convolution, parameters for stability, two-sided recursions) are variations on the same PFE-and-ROC skills.
 
-## 4. Plan for the remaining hours
+## 4. A plan for the last day before the exam
 
 Adapt the blocks to the time you have; keep the order.
 
 | block | time | what | where |
 |---|---|---|---|
-| 1 | 60 min | **Write your handwritten sheet.** The act of writing it is the first review. | [[0-midterm-1/cheat-sheet\|cheat sheet]] |
-| 2 | 120 min | **FA2025 under exam conditions** — timer, your sheet only, no calculator. It is the most recent exam by the same instructor. | [[0-midterm-1/past-exams/fall-2025\|Fall 2025]] |
+| 1 | 60 min | **Write your handwritten sheet.** The act of writing it is the first review. | [[exams/midterm-1/cheat-sheet\|cheat sheet]] |
+| 2 | 120 min | **FA2025 under exam conditions** — timer, your sheet only, no calculator. It is the most recent exam by the same instructor. | [[exams/midterm-1/past-exams/fall-2025\|Fall 2025]] |
 | 3 | 45 min | Grade it with the folded solutions. For every lost point: read the family page's recipe and trap, then redo the problem without looking. | [[problems/index\|problem families]] |
 | — | 30 min | Break and a real meal. | |
-| 4 | 120 min | **SP2025 under exam conditions.** | [[0-midterm-1/past-exams/spring-2025\|Spring 2025]] |
+| 4 | 120 min | **SP2025 under exam conditions.** | [[exams/midterm-1/past-exams/spring-2025\|Spring 2025]] |
 | 5 | 30 min | Grade and repair, as in block 3; add anything you had to look up to your sheet. | |
-| 6 | 30–45 min | Randomized drills on your weakest skill, then the T/F and property banks. | [[0-midterm-1/practice-drills\|practice drills]] · [[0-midterm-1/true-false-bank\|T/F bank]] · [[0-midterm-1/system-property-bank\|property bank]] |
-| 7 | last hour before 7 pm | **Light review only**: re-read §5 below and your sheet. No new problems. Eat, pack your sheet and pencils, arrive early. | |
+| 6 | 30–45 min | Randomized drills on your weakest skill, then the T/F and property banks. | [[demos/practice-drills\|practice drills]] · [[exams/midterm-1/true-false-bank\|T/F bank]] · [[exams/midterm-1/system-property-bank\|property bank]] |
+| 7 | last hour before the exam | **Light review only**: re-read §5 below and your sheet. No new problems. Eat, pack your sheet and pencils, arrive early. | |
 
 > [!tip] Short on time (about 4 hours)?
-> Sheet (45 min) → FA2025 problems #1, #2, #3, #6, #7, #8 timed (75 min) → repair the misses with the family pages (45 min) → T/F bank and the trap list (30 min) → light review. If you only have an hour: read the trap list, then the [[0-midterm-1/cheat-sheet|cheat sheet]] §6, §8 and §10.
+> Sheet (45 min) → FA2025 problems #1, #2, #3, #6, #7, #8 timed (75 min) → repair the misses with the family pages (45 min) → T/F bank and the trap list (30 min) → light review. If you only have an hour: read the trap list, then the [[exams/midterm-1/cheat-sheet|cheat sheet]] §6, §8 and §10.
 
 ## 5. The fifteen traps that cost the most points
 
@@ -126,7 +126,7 @@ The Midterm 1 Review (Monday Sep 28) worked **one past-exam problem per exam sec
 > - (i) **False** — the input is itself unbounded; even the stable system $y[n] = x[n]$ passes it through.
 > - (j) **False** — "we may have pole-zero cancellation": an input with a zero on the unstable pole gives a bounded output.
 >
-> More statements like these, from all seven exams: [[0-midterm-1/true-false-bank|T/F bank]].
+> More statements like these, from all seven exams: [[exams/midterm-1/true-false-bank|T/F bank]].
 
 ### 6.2 The property table — SP2023 #2
 
@@ -140,7 +140,7 @@ The Midterm 1 Review (Monday Sep 28) worked **one past-exam problem per exam sec
 > | $x[n]/x[2]$ | No | No | No | No |
 > | $\cos^2(\tfrac{\pi}{2}n)\,x[n]$ | Yes | No | Yes | Yes |
 >
-> (1) A convolution is LTI; $h = (-1)^nu[n]$ vanishes for $n<0$ (causal) but $\sum\lvert h\rvert = \infty$ (unstable). (2) Doubling $x$ leaves $y$ unchanged, so it is not linear; the fixed sample $x[2]$ makes it shift-varying, and non-causal (at $n = 0$ it needs $x[2]$); a bounded input with $x[2] = 0$, such as $\delta[n]$, divides by zero — not stable. (3) The coefficient depends on $n$: linear but shift-varying; memoryless, so causal; $\lvert\cos^2\rvert\le1$, so stable. Every system from the past tables and the lectures: [[0-midterm-1/system-property-bank|property bank]].
+> (1) A convolution is LTI; $h = (-1)^nu[n]$ vanishes for $n<0$ (causal) but $\sum\lvert h\rvert = \infty$ (unstable). (2) Doubling $x$ leaves $y$ unchanged, so it is not linear; the fixed sample $x[2]$ makes it shift-varying, and non-causal (at $n = 0$ it needs $x[2]$); a bounded input with $x[2] = 0$, such as $\delta[n]$, divides by zero — not stable. (3) The coefficient depends on $n$: linear but shift-varying; memoryless, so causal; $\lvert\cos^2\rvert\le1$, so stable. Every system from the past tables and the lectures: [[exams/midterm-1/system-property-bank|property bank]].
 
 ### 6.3 Convolution — FA2023 #3
 
@@ -224,14 +224,14 @@ The Midterm 1 Review (Monday Sep 28) worked **one past-exam problem per exam sec
 
 ## 7. See how it fits together
 
-The [[0-midterm-1/concept-map.canvas|concept map]] is a pannable canvas of the ~25 ideas that carry Midterm 1 — from $\delta[n]$ through convolution and the transfer function to ROCs, causality, stability and the exam's problem families — with labelled arrows showing what depends on what. Click a box to open its page.
+The [[concepts/concept-map.canvas|concept map]] is a pannable canvas of the ~25 ideas that carry Midterm 1 — from $\delta[n]$ through convolution and the transfer function to ROCs, causality, stability and the exam's problem families — with labelled arrows showing what depends on what. Click a box to open its page.
 
 > [!tip] In the exam room
 > Skim all problems first (two minutes). Bank the T/F and the property table quickly — 24 points, don't overthink. Write the ROC next to **every** transform the moment you write the transform, and mark $n = 0$ on every sequence. Check convolutions with $\sum y = \sum x\cdot\sum h$ and PFEs by $h[0] = \lim_{z\to\infty}H(z)$. Leave ten minutes to re-read what the question actually asks (causal? stable? *all* possible ROCs?).
 
 ## Related
 
-[[0-midterm-1/cheat-sheet|cheat sheet]] · [[0-midterm-1/practice-drills|practice drills]] · [[0-midterm-1/true-false-bank|T/F bank]] · [[0-midterm-1/system-property-bank|property bank]] · [[0-midterm-1/past-exams/index|past exams]] · [[problems/index|problem families]] · [[0-toolkit/05-errata|errata]] · [[index|home]]
+[[exams/midterm-1/cheat-sheet|cheat sheet]] · [[demos/practice-drills|practice drills]] · [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|property bank]] · [[exams/midterm-1/past-exams/index|past exams]] · [[problems/index|problem families]] · [[0-toolkit/05-errata|errata]] · [[exams/index|all exams]] · [[index|home]]
 
 ### Sources for this page
 

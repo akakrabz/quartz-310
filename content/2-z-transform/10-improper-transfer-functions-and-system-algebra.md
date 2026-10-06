@@ -29,7 +29,7 @@ i.e. the numerator's highest power $z^{-(M-1)}$ is lower than the denominator's 
 > The $C_k$ come from long division, the $A_k$ from a PFE of the **remainder** over the denominator.
 
 > [!trap] Count degrees in $z^{-1}$ — and "equal" already counts as improper
-> HW4 #3(a) gives $H(z) = \dfrac{z(z-4)}{z^2-5z+6}$, which *looks* improper in $z$ (the official solution long-divides in $z$). In powers of $z^{-1}$ it is $\dfrac{1-4z^{-1}}{(1-2z^{-1})(1-3z^{-1})}$ — **proper**, so the PFE is immediate: $A = 2$ at $z = 2$, $A = -1$ at $z = 3$, $h[n] = (2^{n+1} - 3^n)u[n]$ (the same sequence as the key's $\delta[n] + 4(2)^{n-1}u[n-1] - 3^n u[n-1]$). Conversely, **equal** degrees in $z^{-1}$ are improper: FA2025 #6's $\dfrac{1-z^{-2}}{(1-2z^{-1})(1+\frac23 z^{-1})}$ hides a constant $C_0 = \tfrac34$, and without it the cover-up coefficients are wrong.
+> HW4 #3(a) gives $H(z) = \dfrac{z(z-4)}{z^2-5z+6}$, which *looks* improper in $z$ (the official solution long-divides in $z$). In powers of $z^{-1}$ it is $\dfrac{1-4z^{-1}}{(1-2z^{-1})(1-3z^{-1})}$ — **proper**, so the PFE is immediate: $A = 2$ at $z = 2$, $A = -1$ at $z = 3$, $h[n] = (2^{n+1} - 3^n)u[n]$ (the same sequence as the key's $\delta[n] + 4(2)^{n-1}u[n-1] - 3^n u[n-1]$). Conversely, **equal** degrees in $z^{-1}$ are improper: FA2025 #6's $\dfrac{1-z^{-2}}{(1-2z^{-1})(1+\frac23 z^{-1})}$ hides a constant $C_0 = \tfrac34$. Cover-up still gives the right $A_k$ ($\tfrac{9}{16}$ at $2$, $-\tfrac{5}{16}$ at $-\tfrac23$), but without $C_0$ the expansion is wrong: $h[n]$ loses its $\tfrac34\delta[n]$, and $h[0]$ comes out $\tfrac14$ instead of $1$.
 
 ## 2. Exercise 1 — the same $h[n]$ two ways
 
@@ -82,7 +82,7 @@ $$
 > [!recipe] Improper $H(z) \to h[n]$
 > 1. Write $H$ in powers of $z^{-1}$ and compare degrees; numerator degree $\ge$ denominator degree ⇒ improper.
 > 2. Long-divide from the **highest** power of $z^{-1}$ down, until the remainder's degree is below the denominator's. The quotient is $C_0 + C_1 z^{-1} + \dots$
-> 3. PFE of remainder ÷ denominator by cover-up (the numerator is the *remainder*, not the original numerator).
+> 3. PFE of remainder ÷ denominator by cover-up. (Cover-up with the *original* numerator gives the same $A_k$, because the quotient part vanishes at every pole, which makes a quick check. What only the division gives you is the $C_k$.)
 > 4. Invert: $C_k z^{-k} \to C_k\,\delta[n-k]$; $\dfrac{A_k}{1-p_kz^{-1}} \to A_k p_k^n u[n]$ (or $-A_k p_k^n u[-n-1]$ for the left-sided choice).
 > 5. Check $h[0]$ against the LCCDE ($h[0] = b_0$ for a causal system).
 
@@ -181,9 +181,9 @@ FA2019 #10(d) is the same idea: the zero of $H$ at $2$ cancels the pole of the u
 > In HW4 #5 with $x = u[n]$ and $h_1$ first, the signal *between* the two blocks grows like $2n$ while the final output settles at $\tfrac83$ (checked numerically). The input–output system is stable; a real implementation of the first block would still overflow. Exams only ask about the input–output $H(z)$.
 
 > [!exam] Where Lecture 10 shows up
-> - **Improper $H(z)$ inside LCCDE problems** (family: [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]], 7/7 exams): any numerator whose delays reach the denominator's — [[0-midterm-1/past-exams/fall-2025|FA2025 #6]] (equal degrees, $C_0 = \tfrac34$ if you invert $H$), [[0-midterm-1/past-exams/spring-2021|SP2021 #6]] (above). In [[homework/hw4|HW4]], #1(b) is improper and #3(a) only *looks* improper.
-> - **System algebra with sequences**: [[0-midterm-1/past-exams/fall-2024|FA2024 #3]] (series: $x = \{\underset{\uparrow}{1}, -1\}$, $h_2 = \{\underset{\uparrow}{2}, 1\}$, $y = \{4, \underset{\uparrow}{-2}, -2\}$ ⇒ $h_1 = 2\delta[n+1]$, overall $h = \{4, \underset{\uparrow}{2}\}$, non-causal); [[0-midterm-1/past-exams/spring-2025|SP2025 #3]] (parallel: $h_1 = \delta[n-1]$ and the data force $h_2 = \delta[n+1]$, overall $h = \{1, \underset{\uparrow}{0}, 1\}$, non-causal). Family: [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]].
-> - **Cascades and cancellation**: [[0-midterm-1/past-exams/fall-2019|FA2019 #10(d)]], HW4 #5, and the T/F items above — collected in the [[0-midterm-1/true-false-bank|T/F bank]].
+> - **Improper $H(z)$ inside LCCDE problems** (family: [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]], 7/7 exams): any numerator whose delays reach the denominator's — [[exams/midterm-1/past-exams/fall-2025|FA2025 #6]] (equal degrees, $C_0 = \tfrac34$ if you invert $H$), [[exams/midterm-1/past-exams/spring-2021|SP2021 #6]] (above). In [[homework/hw4|HW4]], #1(b) is improper and #3(a) only *looks* improper.
+> - **System algebra with sequences**: [[exams/midterm-1/past-exams/fall-2024|FA2024 #3]] (series: $x = \{\underset{\uparrow}{1}, -1\}$, $h_2 = \{\underset{\uparrow}{2}, 1\}$, $y = \{4, \underset{\uparrow}{-2}, -2\}$ ⇒ $h_1 = 2\delta[n+1]$, overall $h = \{4, \underset{\uparrow}{2}\}$, non-causal); [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]] (parallel: $h_1 = \delta[n-1]$ and the data force $h_2 = \delta[n+1]$, overall $h = \{1, \underset{\uparrow}{0}, 1\}$, non-causal). Family: [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]].
+> - **Cascades and cancellation**: [[exams/midterm-1/past-exams/fall-2019|FA2019 #10(d)]], HW4 #5, and the T/F items above — collected in the [[exams/midterm-1/true-false-bank|T/F bank]].
 
 ## Related
 

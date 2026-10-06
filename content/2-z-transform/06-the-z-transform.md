@@ -88,7 +88,7 @@ $$
 > $$
 > u[n]\ \longleftrightarrow\ \frac{1}{1-z^{-1}},\ |z|>1 \qquad\qquad -u[-n-1]\ \longleftrightarrow\ \frac{1}{1-z^{-1}},\ |z|<1
 > $$
-> Same $X(z)$, different ROC $\Rightarrow$ different signal. Always state the ROC. (And the constant $x[n]=1$ for all $n$, which is $u[n]+u[-n-1]$, has **no** z-transform at all: it would need $|z|>1$ and $|z|<1$ at once. [[0-midterm-1/past-exams/spring-2025|SP2025]] T/F 1c asks exactly this about $e^{j\frac\pi4n}$ for all $n$: its ROC is empty — True.)
+> Same $X(z)$, different ROC $\Rightarrow$ different signal. Always state the ROC. (And the constant $x[n]=1$ for all $n$, which is $u[n]+u[-n-1]$, has **no** z-transform at all: it would need $|z|>1$ and $|z|<1$ at once. [[exams/midterm-1/past-exams/spring-2025|SP2025]] T/F 1c asks exactly this about $e^{j\frac\pi4n}$ for all $n$: its ROC is empty — True.)
 
 > [!trap] The minus sign in $-a^n u[-n-1]$
 > The left-sided table entry carries a minus sign: $a^n u[-n-1]$ (no minus) transforms to $-\dfrac{1}{1-az^{-1}}$. Dropping it is the most common sign error in two-sided problems.
@@ -137,7 +137,7 @@ $$
 > | $\delta[n+3]+4\delta[n]-\delta[n-2]$ ([[homework/hw3\|HW3]] #1a) | $z^{3}+4-z^{-2}$ | $0<\lvert z\rvert<\infty$ |
 
 > [!trap] A finite pulse has no pole at $z=1$
-> [[0-midterm-1/past-exams/fall-2025|FA2025]] #5(b): $u[n]-u[n-8]=\{\underset{\uparrow}{1},1,1,1,1,1,1,1\}$ (eight ones, $n=0..7$), so $X(z)=\sum_{k=0}^{7}z^{-k}=\dfrac{1-z^{-8}}{1-z^{-1}}$. The closed form *looks* like it has a pole at $z=1$, but the numerator vanishes there too ($1-1^{-8}=0$): the sum is simply $X(1)=8$. ROC: $z\neq 0$ — **not** $|z|>1$.
+> [[exams/midterm-1/past-exams/fall-2025|FA2025]] #5(b): $u[n]-u[n-8]=\{\underset{\uparrow}{1},1,1,1,1,1,1,1\}$ (eight ones, $n=0..7$), so $X(z)=\sum_{k=0}^{7}z^{-k}=\dfrac{1-z^{-8}}{1-z^{-1}}$. The closed form *looks* like it has a pole at $z=1$, but the numerator vanishes there too ($1-1^{-8}=0$): the sum is simply $X(1)=8$. ROC: $z\neq 0$ — **not** $|z|>1$.
 
 ## 6. The shape of the ROC: right-, left- and two-sided
 
@@ -201,12 +201,12 @@ Swap which pole goes with which side and the ring disappears: $3^n u[n]+(\tfrac1
 > (i) $x[n]=3^n u[-n+2]$. $\qquad$ (ii) $x[n]=e^{-n^2}\,u[n-8]\,u[-n+10]$.
 
 > [!success]- Answers
-> (i) Left-sided, ending at $n=2$. With $m=2-n\ge 0$: $\sum_{n\le2}(3z^{-1})^{n}=(3z^{-1})^{2}\sum_{m\ge0}\left(\tfrac{z}{3}\right)^m=\dfrac{9z^{-2}}{1-\frac13 z}$, which needs $|z|<3$; the $n=1,2$ terms put $z^{-1},z^{-2}$ in the sum, so $z=0$ is excluded. $X(z)=\dfrac{9z^{-2}}{1-\frac13 z}=\dfrac{-27z^{-3}}{1-3z^{-1}}$, ROC $0<|z|<3$. ([[0-midterm-1/past-exams/spring-2025|SP2025]] #5b.)
+> (i) Left-sided, ending at $n=2$. With $m=2-n\ge 0$: $\sum_{n\le2}(3z^{-1})^{n}=(3z^{-1})^{2}\sum_{m\ge0}\left(\tfrac{z}{3}\right)^m=\dfrac{9z^{-2}}{1-\frac13 z}$, which needs $|z|<3$; the $n=1,2$ terms put $z^{-1},z^{-2}$ in the sum, so $z=0$ is excluded. $X(z)=\dfrac{9z^{-2}}{1-\frac13 z}=\dfrac{-27z^{-3}}{1-3z^{-1}}$, ROC $0<|z|<3$. ([[exams/midterm-1/past-exams/spring-2025|SP2025]] #5b.)
 >
-> (ii) The two steps leave only $n=8,9,10$: $X(z)=e^{-64}z^{-8}+e^{-81}z^{-9}+e^{-100}z^{-10}$, ROC $z\neq0$. (The [[0-midterm-1/past-exams/fall-2019|FA2019]] key writes $e^{-91}$ for $e^{-81}$ and calls the answer $X_d(\omega)$ — both slips, see [[0-toolkit/05-errata|errata]].)
+> (ii) The two steps leave only $n=8,9,10$: $X(z)=e^{-64}z^{-8}+e^{-81}z^{-9}+e^{-100}z^{-10}$, ROC $z\neq0$. (The [[exams/midterm-1/past-exams/fall-2019|FA2019]] key writes $e^{-91}$ for $e^{-81}$ and calls the answer $X_d(\omega)$ — both slips, see [[0-toolkit/05-errata|errata]].)
 
 > [!exam] How Lecture 6 is tested
-> "Compute the z-transform **and ROC**" is on 6 of 7 past exams, worth 9–15 points — [[problems/z-transform-with-roc|z-transform with ROC]]: [[0-midterm-1/past-exams/fall-2025|FA2025 #5]] (shifted complex exponential $e^{j\pi n/3}u[n+4]$, the finite pulse above, $\cos^2(\frac{\pi}{4}n)u[n]$), [[0-midterm-1/past-exams/spring-2025|SP2025 #5]] (a sum of shifted steps, $3^n u[-n+2]$, a two-sided signal with ROC $\frac16<|z|<\frac43$), [[0-midterm-1/past-exams/fall-2024|FA2024 #5]], [[0-midterm-1/past-exams/fall-2023|FA2023 #5]], [[0-midterm-1/past-exams/spring-2021|SP2021 #4]], [[0-midterm-1/past-exams/fall-2019|FA2019 #5]]. Points go for: a missing ROC, a missing "$z\neq0$" on finite or delayed signals, the sign of left-sided pieces, and forgetting to intersect ROCs. The same-$X(z)$-different-ROC idea returns in every [[problems/all-possible-rocs|all-possible-ROCs]] problem (7/7 exams).
+> "Compute the z-transform **and ROC**" is on 6 of 7 past exams, worth 9–15 points — [[problems/z-transform-with-roc|z-transform with ROC]]: [[exams/midterm-1/past-exams/fall-2025|FA2025 #5]] (shifted complex exponential $e^{j\pi n/3}u[n+4]$, the finite pulse above, $\cos^2(\frac{\pi}{4}n)u[n]$), [[exams/midterm-1/past-exams/spring-2025|SP2025 #5]] (a sum of shifted steps, $3^n u[-n+2]$, a two-sided signal with ROC $\frac16<|z|<\frac43$), [[exams/midterm-1/past-exams/fall-2024|FA2024 #5]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #5]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #4]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #5]]. Points go for: a missing ROC, a missing "$z\neq0$" on finite or delayed signals, the sign of left-sided pieces, and forgetting to intersect ROCs. The same-$X(z)$-different-ROC idea returns in every [[problems/all-possible-rocs|all-possible-ROCs]] problem (7/7 exams).
 
 ## Related
 

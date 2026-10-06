@@ -166,11 +166,11 @@ flowchart TD
 > $$
 
 > [!exam] LCCDE ↔ $H(z)$ ↔ response — on all 7 past exams, 15–20 points
-> - [[0-midterm-1/past-exams/fall-2025|FA2025 #6]] (above) · [[0-midterm-1/past-exams/spring-2025|SP2025 #8]]: $H \to$ LCCDE, input $\delta[n] + \tfrac32\delta[n-1]$ cancels the pole $-\tfrac32$, then *two* possible outputs ($|z| > \tfrac12$: $2(\tfrac12)^n u[n] - 3(\tfrac12)^{n-1}u[n-1]$; or $|z| < \tfrac12$) and the stable $h$.
-> - [[0-midterm-1/past-exams/spring-2023|SP2023 #5]]: $y[n] = y[n-1] + \tfrac34 y[n-2] + x[n] - 4x[n-2]$, poles $\tfrac32, -\tfrac12$; the input $2\delta[n] - 3\delta[n-1] = 2(1-\tfrac32 z^{-1})$ cancels the *unstable* pole: $y = 2(-\tfrac12)^n u[n] - 8(-\tfrac12)^{n-2}u[n-2]$. SP2023 #6: $H = Y/X$ from two z-transforms, then the LCCDE — the key repeats $y[n-1]$; correct $y[n] = \tfrac34 y[n-1] - \tfrac18 y[n-2] + x[n] - 2x[n-1]$.
-> - [[0-midterm-1/past-exams/fall-2024|FA2024 #6]]: $H = Y/X = \dfrac{1+\frac12 z^{-1}}{1+\frac13 z^{-1}}$ from one input/output pair, then $h$ and the LCCDE $y[n] = -\tfrac13 y[n-1] + x[n] + \tfrac12 x[n-1]$.
-> - [[0-midterm-1/past-exams/fall-2023|FA2023 #6(b), #7]] · [[0-midterm-1/past-exams/fall-2019|FA2019 #10]] (causal → ROC, stable?, LCCDE $y[n] = \tfrac34 y[n-1] - \tfrac18 y[n-2] + x[n] - 2x[n-1]$).
-> - [[0-midterm-1/past-exams/spring-2021|SP2021 #6]]: $y[n] = 2y[n-3] - x[n] + x[n-3]$ at rest — the key's $h[0] = 1$, $h[3] = 3$ are wrong; $H = \dfrac{-1+z^{-3}}{1-2z^{-3}}$ gives $h[0] = -1$, $h[1] = 0$, $h[3] = -1$, $h[4] = 0$.
+> - [[exams/midterm-1/past-exams/fall-2025|FA2025 #6]] (above) · [[exams/midterm-1/past-exams/spring-2025|SP2025 #8]]: $H \to$ LCCDE, input $\delta[n] + \tfrac32\delta[n-1]$ cancels the pole $-\tfrac32$, then *two* possible outputs ($|z| > \tfrac12$: $2(\tfrac12)^n u[n] - 3(\tfrac12)^{n-1}u[n-1]$; or $|z| < \tfrac12$) and the stable $h$.
+> - [[exams/midterm-1/past-exams/spring-2023|SP2023 #5]]: $y[n] = y[n-1] + \tfrac34 y[n-2] + x[n] - 4x[n-2]$, poles $\tfrac32, -\tfrac12$; the input $2\delta[n] - 3\delta[n-1] = 2(1-\tfrac32 z^{-1})$ cancels the *unstable* pole: $y = 2(-\tfrac12)^n u[n] - 8(-\tfrac12)^{n-2}u[n-2]$. SP2023 #6: $H = Y/X$ from two z-transforms, then the LCCDE — the key repeats $y[n-1]$; correct $y[n] = \tfrac34 y[n-1] - \tfrac18 y[n-2] + x[n] - 2x[n-1]$.
+> - [[exams/midterm-1/past-exams/fall-2024|FA2024 #6]]: $H = Y/X = \dfrac{1+\frac12 z^{-1}}{1+\frac13 z^{-1}}$ from one input/output pair, then $h$ and the LCCDE $y[n] = -\tfrac13 y[n-1] + x[n] + \tfrac12 x[n-1]$.
+> - [[exams/midterm-1/past-exams/fall-2023|FA2023 #6(b), #7]] · [[exams/midterm-1/past-exams/fall-2019|FA2019 #10]] (causal → ROC, stable?, LCCDE $y[n] = \tfrac34 y[n-1] - \tfrac18 y[n-2] + x[n] - 2x[n-1]$).
+> - [[exams/midterm-1/past-exams/spring-2021|SP2021 #6]]: $y[n] = 2y[n-3] - x[n] + x[n-3]$ at rest — the key's $h[0] = 1$, $h[3] = 3$ are wrong; $H = \dfrac{-1+z^{-3}}{1-2z^{-3}}$ gives $h[0] = -1$, $h[1] = 0$, $h[3] = -1$, $h[4] = 0$.
 >
 > Family page with the full recipe: [[problems/lccde-to-transfer-function-and-response|LCCDE → transfer function → response]]. Unstable poles and bounded inputs continue in [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]].
 

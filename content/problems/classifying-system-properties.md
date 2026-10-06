@@ -15,13 +15,13 @@ Three systems, four columns (**Linear**, **Time-invariant** — older exams say 
 
 Every instance:
 
-- [[0-midterm-1/past-exams/fall-2025|FA2025 #2]]: $\lvert n\rvert\,x[n]$; $\ \lvert x[n]-x[n-1]\rvert$; $\ x[n]*2^n u[-n]$. Plus [[0-midterm-1/past-exams/fall-2025|FA2025 #4(a)]]: is the modified moving average $y[n]=\frac1L\sum_{k=0}^{L-1}x[n-Sk]$ linear? time-invariant?
-- [[0-midterm-1/past-exams/spring-2025|SP2025 #2]]: $x[n]*j^n u[n]$; $\ 2x[\lvert n\rvert]+10$; $\ e^{x[n]+1}$.
-- [[0-midterm-1/past-exams/fall-2024|FA2024 #2]]: $x[n]\,x[n+1]$; $\ \dfrac{x[n]}{\lvert n\rvert+1}$; $\ \sin(x[n])+x[0]$.
-- [[0-midterm-1/past-exams/fall-2023|FA2023 #2]]: $\log(\lvert n\rvert+1)\,x[n]$; $\ x[n]*u[n+1]$; $\ x[n]+3$.
-- [[0-midterm-1/past-exams/spring-2023|SP2023 #2]] (the instructor's worked example in the Midterm 1 review): $x[n]*(-1)^n u[n]$; $\ \dfrac{x[n]}{x[2]}$; $\ \cos^2\!\left(\tfrac{\pi}{2}n\right)x[n]$.
-- [[0-midterm-1/past-exams/spring-2021|SP2021 #3]] (24 pts): $x[n]\cos\!\left(\tfrac{\pi(n-2)}{3}\right)$; $\ x[3]\,x[n]$; $\ (0.8+0.8j)^n x[n]$.
-- [[0-midterm-1/past-exams/fall-2019|FA2019 #2]] (L / SI / C only): $x[\lvert n\rvert+n]$; $\ (0.2)^{\lvert n\rvert}\log x[n]$.
+- [[exams/midterm-1/past-exams/fall-2025|FA2025 #2]]: $\lvert n\rvert\,x[n]$; $\ \lvert x[n]-x[n-1]\rvert$; $\ x[n]*2^n u[-n]$. Plus [[exams/midterm-1/past-exams/fall-2025|FA2025 #4(a)]]: is the modified moving average $y[n]=\frac1L\sum_{k=0}^{L-1}x[n-Sk]$ linear? time-invariant?
+- [[exams/midterm-1/past-exams/spring-2025|SP2025 #2]]: $x[n]*j^n u[n]$; $\ 2x[\lvert n\rvert]+10$; $\ e^{x[n]+1}$.
+- [[exams/midterm-1/past-exams/fall-2024|FA2024 #2]]: $x[n]\,x[n+1]$; $\ \dfrac{x[n]}{\lvert n\rvert+1}$; $\ \sin(x[n])+x[0]$.
+- [[exams/midterm-1/past-exams/fall-2023|FA2023 #2]]: $\log(\lvert n\rvert+1)\,x[n]$; $\ x[n]*u[n+1]$; $\ x[n]+3$.
+- [[exams/midterm-1/past-exams/spring-2023|SP2023 #2]] (the instructor's worked example in the Midterm 1 review): $x[n]*(-1)^n u[n]$; $\ \dfrac{x[n]}{x[2]}$; $\ \cos^2\!\left(\tfrac{\pi}{2}n\right)x[n]$.
+- [[exams/midterm-1/past-exams/spring-2021|SP2021 #3]] (24 pts): $x[n]\cos\!\left(\tfrac{\pi(n-2)}{3}\right)$; $\ x[3]\,x[n]$; $\ (0.8+0.8j)^n x[n]$.
+- [[exams/midterm-1/past-exams/fall-2019|FA2019 #2]] (L / SI / C only): $x[\lvert n\rvert+n]$; $\ (0.2)^{\lvert n\rvert}\log x[n]$.
 - Homework: [[homework/hw1|HW1 #5]] (clipping), [[homework/hw1|HW1 #6]] (windowing), [[homework/hw2|HW2 #1]] (two recursions and $(\tfrac12)^{\lvert n\rvert}x[n]$), [[homework/hw2|HW2 #2]] (convolution ⇒ LTI).
 - Lecture: [[1-signals-and-systems/03-system-properties|Lecture 3]] exercises 1–7 ($x[n]-x[n-1]$, $x^p[n]$, $x[\lvert n\rvert]$, $n\,x[3n]$, $x[n]+x[n-2]-x[n-4]$, $x^{10}[n]+e^{x[n]}$).
 
@@ -51,7 +51,7 @@ Every instance:
 >
 > FA2025 #4(a): linear and time-invariant — the moving average is a sum of scaled, shifted copies of $x$, i.e. a convolution with an FIR $h$ (so also causal and stable).
 >
-> Every row is checked numerically (superposition with random complex inputs, shifted inputs, perturbing future samples, a bounded input that blows up) in `verify/exams/property_bank.py` and `verify/problems/classifying.py`. The full bank with the homework and lecture systems, and a one-line reason per cell, is the [[0-midterm-1/system-property-bank|system-property bank]].
+> Every row is checked numerically (superposition with random complex inputs, shifted inputs, perturbing future samples, a bounded input that blows up) in `verify/exams/property_bank.py` and `verify/problems/classifying.py`. The full bank with the homework and lecture systems, and a one-line reason per cell, is the [[exams/midterm-1/system-property-bank|system-property bank]].
 
 ## The fast rules
 
@@ -180,8 +180,8 @@ All three are checked in `verify/problems/classifying.py` (random-input tests fo
 
 ## Related
 
-- [[0-midterm-1/system-property-bank|System-property bank]] — every system from the seven past tables, HW1–HW2 and Lecture 3, with the reason per cell; [[0-midterm-1/true-false-bank|True/False bank]] for the statement versions.
-- [[0-midterm-1/practice-drills|Practice drills]] — randomized property questions, auto-graded.
+- [[exams/midterm-1/system-property-bank|System-property bank]] — every system from the seven past tables, HW1–HW2 and Lecture 3, with the reason per cell; [[exams/midterm-1/true-false-bank|True/False bank]] for the statement versions.
+- [[demos/practice-drills|Practice drills]] — randomized property questions, auto-graded.
 - Lectures: [[1-signals-and-systems/03-system-properties|Lecture 3]] (definitions and proofs), [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] (LTI ⇒ convolution; stability via $\sum\lvert h\rvert$), [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] (the same two properties read off $H(z)$ and its ROC).
 - Concepts: [[concepts/linearity]], [[concepts/time-invariance]], [[concepts/causality]], [[concepts/bibo-stability]], [[concepts/lti-system]], [[concepts/impulse-response]].
 - Next family: [[problems/finite-length-convolution|finite-length convolution]]; all families: [[problems/index|exam problem families]].

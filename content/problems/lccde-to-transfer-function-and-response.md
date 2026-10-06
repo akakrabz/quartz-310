@@ -18,15 +18,15 @@ A causal system is given as a difference equation (or as $H(z)$, or through one 
 
 | where | given → asked | key result |
 |---|---|---|
-| [[0-midterm-1/past-exams/fall-2025\|FA2025 #6]] (16 pts) | $y[n]=\tfrac43y[n-1]+\tfrac43y[n-2]+x[n]-x[n-2]$ → $H$, poles, zeros, ROC; $y$ for $x=3\delta[n]+2\delta[n-1]$ | $H=\dfrac{1-z^{-2}}{(1-2z^{-1})(1+\frac23z^{-1})}$, $\lvert z\rvert>2$; $x$ cancels $-\tfrac23$: $y=3(2)^nu[n]-3(2)^{n-2}u[n-2]$ |
-| [[0-midterm-1/past-exams/spring-2025\|SP2025 #8a,b]] (20 pts) | $H\to$ LCCDE; all outputs for $x=\delta[n]+\tfrac32\delta[n-1]$ | $y[n]+y[n-1]-\tfrac34y[n-2]=2x[n]-3x[n-1]$; $x$ cancels $-\tfrac32$ → two outputs |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #6]] (15 pts) | causal; input $\{1,\tfrac13\}$ gives output $\{1,\tfrac12\}$ → $H$, $h$, LCCDE | $H=\dfrac{1+\frac12z^{-1}}{1+\frac13z^{-1}}$, $y[n]=-\tfrac13y[n-1]+x[n]+\tfrac12x[n-1]$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #6b]] | $H\to$ LCCDE | $y[n]-\tfrac52y[n-1]+y[n-2]=x[n]-x[n-1]$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #7]] (20 pts) | $H=\dfrac{1-3z^{-1}+2z^{-2}}{1+\frac34z^{-1}-\frac14z^{-2}}$ causal → poles, zeros, ROC; $y$ for $u[n]$; stable? | poles $\tfrac14,-1$; zeros $1,2$; $\lvert z\rvert>1$; $y=-\tfrac75(\tfrac14)^nu[n]+\tfrac{12}{5}(-1)^nu[n]$; unstable |
-| [[0-midterm-1/past-exams/spring-2023\|SP2023 #5]] (20 pts) | $y[n]=y[n-1]+\tfrac34y[n-2]+x[n]-4x[n-2]$ → $H$; $y$ for $x=2\delta[n]-3\delta[n-1]$; stable? | poles $\tfrac32,-\tfrac12$, zeros $\pm2$; $x$ cancels $\tfrac32$: $y=2(-\tfrac12)^nu[n]-8(-\tfrac12)^{n-2}u[n-2]$; unstable |
-| [[0-midterm-1/past-exams/spring-2023\|SP2023 #6c]] | $H\to$ LCCDE | $y[n]=\tfrac34y[n-1]-\tfrac18y[n-2]+x[n]-2x[n-1]$ (the key's typo repeats $y[n-1]$) |
-| [[0-midterm-1/past-exams/spring-2021\|SP2021 #6]] | $y[n]=2y[n-3]-x[n]+x[n-3]$ → $h[0..4]$ | $-1,0,0,-1,0$ (the key's $1,0,0,3,0$ is a sign error) |
-| [[0-midterm-1/past-exams/fall-2019\|FA2019 #10]] (12 pts) | causal $H=\dfrac{1-2z^{-1}}{(1-\frac12z^{-1})(1-\frac14z^{-1})}$ → ROC, stable?, LCCDE | $\lvert z\rvert>\tfrac12$, stable, $y[n]=\tfrac34y[n-1]-\tfrac18y[n-2]+x[n]-2x[n-1]$ |
+| [[exams/midterm-1/past-exams/fall-2025\|FA2025 #6]] (16 pts) | $y[n]=\tfrac43y[n-1]+\tfrac43y[n-2]+x[n]-x[n-2]$ → $H$, poles, zeros, ROC; $y$ for $x=3\delta[n]+2\delta[n-1]$ | $H=\dfrac{1-z^{-2}}{(1-2z^{-1})(1+\frac23z^{-1})}$, $\lvert z\rvert>2$; $x$ cancels $-\tfrac23$: $y=3(2)^nu[n]-3(2)^{n-2}u[n-2]$ |
+| [[exams/midterm-1/past-exams/spring-2025\|SP2025 #8a,b]] (20 pts) | $H\to$ LCCDE; all outputs for $x=\delta[n]+\tfrac32\delta[n-1]$ | $y[n]+y[n-1]-\tfrac34y[n-2]=2x[n]-3x[n-1]$; $x$ cancels $-\tfrac32$ → two outputs |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #6]] (15 pts) | causal; input $\{1,\tfrac13\}$ gives output $\{1,\tfrac12\}$ → $H$, $h$, LCCDE | $H=\dfrac{1+\frac12z^{-1}}{1+\frac13z^{-1}}$, $y[n]=-\tfrac13y[n-1]+x[n]+\tfrac12x[n-1]$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #6b]] | $H\to$ LCCDE | $y[n]-\tfrac52y[n-1]+y[n-2]=x[n]-x[n-1]$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #7]] (20 pts) | $H=\dfrac{1-3z^{-1}+2z^{-2}}{1+\frac34z^{-1}-\frac14z^{-2}}$ causal → poles, zeros, ROC; $y$ for $u[n]$; stable? | poles $\tfrac14,-1$; zeros $1,2$; $\lvert z\rvert>1$; $y=-\tfrac75(\tfrac14)^nu[n]+\tfrac{12}{5}(-1)^nu[n]$; unstable |
+| [[exams/midterm-1/past-exams/spring-2023\|SP2023 #5]] (20 pts) | $y[n]=y[n-1]+\tfrac34y[n-2]+x[n]-4x[n-2]$ → $H$; $y$ for $x=2\delta[n]-3\delta[n-1]$; stable? | poles $\tfrac32,-\tfrac12$, zeros $\pm2$; $x$ cancels $\tfrac32$: $y=2(-\tfrac12)^nu[n]-8(-\tfrac12)^{n-2}u[n-2]$; unstable |
+| [[exams/midterm-1/past-exams/spring-2023\|SP2023 #6c]] | $H\to$ LCCDE | $y[n]=\tfrac34y[n-1]-\tfrac18y[n-2]+x[n]-2x[n-1]$ (the key's typo repeats $y[n-1]$) |
+| [[exams/midterm-1/past-exams/spring-2021\|SP2021 #6]] | $y[n]=2y[n-3]-x[n]+x[n-3]$ → $h[0..4]$ | $-1,0,0,-1,0$ (the key's $1,0,0,3,0$ is a sign error) |
+| [[exams/midterm-1/past-exams/fall-2019\|FA2019 #10]] (12 pts) | causal $H=\dfrac{1-2z^{-1}}{(1-\frac12z^{-1})(1-\frac14z^{-1})}$ → ROC, stable?, LCCDE | $\lvert z\rvert>\tfrac12$, stable, $y[n]=\tfrac34y[n-1]-\tfrac18y[n-2]+x[n]-2x[n-1]$ |
 | [[homework/hw4\|HW4 #6]] | $y[n]=x[n]+0.5x[n-1]-y[n-1]-0.25y[n-2]$ → $H$, $h$, $y$ for $(-1)^nu[n]$ | a factor cancels: $H=\dfrac{1}{1+0.5z^{-1}}$, $h=(-\tfrac12)^nu[n]$, $y=[2(-1)^n-(-\tfrac12)^n]u[n]$ |
 | [[2-z-transform/09-transfer-functions\|Lecture 9]] | notes Exercise 1: $y[n]=\tfrac12y[n-1]+x[n]$; slides Exercises 1–3 (same drill, other numbers) | $H=\dfrac{1}{1-\frac12z^{-1}}$, $h=(\tfrac12)^nu[n]$ |
 | [[2-z-transform/10-improper-transfer-functions-and-system-algebra\|Lecture 10]] | notes Exercise 1: $y[n]=2y[n-1]+3y[n-2]+x[n]-3x[n-1]+x[n-2]+4x[n-3]$ (improper) | $h=\tfrac59\delta[n]-\tfrac43\delta[n-1]+\tfrac{7}{36}3^nu[n]+\tfrac14(-1)^nu[n]$ |
@@ -61,7 +61,7 @@ A causal system is given as a difference equation (or as $H(z)$, or through one 
 > - **Signs when you move terms.** $y[n]=\tfrac34y[n-1]-\tfrac18y[n-2]+\dots$ has denominator $1-\tfrac34z^{-1}+\tfrac18z^{-2}$. Two official keys slip here: SP2021 #6 (sign of $x[n]$ lost) and SP2023 #6c (the $z^{-2}$ term written as $y[n-1]$); see [[0-toolkit/05-errata|errata]].
 > - **Lecture 5 vs Lecture 9 notation.** Lecture 5 writes $y[n]=\sum_i b_i\,y[n-i]+\sum_j c_j\,x[n-j]$: there $b_i$ are the **feedback** coefficients, on the right-hand side, with no sign flip. Lecture 9 (and `scipy.signal.lfilter(b, a, x)`) uses $a_k$ on the left, so $a_k=-b_i$, and $b_k$ are the **input** coefficients. Same letter, different job.
 > - **Missing the cancellation.** FA2025 #6b: $X(z)=3+2z^{-1}=3(1+\tfrac23z^{-1})$ kills the pole at $-\tfrac23$, so only the $2^n$ mode survives. SP2023 #5b: $2-3z^{-1}$ kills the *unstable* pole $\tfrac32$, leaving a bounded output from an unstable system. Expanding before cancelling costs time and usually a sign.
-> - **Improper $Y(z)$.** Cover-up on an improper fraction gives wrong coefficients. $\dfrac{1-z^{-2}}{1-2z^{-1}}$ is improper in $z^{-1}$: use delays ($g[n]-g[n-2]$) or long division.
+> - **Improper $Y(z)$.** Cover-up alone is incomplete. $\dfrac{1-z^{-2}}{1-2z^{-1}}$ is improper in $z^{-1}$: cover-up gives the right $A=\tfrac34$, but misses the polynomial part $\tfrac14+\tfrac12z^{-1}$, i.e. $\tfrac14\delta[n]+\tfrac12\delta[n-1]$. Use delays ($g[n]-g[n-2]$) or long division.
 > - **ROC of the output after cancellation.** ROC$_Y$ is *at least* the intersection and grows when a boundary pole cancels: SP2021 #7 gives ROC$_Y$ $\lvert z\rvert>1$, not $1<\lvert z\rvert<4$.
 > - **Causal is not stable.** An LCCDE run forward from rest is causal; it is stable only if every remaining pole is inside $\lvert z\rvert=1$ (SP2023 #5c, FA2023 #7c: "No").
 > - **Zeros at the origin.** In positive powers, $\dfrac{1+2z^{-1}}{1+\frac16z^{-1}-\frac16z^{-2}} = \dfrac{z(z+2)}{(z+\frac12)(z-\frac13)}$ has a zero at $z=0$ too. $\dfrac{1-z^{-2}}{(1-2z^{-1})(1+\frac23z^{-1})}$ does not: the $z^2$ cancels.
@@ -163,7 +163,7 @@ True
 - Concepts: [[concepts/lccde|LCCDE]], [[concepts/transfer-function|transfer function]], [[concepts/poles-and-zeros|poles and zeros]], [[concepts/fir-and-iir|FIR and IIR]], [[concepts/pole-zero-cancellation|pole–zero cancellation]], [[concepts/partial-fraction-expansion|PFE]], [[concepts/system-algebra|system algebra]].
 - Lectures: [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] (LCCDEs, block diagrams), [[2-z-transform/09-transfer-functions|Lecture 9]] (LCCDE → $H$), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (improper $H$), [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] (stability from the ROC).
 - Related families: [[problems/all-possible-rocs|all possible ROCs]] (the PFE step), [[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]], [[problems/parameters-for-stability|parameters for stability]], [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]] (FA2024 #6).
-- Try it: [[demos/difference-equation-simulator|difference-equation simulator]] (type the coefficients, watch $h[n]$ and the step response), [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]], [[0-midterm-1/practice-drills|practice drills]].
+- Try it: [[demos/difference-equation-simulator|difference-equation simulator]] (type the coefficients, watch $h[n]$ and the step response), [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]], [[demos/practice-drills|practice drills]].
 
 ### Sources for this page
 

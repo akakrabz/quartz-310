@@ -21,14 +21,14 @@ Two formats, both short and both easy to lose points on:
 
 | where | system | asked | answers |
 |---|---|---|---|
-| [[0-midterm-1/past-exams/fall-2025\|FA2025 #8a]] | $\dfrac{1-\frac34z^{-1}}{1+3z^{-1}}$, $\lvert z\rvert>3$ (unstable) | bounded output? | i $(\frac34)^nu[n]$ F · ii $\frac13(\frac12)^nu[n]+(\frac12)^{n-1}u[n-1]$ **T** · iii $(-3)^nu[n]$ F · iv $\delta[n]-\frac34\delta[n-1]$ F · v $\delta[n]+3\delta[n-1]$ **T** |
-| [[0-midterm-1/past-exams/fall-2025\|FA2025 #8b]] | poles $\frac34,\ j,\ e^{j2/3}$, $\lvert z\rvert>1$ (marginal) | unbounded output? | i $\delta[n]-\frac34\delta[n-1]$ F · ii $(\frac23)^nu[n]$ F · iii $j^nu[n]$ **T** · iv $\sin(\frac{\pi}{2}n)u[n]$ **T** · v $\cos(\frac{2\pi}{3}n)u[n]$ F |
-| [[0-midterm-1/past-exams/spring-2025\|SP2025 #6]] | $\dfrac{z}{z-e^{j\pi/4}}$, $\lvert z\rvert>1$ (marginal) | unbounded output? | $u[n]$ F · $e^{j\pi n/4}u[n]$ **T** · $e^{-j\pi n/4}u[n]$ F · $e^{-j3\pi n/4}u[n]$ F · $\cos(\frac{\pi}{4}n)u[n]$ **T** · $4^nu[n]$ **T** |
-| [[0-midterm-1/past-exams/spring-2023\|SP2023 #7]] | $\dfrac{z-3}{z-4}$, $\lvert z\rvert>4$ (unstable) | three constructions | $\delta[n]$; $3^nu[n]-4(3)^{n-1}u[n-1]\to\delta[n]$; $\delta[n]-4\delta[n-1]\to\delta[n]-3\delta[n-1]$ |
-| [[0-midterm-1/past-exams/spring-2021\|SP2021 #5b]] | $\dfrac{3z^{-1}}{1+z^{-2}}$, poles $\pm j$ (marginal) | bounded inputs with unbounded outputs | $j^nu[n]$, $\cos(\frac{\pi}{2}n)u[n]$, $\sin(\frac{\pi}{2}n)u[n]$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #7c]] | causal, poles $\frac14,\ -1$ | not stable: give a bad input | $(-1)^nu[n]=\cos(\pi n)u[n]$ |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #7c,d]] | causal, poles $\frac12,\ 2$; $X$ has a zero at 2 | is $y$ bounded? | yes: $y=2n(\frac12)^nu[n]$ |
-| [[0-midterm-1/past-exams/fall-2019\|FA2019 #10d]] | stable $H$ in series with $2^nu[n]$ | "overall unstable": T/F? | False: the zero of $H$ at 2 cancels the pole |
+| [[exams/midterm-1/past-exams/fall-2025\|FA2025 #8a]] | $\dfrac{1-\frac34z^{-1}}{1+3z^{-1}}$, $\lvert z\rvert>3$ (unstable) | bounded output? | i $(\frac34)^nu[n]$ F · ii $\frac13(\frac12)^nu[n]+(\frac12)^{n-1}u[n-1]$ **T** · iii $(-3)^nu[n]$ F · iv $\delta[n]-\frac34\delta[n-1]$ F · v $\delta[n]+3\delta[n-1]$ **T** |
+| [[exams/midterm-1/past-exams/fall-2025\|FA2025 #8b]] | poles $\frac34,\ j,\ e^{j2/3}$, $\lvert z\rvert>1$ (marginal) | unbounded output? | i $\delta[n]-\frac34\delta[n-1]$ F · ii $(\frac23)^nu[n]$ F · iii $j^nu[n]$ **T** · iv $\sin(\frac{\pi}{2}n)u[n]$ **T** · v $\cos(\frac{2\pi}{3}n)u[n]$ F |
+| [[exams/midterm-1/past-exams/spring-2025\|SP2025 #6]] | $\dfrac{z}{z-e^{j\pi/4}}$, $\lvert z\rvert>1$ (marginal) | unbounded output? | $u[n]$ F · $e^{j\pi n/4}u[n]$ **T** · $e^{-j\pi n/4}u[n]$ F · $e^{-j3\pi n/4}u[n]$ F · $\cos(\frac{\pi}{4}n)u[n]$ **T** · $4^nu[n]$ **T** |
+| [[exams/midterm-1/past-exams/spring-2023\|SP2023 #7]] | $\dfrac{z-3}{z-4}$, $\lvert z\rvert>4$ (unstable) | three constructions | $\delta[n]$; $3^nu[n]-4(3)^{n-1}u[n-1]\to\delta[n]$; $\delta[n]-4\delta[n-1]\to\delta[n]-3\delta[n-1]$ |
+| [[exams/midterm-1/past-exams/spring-2021\|SP2021 #5b]] | $\dfrac{3z^{-1}}{1+z^{-2}}$, poles $\pm j$ (marginal) | bounded inputs with unbounded outputs | $j^nu[n]$, $\cos(\frac{\pi}{2}n)u[n]$, $\sin(\frac{\pi}{2}n)u[n]$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #7c]] | causal, poles $\frac14,\ -1$ | not stable: give a bad input | $(-1)^nu[n]=\cos(\pi n)u[n]$ |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #7c,d]] | causal, poles $\frac12,\ 2$; $X$ has a zero at 2 | is $y$ bounded? | yes: $y=2n(\frac12)^nu[n]$ |
+| [[exams/midterm-1/past-exams/fall-2019\|FA2019 #10d]] | stable $H$ in series with $2^nu[n]$ | "overall unstable": T/F? | False: the zero of $H$ at 2 cancels the pole |
 | [[homework/hw4\|HW4 #3, #5]] | four causal $H$; a cascade | stable? bad input? | (a) $\delta[n]$; (c) $u[n]$, not $\delta[n]$; (d) $\cos(\frac{\pi}{4}n)u[n]$; #5 cascade is stable |
 | [[2-z-transform/11-bibo-stability-and-causality\|Lecture 11]] | $3^nu[n]$, $(-1)^nu[n]$; slide 18 | which inputs are bad? | answered below |
 
@@ -139,8 +139,8 @@ cos(n/3)    [3.0, 3.0, 3.0]
 
 - Concepts: [[concepts/bibo-stability|BIBO stability]], [[concepts/marginal-stability|marginal stability]], [[concepts/pole-zero-cancellation|pole–zero cancellation]], [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]] (why $e^{j\omega_0n}$ is special), [[concepts/system-algebra|system algebra]].
 - Lectures: [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] (unstable inputs, marginal stability, pole matching), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (series connections).
-- Related families: [[problems/parameters-for-stability|parameters for stability]] (choose a zero to cancel the bad pole), [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]], and the stability statements in the [[0-midterm-1/true-false-bank|true/false bank]].
-- Try it: [[demos/difference-equation-simulator|difference-equation simulator]] (drive a marginal system at its pole frequency and watch the envelope grow), [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]], [[0-midterm-1/practice-drills|practice drills]].
+- Related families: [[problems/parameters-for-stability|parameters for stability]] (choose a zero to cancel the bad pole), [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]], and the stability statements in the [[exams/midterm-1/true-false-bank|true/false bank]].
+- Try it: [[demos/difference-equation-simulator|difference-equation simulator]] (drive a marginal system at its pole frequency and watch the envelope grow), [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]], [[demos/practice-drills|practice drills]].
 
 ### Sources for this page
 

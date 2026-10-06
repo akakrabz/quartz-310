@@ -34,7 +34,7 @@ Quadrant rule (Lecture 2, Eq. 12): $\angle x = \tan^{-1}(b/a)$ if $a \ge 0$; add
 - **Powers:** $(Re^{j\theta})^n = R^n e^{jn\theta}$, so $\lvert a^n\rvert = \lvert a\rvert^n$. That single fact decides whether $a^n u[n]$ decays ($\lvert a\rvert<1$), stays bounded ($\lvert a\rvert = 1$) or blows up ($\lvert a\rvert>1$) — the whole of [[concepts/bibo-stability|BIBO stability]] for causal systems.
 
 > [!exam] SP2021 #3, third row: $y[n] = (0.8+0.8j)^n x[n]$
-> $\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$, so the multiplier grows like $1.13^n$ and a bounded input can produce an unbounded output: **not stable** (it is linear, not shift-invariant, causal). See [[0-midterm-1/past-exams/spring-2021|SP2021]] and [[problems/classifying-system-properties|classifying system properties]].
+> $\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$, so the multiplier grows like $1.13^n$ and a bounded input can produce an unbounded output: **not stable** (it is linear, not shift-invariant, causal). See [[exams/midterm-1/past-exams/spring-2021|SP2021]] and [[problems/classifying-system-properties|classifying system properties]].
 
 ## $e^{j\theta}$ lives on the unit circle
 
@@ -44,10 +44,10 @@ $\lvert e^{j\theta}\rvert = 1$ for every real $\theta$. Values to know cold:
 |---|---|---|---|---|---|---|
 | $e^{j\theta}$ | $1$ | $j$ | $-1$ | $-j$ | $(1+j)/\sqrt2$ | $1$ |
 
-So $j^n = e^{j\pi n/2}$ cycles $1, j, -1, -j$ (period 4) and $(-1)^n = e^{j\pi n} = \cos(\pi n)$. Angles are only defined modulo $2\pi$: add or subtract $2\pi$ until you reach the principal range, e.g. $e^{j\pi/3} = e^{j7\pi/3}$ (Lecture 2) and $e^{-j4\pi/3} = e^{j2\pi/3}$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #5a]]).
+So $j^n = e^{j\pi n/2}$ cycles $1, j, -1, -j$ (period 4) and $(-1)^n = e^{j\pi n} = \cos(\pi n)$. Angles are only defined modulo $2\pi$: add or subtract $2\pi$ until you reach the principal range, e.g. $e^{j\pi/3} = e^{j7\pi/3}$ (Lecture 2) and $e^{-j4\pi/3} = e^{j2\pi/3}$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #5a]]).
 
 > [!trap] $e^{j2/3}$ is not $e^{j2\pi/3}$
-> [[0-midterm-1/past-exams/fall-2025|FA2025 #8(b)]] puts a pole at $e^{j2/3}$: angle $2/3$ rad $\approx 38^\circ$. The input $\cos(\tfrac{2\pi}{3}n)u[n]$ has poles at $e^{\pm j2\pi/3}$ (angle $\approx 120^\circ$), which do **not** coincide with it, so that output stays bounded (key: False). Read exponents literally — see [[problems/unbounded-outputs-and-pole-matching|pole matching]].
+> [[exams/midterm-1/past-exams/fall-2025|FA2025 #8(b)]] puts a pole at $e^{j2/3}$: angle $2/3$ rad $\approx 38^\circ$. The input $\cos(\tfrac{2\pi}{3}n)u[n]$ has poles at $e^{\pm j2\pi/3}$ (angle $\approx 120^\circ$), which do **not** coincide with it, so that output stays bounded (key: False). Read exponents literally — see [[problems/unbounded-outputs-and-pole-matching|pole matching]].
 
 ## Solving $z^N = a$
 
@@ -67,7 +67,7 @@ So $j^n = e^{j\pi n/2}$ cycles $1, j, -1, -j$ (period 4) and $(-1)^n = e^{j\pi n
 >
 > One more for practice: $z^3 = -8j = 8e^{-j\pi/2}$ gives $z = 2e^{j(-\pi/6 + 2\pi k/3)}$, i.e. $2e^{-j\pi/6},\ 2j,\ 2e^{-j5\pi/6}$.
 
-Where it shows up: the poles of $1/(1 - c\,z^{-N})$ are the $N$-th roots of $c$. In [[0-midterm-1/past-exams/spring-2021|SP2021 #6]], $H(z) = \dfrac{-1+z^{-3}}{1-2z^{-3}}$ has poles at $z^3 = 2$, i.e. $2^{1/3}e^{j2\pi k/3}$, all with $\lvert p\rvert = 2^{1/3}\approx 1.26 > 1$, so the causal system is unstable.
+Where it shows up: the poles of $1/(1 - c\,z^{-N})$ are the $N$-th roots of $c$. In [[exams/midterm-1/past-exams/spring-2021|SP2021 #6]], $H(z) = \dfrac{-1+z^{-3}}{1-2z^{-3}}$ has poles at $z^3 = 2$, i.e. $2^{1/3}e^{j2\pi k/3}$, all with $\lvert p\rvert = 2^{1/3}\approx 1.26 > 1$, so the causal system is unstable.
 
 ## Sums of exponentials ↔ cosines and sines
 
@@ -106,7 +106,7 @@ $$
 > $$
 > X(z) = \frac{1/2}{1-z^{-1}} + \frac{1/4}{1-jz^{-1}} + \frac{1/4}{1+jz^{-1}},\qquad \text{ROC: } \lvert z\rvert > 1.
 > $$
-> Three poles on the unit circle ($1, j, -j$). See [[0-midterm-1/past-exams/fall-2025|FA2025]] and [[problems/z-transform-with-roc|z-transform with ROC]].
+> Three poles on the unit circle ($1, j, -j$). See [[exams/midterm-1/past-exams/fall-2025|FA2025]] and [[problems/z-transform-with-roc|z-transform with ROC]].
 
 ## Python check
 

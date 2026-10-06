@@ -1,12 +1,12 @@
 ---
 title: "Official transform tables"
-description: "The course's z-transform properties and pairs tables (transform_tables.pdf, Tables 9 and 10) typed out and checked numerically — including the missing minus sign in pair 3 — with the DTFT tables folded away as after-Midterm-1 material."
-tags: [supplement, z-transform, roc, midterm-1]
+description: "The course's z-transform properties and pairs tables (transform_tables.pdf, Tables 9 and 10) typed out and checked numerically — including the missing minus sign in pair 3 — and its DTFT tables (Tables 5 and 6) for Unit 3, with the differentiation sign that Lecture 14 misprints and the two sinc conventions."
+tags: [supplement, z-transform, roc, dtft, midterm-1]
 ---
 
-*Supplement · `suppliment/transform_tables.pdf` (10 pages) · used by [[2-z-transform/06-the-z-transform|Lecture 6]], [[2-z-transform/07-z-transform-properties|Lecture 7]] and [[2-z-transform/08-inverse-z-transform|Lecture 8]]*
+*Supplement · `suppliment/transform_tables.pdf` (10 pages) · used by [[2-z-transform/06-the-z-transform|Lecture 6]], [[2-z-transform/07-z-transform-properties|Lecture 7]] and [[2-z-transform/08-inverse-z-transform|Lecture 8]] (z-transform), and [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] and [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (DTFT)*
 
-The course's reference sheet is the standard set of ten tables from Oppenheim & Willsky, *Signals and Systems*: Fourier series (Tables 1–2), CT Fourier transform (3–4), **DTFT (5–6)**, Laplace (7–8) and **z-transform (9–10)**. For Midterm 1 only Tables 9 and 10 matter; the DTFT tables become relevant after the midterm, and Tables 1–4 and 7–8 are continuous-time background from earlier courses.
+The course's reference sheet is the standard set of ten tables from Oppenheim & Willsky, *Signals and Systems*: Fourier series (Tables 1–2), CT Fourier transform (3–4), **DTFT (5–6)**, Laplace (7–8) and **z-transform (9–10)**. Tables 9 and 10 serve Unit 2 (and Midterm 1), Tables 5 and 6 serve [[3-fourier-analysis/index|Unit 3]], and Tables 1–4 and 7–8 are continuous-time background from earlier courses.
 
 Every z-transform pair below was checked by summing the series directly at three test points inside the ROC, and every property on test signals (`verify/hub/supp_tables.py`, 45 checks).
 
@@ -71,9 +71,11 @@ Two more rows appear in Lecture 7's table and are used for complex signals: $\ma
 > [!trap] "At least" matters
 > Linearity and convolution give *at least* the intersection: a pole can be cancelled by a zero and the ROC grows. That is exactly the mechanism of [[concepts/pole-zero-cancellation|pole-zero cancellation]] problems (FA2025 #6, SP2025 #8, SP2021 #7, FA2019 #10). And the accumulator adds a pole at $z=1$, so $\lvert z\rvert>1$ is imposed.
 
-## After Midterm 1: the DTFT tables
+## Unit 3: the DTFT tables
 
-The course writes the DTFT as $X_d(\omega)$; the tables write $X(e^{j\omega})$ — the same function, $X_d(\omega) = X(z)\big|_{z=e^{j\omega}}$ when the ROC contains the unit circle ([[supplements/notation-translation|notation translation]]). **Not on Midterm 1.**
+The course writes the DTFT as $X_d(\omega)$; the tables write $X(e^{j\omega})$ — the same function, $X_d(\omega) = X(z)\big|_{z=e^{j\omega}}$ when the ROC contains the unit circle ([[supplements/notation-translation|notation translation]]). They are used from [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] on; Lecture 14's own table of pairs is on [[concepts/dtft-pairs|DTFT pairs]], its properties on [[concepts/dtft-properties|DTFT properties]].
+
+**Two sincs.** These tables (like NumPy's `np.sinc`) mean $\mathrm{sinc}(x)=\frac{\sin\pi x}{\pi x}$, so the ideal low-pass pair reads $\frac{\sin Wn}{\pi n}=\frac{W}{\pi}\mathrm{sinc}\big(\frac{Wn}{\pi}\big)$; Lecture 14 and the exam keys (e.g. [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]]) write $\mathrm{sinc}(x)=\frac{\sin x}{x}$, and the same pair becomes $\frac{W}{\pi}\mathrm{sinc}(Wn)$.
 
 > [!note]- Table 5 — properties of the DTFT (PDF p. 5)
 > $x[n] = \dfrac{1}{2\pi}\displaystyle\int_{2\pi}X(e^{j\omega})e^{j\omega n}\,d\omega$, $\quad X(e^{j\omega}) = \displaystyle\sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n}$ (periodic with period $2\pi$).
@@ -90,7 +92,7 @@ The course writes the DTFT as $X_d(\omega)$; the tables write $X(e^{j\omega})$ �
 > | multiplication | $x[n]y[n]$ | $\dfrac{1}{2\pi}\displaystyle\int_{2\pi}X(e^{j\theta})Y(e^{j(\omega-\theta)})\,d\theta$ |
 > | differencing in time | $x[n]-x[n-1]$ | $(1-e^{-j\omega})X(e^{j\omega})$ |
 > | accumulation | $\sum_{k=-\infty}^{n}x[k]$ | $\dfrac{X(e^{j\omega})}{1-e^{-j\omega}} + \pi X(e^{j0})\displaystyle\sum_{k}\delta(\omega-2\pi k)$ |
-> | differentiation in frequency | $n\,x[n]$ | $j\dfrac{dX(e^{j\omega})}{d\omega}$ |
+> | differentiation in frequency | $n\,x[n]$ | $j\dfrac{dX(e^{j\omega})}{d\omega}$ — right; Lecture 14's Table 2 and slide 15 print $-j$ ([[0-toolkit/05-errata\|erratum]]) |
 > | conjugate symmetry, $x$ real | | $X(e^{j\omega}) = X^*(e^{-j\omega})$: $\mathrm{Re}$ and $\lvert X\rvert$ even, $\mathrm{Im}$ and $\angle X$ odd |
 > | $x$ real and even | | $X(e^{j\omega})$ real and even |
 > | $x$ real and odd | | $X(e^{j\omega})$ purely imaginary and odd |
@@ -120,8 +122,8 @@ The course writes the DTFT as $X_d(\omega)$; the tables write $X(e^{j\omega})$ �
 
 ## Related
 
-[[concepts/z-transform|z-transform]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/region-of-convergence|ROC]] · [[concepts/inverse-z-transform|inverse z-transform]] · [[problems/z-transform-with-roc|z-transform with ROC]] · [[0-toolkit/02-geometric-series|geometric series]] (where every pair comes from) · [[3-beyond-midterm-1/index|beyond Midterm 1]] (DTFT).
+[[concepts/z-transform|z-transform]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/region-of-convergence|ROC]] · [[concepts/inverse-z-transform|inverse z-transform]] · [[problems/z-transform-with-roc|z-transform with ROC]] · [[0-toolkit/02-geometric-series|geometric series]] (where every pair comes from) · [[3-fourier-analysis/index|Unit 3]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]].
 
 ### Sources for this page
 
-`suppliment/transform_tables.pdf` Tables 5, 6, 9, 10 (pages 5, 6, 9, 10; page 10 rendered to confirm pair 3); Lecture 6 notes Table 1 and Lecture 7 notes Table 1; `suppliment/review.pdf` p. 3. Checked in `verify/hub/supp_tables.py`.
+`suppliment/transform_tables.pdf` Tables 5, 6, 9, 10 (pages 5, 6, 9, 10; page 10 rendered to confirm pair 3); Lecture 6 notes Table 1 and Lecture 7 notes Table 1; Lecture 14 notes Tables 1–2 and slide 15 (the differentiation sign, rendered); `suppliment/review.pdf` p. 3. Checked in `verify/hub/supp_tables.py`; the differentiation sign in `verify/INTEG_errata.py`.

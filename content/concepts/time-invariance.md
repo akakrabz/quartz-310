@@ -32,11 +32,11 @@ aliases: ["shift-invariance", "time-invariant", "shift-invariant", "time-varying
 > - **Shifting the input goes inside the index map.** For $y=x[2n]$, $T\{x[n-n_0]\}=x[2n-n_0]$, not $x[2(n-n_0)]$ (that one is the shifted output).
 > - **Leave the outside $n$ alone** when shifting the input: for $y=n\,x[n]$, $T\{x[n-n_0]\}=n\,x[n-n_0]$ while $y[n-n_0]=(n-n_0)\,x[n-n_0]$.
 > - **Check that the gain really varies on the integers**: $\cos(2\pi n)=1$ for every integer $n$, so $\cos(2\pi n)\,x[n]=x[n]$ is time-invariant; $\cos^2(\frac{\pi}{2}n)$ alternates $1,0,1,0,\dots$ and is not.
-> - **TI and causality are unrelated**: "any causal system must be time-invariant" ([[0-midterm-1/past-exams/fall-2023|FA2023 #1a]]) and "a time-varying system cannot be causal" ([[0-midterm-1/past-exams/fall-2019|FA2019 #1f]]) are both False: $y=n\,x[n]$ is causal and time-varying.
+> - **TI and causality are unrelated**: "any causal system must be time-invariant" ([[exams/midterm-1/past-exams/fall-2023|FA2023 #1a]]) and "a time-varying system cannot be causal" ([[exams/midterm-1/past-exams/fall-2019|FA2019 #1f]]) are both False: $y=n\,x[n]$ is causal and time-varying.
 > - **TI does not need linearity**: $x[n]+3$ and $e^{x[n]+1}$ are time-invariant and nonlinear.
 > - A convolution is time-invariant **whatever $h$ is** (non-causal or unstable included): [[homework/hw2|HW2]] #2.
 
-**Where it appears.** [[1-signals-and-systems/03-system-properties|Lecture 3]] §2.2 (Exercises 3–5); [[homework/hw1|HW1]] #5(c) (clipping: TI), #6(c) (window: time-varying); [[homework/hw2|HW2]] #1, #2. The Shift-invariant column of every property table (7/7 exams) and [[0-midterm-1/past-exams/fall-2025|FA2025 #4a]]. Drill: [[problems/classifying-system-properties]], [[0-midterm-1/system-property-bank]].
+**Where it appears.** [[1-signals-and-systems/03-system-properties|Lecture 3]] §2.2 (Exercises 3–5); [[homework/hw1|HW1]] #5(c) (clipping: TI), #6(c) (window: time-varying); [[homework/hw2|HW2]] #1, #2. The Shift-invariant column of every property table (7/7 exams) and [[exams/midterm-1/past-exams/fall-2025|FA2025 #4a]]. Drill: [[problems/classifying-system-properties]], [[exams/midterm-1/system-property-bank]].
 
 **Related.** [[concepts/linearity|linearity]] · [[concepts/causality|causality]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|convolution]] · [[concepts/discrete-time-signal|discrete-time signal]] (index maps)
 

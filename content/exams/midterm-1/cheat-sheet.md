@@ -48,7 +48,7 @@ $$
 | [[concepts/bibo-stability\|BIBO stable]] | every bounded input gives a bounded output | growing coefficients ($n\,x[n]$, $\log(\lvert n\rvert+1)\,x[n]$, $(0.8+0.8j)^n x[n]$ since $\lvert 0.8+0.8j\rvert\approx1.13$); division by $x$, $\log x$ (bounded $x$ can approach $0$); running sums; LTI with $\sum\lvert h\rvert = \infty$ ($x*j^nu[n]$, $x*(-1)^nu[n]$) | bounded coefficients ($\cos^2(\cdot)$, $(\tfrac12)^{\lvert n\rvert}$, $\tfrac{1}{\lvert n\rvert+1}$); bounded nonlinear maps ($e^{x}$, $\lvert\cdot\rvert$, $\sin x$); FIR |
 
 > [!trap] Property-table point losers
-> Answer each column **independently** — a nonlinear system can still be time-invariant, causal and stable ($x[n]+3$: N Y Y Y). For causality of $x[f(n)]$, test negative **and** positive $n$, not just $n = 0$ ($x[2n]$ fails only at $n>0$: $y[1]=x[2]$). "$x[3]\,x[n]$" and "$x[n]/x[2]$" reference fixed samples: time-varying *and* non-causal. Every system from the seven past tables is worked in the [[0-midterm-1/system-property-bank|property bank]].
+> Answer each column **independently** — a nonlinear system can still be time-invariant, causal and stable ($x[n]+3$: N Y Y Y). For causality of $x[f(n)]$, test negative **and** positive $n$, not just $n = 0$ ($x[2n]$ fails only at $n>0$: $y[1]=x[2]$). "$x[3]\,x[n]$" and "$x[n]/x[2]$" reference fixed samples: time-varying *and* non-causal. Every system from the seven past tables is worked in the [[exams/midterm-1/system-property-bank|property bank]].
 
 ## 3. Convolution
 
@@ -235,7 +235,7 @@ For parameters: "stable iff" → put every pole inside the unit circle for a cau
 
 ## Related
 
-[[0-midterm-1/index|Midterm 1 survival guide]] · [[0-midterm-1/true-false-bank|T/F bank]] · [[0-midterm-1/system-property-bank|property bank]] · [[0-midterm-1/practice-drills|practice drills]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/region-of-convergence|ROC]] · [[concepts/partial-fraction-expansion|PFE]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[supplements/transform-tables|transform tables]]
+[[exams/midterm-1/index|Midterm 1 review guide]] · [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|property bank]] · [[demos/practice-drills|practice drills]] · [[exams/index|all exams]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/region-of-convergence|ROC]] · [[concepts/partial-fraction-expansion|PFE]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
 

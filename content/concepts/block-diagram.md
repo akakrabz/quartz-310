@@ -19,7 +19,7 @@ aliases: ["block diagram", "direct form I", "direct form", "DFI", "delay block",
 > 2. Write the adder: $y[n]=$ (gain $\times$ labelled signal), summed over every branch entering it. Above: $y[n]=\frac12y[n-1]+\frac12y[n-2]+3x[n]-2x[n-1]+x[n-2]$.
 > 3. Move the $y$ terms left, $y[n]-\frac12y[n-1]-\frac12y[n-2]=3x[n]-2x[n-1]+x[n-2]$, and read off $H(z)=\dfrac{3-2z^{-1}+z^{-2}}{1-\frac12z^{-1}-\frac12z^{-2}}$ ([[concepts/lccde|LCCDE]], [[concepts/transfer-function|transfer function]]).
 
-**Boxes in series and parallel** (Lecture 10, [[concepts/system-algebra|system algebra]]): a cascade of LTI boxes has $h_1*h_2$ and $H_1H_2$; boxes whose outputs are added have $h_1+h_2$ and $H_1+H_2$. The exams draw exactly these pictures: series in [[0-midterm-1/past-exams/fall-2024|FA2024 #3]], parallel in [[0-midterm-1/past-exams/spring-2025|SP2025 #3]].
+**Boxes in series and parallel** (Lecture 10, [[concepts/system-algebra|system algebra]]): a cascade of LTI boxes has $h_1*h_2$ and $H_1H_2$; boxes whose outputs are added have $h_1+h_2$ and $H_1+H_2$. The exams draw exactly these pictures: series in [[exams/midterm-1/past-exams/fall-2024|FA2024 #3]], parallel in [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]].
 
 > [!trap]
 > - **Feedback gains carry the Lecture 5 sign.** In the Lecture 9 form $y[n]+\sum a_k\,y[n-k]=\dots$ the gain on the $y[n-k]$ branch is $-a_k$.
@@ -27,7 +27,7 @@ aliases: ["block diagram", "direct form I", "direct form", "DFI", "delay block",
 > - **A feedback loop suggests IIR but does not prove it**: the recursive moving average is FIR ([[concepts/fir-and-iir|FIR and IIR]]). Nor does a diagram show stability: the example above has poles $1$ and $-\frac12$, so its impulse response tends to $\frac43$ and it is **not** BIBO stable.
 > - The diagram of a system is not unique; direct form I is one choice (Lecture 5 promises other forms later in the course).
 
-**Where it appears.** [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] §2 (Figs. 1–4, Eq. 12), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (series and parallel). No past Midterm 1 asks for a direct-form drawing; the series/parallel box problems ([[0-midterm-1/past-exams/fall-2024|FA2024 #3]], [[0-midterm-1/past-exams/spring-2025|SP2025 #3]]) belong to [[problems/finding-h-from-input-output-pairs]]. Try recursions in [[demos/difference-equation-simulator]].
+**Where it appears.** [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] §2 (Figs. 1–4, Eq. 12), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (series and parallel). No past Midterm 1 asks for a direct-form drawing; the series/parallel box problems ([[exams/midterm-1/past-exams/fall-2024|FA2024 #3]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]]) belong to [[problems/finding-h-from-input-output-pairs]]. Try recursions in [[demos/difference-equation-simulator]].
 
 **Related.** [[concepts/lccde|LCCDE]] · [[concepts/fir-and-iir|FIR and IIR]] · [[concepts/transfer-function|transfer function]] · [[concepts/system-algebra|system algebra]] · [[concepts/lti-system|LTI system]]
 

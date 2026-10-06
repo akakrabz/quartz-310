@@ -24,15 +24,15 @@ Every past midterm has at least one of the three, usually worth 15–20 points, 
 
 | where | what is asked | poles | result |
 |---|---|---|---|
-| [[0-midterm-1/past-exams/fall-2025\|FA2025 #7a]] | stable $h$ of $\dfrac{1-z^{-1}}{(1+2z^{-1})(1+\frac23z^{-1})}$ | $-2,\ -\tfrac23$ | ROC $\tfrac23<\lvert z\rvert<2$, $h=-\tfrac94(-2)^nu[-n-1]-\tfrac54(-\tfrac23)^nu[n]$ |
-| [[0-midterm-1/past-exams/spring-2025\|SP2025 #8b,c]] | all possible outputs; stable $h$ | $\tfrac12,\ -\tfrac32$ | two outputs; ROC $\tfrac12<\lvert z\rvert<\tfrac32$, $h=-(\tfrac12)^nu[n]-3(-\tfrac32)^nu[-n-1]$ |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #7a,b]] | causal: sketch ROC, find $h$ | $\tfrac12,\ 2$ | $\lvert z\rvert>2$, $h=-\tfrac13(\tfrac12)^nu[n]+\tfrac43\,2^nu[n]$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #6a]] | all possible ROCs of $\dfrac{1-z^{-1}}{(1-\frac12z^{-1})(1-2z^{-1})}$ | $\tfrac12,\ 2$ | $A_1=\tfrac13$, $A_2=\tfrac23$; three ROCs, the fourth combination is empty |
-| [[0-midterm-1/past-exams/spring-2023\|SP2023 #6a,b]] | $H=Y/X$, causal and stable, find $h$ | $\tfrac12,\ \tfrac14$ | $\lvert z\rvert>\tfrac12$, $h=-6(\tfrac12)^nu[n]+7(\tfrac14)^nu[n]$ |
-| [[0-midterm-1/past-exams/spring-2021\|SP2021 #5a]] | $h$ of $\dfrac{3z^{-1}}{1+z^{-2}}$, $\lvert z\rvert>1$ | $\pm j$ | $h=3\sin(\tfrac{\pi}{2}n)u[n]$ |
-| [[0-midterm-1/past-exams/spring-2021\|SP2021 #7]] | $X$, $H=Y/X$, ROC of $Y$, $h$ | $\tfrac12,\ 1$ ($4$ cancels) | ROC$_Y$ $\lvert z\rvert>1$, $h=7(\tfrac12)^nu[n]-6u[n]$ |
-| [[0-midterm-1/past-exams/fall-2019\|FA2019 #6]] | inverse of $1+z^{-100}+\dfrac{1}{1-5z^{-1}}$, $\lvert z\rvert>5$ | $5$ | $\delta[n]+\delta[n-100]+5^nu[n]$ |
-| [[0-midterm-1/past-exams/fall-2019\|FA2019 #7]] | all valid ROCs of $\dfrac{z}{z-e^{j\pi/3}}+\dfrac{z}{z-0.5}$ | $e^{j\pi/3},\ \tfrac12$ | $\lvert z\rvert>1$, $\lvert z\rvert<\tfrac12$, $\tfrac12<\lvert z\rvert<1$ (fourth is empty) |
+| [[exams/midterm-1/past-exams/fall-2025\|FA2025 #7a]] | stable $h$ of $\dfrac{1-z^{-1}}{(1+2z^{-1})(1+\frac23z^{-1})}$ | $-2,\ -\tfrac23$ | ROC $\tfrac23<\lvert z\rvert<2$, $h=-\tfrac94(-2)^nu[-n-1]-\tfrac54(-\tfrac23)^nu[n]$ |
+| [[exams/midterm-1/past-exams/spring-2025\|SP2025 #8b,c]] | all possible outputs; stable $h$ | $\tfrac12,\ -\tfrac32$ | two outputs; ROC $\tfrac12<\lvert z\rvert<\tfrac32$, $h=-(\tfrac12)^nu[n]-3(-\tfrac32)^nu[-n-1]$ |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #7a,b]] | causal: sketch ROC, find $h$ | $\tfrac12,\ 2$ | $\lvert z\rvert>2$, $h=-\tfrac13(\tfrac12)^nu[n]+\tfrac43\,2^nu[n]$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #6a]] | all possible ROCs of $\dfrac{1-z^{-1}}{(1-\frac12z^{-1})(1-2z^{-1})}$ | $\tfrac12,\ 2$ | $A_1=\tfrac13$, $A_2=\tfrac23$; three ROCs, the fourth combination is empty |
+| [[exams/midterm-1/past-exams/spring-2023\|SP2023 #6a,b]] | $H=Y/X$, causal and stable, find $h$ | $\tfrac12,\ \tfrac14$ | $\lvert z\rvert>\tfrac12$, $h=-6(\tfrac12)^nu[n]+7(\tfrac14)^nu[n]$ |
+| [[exams/midterm-1/past-exams/spring-2021\|SP2021 #5a]] | $h$ of $\dfrac{3z^{-1}}{1+z^{-2}}$, $\lvert z\rvert>1$ | $\pm j$ | $h=3\sin(\tfrac{\pi}{2}n)u[n]$ |
+| [[exams/midterm-1/past-exams/spring-2021\|SP2021 #7]] | $X$, $H=Y/X$, ROC of $Y$, $h$ | $\tfrac12,\ 1$ ($4$ cancels) | ROC$_Y$ $\lvert z\rvert>1$, $h=7(\tfrac12)^nu[n]-6u[n]$ |
+| [[exams/midterm-1/past-exams/fall-2019\|FA2019 #6]] | inverse of $1+z^{-100}+\dfrac{1}{1-5z^{-1}}$, $\lvert z\rvert>5$ | $5$ | $\delta[n]+\delta[n-100]+5^nu[n]$ |
+| [[exams/midterm-1/past-exams/fall-2019\|FA2019 #7]] | all valid ROCs of $\dfrac{z}{z-e^{j\pi/3}}+\dfrac{z}{z-0.5}$ | $e^{j\pi/3},\ \tfrac12$ | $\lvert z\rvert>1$, $\lvert z\rvert<\tfrac12$, $\tfrac12<\lvert z\rvert<1$ (fourth is empty) |
 | [[homework/hw4\|HW4 #1]] | all possible ROCs, three transforms | (b): $(z+1)$ cancels | (a), (c): three ROCs each; (b): two ROCs, improper |
 | [[homework/hw3\|HW3 #3c, #4]] | $h$ for a given ROC; right-sided $H$ | | two-sided $h_3$ on $\tfrac14<\lvert z\rvert<\tfrac32$; $\lvert z\rvert>\tfrac23$ |
 | [[2-z-transform/08-inverse-z-transform\|Lecture 8]] | Exercise 1; slides Example 3 | $\tfrac13,2$; $\tfrac43,\tfrac23$ | $A=\tfrac15,\tfrac95$; $A=2,-1$ |
@@ -87,7 +87,7 @@ All exam answers above are checked against the keys on the past-exam pages.
 
 > [!trap] Where the points go
 > - **A zero cancels a pole.** HW4 #1(b): $\dfrac{z^3-z}{z^2+3z+2}=\dfrac{z(z-1)(z+1)}{(z+1)(z+2)}$. Not cancelling $(z+1)$ gives three ROCs; the right answer has two. Always factor the numerator too.
-> - **Improper fraction.** Cover-up on an improper fraction gives wrong $A_k$ and loses the $\delta$ terms. Divide first, or split off $z^k$ (HW4 #1b, [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]]).
+> - **Improper fraction.** Cover-up on an improper fraction still gives the right $A_k$ (the polynomial part vanishes at each pole), but it cannot produce the $C_kz^{-k}$ terms, so $h[n]$ loses its $\delta$ samples. Divide first, or split off $z^k$ (HW4 #1b, [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]]).
 > - **The left-sided pair has a minus sign and $u[-n-1]$:** $\dfrac{1}{1-pz^{-1}},\ \lvert z\rvert<\lvert p\rvert \ \longleftrightarrow\ -p^n u[-n-1]$. Writing $+p^nu[-n-1]$ or $u[-n]$ are the two most common deductions.
 > - **"All possible" means the non-empty ones.** With poles at $a<b$ there are three ROCs. The pattern "outer pole right-sided, inner pole left-sided" converges nowhere; the FA2023 key notes it only to say it is *not* an answer.
 > - **Equal magnitudes move together.** Complex-conjugate poles (or $\pm p$) are on the same circle, so they are always on the same side. Two poles on one circle give two ROCs, not four.
@@ -212,7 +212,7 @@ True [ 3.          3.66666667  8.11111111 15.96296296]
 - Concepts: [[concepts/partial-fraction-expansion|partial-fraction expansion]], [[concepts/region-of-convergence|region of convergence]], [[concepts/sided-sequences|right-, left- and two-sided sequences]], [[concepts/z-transform-pairs|z-transform pairs]], [[concepts/pole-zero-cancellation|pole–zero cancellation]], [[concepts/bibo-stability|BIBO stability]], [[concepts/causality|causality]].
 - Lectures: [[2-z-transform/08-inverse-z-transform|Lecture 8]] (PFE), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (long division), [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] (ROC shape ↔ causality and stability table).
 - Next family: [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]] (what to do with the stable two-sided $h$), [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]].
-- Try it: [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]] (place the poles, click through the ROCs), [[0-midterm-1/practice-drills|practice drills]] (randomized PFE and ROC questions), [[0-midterm-1/cheat-sheet|cheat sheet]] (the pair table).
+- Try it: [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]] (place the poles, click through the ROCs), [[demos/practice-drills|practice drills]] (randomized PFE and ROC questions), [[exams/midterm-1/cheat-sheet|cheat sheet]] (the pair table).
 
 ### Sources for this page
 

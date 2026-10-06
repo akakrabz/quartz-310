@@ -33,11 +33,11 @@ aliases: ["discrete-time signal", "sequence", "digital signal", "x[n]", "signal"
 > - **Always mark $n=0$.** $\{1,2,3\}$ without an arrow is not an answer; convolution results are graded on where the arrow sits.
 > - **$x[-n+3]$ shifts right after the flip** ($x[-(n-3)]$), not left. When in doubt, tabulate.
 > - **Decimation loses samples**: $x[2n]$ cannot be undone, and $x[n/2]$ is undefined for odd $n$.
-> - **$n$ is an integer**: $\cos(2\pi n)=1$ and $\sin(\pi n)=0$ for every $n$ ([[0-midterm-1/past-exams/spring-2021|SP2021 #1e]]), and frequencies $\omega$ and $\omega+2\pi$ produce the same samples.
+> - **$n$ is an integer**: $\cos(2\pi n)=1$ and $\sin(\pi n)=0$ for every $n$ ([[exams/midterm-1/past-exams/spring-2021|SP2021 #1e]]), and frequencies $\omega$ and $\omega+2\pi$ produce the same samples.
 > - **Bounded is not summable**: $\lvert u[n]\rvert\le1$, yet $\sum_n u[n]=\infty$. This is exactly the bounded-but-unstable $h$ of [[concepts/bibo-stability|BIBO stability]].
 > - "Signal" vs. "sample": $x[n]$ may mean the whole sequence or the single number at index $n$ (course summary).
 
-**Where it appears.** [[1-signals-and-systems/01-digital-signals|Lecture 1]] §2, [[1-signals-and-systems/02-complex-numbers-and-elementary-signals|Lecture 2]] §2; [[homework/hw1|HW1]] #1–#3; [[0-toolkit/03-sketching-and-transforming-signals]]. Every convolution problem depends on the $n=0$ bookkeeping ([[problems/finite-length-convolution]]), e.g. [[0-midterm-1/past-exams/fall-2025|FA2025 #3b]] where $x[n]=n\,u[n+1]\,u[-n+1]=\{-1,\ \underset{\uparrow}{0},\ 1\}$; index maps like $x[2n]$, $x[\lvert n\rvert]$ fill the property tables ([[problems/classifying-system-properties]]).
+**Where it appears.** [[1-signals-and-systems/01-digital-signals|Lecture 1]] §2, [[1-signals-and-systems/02-complex-numbers-and-elementary-signals|Lecture 2]] §2; [[homework/hw1|HW1]] #1–#3; [[0-toolkit/03-sketching-and-transforming-signals]]. Every convolution problem depends on the $n=0$ bookkeeping ([[problems/finite-length-convolution]]), e.g. [[exams/midterm-1/past-exams/fall-2025|FA2025 #3b]] where $x[n]=n\,u[n+1]\,u[-n+1]=\{-1,\ \underset{\uparrow}{0},\ 1\}$; index maps like $x[2n]$, $x[\lvert n\rvert]$ fill the property tables ([[problems/classifying-system-properties]]).
 
 **Related.** [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/unit-step|unit step]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/sided-sequences|sided sequences]] · [[concepts/convolution|convolution]] · [[concepts/time-invariance|time-invariance]]
 

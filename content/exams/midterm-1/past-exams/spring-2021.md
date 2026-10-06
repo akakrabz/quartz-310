@@ -8,9 +8,9 @@ tags: [exam, midterm-1]
 
 | # | pts | what it asks | problem family | lectures |
 |---|---|---|---|---|
-| 1 | 15 | True/False: stability with no ROC given, poles of a sum, cascade of unstable systems, a pole on the unit circle driven by $u[n]$, $\sum x[n]\,\delta[f(n)]$ | [[0-midterm-1/true-false-bank\|True/False bank]] | [[2-z-transform/09-transfer-functions\|L9]]–[[2-z-transform/11-bibo-stability-and-causality\|L11]] |
+| 1 | 15 | True/False: stability with no ROC given, poles of a sum, cascade of unstable systems, a pole on the unit circle driven by $u[n]$, $\sum x[n]\,\delta[f(n)]$ | [[exams/midterm-1/true-false-bank\|True/False bank]] | [[2-z-transform/09-transfer-functions\|L9]]–[[2-z-transform/11-bibo-stability-and-causality\|L11]] |
 | 2 | 10 | Finite convolution with $n=0$ bookkeeping | [[problems/finite-length-convolution\|Finite convolution]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]] |
-| 3 | 24 | Linear / time-invariant / causal / stable table, 3 systems | [[problems/classifying-system-properties\|Classifying properties]] · [[0-midterm-1/system-property-bank\|bank]] | [[1-signals-and-systems/03-system-properties\|L3]] |
+| 3 | 24 | Linear / time-invariant / causal / stable table, 3 systems | [[problems/classifying-system-properties\|Classifying properties]] · [[exams/midterm-1/system-property-bank\|bank]] | [[1-signals-and-systems/03-system-properties\|L3]] |
 | 4 | 10 | z-transform and ROC of $(n+1)x[n]$ | [[problems/z-transform-with-roc\|z-transform with ROC]] | [[2-z-transform/07-z-transform-properties\|L7]] |
 | 5 | 12 | $h[n] = A\sin(\omega_0 n+\theta)u[n]$ from $H(z)$; a bounded input with an unbounded output | [[problems/all-possible-rocs\|Inverse z]] · [[problems/unbounded-outputs-and-pole-matching\|Pole matching]] | [[2-z-transform/08-inverse-z-transform\|L8]], [[2-z-transform/11-bibo-stability-and-causality\|L11]] |
 | 6 | 8 | Impulse-response values from $y[n] = 2y[n-3] - x[n] + x[n-3]$ | [[problems/lccde-to-transfer-function-and-response\|LCCDE ↔ H(z)]] | [[1-signals-and-systems/05-difference-equations-and-block-diagrams\|L5]], [[2-z-transform/09-transfer-functions\|L9]] |
@@ -33,7 +33,7 @@ tags: [exam, midterm-1]
 > - **(d) True.** $Y = \dfrac{z^{-1}}{(1-z^{-1})^2}$, so $y[n] = n\,u[n]$. The input's pole sits on the system's pole at $z = 1$.
 > - **(e) False.** $\cos(2\pi n + \frac\pi2) = 0$ and $\sin(\pi n) = 0$ for every integer $n$, so the delta is 1 for all $n$ and $\sum x[n] = 4$.
 >
-> These are Q37, Q31, Q25, Q20 and Q42 of the [[0-midterm-1/true-false-bank|True/False bank]].
+> These are Q37, Q31, Q25, Q20 and Q42 of the [[exams/midterm-1/true-false-bank|True/False bank]].
 
 > [!trap]
 > "Cannot be stable" about an $H(z)$ **without an ROC** is almost always False: you choose the ROC. It is True only if a pole lies *on* $\lvert z\rvert = 1$.
@@ -73,7 +73,7 @@ tags: [exam, midterm-1]
 > - $0.8 + 0.8j = \sqrt{1.28}\,e^{j\pi/4}$ with $\sqrt{1.28} \approx 1.13 > 1$. The gain is linear and memoryless but $n$-dependent. $x = u[n]$ gives $\lvert y[n]\rvert = 1.13^n \to \infty$ (the key's note: "goes to $\infty$ as $n \to \infty$").
 
 > [!trap]
-> $\cos(\frac\pi3(n-2))$ looks like a delay by 2 but is a **gain**, so the system is time-varying. For the complex base, compute the **magnitude** $\lvert 0.8+0.8j\rvert = 0.8\sqrt2$ before deciding stability: $0.8 < 1$ is the wrong number to look at. More: [[0-midterm-1/system-property-bank|system-property bank]].
+> $\cos(\frac\pi3(n-2))$ looks like a delay by 2 but is a **gain**, so the system is time-varying. For the complex base, compute the **magnitude** $\lvert 0.8+0.8j\rvert = 0.8\sqrt2$ before deciding stability: $0.8 < 1$ is the wrong number to look at. More: [[exams/midterm-1/system-property-bank|system-property bank]].
 
 ## Problem 4 · z-transform of $(n+1)x[n]$ (10 pts)
 

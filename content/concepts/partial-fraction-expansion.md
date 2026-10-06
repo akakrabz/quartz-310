@@ -114,7 +114,7 @@ print(r, p, k)
 - Lectures: [[2-z-transform/08-inverse-z-transform|L8]] (procedure, Exercises 1–2), [[2-z-transform/09-transfer-functions|L9]] (impulse responses of LCCDEs), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|L10]] (improper case).
 - Problem families: [[problems/all-possible-rocs]], [[problems/lccde-to-transfer-function-and-response]], [[problems/infinite-length-convolution]] (via $Y = HX$), [[problems/two-sided-systems-as-recursions]] (splitting $H = H_1 + H_2$).
 - Homework: [[homework/hw3|HW3]] #3, #4; [[homework/hw4|HW4]] #1, #4, #5, #6.
-- Past exams: [[0-midterm-1/past-exams/fall-2025|FA2025]] #6, #7; [[0-midterm-1/past-exams/spring-2025|SP2025]] #4b, #8; [[0-midterm-1/past-exams/fall-2024|FA2024]] #7; [[0-midterm-1/past-exams/fall-2023|FA2023]] #6, #7; [[0-midterm-1/past-exams/spring-2023|SP2023]] #6; [[0-midterm-1/past-exams/spring-2021|SP2021]] #5, #7; [[0-midterm-1/past-exams/fall-2019|FA2019]] #10. Some PFE appears on every exam.
+- Past exams: [[exams/midterm-1/past-exams/fall-2025|FA2025]] #6, #7; [[exams/midterm-1/past-exams/spring-2025|SP2025]] #4b, #8; [[exams/midterm-1/past-exams/fall-2024|FA2024]] #7; [[exams/midterm-1/past-exams/fall-2023|FA2023]] #6, #7; [[exams/midterm-1/past-exams/spring-2023|SP2023]] #6; [[exams/midterm-1/past-exams/spring-2021|SP2021]] #5, #7; [[exams/midterm-1/past-exams/fall-2019|FA2019]] #10. Some PFE appears on every exam.
 
 Related: [[concepts/inverse-z-transform]] · [[concepts/region-of-convergence]] · [[concepts/z-transform-pairs]] · [[concepts/poles-and-zeros]] · [[concepts/transfer-function]] · [[demos/python-demos]]
 

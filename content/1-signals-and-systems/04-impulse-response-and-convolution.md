@@ -72,7 +72,7 @@ Every row of the table used a property, so the construction works **only for LTI
 The median filter breaks the triangle: it is nonlinear, so $h_2 = 0$ says nothing about its response to other inputs. The difference system is LTI (Lecture 3), so $y_1 = x * (\delta[n] - \delta[n-1])$ reproduces it exactly.
 
 > [!trap] "Every system is described by its impulse response" is False
-> The exams test the triangle in both directions. False: "for a system with impulse response $h[n]$, the output to any input is $y = x * h$" ([[0-midterm-1/past-exams/fall-2023|FA2023 #1(d)]]), "…is always determined using $h[n]$" ([[0-midterm-1/past-exams/fall-2024|FA2024 #1(a)]]), "the input–output relationship of an arbitrary system is completely determined by its unit pulse response" ([[0-midterm-1/past-exams/fall-2019|FA2019 #1(b)]]). True: "if the response to *any* input is fully described by the unit pulse response, the system must be LTI" ([[0-midterm-1/past-exams/spring-2023|SP2023 #1(a)]]).
+> The exams test the triangle in both directions. False: "for a system with impulse response $h[n]$, the output to any input is $y = x * h$" ([[exams/midterm-1/past-exams/fall-2023|FA2023 #1(d)]]), "…is always determined using $h[n]$" ([[exams/midterm-1/past-exams/fall-2024|FA2024 #1(a)]]), "the input–output relationship of an arbitrary system is completely determined by its unit pulse response" ([[exams/midterm-1/past-exams/fall-2019|FA2019 #1(b)]]). True: "if the response to *any* input is fully described by the unit pulse response, the system must be LTI" ([[exams/midterm-1/past-exams/spring-2023|SP2023 #1(a)]]).
 
 ## 4. Computing one output sample: flip, shift, multiply, add
 
@@ -104,7 +104,7 @@ Repeat steps 2–4 for every $n$. The picture for the notes' example $x[n] = \{\
 > \lvert y[n]\rvert = \Big\lvert \sum_k h[k]\,x[n-k] \Big\rvert \le \sum_k \lvert h[k]\rvert\,\lvert x[n-k]\rvert < \beta\,S \quad\text{for every } n .
 > $$
 > **Only if:** when $\sum_k \lvert h[k]\rvert = \infty$, use the bounded input $x[n] = \operatorname{sgn}(h[-n])$ (for complex $h$: $\overline{h[-n]}/\lvert h[-n]\rvert$, and $0$ where $h[-n] = 0$). Then $y[0] = \sum_k h[k]\,x[-k] = \sum_k \lvert h[k]\rvert = \infty$.
-> Consequences that the T/F questions love: a **bounded** $h$ can still be unstable ($h = u[n]$, [[0-midterm-1/past-exams/fall-2025|FA2025 #1(a)]], False); a finite-length $h$ is **always** stable ([[0-midterm-1/past-exams/fall-2019|FA2019 #1(e)]], "can be stable or unstable" is False).
+> Consequences that the T/F questions love: a **bounded** $h$ can still be unstable ($h = u[n]$, [[exams/midterm-1/past-exams/fall-2025|FA2025 #1(a)]], False); a finite-length $h$ is **always** stable ([[exams/midterm-1/past-exams/fall-2019|FA2019 #1(e)]], "can be stable or unstable" is False).
 
 ## 6. Computing convolutions: the three cases
 
@@ -169,7 +169,7 @@ sum check: 18 = 9 * 2
 ```
 
 > [!tip] A 10-second check for any finite convolution
-> $\sum_n y[n] = \big(\sum_n x[n]\big)\big(\sum_n h[n]\big)$. Here $18 = 9 \cdot 2$. It catches most arithmetic slips; it even catches the official key of [[0-midterm-1/past-exams/spring-2025|SP2025 #4(a)]], whose boxed answer sums to 7 instead of $2 \cdot 4 = 8$ (the correct answer is $\{2, -5, \underset{\uparrow}{5}, 0, -5, 12, -4, 3\}$). It does not check the *position* of the arrow: do that with the start-index rule.
+> $\sum_n y[n] = \big(\sum_n x[n]\big)\big(\sum_n h[n]\big)$. Here $18 = 9 \cdot 2$. It catches most arithmetic slips; it even catches the official key of [[exams/midterm-1/past-exams/spring-2025|SP2025 #4(a)]], whose boxed answer sums to 7 instead of $2 \cdot 4 = 8$ (the correct answer is $\{2, -5, \underset{\uparrow}{5}, 0, -5, 12, -4, 3\}$). It does not check the *position* of the arrow: do that with the start-index rule.
 
 > [!question] Slides practice: convolve $x[n] = \{\underset{\uparrow}{1}, 2, 0, -4, -1\}$ with $h[n] = \{-2, \underset{\uparrow}{0}, 1\}$, and $x[n] = \{-3, 6, 2, \underset{\uparrow}{0}, 1, 1\}$ with $h[n] = \{1, \underset{\uparrow}{-1}\}$.
 
@@ -208,7 +208,7 @@ $$
 
 Check: $y[0] = 1 = x[0]h[0]$ and $y[1] = -\tfrac34 + \tfrac12 = -\tfrac14$ ✓. The last form (a combination of the two input "modes") is what the z-transform will produce directly in [[2-z-transform/09-transfer-functions|Lecture 9]].
 
-> [!question] Slides extra practice: $x[n] = u[n]$, $h[n] = (\tfrac23)^{n-2}u[n-4]$. And from [[0-midterm-1/past-exams/spring-2023|SP2023 #3(b)]]: $x[n] = (-\tfrac12)^n u[n]$, $h[n] = (\tfrac23)^n u[n-1]$.
+> [!question] Slides extra practice: $x[n] = u[n]$, $h[n] = (\tfrac23)^{n-2}u[n-4]$. And from [[exams/midterm-1/past-exams/spring-2023|SP2023 #3(b)]]: $x[n] = (-\tfrac12)^n u[n]$, $h[n] = (\tfrac23)^n u[n-1]$.
 
 > [!success]- Answers
 > **Slides:** $u[k-4]\,u[n-k]$ keeps $4 \le k \le n$, so $y[n] = 0$ for $n < 4$ and, with $m = k-4$,
@@ -246,7 +246,7 @@ y[n] = -2e^{-(n+2)}u[n+2] + 3e^{-(n-1)}u[n-1] + e^{-(n-3)}u[n-3].
 $$
 
 > [!trap] Shift every $n$, including the step
-> $h[n-4]$ means replace **every** $n$: $\sin^3(\frac{\pi}{4}(n-4))\,u[n-4]$, not $\sin^3(\frac{\pi}{4}(n-4))\,u[n]$. Dropping the shifted step is the most common way to lose points on the mixed convolution. The same goes for polynomial factors: in [[0-midterm-1/past-exams/fall-2025|FA2025 #3(b)]], $x[n] = n\,u[n+1]\,u[-n+1] = \{-1, \underset{\uparrow}{0}, 1\} = -\delta[n+1] + \delta[n-1]$ and $h[n] = n(\tfrac13)^n\cos(n)$, so $y[n] = -h[n+1] + h[n-1] = -(n+1)(\tfrac13)^{n+1}\cos(n+1) + (n-1)(\tfrac13)^{n-1}\cos(n-1)$.
+> $h[n-4]$ means replace **every** $n$: $\sin^3(\frac{\pi}{4}(n-4))\,u[n-4]$, not $\sin^3(\frac{\pi}{4}(n-4))\,u[n]$. Dropping the shifted step is the most common way to lose points on the mixed convolution. The same goes for polynomial factors: in [[exams/midterm-1/past-exams/fall-2025|FA2025 #3(b)]], $x[n] = n\,u[n+1]\,u[-n+1] = \{-1, \underset{\uparrow}{0}, 1\} = -\delta[n+1] + \delta[n-1]$ and $h[n] = n(\tfrac13)^n\cos(n)$, so $y[n] = -h[n+1] + h[n-1] = -(n+1)(\tfrac13)^{n+1}\cos(n+1) + (n-1)(\tfrac13)^{n-1}\cos(n-1)$.
 
 ## 7. Working backwards: finding $h$ from input–output pairs
 
@@ -259,7 +259,7 @@ LTI means linear combinations and shifts of inputs produce the same combinations
 > 4. **Cascades and parallels:** cascade $h = h_1 * h_2$ (order irrelevant), parallel $h = h_1 + h_2$; peel off the known piece.
 > 5. Then answer the follow-ups from $h$: causal? ($h[n] = 0$ for $n<0$) stable? ($\sum\lvert h\rvert < \infty$)
 
-> [!question] [[0-midterm-1/past-exams/fall-2019|FA2019 #3]]: an LTI system maps $x[n] = 2\delta[n-2]$ to $y[n] = \delta[n-1] + 2\delta[n-2] + \delta[n-3]$. Find $h[n]$, the step response, and decide whether the system is causal.
+> [!question] [[exams/midterm-1/past-exams/fall-2019|FA2019 #3]]: an LTI system maps $x[n] = 2\delta[n-2]$ to $y[n] = \delta[n-1] + 2\delta[n-2] + \delta[n-3]$. Find $h[n]$, the step response, and decide whether the system is causal.
 
 > [!success]- Answer
 > Step 1 with $c = 2$, $n_0 = 2$: $h[n] = \tfrac12\,y[n+2] = \tfrac12\delta[n+1] + \delta[n] + \tfrac12\delta[n-1]$. Step response: $g = h * u = \tfrac12 u[n+1] + u[n] + \tfrac12 u[n-1]$, i.e. $\{\tfrac12, \underset{\uparrow}{\tfrac32}, 2, 2, \dots\}$ starting at $n = -1$. **Not causal**: $h[-1] = \tfrac12 \neq 0$.
@@ -267,19 +267,19 @@ LTI means linear combinations and shifts of inputs produce the same combinations
 More from the exams and homework (all verified):
 
 - [[homework/hw2|HW2]] #4: $x[n] = 3^{-n}u[n]$ gives $y[n] = 5^{-n}u[n-1]$. Since $x[n] - \tfrac13 x[n-1] = \delta[n]$, $h[n] = y[n] - \tfrac13 y[n-1] = \tfrac15\delta[n-1] - \tfrac23(\tfrac15)^n u[n-2]$.
-- [[0-midterm-1/past-exams/fall-2023|FA2023 #4]]: which $h$ maps $u[n]$ to $\delta[n] + \delta[n-1]$? $h[n] = g[n] - g[n-1] = \delta[n] - \delta[n-2]$.
-- [[0-midterm-1/past-exams/spring-2023|SP2023 #4]]: two pairs $(x_1, y_1)$, $(x_2, y_2)$ with $x_1[n] - 3x_2[n-1] = \delta[n]$, so $h[n] = y_1[n] - 3y_2[n-1]$.
-- [[0-midterm-1/past-exams/fall-2024|FA2024 #3]] (cascade, $h_2$ known): $h_1 = 2\delta[n+1]$. [[0-midterm-1/past-exams/spring-2025|SP2025 #3]] (parallel, $h_1 = \delta[n-1]$ known): $h_2 = \delta[n+1]$, so $h = \{1, \underset{\uparrow}{0}, 1\}$, not causal.
+- [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]]: which $h$ maps $u[n]$ to $\delta[n] + \delta[n-1]$? $h[n] = g[n] - g[n-1] = \delta[n] - \delta[n-2]$.
+- [[exams/midterm-1/past-exams/spring-2023|SP2023 #4]]: two pairs $(x_1, y_1)$, $(x_2, y_2)$ with $x_1[n] - 3x_2[n-1] = \delta[n]$, so $h[n] = y_1[n] - 3y_2[n-1]$.
+- [[exams/midterm-1/past-exams/fall-2024|FA2024 #3]] (cascade, $h_2$ known): $h_1 = 2\delta[n+1]$. [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]] (parallel, $h_1 = \delta[n-1]$ known): $h_2 = \delta[n+1]$, so $h = \{1, \underset{\uparrow}{0}, 1\}$, not causal.
 
 Full recipe page: [[problems/finding-h-from-input-output-pairs]].
 
 ## 8. On the exam
 
 > [!exam] Where Lecture 4 shows up (the densest lecture on Midterm 1)
-> - **Finite-length convolution, 7 of 7 exams (5–10 points):** [[0-midterm-1/past-exams/fall-2025|FA2025 #3a]], [[0-midterm-1/past-exams/spring-2025|SP2025 #4a]], [[0-midterm-1/past-exams/fall-2024|FA2024 #4a]], [[0-midterm-1/past-exams/fall-2023|FA2023 #3a]], [[0-midterm-1/past-exams/spring-2023|SP2023 #3a]], [[0-midterm-1/past-exams/spring-2021|SP2021 #2]], [[0-midterm-1/past-exams/fall-2019|FA2019 #4]]. The keys use the matrix method; the points are lost on the arrow. Write the start index first. Recipe: [[problems/finite-length-convolution]].
-> - **Infinite or mixed convolution, 5 of 7:** [[0-midterm-1/past-exams/fall-2025|FA2025 #3b]], [[0-midterm-1/past-exams/spring-2025|SP2025 #4b]], [[0-midterm-1/past-exams/fall-2024|FA2024 #4b]], [[0-midterm-1/past-exams/fall-2023|FA2023 #3b]], [[0-midterm-1/past-exams/spring-2023|SP2023 #3b–c]]. Closed form required (no $\sum$ left). Recipe: [[problems/infinite-length-convolution]].
+> - **Finite-length convolution, 7 of 7 exams (5–10 points):** [[exams/midterm-1/past-exams/fall-2025|FA2025 #3a]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #4a]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #4a]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #3a]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #3a]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #2]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #4]]. The keys use the matrix method; the points are lost on the arrow. Write the start index first. Recipe: [[problems/finite-length-convolution]].
+> - **Infinite or mixed convolution, 5 of 7:** [[exams/midterm-1/past-exams/fall-2025|FA2025 #3b]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #4b]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #4b]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #3b]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #3b–c]]. Closed form required (no $\sum$ left). Recipe: [[problems/infinite-length-convolution]].
 > - **Finding $h$ (or $H$) from input–output data, 7 of 7:** §7 above; later exams mix in z-transforms ([[2-z-transform/09-transfer-functions|Lecture 9]]).
-> - **True/False:** the LTI triangle (§3); "a bounded $h$ means stable" (False); "the convolution of two causal signals is causal" ([[0-midterm-1/past-exams/fall-2025|FA2025 #1(b)]], True); "the parallel connection of two unstable LTI systems is always unstable" ([[0-midterm-1/past-exams/fall-2025|FA2025 #1(f)]], False: $u[n] + (\delta[n] - u[n]) = \delta[n]$); cascade order never matters for LTI systems ([[0-midterm-1/past-exams/fall-2023|FA2023 #1(e)]], True). All of them in the [[0-midterm-1/true-false-bank|T/F bank]].
+> - **True/False:** the LTI triangle (§3); "a bounded $h$ means stable" (False); "the convolution of two causal signals is causal" ([[exams/midterm-1/past-exams/fall-2025|FA2025 #1(b)]], True); "the parallel connection of two unstable LTI systems is always unstable" ([[exams/midterm-1/past-exams/fall-2025|FA2025 #1(f)]], False: $u[n] + (\delta[n] - u[n]) = \delta[n]$); cascade order never matters for LTI systems ([[exams/midterm-1/past-exams/fall-2023|FA2023 #1(e)]], True). All of them in the [[exams/midterm-1/true-false-bank|T/F bank]].
 > - **Property table rows** like $x[n] * u[n+1]$ or $x[n] * 2^n u[-n]$ are decided by §5: LTI by construction, causal iff $h[n] = 0$ for $n < 0$, stable iff $\sum\lvert h\rvert < \infty$.
 
 ## Related

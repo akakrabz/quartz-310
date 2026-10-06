@@ -88,7 +88,7 @@
   .sol h3 { font-size: 1rem; margin: 0 0 6px; color: var(--accent); }
   .sol p { margin: 6px 0; }
   .sol ul { margin: 4px 0; padding-left: 20px; }
-  .sol a, .blurb a { color: var(--accent); }
+  .sol a, .blurb a, .hint a, .row a { color: var(--accent); }
 
   /* math-ish typography */
   .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 .12em; line-height: 1.25; }
@@ -125,6 +125,7 @@
       <p>Every drill draws fresh random parameters (<b>New variant</b>). Answers are checked tolerantly: fractions such as <code>9/4</code> or <code>-5/4</code>, decimals within 10<sup>−6</sup>, spaces, and optional braces are all accepted; use <code>-</code> or <code>−</code> for minus.
       <b>Exam-style points</b> count only your <em>first</em> submission of each variant (on the exam you get one shot); resubmitting still gives feedback and, after a wrong attempt, a hint. Opening the worked solution before submitting scores that variant as a blank.
       True/False uses the exam rule: +2 correct, −1 wrong, 0 skipped. Scores live in memory only and reset when you reload the page.</p>
+      <p>Unit 3 drills also read <code>π</code> or <code>pi</code>, <code>√3</code> or <code>sqrt(3)</code>, products such as <code>3√2/2</code> and <code>2pi/3</code>, and degrees (<code>60°</code>). Angles are compared modulo 2π, so <code>−π</code> and <code>π</code> are the same answer; decimals are accepted to about three digits.</p>
     </details>
     <noscript><p>This page needs JavaScript.</p></noscript>
   </footer>
@@ -486,7 +487,7 @@ drills.props = {
   solution(p) {
     return `<h3>Worked solution</h3><p class="sys">${p.sys} <span class="src">${p.src}</span></p><ul>` +
       PROP_NAMES.map((name, i) => `<li><b>${name}: ${p.ans[i] ? 'Yes' : 'No'}.</b> ${p.why[i]}</li>`).join('') +
-      `</ul><p class="muted">Review: ${pageLink('0-midterm-1/system-property-bank', 'System-property bank')} · ${pageLink('problems/classifying-system-properties', 'Classifying system properties (recipe)')} · ${pageLink('1-signals-and-systems/03-system-properties', 'Lecture 3')}</p>`;
+      `</ul><p class="muted">Review: ${pageLink('exams/midterm-1/system-property-bank', 'System-property bank')} · ${pageLink('problems/classifying-system-properties', 'Classifying system properties (recipe)')} · ${pageLink('1-signals-and-systems/03-system-properties', 'Lecture 3')}</p>`;
   },
 };
 
@@ -1187,8 +1188,477 @@ drills.tf = {
   },
 };
 
+/* =====================================================================================
+   8–10. Unit 3: DTFT values, sinusoidal response, magnitude & phase of linear-phase FIRs
+   ===================================================================================== */
+const PI = Math.PI;
+/* A real number typed with π, √ and degrees: 2π/3, -pi/2, 3√2/2, sqrt(3)/2, 2(1/3), 60°, 1.047 rad.
+   Returns {v, pi}: pi is true when π (or a degree sign) was used. v is NaN if unreadable. */
+function parseVal(src) {
+  let s = normalize(src).toLowerCase();
+  if (s.includes('=')) s = s.slice(s.lastIndexOf('=') + 1);
+  s = s.replace(/\s+/g, '').replace(/rad(ians?)?$/, '');
+  let deg = false;
+  const dm = /(°|deg(rees?)?)$/.exec(s);
+  if (dm) { deg = true; s = s.slice(0, dm.index); }
+  s = s.replace(/π|pi/g, 'p').replace(/√|sqrt/g, 'r');
+  if (/^\{.*\}$/.test(s)) s = s.slice(1, -1);
+  if (!s) return { v: NaN, pi: false };
+  let i = 0, usedPi = false;
+  const peek = () => s[i];
+  const startsAtom = c => !!c && /[0-9.([{pr]/.test(c);
+  function number() {
+    const m = /^(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?/.exec(s.slice(i));
+    if (!m) throw new Error('number expected');
+    i += m[0].length;
+    return parseFloat(m[0]);
+  }
+  function atom() {
+    const c = peek();
+    if (c === '(' || c === '[' || c === '{') {
+      i++; const v = expr();
+      if (!')]}'.includes(s[i] || 'x')) throw new Error('bracket');
+      i++; return v;
+    }
+    if (c === 'p') { i++; usedPi = true; return PI; }
+    if (c === 'r') { i++; const v = power(); if (v < 0) throw new Error('sqrt'); return Math.sqrt(v); }
+    return number();
+  }
+  function power() { const b = atom(); if (peek() === '^') { i++; return Math.pow(b, unary()); } return b; }
+  function unary() { if (peek() === '-') { i++; return -unary(); } if (peek() === '+') { i++; return unary(); } return power(); }
+  function term() {
+    let v = unary();
+    for (;;) {
+      const c = peek();
+      if (c === '*' || c === '/') { i++; const w = unary(); v = c === '*' ? v * w : v / w; }
+      else if (startsAtom(c)) v *= power();                       // implicit product: 2π, 3√2, 2(1/3)
+      else break;
+    }
+    return v;
+  }
+  function expr() { let v = term(); while (peek() === '+' || peek() === '-') { const op = s[i++]; const w = term(); v = op === '+' ? v + w : v - w; } return v; }
+  try {
+    const v = expr();
+    if (i !== s.length || !Number.isFinite(v)) return { v: NaN, pi: false };
+    return { v: deg ? v * PI / 180 : v, pi: usedPi || deg };
+  } catch (e) { return { v: NaN, pi: false }; }
+}
+const valOf = src => parseVal(src).v;
+/* a "multiple of π" field: −14 and −14π both mean −14 */
+const piMultiple = src => { const r = parseVal(src); return r.pi ? r.v / PI : r.v; };
+const wrapPi = t => { let v = ((t + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI; if (v <= -PI + 1e-12) v = PI; return v; };   // (−π, π]
+const angClose = (u, v, tol = 5e-3) => Number.isFinite(u) && Math.abs(wrapPi(u - v)) <= tol;
+const numClose = (u, v) => Number.isFinite(u) && Math.abs(u - v) <= Math.max(3e-3 * Math.abs(v), 1e-3);
+function ratOf(x, maxDen = 64, tol = 1e-9) {                    // continued fractions
+  if (!Number.isFinite(x)) return null;
+  const sg = x < 0 ? -1 : 1, ax = Math.abs(x);
+  let h0 = 0, h1 = 1, k0 = 1, k1 = 0, b = ax;
+  for (let it = 0; it < 40; it++) {
+    const a = Math.floor(b), h2 = a * h1 + h0, k2 = a * k1 + k0;
+    if (k2 > maxDen) break;
+    h0 = h1; h1 = h2; k0 = k1; k1 = k2;
+    if (Math.abs(ax - h1 / k1) <= tol * Math.max(1, ax)) return { p: sg * h1, q: k1 };
+    const f = b - a; if (f < 1e-12) break;
+    b = 1 / f;
+  }
+  return null;
+}
+/* exact-looking text for a value: π/3 (angles), 7/4, 3√3/2, √2, else a 4-decimal number */
+function valStr(x, allowPi = true) {
+  if (!Number.isFinite(x)) return '—';
+  if (Math.abs(x) < 1e-12) return '0';
+  if (allowPi) {
+    const q = ratOf(x / PI, 24);
+    if (q) { const p = Math.abs(q.p); return (q.p < 0 ? M : '') + (p === 1 ? '' : p) + 'π' + (q.q === 1 ? '' : '/' + q.q); }
+  }
+  const q = ratOf(x, 64);
+  if (q) return num(F(q.p, q.q));
+  const q2 = ratOf(x * x, 400);
+  if (q2 && q2.p > 0) {
+    let a = 1, b = q2.p * q2.q;
+    for (let f = 2; f * f <= b; f++) while (b % (f * f) === 0) { b /= f * f; a *= f; }
+    const g = gcd(a, q2.q), nn = a / g, dd = q2.q / g;
+    if (b > 1) return (x < 0 ? M : '') + (nn === 1 ? '' : nn) + '√' + b + (dd === 1 ? '' : '/' + dd);
+  }
+  return String(+x.toFixed(4)).replace('-', M);
+}
+const parS = t => (/[\/−√]/.test(t) ? `(${t})` : t);       // parenthesize a displayed value
+const isNice = x => !/\d\.\d/.test(valStr(x, false));
+/* what answer() puts in a field: the exact text when it is exact, else full precision */
+function ansStr(x, allowPi = true) {
+  const s = valStr(x, allowPi);
+  return Math.abs(valOf(s) - x) < 1e-12 * Math.max(1, Math.abs(x)) ? s : String(x);
+}
+/* signed term inside a sum: " + 3", " − 2" (first term without the plus) */
+const signed = (s, first) => (s.startsWith(M) ? (first ? M : ` ${M} `) + s.slice(1) : (first ? '' : ' + ') + s);
+/* ω/π as Fr -> "π/3"; with n: "πn/3" */
+const wpi = (f, withN) => (f.isZero() ? '0' : angStr({ pi: f }, withN));
+
+/* ---- linear-phase FIR: H_d = e^{−jMω}A(ω) (symmetric) or j e^{−jMω}A(ω) (antisymmetric), A real ---- */
+function linPhase(h, n0) {
+  const L = h.length, c2 = L - 1;                           // 2·(centre offset)
+  const sym = h.every((v, k) => v === h[L - 1 - k]), anti = h.every((v, k) => v === -h[L - 1 - k]);
+  if (!sym && !anti) return null;
+  const terms = [];                                         // A(ω) = Σ coef·cos(mult·ω)   (or sin for anti)
+  if (sym && L % 2 === 1 && h[c2 / 2] !== 0) terms.push({ coef: h[c2 / 2], mult: F(0) });
+  for (let k = 0; 2 * k < c2; k++) if (h[k] !== 0) terms.push({ coef: 2 * h[k], mult: F(c2 - 2 * k, 2) });
+  return { kind: sym ? 'sym' : 'anti', M: F(2 * n0 + c2, 2), terms };
+}
+const Aval = (lp, w) => lp.terms.reduce((s, t) => s + t.coef * (lp.kind === 'sym' ? Math.cos(t.mult.v * w) : Math.sin(t.mult.v * w)), 0);
+function multW(m) { return m.d === 1 ? (m.n === 1 ? 'ω' : `${m.n}ω`) : `${m.n === 1 ? '' : m.n}ω/${m.d}`; }
+function aHTML(lp) {
+  let out = '';
+  lp.terms.forEach(t => {
+    const fn = t.mult.isZero() ? '' : `${lp.kind === 'sym' ? 'cos' : 'sin'}(${multW(t.mult)})`;
+    const mag = Math.abs(t.coef);
+    const body = fn ? (mag === 1 ? '' : num(mag)) + fn : num(mag);
+    out += out === '' ? (t.coef < 0 ? M : '') + body : (t.coef < 0 ? ` ${M} ` : ' + ') + body;
+  });
+  return out || '0';
+}
+/* the same A(ω) with ω = w0 substituted, term by term: "2cos(π/3) + 1" */
+function aSubHTML(lp, w0) {
+  let out = '';
+  lp.terms.forEach(t => {
+    const arg = t.mult.mul(w0), fn = t.mult.isZero() ? '' : `${lp.kind === 'sym' ? 'cos' : 'sin'}(${wpi(arg)})`;
+    const mag = Math.abs(t.coef);
+    const body = fn ? (mag === 1 ? '' : num(mag)) + fn : num(mag);
+    out += out === '' ? (t.coef < 0 ? M : '') + body : (t.coef < 0 ? ` ${M} ` : ' + ') + body;
+  });
+  return out || '0';
+}
+const coefW = a => (a.eq(1) ? '' : a.d === 1 ? num(a) : `(${num(a)})`);          // the c in "cω"
+const ejw = Mv => (Mv.isZero() ? '' : `e<sup>${Mv.sign() > 0 ? M : ''}j${coefW(Mv.abs())}ω</sup>`);
+const hPrefix = lp => (lp.kind === 'anti' ? 'j' : '') + ejw(lp.M);                // H_d = prefix·A(ω)
+function linPh(lp) {                                                               // text of −Mω (+ π/2)
+  let t = lp.M.isZero() ? '' : (lp.M.sign() > 0 ? M : '') + coefW(lp.M.abs()) + 'ω';
+  if (lp.kind === 'anti') t += t ? ' + π/2' : 'π/2';
+  return t || '0';
+}
+const Hd = sub('d');
+const L13 = () => pageLink('3-fourier-analysis/13-fourier-analysis-and-the-dtft', 'Lecture 13');
+const L14 = () => pageLink('3-fourier-analysis/14-dtft-properties', 'Lecture 14');
+const L15 = () => pageLink('3-fourier-analysis/15-frequency-response', 'Lecture 15');
+const L16 = () => pageLink('3-fourier-analysis/16-magnitude-and-phase-response', 'Lecture 16');
+
+/* ---------------- 8. DTFT values without the DTFT ---------------- */
+drills.dtftv = {
+  gen(seed) {
+    const R = rng(seed);
+    const nz = () => R.pick([-3, -2, -1, 1, 2, 3]);
+    let x;
+    if (R.chance(0.2)) {                                          // exam style (FA2019 MT2 #3): symmetric, odd length, centred
+      const Lh = R.int(2, 3), half = Array.from({ length: Lh }, (_, i) => (i === 0 ? nz() : R.int(-3, 3)));
+      x = half.concat([R.int(-4, 4) || 1], half.slice().reverse());
+    } else {
+      const L = R.int(3, 6);
+      x = Array.from({ length: L }, (_, i) => (i === 0 || i === L - 1) ? nz() : R.int(-3, 3));
+    }
+    const L = x.length;
+    const n0 = -(x.length % 2 === 1 && R.chance(0.35) ? (L - 1) / 2 : R.int(0, L - 1));   // first index; n = 0 always inside
+    const ns = x.map((_, i) => n0 + i);
+    const sgn = n => (Math.abs(n) % 2 === 0 ? 1 : -1);
+    const X0 = x.reduce((s, v) => s + v, 0);
+    const Xpi = x.reduce((s, v, i) => s + sgn(ns[i]) * v, 0);
+    const x0 = x[-n0];
+    const E = x.reduce((s, v) => s + v * v, 0);
+    return { drill: 'dtftv', seed, x, n0, X0, Xpi, x0, I1: 2 * x0, E, I2: 2 * E, maxPts: 8 };
+  },
+  statement(p) {
+    return `<p>A finite-length sequence (the arrow ↑ marks n = 0):</p>
+      <p class="sys">x[n] = ${seqHTML(p.x, p.n0)}</p>
+      <div class="scroll">${idxTable('x[n]', p.x, p.n0)}</div>
+      <p>Its DTFT is X${Hd}(ω) = Σ x[n]e<sup>${M}jωn</sup>. Find, without writing X${Hd}(ω) out in full:</p>
+      <p><b>(a)</b> X${Hd}(0) &nbsp; <b>(b)</b> X${Hd}(π) &nbsp; <b>(c)</b> ∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω) dω &nbsp; <b>(d)</b> ∫<sub>${M}π</sub><sup>π</sup> |X${Hd}(ω)|² dω</p>
+      <p class="muted" style="font-size:13px">Enter (c) and (d) as multiples of π: for 6π type 6 (or 6π).</p>`;
+  },
+  answer(p) { return { a: String(p.X0), b: String(p.Xpi), c: String(p.I1), d: String(p.I2) }; },
+  check(p, r) {
+    const a = valOf(r.a), b = valOf(r.b), c = piMultiple(r.c), d = piMultiple(r.d);
+    const okA = near(a, p.X0), okB = near(b, p.Xpi), okC = near(c, p.I1), okD = near(d, p.I2);
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read a number.' : '');
+    const sgnFirst = p.x.reduce((s, v, i) => s + (i % 2 === 0 ? 1 : -1) * v, 0);
+    let mB = blank(r.b, b);
+    if (!mB && !okB && near(b, sgnFirst) && sgnFirst !== p.Xpi) mB = 'the sign pattern (−1)<sup>n</sup> follows the index n, not the position in the list: x[0] always gets +.';
+    let mC = blank(r.c, c);
+    if (!mC && !okC && near(c, p.x0) && p.x0 !== 0) mC = 'that is x[0] — the inverse DTFT has 1/(2π) in front, so the integral is 2π·x[0].';
+    let mD = blank(r.d, d);
+    if (!mD && !okD && near(d, p.E)) mD = 'that is Σ|x[n]|² — Parseval has 1/(2π) in front, so the integral is 2π times it.';
+    const parts = [
+      { label: `(a) X${Hd}(0)`, ok: okA, pts: okA ? 2 : 0, max: 2, msg: okA ? `Σ x[n] = ${num(p.X0)}.` : blank(r.a, a) },
+      { label: `(b) X${Hd}(π)`, ok: okB, pts: okB ? 2 : 0, max: 2, msg: okB ? `Σ (${M}1)<sup>n</sup>x[n] = ${num(p.Xpi)}.` : mB },
+      { label: `(c) ∫X${Hd}(ω)dω`, ok: okC, pts: okC ? 2 : 0, max: 2, msg: okC ? `2π·x[0] = ${num(p.I1)}π.` : mC },
+      { label: `(d) ∫|X${Hd}(ω)|²dω`, ok: okD, pts: okD ? 2 : 0, max: 2, msg: okD ? `2π·Σ|x[n]|² = ${num(p.I2)}π.` : mD },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    const signs = p.x.map((_, i) => ((Math.abs(p.n0 + i) % 2 === 0) ? '+' : M)).join(' ');
+    if (!okA) { h1.push(`<b>ω = 0.</b> Every e<sup>${M}j0n</sup> = 1, so X${Hd}(0) = Σ x[n].`); h2.push(`(a) Add the samples: ${p.x.map(v => paren(v)).join(' + ')}.`); }
+    if (!okB) { h1.push(`<b>ω = π.</b> e<sup>${M}jπn</sup> = (${M}1)<sup>n</sup>: + for even n, ${M} for odd n (negative n too: (${M}1)<sup>${M}3</sup> = ${M}1).`); h2.push(`(b) Signs by index n = ${num(p.n0)} … ${num(p.n0 + p.x.length - 1)}: ${signs}.`); }
+    if (!okC) { h1.push(`<b>Inverse DTFT at n = 0.</b> x[0] = (1/2π)∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω) dω.`); h2.push(`(c) The sample under the arrow is x[0] = ${num(p.x0)}.`); }
+    if (!okD) { h1.push(`<b>Parseval</b> (${L14()}): Σ|x[n]|² = (1/2π)∫<sub>${M}π</sub><sup>π</sup> |X${Hd}(ω)|² dω.`); h2.push(`(d) Squares: ${p.x.map(v => v * v).join(' + ')}.`); }
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    const ns = p.x.map((_, i) => p.n0 + i), c0 = n => (n === 0 ? ' class="n0"' : '');
+    const sg = n => (Math.abs(n) % 2 === 0 ? 1 : -1);
+    const row = (name, f) => `<tr><th>${name}</th>${ns.map((n, i) => `<td${c0(n)}>${num(f(n, i))}</td>`).join('')}</tr>`;
+    const t = `<table class="grid"><tr><th>n</th>${ns.map(n => `<td${c0(n)}>${num(n)}</td>`).join('')}</tr>` +
+      row('x[n]', (n, i) => p.x[i]) + row(`(${M}1)<sup>n</sup>`, n => sg(n)) + row(`(${M}1)<sup>n</sup>x[n]`, (n, i) => sg(n) * p.x[i]) + row('|x[n]|²', (n, i) => p.x[i] * p.x[i]) + '</table>';
+    return `<h3>Worked solution</h3>
+      <p>Each quantity is a value of the DTFT sum or of an inverse-DTFT identity, so no closed form of X${Hd}(ω) is needed.</p>
+      <div class="scroll">${t}</div>
+      <p><b>(a)</b> X${Hd}(0) = Σ x[n]·1 = <b>${num(p.X0)}</b>.</p>
+      <p><b>(b)</b> X${Hd}(π) = Σ x[n]e<sup>${M}jπn</sup> = Σ (${M}1)<sup>n</sup>x[n] = <b>${num(p.Xpi)}</b> (the (${M}1)<sup>n</sup>x[n] row of the table, summed).</p>
+      <p><b>(c)</b> The synthesis equation x[n] = (1/2π)∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω)e<sup>jωn</sup> dω at n = 0 gives ∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω) dω = 2π·x[0] = 2π·${paren(p.x0)} = <b>${num(p.I1)}π</b>.</p>
+      <p><b>(d)</b> Parseval: ∫<sub>${M}π</sub><sup>π</sup> |X${Hd}(ω)|² dω = 2π Σ|x[n]|² = 2π·${p.E} = <b>${num(p.I2)}π</b>.</p>
+      <p class="muted">Why it works: the e<sup>${M}jωn</sup> with n ≠ 0 integrate to zero over a full period, which is also why only x[0] survives in (c). HW5 #2 asks all four, FA2019 MT2 #3 asks (a)–(c) and FA2023 MT2 #2 asks (a)–(b); (d) is Parseval's relation from Lecture 14. Review: ${L13()} · ${L14()} · ${pageLink('concepts/dtft', 'DTFT')} · ${pageLink('concepts/dtft-properties', 'DTFT properties')} · ${pageLink('problems/dtft-and-inverse-dtft', 'DTFT and inverse DTFT (recipe)')}</p>`;
+  },
+};
+
+/* ---------------- 9. Response to a sum of sinusoids ---------------- */
+/* Formula systems: H = R(ω)·e^{jψ(ω)}, R real (may be negative), all with Hermitian symmetry (real h[n]) */
+const SR_FORMULAS = [
+  { id: 'F1', html: `|H${Hd}(ω)| = cos²(ω), &nbsp; ∠H${Hd}(ω) = sin(ω), &nbsp; ${M}π ≤ ω ≤ π`, src: 'Lecture 15 concept check',
+    R: w => Math.cos(w) ** 2, psi: w => Math.sin(w), Rtxt: 'cos²(ω)', psiTxt: 'sin(ω)', given: true },
+  { id: 'F2', html: `H${Hd}(ω) = e<sup>${M}jω</sup>(1 + cos ω)`, src: '', R: w => 1 + Math.cos(w), psi: w => -w, Rtxt: '1 + cos ω', psiTxt: `${M}ω` },
+  { id: 'F3', html: `H${Hd}(ω) = e<sup>${M}j2ω</sup>(1 + 2cos ω)`, src: '', R: w => 1 + 2 * Math.cos(w), psi: w => -2 * w, Rtxt: '1 + 2cos ω', psiTxt: `${M}2ω` },
+  { id: 'F4', html: `H${Hd}(ω) = 2j e<sup>${M}jω</sup> sin ω`, src: 'Lecture 16, Exercise 1', R: w => 2 * Math.sin(w), psi: w => PI / 2 - w, Rtxt: '2 sin ω', psiTxt: `π/2 ${M} ω` },
+  { id: 'F5', html: `H${Hd}(ω) = 2e<sup>${M}j3ω</sup> cos 3ω`, src: 'SP2023 MT2 #5', R: w => 2 * Math.cos(3 * w), psi: w => -3 * w, Rtxt: '2cos 3ω', psiTxt: `${M}3ω` },
+  { id: 'F6', html: `|H${Hd}(ω)| = |ω|/π, &nbsp; ∠H${Hd}(ω) = ${M}2ω, &nbsp; ${M}π ≤ ω ≤ π`, src: '', R: w => Math.abs(w) / PI, psi: w => -2 * w, Rtxt: '|ω|/π', psiTxt: `${M}2ω`, given: true },
+];
+function srSystem(p) {                                     // R and ψ for this variant
+  if (p.fam === 'formula') { const f = SR_FORMULAS.find(q => q.id === p.fid); return { R: f.R, psi: f.psi }; }
+  return { R: w => Aval(p.lp, w), psi: w => -p.lp.M.v * w + (p.lp.kind === 'anti' ? PI / 2 : 0) };
+}
+function srEval(p, w) {                                    // {mag, ph (principal, NaN if 0), H (complex)}
+  const s = srSystem(p), Rv = s.R(w), ps = s.psi(w);
+  const mag = Math.abs(Rv) < 1e-12 ? 0 : Math.abs(Rv);
+  return { R: Rv, mag, ph: mag === 0 ? NaN : wrapPi(ps + (Rv < 0 ? PI : 0)), H: cpolar(Rv, ps) };
+}
+drills.sinr = {
+  gen(seed) {
+    const R = rng(seed);
+    for (let t = 0; t < 5000; t++) {
+      const fam = R.chance(0.6) ? 'fir' : 'formula';
+      let h = null, n0 = 0, lp = null, fid = null;
+      if (fam === 'fir') {
+        const a = R.pick([1, 2, -1, 0.5, 1]), L = R.pick([2, 3, 3]);
+        const anti = R.chance(0.35);
+        h = L === 2 ? (anti ? [a, -a] : [a, a]) : (anti ? [a, 0, -a] : [a, R.pick([1, 2, 3, -1, -2, 0]), a]);
+        n0 = L === 3 && R.chance(0.3) ? -1 : (L === 2 && R.chance(0.15) ? -1 : 0);
+        lp = linPhase(h, n0);
+      } else fid = R.pick(SR_FORMULAS).id;
+      const w1 = F(...R.pick([[1, 2], [1, 3], [1, 3], [2, 3]]));               // ω1/π
+      const th = F(...R.pick([[0], [0], [1, 4], [-1, 4], [1, 6], [-1, 3], [1, 3], [1, 2], [-1, 2]]));   // θ1/π (cosine form)
+      const wsin = R.chance(0.3);                                             // show the middle term as a sine
+      const thShown = wsin ? th.add(F(1, 2)) : th;                            // sin(α + π/2) = cos(α)
+      if (wsin && thShown.abs().gt(1)) continue;
+      const A0 = R.pick([1, 2, 3, 4, -1, -2, 5]), A1 = R.pick([1, 2, 3, 4]), A2 = R.pick([1, 2, 3, -1, -2]);
+      const p = { drill: 'sinr', seed, fam, h, n0, lp, fid, w1, th, wsin, thShown, A0, A1, A2, maxPts: 8 };
+      const E0 = srEval(p, 0), E1 = srEval(p, PI * w1.v), Epi = srEval(p, PI);
+      if (E1.mag === 0 && !R.chance(0.25)) continue;                         // a blocked cosine now and then, not often
+      if (E0.mag === 0 && Epi.mag === 0 && E1.mag === 0) continue;
+      const clean = v => (Math.abs(v) < 1e-12 ? 0 : v);
+      const H0 = clean(E0.H.re), Hpi = clean(Epi.H.re);                       // real for a real system
+      if (!isNice(H0) || !isNice(Hpi) || !isNice(E1.mag)) continue;
+      const B = A1 * E1.mag;
+      const phi = E1.mag === 0 ? 0 : wrapPi(PI * th.v + E1.ph);
+      return { ...p, E0, E1, Epi, H0, Hpi, c0: A0 * H0, c2: A2 * Hpi, B, phi, blocked: E1.mag === 0 };
+    }
+    throw new Error('sinr: no parameters found');
+  },
+  inputHTML(p) {
+    const fn = p.wsin ? 'sin' : 'cos';
+    const arg = wpi(p.w1, true) + (p.thShown.isZero() ? '' : (p.thShown.sign() < 0 ? ` ${M} ` : ' + ') + wpi(p.thShown.abs()));
+    const mid = `${p.A1 === 1 ? '' : p.A1}${fn}(${arg})`;
+    const a2 = Math.abs(p.A2) === 1 ? '' : Math.abs(p.A2);
+    return `${num(p.A0)} + ${mid} ${p.A2 < 0 ? M : '+'} ${a2}(${M}1)<sup>n</sup>`;
+  },
+  sysHTML(p) {
+    if (p.fam === 'fir') return `<p>A real LTI system has impulse response</p><p class="sys">h[n] = ${seqHTML(p.h, p.n0)}</p>`;
+    const f = SR_FORMULAS.find(q => q.id === p.fid);
+    return `<p>A real LTI system has frequency response${f.src ? ` <span class="src">${f.src}</span>` : ''}</p><p class="sys">${f.html}</p>`;
+  },
+  statement(p) {
+    return this.sysHTML(p) + `<p>The input is</p><p class="sys">x[n] = ${this.inputHTML(p)}</p>
+      <p>Write the output as <b>y[n] = c${sub('0')} + B cos(${wpi(p.w1, true)} + φ) + c${sub('2')}(${M}1)<sup>n</sup></b> with B ≥ 0, and enter c${sub('0')}, B, φ (radians) and c${sub('2')}.</p>`;
+  },
+  answer(p) { return { c0: ansStr(p.c0, false), B: ansStr(p.B, false), phi: p.blocked ? '0' : ansStr(p.phi), c2: ansStr(p.c2, false) }; },
+  check(p, r) {
+    const c0 = valOf(r.c0), B = valOf(r.B), phi = valOf(r.phi), c2 = valOf(r.c2);
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read it — numbers, fractions, π, √ and ° are accepted.' : '');
+    const ok0 = numClose(c0, p.c0), ok2 = numClose(c2, p.c2);
+    // the middle term: compare phasors B·e^{jφ}, so −B with φ ± π also counts
+    const okB = Number.isFinite(B) && numClose(Math.abs(B), p.B);
+    const phiU = Number.isFinite(phi) ? phi : (p.blocked || (okB && p.B === 0) ? 0 : NaN);
+    const okPhi = okB && (p.blocked ? true : angClose(phiU + (B < 0 ? PI : 0), p.phi));
+    const thV = PI * p.th.v, ang = p.E1.ph;
+    let mPhi = '';
+    if (!okPhi && Number.isFinite(phi)) {
+      if (!p.blocked && angClose(phi, thV) && !angClose(thV, p.phi)) mPhi = `that is the input phase alone — the system adds ∠H${Hd}(ω₁).`;
+      else if (!p.blocked && angClose(phi, thV - ang) && !angClose(thV - ang, p.phi)) mPhi = `∠H${Hd}(ω₁) is added to the input phase, not subtracted.`;
+      else if (!p.blocked && p.wsin && angClose(phi, PI * p.thShown.v + ang)) mPhi = 'convert the sine first: sin(α) = cos(α − π/2).';
+    }
+    let m2 = blank(r.c2, c2);
+    if (!m2 && !ok2 && numClose(c2, -p.c2) && p.c2 !== 0) m2 = `check the sign of H${Hd}(π).`;
+    else if (!m2 && !ok2 && numClose(c2, p.A2 * p.H0) && p.H0 !== p.Hpi) m2 = `(${M}1)<sup>n</sup> = cos(πn) is the frequency ω = π: it is scaled by H${Hd}(π), not H${Hd}(0).`;
+    const parts = [
+      { label: `c${sub('0')} (the constant)`, ok: ok0, pts: ok0 ? 2 : 0, max: 2, msg: ok0 ? `${num(p.A0)}·H${Hd}(0) = ${valStr(p.c0, false)}.` : blank(r.c0, c0) },
+      { label: 'B (amplitude)', ok: okB, pts: okB ? 2 : 0, max: 2, msg: okB ? `${p.A1}·|H${Hd}(ω₁)| = ${valStr(p.B, false)}${B < 0 ? ' (written with B ≥ 0 that is ' + valStr(p.B, false) + ')' : ''}.` : blank(r.B, B) },
+      { label: 'φ (phase)', ok: okPhi, pts: okPhi ? 2 : 0, max: 2, msg: okPhi ? (p.blocked ? `the cosine is blocked (H${Hd}(ω₁) = 0), so any phase is fine.` : `φ = ${valStr(p.phi)}.`) : (!okB && Number.isFinite(phi) ? 'fix the amplitude first.' : mPhi || blank(r.phi, phi)) },
+      { label: `c${sub('2')} (the (${M}1)<sup>n</sup> term)`, ok: ok2, pts: ok2 ? 2 : 0, max: 2, msg: ok2 ? `${num(p.A2)}·H${Hd}(π) = ${valStr(p.c2, false)}.` : m2 },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    if (!ok0 || !ok2) h1.push(`<b>Each piece is an eigenfunction.</b> A constant is the frequency ω = 0 and (${M}1)<sup>n</sup> = cos(πn) is ω = π: multiply them by H${Hd}(0) and H${Hd}(π), which are real for a real h[n].`);
+    if (!okB || !okPhi) h1.push(`<b>The cosine</b> (${L15()}): A cos(ω₁n + θ) → A|H${Hd}(ω₁)| cos(ω₁n + θ + ∠H${Hd}(ω₁)).${p.wsin ? ' Rewrite the sine first: sin(α) = cos(α − π/2).' : ''}`);
+    if (p.fam === 'fir') h1.push(`<b>From h[n]:</b> H${Hd}(0) = Σ h[n], H${Hd}(π) = Σ (${M}1)<sup>n</sup>h[n]; for ω₁, pair the ${p.lp.kind === 'anti' ? 'antisymmetric' : 'symmetric'} taps about their centre M and factor out e<sup>${M}jMω</sup>.`);
+    else if (!SR_FORMULAS.find(q => q.id === p.fid).given) h1.push(`<b>Read magnitude and phase off the formula</b>, but watch the real factor: where it is negative, |H${Hd}| is its absolute value and the phase picks up ±π.`);
+    const wS = wpi(p.w1);
+    h2.push(`Here H${Hd}(0) = ${valStr(p.H0, false)}, H${Hd}(π) = ${valStr(p.Hpi, false)}, and |H${Hd}(${wS})| = ${valStr(p.E1.mag, false)}${p.blocked ? '' : `, ∠H${Hd}(${wS}) = ${valStr(p.E1.ph)}`}. The input phase θ (cosine form) is ${valStr(PI * p.th.v)}.`);
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  /* how H_d(ω) is written as R(ω)e^{jψ(ω)} for this variant */
+  formHTML(p) {
+    if (p.fam === 'formula') {
+      const f = SR_FORMULAS.find(q => q.id === p.fid);
+      return f.given ? `The magnitude and phase are given: |H${Hd}(ω)| = ${f.Rtxt}, ∠H${Hd}(ω) = ${f.psiTxt}.`
+        : `Write H${Hd}(ω) = R(ω)e<sup>jψ(ω)</sup> with R(ω) = ${f.Rtxt} real and ψ(ω) = ${f.psiTxt}. Where R ≥ 0: |H${Hd}| = R and ∠H${Hd} = ψ; where R &lt; 0: |H${Hd}| = −R and ∠H${Hd} = ψ ± π.`;
+    }
+    const lp = p.lp, anti = lp.kind === 'anti', pre = hPrefix(lp);
+    return `H${Hd}(ω) = Σ h[n]e<sup>${M}jωn</sup>. The taps are ${anti ? 'antisymmetric' : 'symmetric'} about n = ${num(lp.M)}, so pairing them gives H${Hd}(ω) = ${pre ? pre + '·' : ''}A(ω) with A(ω) = ${aHTML(lp)} real: |H${Hd}| = |A| and ∠H${Hd} = ${linPh(lp)}, plus π where A &lt; 0.`;
+  },
+  evalLine(p, wF, E) {
+    const wS = wpi(wF), s = srSystem(p), w = PI * wF.v, Rv = s.R(w), ps = s.psi(w);
+    const Rname = p.fam === 'fir' ? 'A' : 'R';
+    const rTxt = p.fam === 'fir' ? `${aSubHTML(p.lp, wF)} = ${valStr(Rv, false)}` : valStr(Rv, false);
+    const given = p.fam === 'formula' && SR_FORMULAS.find(q => q.id === p.fid).given;
+    if (given) return `ω = ${wS}: |H${Hd}(${wS})| = ${valStr(E.mag, false)}${E.mag === 0 ? '' : `, ∠H${Hd}(${wS}) = ${valStr(ps)}${Math.abs(wrapPi(ps) - ps) > 1e-9 ? ` = ${valStr(E.ph)} (principal value)` : ''}`}.`;
+    if (E.mag === 0) return `ω = ${wS}: ${Rname}(${wS}) = ${rTxt}, so H${Hd}(${wS}) = 0.`;
+    return `ω = ${wS}: ${Rname}(${wS}) = ${rTxt}${Rv < 0 ? ' (negative)' : ''}, ψ = ${valStr(ps)} ⇒ |H${Hd}(${wS})| = ${valStr(E.mag, false)}, ∠H${Hd}(${wS}) = ${valStr(E.ph)}${Rv < 0 || Math.abs(wrapPi(ps) - ps) > 1e-9 ? ' (principal value)' : ''}.`;
+  },
+  solution(p) {
+    const wS = wpi(p.w1), thS = valStr(PI * p.th.v);
+    const yTerms = [];
+    if (Math.abs(p.c0) > 1e-12) yTerms.push(valStr(p.c0, false));
+    const frP = t => (t.includes('/') ? `(${t})` : t);           // (1/2)cos(…), not 1/2cos(…)
+    const rawPhi = PI * p.th.v + (p.blocked ? 0 : p.E1.ph);         // θ + ∠H before reducing to [−π, π]
+    const phiTail = Math.abs(rawPhi - p.phi) <= 1e-9 ? `<b>${valStr(p.phi)}</b>`
+      : Math.abs(Math.abs(rawPhi) - PI) <= 1e-9 ? `${valStr(rawPhi)}, the same angle as <b>${valStr(p.phi)}</b>`
+      : `${valStr(rawPhi)}, principal value <b>${valStr(p.phi)}</b>`;
+    if (p.B > 1e-12) yTerms.push(`${Math.abs(p.B - 1) < 1e-12 ? '' : frP(valStr(p.B, false))}cos(${wpi(p.w1, true)}${Math.abs(p.phi) < 1e-12 ? '' : signed(valStr(p.phi), false)})`);
+    if (Math.abs(p.c2) > 1e-12) yTerms.push(`${valStr(p.c2, false).replace(/^(−?)1$/, '$1')}(${M}1)<sup>n</sup>`);
+    const y = yTerms.length ? yTerms.map((t, i) => signed(t, i === 0)).join('') : '0';
+    return `<h3>Worked solution</h3>
+      <p><b>1 · The system.</b> ${this.formHTML(p)}</p>
+      <p><b>2 · Evaluate at the three input frequencies</b> (a constant is ω = 0, (${M}1)<sup>n</sup> = cos(πn) is ω = π):</p>
+      <ul><li>${this.evalLine(p, F(0), p.E0)} H${Hd}(0) = <b>${valStr(p.H0, false)}</b>.</li>
+      <li>${this.evalLine(p, p.w1, p.E1)}</li>
+      <li>${this.evalLine(p, F(1), p.Epi)} H${Hd}(π) = <b>${valStr(p.Hpi, false)}</b>.</li></ul>
+      <p><b>3 · Scale and shift each piece.</b> ${p.wsin ? `First ${p.A1 === 1 ? '' : p.A1}sin(${wpi(p.w1, true)}${p.thShown.isZero() ? '' : signed(valStr(PI * p.thShown.v), false)}) = ${p.A1 === 1 ? '' : p.A1}cos(${wpi(p.w1, true)}${p.th.isZero() ? '' : signed(thS, false)}), since sin(α) = cos(α − π/2). ` : ''}
+      c${sub('0')} = ${num(p.A0)}·${parS(valStr(p.H0, false))} = <b>${valStr(p.c0, false)}</b>;
+      B = ${p.A1}·${frP(valStr(p.E1.mag, false))} = <b>${valStr(p.B, false)}</b>${p.blocked ? ' (the cosine is blocked)' : `, φ = θ + ∠H${Hd}(${wS}) = ${thS}${signed(valStr(p.E1.ph), false)} = ${phiTail}`};
+      c${sub('2')} = ${num(p.A2)}·${parS(valStr(p.Hpi, false))} = <b>${valStr(p.c2, false)}</b>.</p>
+      <p><b>Answer.</b> y[n] = ${y}</p>
+      <p class="muted">Only the frequencies already in the input come out: an LTI system can rescale and shift each sinusoid, never create a new frequency. Review: ${L15()} · ${L16()} · ${pageLink('concepts/frequency-response', 'frequency response')} · ${pageLink('concepts/eigenfunctions-of-lti-systems', 'eigenfunctions of LTI systems')} · ${pageLink('problems/lti-response-to-sinusoids', 'LTI response to sinusoids (recipe)')}</p>`;
+  },
+};
+
+/* ---------------- 10. Magnitude, phase and group delay of a linear-phase FIR ---------------- */
+drills.magph = {
+  gen(seed) {
+    const R = rng(seed);
+    for (let t = 0; t < 5000; t++) {
+      const L = R.pick([2, 3, 3, 4, 5]), anti = R.chance(0.4);
+      const e = () => R.pick([1, 2, 3, -1, -2, -3]), f = () => R.int(-3, 3);
+      let h;
+      if (L === 2) { const a = e(); h = anti ? [a, -a] : [a, a]; }
+      else if (L === 3) { const a = e(); h = anti ? [a, 0, -a] : [a, f(), a]; }
+      else if (L === 4) { const a = e(), b = f(); h = anti ? [a, b, -b, -a] : [a, b, b, a]; }
+      else { const a = e(), b = f(); h = anti ? [a, b, 0, -b, -a] : [a, b, f(), b, a]; }
+      const n0 = -R.int(0, L - 1);
+      const lp = linPhase(h, n0);
+      const w0 = F(...R.pick([[1, 2], [1, 3], [2, 3], [1, 1], [1, 4], [3, 4], [1, 6]]));
+      const w = PI * w0.v, A = Aval(lp, w);
+      if (Math.abs(A) < 1e-9 || !isNice(A)) continue;                     // H(ω0) = 0 (phase undefined) or a messy value
+      const ph = wrapPi(-lp.M.v * w + (anti ? PI / 2 : 0) + (A < 0 ? PI : 0));
+      return { drill: 'magph', seed, h, n0, lp, w0, A, mag: Math.abs(A), ph, maxPts: 8 };
+    }
+    throw new Error('magph: no parameters found');
+  },
+  statement(p) {
+    const anti = p.lp.kind === 'anti';
+    return `<p>An LTI system has impulse response (the arrow ↑ marks n = 0)</p>
+      <p class="sys">h[n] = ${seqHTML(p.h, p.n0)}</p>
+      <div class="scroll">${idxTable('h[n]', p.h, p.n0)}</div>
+      <p>The taps are <b>${anti ? 'antisymmetric' : 'symmetric'}</b>, so H${Hd}(ω) = ${anti ? 'j ' : ''}e<sup>${M}jMω</sup>A(ω) with A(ω) real. At ω₀ = <b>${wpi(p.w0)}</b> find</p>
+      <p><b>(a)</b> the group delay τ${sub('gd')}(ω) = M &nbsp; <b>(b)</b> A(ω₀) (with its sign) &nbsp; <b>(c)</b> |H${Hd}(ω₀)| &nbsp; <b>(d)</b> ∠H${Hd}(ω₀) as a principal value in [${M}π, π]</p>`;
+  },
+  answer(p) { return { M: num(p.lp.M), A: ansStr(p.A, false), mag: ansStr(p.mag, false), ph: ansStr(p.ph) }; },
+  check(p, r) {
+    const Mu = valOf(r.M), Au = valOf(r.A), mu = valOf(r.mag), pu = valOf(r.ph);
+    const lp = p.lp, Mv = lp.M.v, anti = lp.kind === 'anti', w = PI * p.w0.v;
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read it — numbers, fractions, π, √ and ° are accepted.' : '');
+    const okM = near(Mu, Mv), okA = numClose(Au, p.A), okm = numClose(mu, p.mag), okp = angClose(pu, p.ph);
+    let mM = blank(r.M, Mu);
+    if (!mM && !okM && near(Mu, -Mv) && Mv !== 0) mM = `e<sup>${M}jMω</sup> is a delay by M: the sign is the other way.`;
+    else if (!mM && !okM && near(Mu, (p.h.length - 1) / 2) && p.n0 !== 0) mM = 'that is the centre counted from the first tap — count from n = 0 (the arrow).';
+    let mA = blank(r.A, Au);
+    if (!mA && !okA && numClose(Au, -p.A)) mA = `right size, wrong sign — check ${anti ? 'which tap of each pair carries the minus sign (the j is outside A)' : 'the cosines at ω₀'}.`;
+    let mm = blank(r.mag, mu);
+    if (!mm && !okm && numClose(mu, p.A) && p.A < 0) mm = 'a magnitude is never negative: |H<sub>d</sub>(ω₀)| = |A(ω₀)|.';
+    let mp = blank(r.ph, pu);
+    if (!mp && !okp && Number.isFinite(pu)) {
+      const base = -Mv * w;
+      if (p.A < 0 && angClose(pu, base + (anti ? PI / 2 : 0))) mp = 'A(ω₀) is negative, and −1 = e<sup>±jπ</sup> adds ±π to the phase.';
+      else if (anti && angClose(pu, base + (p.A < 0 ? PI : 0))) mp = 'the j in front contributes +π/2.';
+      else if (angClose(pu, -base + (anti ? PI / 2 : 0) + (p.A < 0 ? PI : 0))) mp = `the linear phase is ${M}Mω₀, not +Mω₀.`;
+    } else if (okp && Number.isFinite(pu) && Math.abs(pu - p.ph) > 1e-3 && !(Math.abs(Math.abs(p.ph) - PI) < 1e-9)) mp = `the same angle; its principal value is ${valStr(p.ph)}.`;
+    const parts = [
+      { label: '(a) group delay', ok: okM, pts: okM ? 2 : 0, max: 2, msg: okM ? `τ${sub('gd')} = M = ${num(lp.M)} sample${Math.abs(Mv) === 1 ? '' : 's'}.` : mM },
+      { label: '(b) A(ω₀)', ok: okA, pts: okA ? 2 : 0, max: 2, msg: okA ? `A(${wpi(p.w0)}) = ${valStr(p.A, false)}.` : mA },
+      { label: `(c) |H${Hd}(ω₀)|`, ok: okm, pts: okm ? 2 : 0, max: 2, msg: okm ? `${valStr(p.mag, false)}.` : mm },
+      { label: `(d) ∠H${Hd}(ω₀)`, ok: okp, pts: okp ? 2 : 0, max: 2, msg: okp ? (mp || `${valStr(p.ph)}${Math.abs(Math.abs(p.ph) - PI) < 1e-9 ? ' (π and −π are the same angle)' : ''}.`) : mp },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    h1.push(`<b>Pair the taps</b> around the centre M = (first index + last index)/2: h[M−m]e<sup>${M}jω(M−m)</sup> + h[M+m]e<sup>${M}jω(M+m)</sup> = e<sup>${M}jMω</sup>·${anti ? '2j·h[M−m] sin(mω)' : '2h[M−m] cos(mω)'}. What is left after factoring out ${anti ? 'j' : ''}e<sup>${M}jMω</sup> is the real A(ω).`);
+    if (!okp || !okm) h1.push(`<b>Magnitude and phase</b> (${L16()}): |H${Hd}| = |A|; ∠H${Hd} = ${M}Mω₀${anti ? ' + π/2' : ''}, plus π if A(ω₀) &lt; 0, then reduce to [${M}π, π].`);
+    if (!okM) h1.push(`<b>Group delay</b> τ${sub('gd')} = ${M}d∠H${Hd}/dω: the linear phase ${M}Mω gives M; the π jumps where A changes sign do not change the slope.`);
+    h2.push(`Here M = ${num(lp.M)} and A(ω) = ${aHTML(lp)}, so A(${wpi(p.w0)}) = ${aSubHTML(lp, p.w0)}.`);
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    const lp = p.lp, anti = lp.kind === 'anti', w = PI * p.w0.v, wS = wpi(p.w0);
+    const first = p.n0, last = p.n0 + p.h.length - 1;
+    const lin = -lp.M.v * w, raw = lin + (anti ? PI / 2 : 0) + (p.A < 0 ? PI : 0);
+    const terms = [valStr(lin)], why = [];
+    if (anti) { terms.push('π/2'); why.push('π/2 from the j'); }
+    if (p.A < 0) { terms.push('π'); why.push('π because A(ω₀) &lt; 0, and −1 = e<sup>jπ</sup>'); }
+    const linTxt = lp.M.isZero() ? `${M}Mω₀ = 0` : `${M}Mω₀ = ${M}${parS(num(lp.M))}·${wS} = ${valStr(lin)}`;
+    const sumTxt = terms.length > 1 ? ` = ${terms.map((t, i) => signed(t, i === 0)).join('')}` : '';
+    // the value of the sum, reduced to [−π, π] when needed (±π: either sign is the same angle)
+    const atPi = Math.abs(Math.abs(raw) - PI) < 1e-9, wrapped = !atPi && Math.abs(wrapPi(raw) - raw) > 1e-9;
+    const fin = atPi ? `<b>${valStr(raw)}</b> (equivalently ${valStr(-raw)})` : `<b>${valStr(p.ph)}</b>${Math.abs(Math.abs(p.ph) - PI) < 1e-9 ? ` (equivalently ${M}π)` : ''}`;
+    const phTail = wrapped ? `${terms.length > 1 ? ` = ${valStr(raw)}` : ''}, principal value ${fin}` : ` = ${fin}`;
+    const cS = (re, im) => { const r0 = Math.abs(re) < 1e-12 ? 0 : re, i0 = Math.abs(im) < 1e-12 ? 0 : im;
+      if (!i0) return valStr(r0, false); const iS = Math.abs(Math.abs(i0) - 1) < 1e-12 ? 'j' : `j${parS(valStr(Math.abs(i0), false))}`;
+      return r0 ? `${valStr(r0, false)} ${i0 < 0 ? M : '+'} ${iS}` : `${i0 < 0 ? M : ''}${iS}`; };
+    return `<h3>Worked solution</h3>
+      <p><b>1 · Centre and pairing.</b> h[n] runs from n = ${num(first)} to n = ${num(last)}, so it is ${anti ? 'antisymmetric' : 'symmetric'} about M = (${num(first)} + ${parS(num(last))})/2 = <b>${num(lp.M)}</b>. Pairing the taps:</p>
+      <p class="sys">H${Hd}(ω) = ${hPrefix(lp) ? hPrefix(lp) + '·' : ''}[${aHTML(lp)}]</p>
+      <p><b>(a)</b> ∠H${Hd}(ω) = ${linPh(lp)} (+π where A &lt; 0) is linear in ω, so τ${sub('gd')}(ω) = ${M}d∠H${Hd}/dω = <b>${num(lp.M)}</b> sample${Math.abs(lp.M.v) === 1 ? '' : 's'} at every ω where H${Hd} ≠ 0. ${lp.M.sign() < 0 ? 'A negative group delay is an advance: this h[n] is non-causal.' : lp.M.isZero() ? `With M = 0, H${Hd}(ω) is ${anti ? 'purely imaginary' : 'real'}.` : ''}</p>
+      <p><b>(b)</b> A(${wS}) = ${aSubHTML(lp, p.w0)} = <b>${valStr(p.A, false)}</b>.</p>
+      <p><b>(c)</b> |H${Hd}(${wS})| = |A(${wS})| = <b>${valStr(p.mag, false)}</b>.</p>
+      <p><b>(d)</b> ${linTxt}. ∠H${Hd}(${wS}) = ${M}Mω₀${anti ? ' + π/2' : ''}${p.A < 0 ? ' + π' : ''}${sumTxt}${phTail}${why.length ? ` — ${why.join('; ')}` : ''}.</p>
+      <p class="muted">Check: H${Hd}(${wS}) = Σ h[n]e<sup>${M}jω₀n</sup> = ${cS(p.mag * Math.cos(p.ph), p.mag * Math.sin(p.ph))}. Review: ${L16()} · ${pageLink('concepts/magnitude-and-phase-response', 'magnitude and phase response')} · ${pageLink('concepts/group-delay', 'group delay')} · ${pageLink('problems/magnitude-phase-and-group-delay', 'magnitude, phase and group delay (recipe)')}</p>`;
+  },
+};
+
 globalThis.ECE310Drills = { Fr, F, rng, parseNum, parseList, near, num, paren, polyZ, factorZ, termsHTML, termsVal, sameSeq, seqHTML, drills, PROP_NAMES,
-  cx, cadd, csub, cmul, cdiv, cabs, cpolar, cpowi, xVal, sameX, xHTML, ZR_SHAPES, ZR_ORDER };
+  cx, cadd, csub, cmul, cdiv, cabs, cpolar, cpowi, xVal, sameX, xHTML, ZR_SHAPES, ZR_ORDER,
+  parseVal, piMultiple, wrapPi, valStr, linPhase, Aval, SR_FORMULAS, srEval };
 })();
 </script>
 
@@ -1319,6 +1789,24 @@ INPUTS.poles = function (p, root) {
     `<label class="opt"><input type="checkbox" data-i="${i}"><span>x[n] = ${x.html}</span></label>`).join('') + '</div></div>';
   return () => ({ marks: $$('input[type=checkbox]', root).map(c => c.checked) });
 };
+INPUTS.dtftv = function (p, root, submit) {
+  root.innerHTML = textField('(a) X<sub>d</sub>(0) =', 'u3fa', 'e.g. 3', false) + textField('(b) X<sub>d</sub>(π) =', 'u3fb', 'e.g. −5', false) +
+    textField('(c) ∫X<sub>d</sub>(ω) dω = ___ · π', 'u3fc', 'e.g. −14', false) + textField('(d) ∫|X<sub>d</sub>(ω)|² dω = ___ · π', 'u3fd', 'e.g. 44', false);
+  enterSubmits(root, submit);
+  return () => ({ a: $('.u3fa', root).value, b: $('.u3fb', root).value, c: $('.u3fc', root).value, d: $('.u3fd', root).value });
+};
+INPUTS.sinr = function (p, root, submit) {
+  root.innerHTML = textField('c<sub>0</sub> (the constant)', 'u3f0', 'e.g. 6', false) + textField('B (amplitude, ≥ 0)', 'u3fB', 'e.g. 2√3', false) +
+    textField('φ (radians)', 'u3fp', 'e.g. −π/6', false) + textField('c<sub>2</sub> (multiplies (−1)<sup>n</sup>)', 'u3f2', 'e.g. −1', false);
+  enterSubmits(root, submit);
+  return () => ({ c0: $('.u3f0', root).value, B: $('.u3fB', root).value, phi: $('.u3fp', root).value, c2: $('.u3f2', root).value });
+};
+INPUTS.magph = function (p, root, submit) {
+  root.innerHTML = textField('(a) τ<sub>gd</sub> = M', 'u3fM', 'e.g. 3/2', false) + textField('(b) A(ω₀)', 'u3fA', 'e.g. −√3', false) +
+    textField('(c) |H<sub>d</sub>(ω₀)|', 'u3fm', 'e.g. √3', false) + textField('(d) ∠H<sub>d</sub>(ω₀)', 'u3fp', 'e.g. 2π/3', false);
+  enterSubmits(root, submit);
+  return () => ({ M: $('.u3fM', root).value, A: $('.u3fA', root).value, mag: $('.u3fm', root).value, ph: $('.u3fp', root).value });
+};
 /* after grading, colour the chosen multiple-choice options */
 const DECORATE = {
   pfe(p, root, r, res) {
@@ -1343,6 +1831,12 @@ const UIS = [
     blurb: 'Every inverse-z problem starts here: draw the pole circles, pick the ring the problem forces, then read off stability (unit circle inside?) and causality (outside the outermost pole?).' },
   { id: 'poles', label: 'Unbounded outputs', title: 'Which bounded inputs blow the output up?',
     blurb: 'On 7/7 past exams (about 10 pts, one per input). Resonance: an input pole on top of one of H’s unit-circle poles. Rescue: an input zero on top of H’s pole outside the circle.' },
+  { id: 'dtftv', label: 'DTFT values', title: 'DTFT values straight from x[n]',
+    blurb: 'Four numbers you can read off a short sequence without computing X<sub>d</sub>(ω): the sum of the samples, the alternating sum (signs set by the index n), 2π·x[0] from the inverse DTFT, and 2π times the energy from Parseval. Lectures 13–14.' },
+  { id: 'sinr', label: 'Sinusoidal response', title: 'A real LTI system driven by a sum of sinusoids',
+    blurb: 'Split the input by frequency: a constant is ω = 0, (−1)<sup>n</sup> is ω = π, and a cosine keeps its frequency while H<sub>d</sub> scales it by |H<sub>d</sub>| and shifts it by ∠H<sub>d</sub>. Systems come as taps h[n] or as a formula for H<sub>d</sub>(ω). Lecture 15.' },
+  { id: 'magph', label: 'Magnitude & phase', title: 'Magnitude, phase and group delay of a linear-phase FIR',
+    blurb: 'Factor e<sup>−jMω</sup> out of symmetric (or antisymmetric) taps. What is left is real, so the magnitude is its absolute value, the phase is linear with π jumps where it changes sign, and the group delay is M. Lecture 16.' },
   { id: 'tf', label: 'True / False', title: 'True/False rapid fire',
     blurb: 'All 42 non-DTFT True/False statements from the seven past exams, with the official answers. Exam scoring: +2 right, −1 wrong, 0 skipped — skip when you would be guessing. Keyboard: T, F, S, then N for the next one.', custom: buildTF },
 ];

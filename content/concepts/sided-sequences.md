@@ -44,7 +44,7 @@ aliases: ["right-sided", "left-sided", "two-sided", "anti-causal"]
 - Lectures: [[2-z-transform/07-z-transform-properties|L7]] §1 (ROC shapes), [[2-z-transform/11-bibo-stability-and-causality|L11]] §1.1 (definitions, Fig. 1, $h = h_l + h_r$, Table 1); [[1-signals-and-systems/03-system-properties|L3]] and [[1-signals-and-systems/04-impulse-response-and-convolution|L4]] ([[concepts/causality|causality]]).
 - Problem families: [[problems/z-transform-with-roc]], [[problems/all-possible-rocs]], [[problems/two-sided-systems-as-recursions]].
 - Homework: [[homework/hw3|HW3]] #1 (c)–(d), #3(c); [[homework/hw4|HW4]] #1.
-- Past exams: [[0-midterm-1/past-exams/fall-2025|FA2025]] #5a, #7, T/F (c), (d); [[0-midterm-1/past-exams/spring-2025|SP2025]] #5b, T/F (e), (f); [[0-midterm-1/past-exams/fall-2024|FA2024 #8a]]; [[0-midterm-1/past-exams/fall-2023|FA2023 T/F (f)]]; [[0-midterm-1/past-exams/spring-2023|SP2023 T/F (c)]].
+- Past exams: [[exams/midterm-1/past-exams/fall-2025|FA2025]] #5a, #7, T/F (c), (d); [[exams/midterm-1/past-exams/spring-2025|SP2025]] #5b, T/F (e), (f); [[exams/midterm-1/past-exams/fall-2024|FA2024 #8a]]; [[exams/midterm-1/past-exams/fall-2023|FA2023 T/F (f)]]; [[exams/midterm-1/past-exams/spring-2023|SP2023 T/F (c)]].
 
 Related: [[concepts/region-of-convergence]] · [[concepts/causality]] · [[concepts/bibo-stability]] · [[concepts/inverse-z-transform]] · [[concepts/z-transform-pairs]] · [[concepts/discrete-time-signal]]
 

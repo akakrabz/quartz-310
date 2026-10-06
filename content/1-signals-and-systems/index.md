@@ -1,10 +1,10 @@
 ---
 title: "Unit 1 · Signals and systems"
-description: "Lectures 1–5: sequences and complex numbers, the four system properties, impulse response and convolution, and difference equations. The time-domain half of Midterm 1."
+description: "Lectures 1–5: sequences and complex numbers, the four system properties, impulse response and convolution, and difference equations — the time-domain language every later unit is written in (tested on Midterm 1)."
 tags: [midterm-1, signals, systems, convolution, lccde]
 ---
 
-Signals first, then systems, then the one class of systems the course cares about. Lectures 1–2 set up the language: sequences indexed by integers, the $n = 0$ marker, $\delta[n]$ and $u[n]$, complex numbers and Euler's formula. Lecture 3 asks four yes/no questions about any system (linear? time-invariant? causal? stable?). Lecture 4 shows that the systems passing the first two tests, the LTI systems, are completely described by one sequence $h[n]$ and act by convolution. Lecture 5 gives the practical description of those systems, the difference equation, which is how filters actually run. Unit 2 ([[2-z-transform/index|the z-transform]]) then redoes all of this with algebra instead of sums.
+Signals first, then systems, then the one class of systems the course cares about. Lectures 1–2 set up the language: sequences indexed by integers, the $n = 0$ marker, $\delta[n]$ and $u[n]$, complex numbers and Euler's formula. Lecture 3 asks four yes/no questions about any system (linear? time-invariant? causal? stable?). Lecture 4 shows that the systems passing the first two tests, the LTI systems, are completely described by one sequence $h[n]$ and act by convolution. Lecture 5 gives the practical description of those systems, the difference equation, which is how filters actually run. Unit 2 ([[2-z-transform/index|the z-transform]]) then redoes all of this with algebra instead of sums, and Unit 3 ([[3-fourier-analysis/index|Fourier analysis and frequency response]]) asks what the same systems do to each frequency.
 
 | # | page | one line |
 |---|---|---|
@@ -27,17 +27,19 @@ Signals first, then systems, then the one class of systems the course cares abou
 
 ## Exam problem families this unit feeds
 
-| family | past exams | lectures |
+| family | past Midterm 1 exams | lectures |
 |---|---|---|
 | [[problems/classifying-system-properties\|System-property table]] (12 points) | 7 of 7 | L3 (+ L4 for convolution rows) |
 | [[problems/finite-length-convolution\|Finite-length convolution]] | 7 of 7 | L4 (+ L1 for the index) |
 | [[problems/infinite-length-convolution\|Infinite or mixed convolution]] | 5 of 7 | L4 (+ L2 geometric sums) |
 | [[problems/finding-h-from-input-output-pairs\|Finding $h$ from input–output pairs]] | 7 of 7 | L4 (+ L9 on later exams) |
 | [[problems/lccde-to-transfer-function-and-response\|LCCDE ↔ $H(z)$ ↔ response]] | 7 of 7 | L5 → L9 |
-| [[0-midterm-1/true-false-bank\|True/False]] | 7 of 7 | L3 and L4 supply about half of the statements |
+| [[exams/midterm-1/true-false-bank\|True/False]] | 7 of 7 | L3 and L4 supply about half of the statements |
 
-Also from this unit: the complex-number fluency behind every z-transform problem ([[problems/z-transform-with-roc]], [[problems/unbounded-outputs-and-pole-matching]]) and the recursions of [[problems/two-sided-systems-as-recursions]]. The full map of past problems is in [[0-midterm-1/past-exams/index|past exams]]; the homework for this unit is [[homework/hw1|HW1]] and [[homework/hw2|HW2]].
+Also from this unit: the complex-number fluency behind every z-transform problem ([[problems/z-transform-with-roc]], [[problems/unbounded-outputs-and-pole-matching]]) and the recursions of [[problems/two-sided-systems-as-recursions]]. The full map of past problems is in [[exams/midterm-1/past-exams/index|past exams]]; the homework for this unit is [[homework/hw1|HW1]] and [[homework/hw2|HW2]].
 
-**Try it:** [[demos/convolution-explorer|convolution explorer]] · [[demos/difference-equation-simulator|difference-equation simulator]] · [[0-midterm-1/practice-drills|practice drills]]
+**Try it:** [[demos/convolution-explorer|convolution explorer]] · [[demos/difference-equation-simulator|difference-equation simulator]] · [[demos/practice-drills|practice drills]]
+
+**Next:** [[2-z-transform/index|Unit 2 · The z-transform and LTI systems]] (L6–L11) · [[3-fourier-analysis/index|Unit 3 · Fourier analysis and frequency response]] (L12–L16)
 
 Every worked example and number in this unit is checked by the scripts in `verify/lectures/` (`l1_signals.py` … `l5_lccde.py`) against NumPy/SciPy and the official keys; where a key is wrong (SP2021 #6, SP2025 #4(a)) the pages say so and [[0-toolkit/05-errata|errata]] lists it.

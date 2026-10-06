@@ -167,12 +167,12 @@ plugins:
     enabled: true
   - source: "@quartz-community/tag-page"
     enabled: true
-  - source: "@quartz-community/canvas-page"   # renders .canvas files (the Midterm 1 concept map)
+  - source: "@quartz-community/canvas-page"   # renders .canvas files (the concept map, concepts/concept-map.canvas)
     enabled: true
     options:
       enableInteraction: true
       initialZoom: 0.8
-  - source: "@quartz-community/bases-page"    # renders .base files (the exam problem-family index)
+  - source: "@quartz-community/bases-page"    # renders .base files (the problem-family table, problems/exam-problem-families.base)
     enabled: true
     options: {}
     order: 50
@@ -257,7 +257,7 @@ plugins:
         linkDistance: 30
         fontSize: 0.6
         opacityScale: 1
-        removeTags: ["lecture", "concept", "problem", "demo", "toolkit", "exam", "homework", "supplement", "midterm-1"]
+        removeTags: ["lecture", "concept", "problem", "demo", "toolkit", "exam", "homework", "supplement", "midterm-1", "midterm-2"]
         showTags: true
         focusOnHover: false
         enableRadial: false
@@ -271,7 +271,7 @@ plugins:
         linkDistance: 30
         fontSize: 0.6
         opacityScale: 1
-        removeTags: ["lecture", "concept", "problem", "demo", "toolkit", "exam", "homework", "supplement", "midterm-1"]
+        removeTags: ["lecture", "concept", "problem", "demo", "toolkit", "exam", "homework", "supplement", "midterm-1", "midterm-2"]
         showTags: true
         focusOnHover: true
         enableRadial: true

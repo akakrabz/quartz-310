@@ -15,13 +15,13 @@ Two short sequences written as lists with an arrow under the $n=0$ sample; compu
 
 | instance | $x[n]$ | $h[n]$ |
 |---|---|---|
-| [[0-midterm-1/past-exams/fall-2025\|FA2025 #3a]] | $\{\underset{\uparrow}{1},2,3,0,-1,-2,-3\}$ | $\{1,0,\underset{\uparrow}{1}\}$ |
-| [[0-midterm-1/past-exams/spring-2025\|SP2025 #4a]] | $\{1,-2,\underset{\uparrow}{0},3,-1,1\}$ | $\{\underset{\uparrow}{2},-1,3\}$ |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #4a]] | $\{1,-3,\underset{\uparrow}{2},-1,4\}$ | $\{2,\underset{\uparrow}{0},-1\}$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #3a]] | $\{\underset{\uparrow}{1},2,3,2,1\}$ | $\{\underset{\uparrow}{-1},1\}$ |
-| [[0-midterm-1/past-exams/spring-2023\|SP2023 #3a]] | $\{\underset{\uparrow}{1},-2,2\}$ | $\{3,1,\underset{\uparrow}{0},3,1,1\}$ |
-| [[0-midterm-1/past-exams/spring-2021\|SP2021 #2]] | $\{\underset{\uparrow}{-1},-2,3,-3,2,1\}$ | $\{-1,\underset{\uparrow}{0},1\}$ |
-| [[0-midterm-1/past-exams/fall-2019\|FA2019 #4]] | $\{\underset{\uparrow}{1},-4,2,-1,3,1\}$ | $\{\underset{\uparrow}{-1},1,-1\}$ |
+| [[exams/midterm-1/past-exams/fall-2025\|FA2025 #3a]] | $\{\underset{\uparrow}{1},2,3,0,-1,-2,-3\}$ | $\{1,0,\underset{\uparrow}{1}\}$ |
+| [[exams/midterm-1/past-exams/spring-2025\|SP2025 #4a]] | $\{1,-2,\underset{\uparrow}{0},3,-1,1\}$ | $\{\underset{\uparrow}{2},-1,3\}$ |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #4a]] | $\{1,-3,\underset{\uparrow}{2},-1,4\}$ | $\{2,\underset{\uparrow}{0},-1\}$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #3a]] | $\{\underset{\uparrow}{1},2,3,2,1\}$ | $\{\underset{\uparrow}{-1},1\}$ |
+| [[exams/midterm-1/past-exams/spring-2023\|SP2023 #3a]] | $\{\underset{\uparrow}{1},-2,2\}$ | $\{3,1,\underset{\uparrow}{0},3,1,1\}$ |
+| [[exams/midterm-1/past-exams/spring-2021\|SP2021 #2]] | $\{\underset{\uparrow}{-1},-2,3,-3,2,1\}$ | $\{-1,\underset{\uparrow}{0},1\}$ |
+| [[exams/midterm-1/past-exams/fall-2019\|FA2019 #4]] | $\{\underset{\uparrow}{1},-4,2,-1,3,1\}$ | $\{\underset{\uparrow}{-1},1,-1\}$ |
 | [[homework/hw2\|HW2 #5(a)]] | $\{-1,\underset{\uparrow}{0},1\}$ | $\{\underset{\uparrow}{1},2,3,4,5\}$ |
 | [[1-signals-and-systems/04-impulse-response-and-convolution\|Lecture 4 §2.2]] | $\{\underset{\uparrow}{3},1,0,3,1,1\}$ | $\{2,\underset{\uparrow}{-1},1\}$ |
 
@@ -163,7 +163,7 @@ All three solutions (and every instance above) are verified in `verify/problems/
 
 ## Related
 
-- [[demos/convolution-explorer|Convolution explorer]] — type in two sequences with any $n=0$ position and watch the flip-and-slide; [[0-midterm-1/practice-drills|practice drills]] generate fresh finite convolutions with auto-grading.
+- [[demos/convolution-explorer|Convolution explorer]] — type in two sequences with any $n=0$ position and watch the flip-and-slide; [[demos/practice-drills|practice drills]] generate fresh finite convolutions with auto-grading.
 - [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] — the convolution sum, the start/end/length rules, and the three hand methods.
 - Concepts: [[concepts/convolution]] (properties: commutative, associative, identity $\delta$), [[concepts/kronecker-delta]], [[concepts/impulse-response]], [[concepts/lti-system]].
 - Neighbours: [[problems/infinite-length-convolution|infinite-length convolution]] (part (b) of the same exam problem), [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]] (convolution run backwards); all families: [[problems/index|exam problem families]].

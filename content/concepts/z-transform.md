@@ -17,7 +17,7 @@ y[n] = \sum_k h[k]\,z^{n-k} = \Big(\sum_k h[k] z^{-k}\Big) z^n = H(z)\,z^n .
 $$
 Exponentials pass through unchanged in shape, scaled by $H(z)$, the z-transform of $h[n]$ ([[concepts/eigenfunctions-of-lti-systems|eigenfunctions]]). Writing signals in terms of exponentials therefore makes every LTI system a multiplication: [[concepts/convolution|convolution]] becomes $Y(z) = H(z)X(z)$ ([[concepts/transfer-function|transfer function]]).
 
-**Why the ROC is a ring.** With $z = re^{j\omega}$, $x[n]z^{-n} = \left(x[n]r^{-n}\right)e^{-j\omega n}$: only $r = |z|$ affects convergence. Large $|z|$ tames the right-hand tail ($n\to+\infty$), small $|z|$ tames the left-hand tail ($n\to-\infty$). On the unit circle $|z|=1$ it becomes the DTFT — after Midterm 1.
+**Why the ROC is a ring.** With $z = re^{j\omega}$, $x[n]z^{-n} = \left(x[n]r^{-n}\right)e^{-j\omega n}$: only $r = |z|$ affects convergence. Large $|z|$ tames the right-hand tail ($n\to+\infty$), small $|z|$ tames the left-hand tail ($n\to-\infty$). On the unit circle $|z|=1$ it becomes the [[concepts/dtft|DTFT]] (see *In Unit 3* below).
 
 **Poles and zeros.** Values of $z$ where $X(z)=0$ are zeros, where $X(z)\to\infty$ poles ([[concepts/poles-and-zeros|poles and zeros]]). The ROC never contains a pole, so pole radii are its edges.
 
@@ -51,13 +51,15 @@ Exponentials pass through unchanged in shape, scaled by $H(z)$, the z-transform 
 > - Outside the ROC the formula is meaningless: $\frac{1}{1-\frac12 z^{-1}}$ gives $-1$ at $z=\frac14$, but $\sum (\frac12)^n 4^n$ diverges ([[2-z-transform/07-z-transform-properties|Lecture 7]]).
 > - A sinusoid for **all** $n$ (e.g. $e^{j\pi n/4}$) has an empty ROC — no z-transform (SP2025 T/F (c), True).
 
+**In Unit 3.** Setting $z=e^{j\omega}$ (radius 1, angle $\omega$) turns $X(z)=\sum_n x[n]z^{-n}$ into the [[concepts/dtft|DTFT]] $X_d(\omega)=\sum_n x[n]e^{-j\omega n}$, provided the ROC contains the unit circle ([[3-fourier-analysis/14-dtft-properties|Lecture 14]]). The z-transform still covers more signals — $2^nu[n]$ has $X(z)=\frac{1}{1-2z^{-1}}$, ROC $\lvert z\rvert>2$, but no DTFT — while the DTFT shows the frequency content. Many DTFT pairs and properties are the z-transform ones read at $z=e^{j\omega}$ ([[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT properties]]); for $n\,x[n]$ that turns $-z\frac{dX}{dz}$ into $+j\frac{dX_d}{d\omega}$, not the $-j$ printed in Lecture 14's table.
+
 **Where it appears.**
 - Lectures: [[2-z-transform/06-the-z-transform|L6]] (definition, motivation, table), [[2-z-transform/07-z-transform-properties|L7]] (ROC rules, properties), [[2-z-transform/08-inverse-z-transform|L8]] (going back), [[2-z-transform/09-transfer-functions|L9]]–[[2-z-transform/11-bibo-stability-and-causality|L11]] (systems).
 - Problem families: [[problems/z-transform-with-roc]] (6/7 exams), and through $H(z)$ in [[problems/lccde-to-transfer-function-and-response]], [[problems/all-possible-rocs]], [[problems/unbounded-outputs-and-pole-matching]].
 - Homework: [[homework/hw3|HW3]] (all problems), [[homework/hw4|HW4]].
-- Past exams: [[0-midterm-1/past-exams/fall-2025|FA2025 #5]], [[0-midterm-1/past-exams/spring-2025|SP2025 #5]], [[0-midterm-1/past-exams/fall-2024|FA2024 #5]], [[0-midterm-1/past-exams/fall-2023|FA2023 #5]], [[0-midterm-1/past-exams/spring-2021|SP2021 #4]], [[0-midterm-1/past-exams/fall-2019|FA2019 #5]].
+- Past exams: [[exams/midterm-1/past-exams/fall-2025|FA2025 #5]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #5]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #5]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #5]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #4]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #5]].
 
 Related: [[concepts/region-of-convergence]] · [[concepts/z-transform-pairs]] · [[concepts/z-transform-properties]] · [[concepts/inverse-z-transform]] · [[concepts/poles-and-zeros]] · [[concepts/transfer-function]] · [[concepts/sided-sequences]] · [[demos/pole-zero-and-roc-explorer]]
 
 ### Sources for this page
-Lecture 6 notes §1–2 (motivation, definition, Exercises 1–2, Table 1) and slides; Lecture 7 notes §1 (the $X(\frac14)=-1$ remark); Lecture 8 slides, Example 1(a) (finite sequence); HW3 grading rubric (ROC deductions). Verification: `verify/concepts/verify_pairs.py`.
+Lecture 6 notes §1–2 (motivation, definition, Exercises 1–2, Table 1) and slides; Lecture 7 notes §1 (the $X(\frac14)=-1$ remark); Lecture 8 slides, Example 1(a) (finite sequence); HW3 grading rubric (ROC deductions). Verification: `verify/concepts/verify_pairs.py`. The *In Unit 3* paragraph: Lecture 14 §1 (Eqs. 1–6) and Table 2; checked in `verify/CLEAN_unit3.py`.

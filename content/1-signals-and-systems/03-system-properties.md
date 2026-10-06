@@ -191,7 +191,7 @@ $$
 > 4. Stable: $\lvert x[n]\,x[0]\rvert < \beta^2$.
 
 > [!trap] An exponential of the input is harmless; an exponential of time is not
-> $e^{x[n]}$ and $e^{x[n]+1}$ are **stable** (a bounded exponent gives a bounded result), but $2^n\,x[n]$ and $(0.8+0.8j)^n\,x[n]$ are **unstable**: the multiplier grows with $n$ ($\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$), so $x[n] = 1$ already gives an unbounded output. Also remember that stability speaks about *bounded* inputs only: a stable system fed an unbounded input may still return a bounded output. "BIBO stable ⇒ unbounded in gives unbounded out" is **False** ([[0-midterm-1/past-exams/spring-2023|SP2023 #1(b)]], [[0-midterm-1/past-exams/fall-2025|FA2025 #1(e)]]).
+> $e^{x[n]}$ and $e^{x[n]+1}$ are **stable** (a bounded exponent gives a bounded result), but $2^n\,x[n]$ and $(0.8+0.8j)^n\,x[n]$ are **unstable**: the multiplier grows with $n$ ($\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$), so $x[n] = 1$ already gives an unbounded output. Also remember that stability speaks about *bounded* inputs only: a stable system fed an unbounded input may still return a bounded output. "BIBO stable ⇒ unbounded in gives unbounded out" is **False** ([[exams/midterm-1/past-exams/spring-2023|SP2023 #1(b)]], [[exams/midterm-1/past-exams/fall-2025|FA2025 #1(e)]]).
 
 ## 6. The property table: a row in 30 seconds
 
@@ -225,21 +225,21 @@ $$
 > | (g) $x[n]/x[2]$ | N | N | N | N | $T(a\,x) = T(x)$; $x[2]$ is fixed and in the future for $n < 2$; $x[2] = 0$ divides by zero |
 > | (h) $x[\lvert n\rvert + n]$ | Y | N | N | Y | pure index map; $y[1] = x[2]$ |
 >
-> Every system from every exam table and homework, with proofs: [[0-midterm-1/system-property-bank|system-property bank]].
+> Every system from every exam table and homework, with proofs: [[exams/midterm-1/system-property-bank|system-property bank]].
 
 ## 7. On the exam
 
 > [!exam] Where Lecture 3 shows up
-> - **The property table, on 7 of 7 past exams (12 points):** [[0-midterm-1/past-exams/fall-2025|FA2025 #2]], [[0-midterm-1/past-exams/spring-2025|SP2025 #2]], [[0-midterm-1/past-exams/fall-2024|FA2024 #2]], [[0-midterm-1/past-exams/fall-2023|FA2023 #2]], [[0-midterm-1/past-exams/spring-2023|SP2023 #2]], [[0-midterm-1/past-exams/spring-2021|SP2021 #3]], [[0-midterm-1/past-exams/fall-2019|FA2019 #2]]. Three systems × four yes/no boxes, graded on the boxes only. Rows such as $x[n] * u[n+1]$ use Lecture 4's rules (LTI; causal ⇔ $h[n] = 0$ for $n<0$; stable ⇔ $\sum\lvert h[n]\rvert < \infty$). Recipe page: [[problems/classifying-system-properties]].
-> - **True/False (every exam).** "Any causal system must be time-invariant" ([[0-midterm-1/past-exams/fall-2023|FA2023 #1(a)]], False) and "a time-varying system cannot be causal" ([[0-midterm-1/past-exams/fall-2019|FA2019 #1(f)]], False): the four properties are independent, and $y[n] = n\,x[n]$ is causal *and* time-varying. "If the unit pulse response is absolutely summable, the system must be BIBO stable whether or not it is LSI" ([[0-midterm-1/past-exams/spring-2025|SP2025 #1(b)]], False): $y[n] = n\,x[n]$ answers $\delta[n]$ with $n\,\delta[n] = 0$, yet $x[n] = 1$ gives $y[n] = n$. More in the [[0-midterm-1/true-false-bank|T/F bank]].
-> - **Proofs in words:** [[0-midterm-1/past-exams/fall-2025|FA2025 #4]] asks you to show the modified moving average $y[n] = \tfrac1L\sum_{k=0}^{L-1} x[n-Sk]$ is linear and time-invariant, which is §2 and §3 verbatim.
+> - **The property table, on 7 of 7 past exams (12 points):** [[exams/midterm-1/past-exams/fall-2025|FA2025 #2]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #2]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #2]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #2]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #2]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #3]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #2]]. Three systems × four yes/no boxes, graded on the boxes only. Rows such as $x[n] * u[n+1]$ use Lecture 4's rules (LTI; causal ⇔ $h[n] = 0$ for $n<0$; stable ⇔ $\sum\lvert h[n]\rvert < \infty$). Recipe page: [[problems/classifying-system-properties]].
+> - **True/False (every exam).** "Any causal system must be time-invariant" ([[exams/midterm-1/past-exams/fall-2023|FA2023 #1(a)]], False) and "a time-varying system cannot be causal" ([[exams/midterm-1/past-exams/fall-2019|FA2019 #1(f)]], False): the four properties are independent, and $y[n] = n\,x[n]$ is causal *and* time-varying. "If the unit pulse response is absolutely summable, the system must be BIBO stable whether or not it is LSI" ([[exams/midterm-1/past-exams/spring-2025|SP2025 #1(b)]], False): $y[n] = n\,x[n]$ answers $\delta[n]$ with $n\,\delta[n] = 0$, yet $x[n] = 1$ gives $y[n] = n$. More in the [[exams/midterm-1/true-false-bank|T/F bank]].
+> - **Proofs in words:** [[exams/midterm-1/past-exams/fall-2025|FA2025 #4]] asks you to show the modified moving average $y[n] = \tfrac1L\sum_{k=0}^{L-1} x[n-Sk]$ is linear and time-invariant, which is §2 and §3 verbatim.
 > - **Homework:** [[homework/hw1|HW1]] #5 (clipping: nonlinear, time-invariant) and #6 (windowing: linear, time-varying); [[homework/hw2|HW2]] #1 (two recursions and $(\tfrac12)^{\lvert n\rvert}x[n]$).
 
 ## Related
 
 - [[concepts/linearity|Linearity]] · [[concepts/time-invariance|Time-invariance]] · [[concepts/causality|Causality]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lti-system|LTI system]]
 - Next: [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] shows that an LTI system is completely described by its impulse response and turns causality and stability into tests on $h[n]$; [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] turns them into tests on poles and the ROC.
-- Practice: [[problems/classifying-system-properties|classifying system properties]] · [[0-midterm-1/system-property-bank|system-property bank]] · [[0-midterm-1/practice-drills|practice drills]]
+- Practice: [[problems/classifying-system-properties|classifying system properties]] · [[exams/midterm-1/system-property-bank|system-property bank]] · [[demos/practice-drills|practice drills]]
 
 ### Sources for this page
 Snyder, ECE 310 Lecture 3 notes (definitions, Exercises 1–7) and slides "Discrete-time systems" (Aug 28, 2026), including the annotated in-class deck for the practice answers. The annotated deck's fourth extra-practice system is $x[n]\,x[0]$ where the posted deck has $\max\{0, x[n]\}$; both are covered above. HW1 #5–6, HW2 #1; the property tables and T/F items of the seven past Midterm 1 exams (FA2019–FA2025). Every verdict and number on this page is checked in `verify/lectures/l3_systems.py`.

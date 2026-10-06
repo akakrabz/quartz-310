@@ -18,7 +18,7 @@ aliases: ["linear", "linear system", "superposition", "homogeneity", "additivity
 > 2. Expand and try to regroup as $a\,y_1+b\,y_2$. If you can for every $a,b,x_1,x_2$: linear.
 > 3. To disprove, one concrete counterexample is enough. Fastest tries: $x=0$ (catches offsets), $a=-1$ (catches $\lvert x\rvert$, $\max\{0,x\}$), $a=2$ (catches $x^2$, $e^x$, products of samples).
 
-**Worked examples (from the tables).** $y=\lvert n\rvert x[n]$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #2]]): $T\{ax_1+bx_2\}=\lvert n\rvert(ax_1[n]+bx_2[n])=a\lvert n\rvert x_1[n]+b\lvert n\rvert x_2[n]=ay_1+by_2$, **linear** (the gain may depend on $n$). $y=x[3]\,x[n]$ ([[0-midterm-1/past-exams/spring-2021|SP2021 #3]]): the input $2x$ gives $2x[3]\cdot2x[n]=4y\neq2y$, **nonlinear**. Lecture 3: $y=x^p[n]$ gives $T\{ax\}=a^pT\{x\}\neq aT\{x\}$ for $p\neq1$.
+**Worked examples (from the tables).** $y=\lvert n\rvert x[n]$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #2]]): $T\{ax_1+bx_2\}=\lvert n\rvert(ax_1[n]+bx_2[n])=a\lvert n\rvert x_1[n]+b\lvert n\rvert x_2[n]=ay_1+by_2$, **linear** (the gain may depend on $n$). $y=x[3]\,x[n]$ ([[exams/midterm-1/past-exams/spring-2021|SP2021 #3]]): the input $2x$ gives $2x[3]\cdot2x[n]=4y\neq2y$, **nonlinear**. Lecture 3: $y=x^p[n]$ gives $T\{ax\}=a^pT\{x\}\neq aT\{x\}$ for $p\neq1$.
 
 | form of the system | linear? | examples from exams and homework |
 |---|---|---|
@@ -31,14 +31,14 @@ aliases: ["linear", "linear system", "superposition", "homogeneity", "additivity
 | product or ratio of input samples | no | $x[n]x[n+1]$, $x[3]x[n]$, $x[n]/x[2]$ |
 
 > [!trap]
-> - **Affine is not linear.** $y=x[n]+3$ ([[0-midterm-1/past-exams/fall-2023|FA2023 #2]]) is a straight line in $x$ but fails $T\{0\}=0$.
+> - **Affine is not linear.** $y=x[n]+3$ ([[exams/midterm-1/past-exams/fall-2023|FA2023 #2]]) is a straight line in $x$ but fails $T\{0\}=0$.
 > - **$n$-dependent coefficients do not break linearity**; they break [[concepts/time-invariance|time-invariance]]. $\lvert n\rvert x[n]$ is linear.
 > - **Products of samples are nonlinear** even when each factor is "first power": $x[3]x[n]$, $x[n]x[n+1]$, $x[n]/x[2]$.
 > - **Test a negative scale too**: $\lvert x[n]\rvert$ and $\max\{0,x[n]\}$ pass $a=2$ and fail $a=-1$.
 > - **A nonlinear system's impulse response describes nothing**: the median filter has $h[n]=0$ yet is not the zero system ([[concepts/lti-system|LTI system]]).
 > - An LCCDE is linear only **at initial rest** (zero initial conditions, as the course assumes).
 
-**Where it appears.** [[1-signals-and-systems/03-system-properties|Lecture 3]] §2.1; [[homework/hw1|HW1]] #5(b) (clipping: nonlinear) and #6(b) (window: linear), [[homework/hw2|HW2]] #1, #2. The Linear column of every property table (7/7 exams, [[0-midterm-1/past-exams/fall-2025|FA2025 #2]] … [[0-midterm-1/past-exams/fall-2019|FA2019 #2]]) and [[0-midterm-1/past-exams/fall-2025|FA2025 #4a]]. Drill: [[problems/classifying-system-properties]], [[0-midterm-1/system-property-bank]].
+**Where it appears.** [[1-signals-and-systems/03-system-properties|Lecture 3]] §2.1; [[homework/hw1|HW1]] #5(b) (clipping: nonlinear) and #6(b) (window: linear), [[homework/hw2|HW2]] #1, #2. The Linear column of every property table (7/7 exams, [[exams/midterm-1/past-exams/fall-2025|FA2025 #2]] … [[exams/midterm-1/past-exams/fall-2019|FA2019 #2]]) and [[exams/midterm-1/past-exams/fall-2025|FA2025 #4a]]. Drill: [[problems/classifying-system-properties]], [[exams/midterm-1/system-property-bank]].
 
 **Related.** [[concepts/time-invariance|time-invariance]] · [[concepts/causality|causality]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lti-system|LTI system]] · [[concepts/impulse-response|impulse response]]
 

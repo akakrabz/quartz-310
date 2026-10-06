@@ -5,7 +5,7 @@ tags: [lecture, midterm-1, stability, roc, z-transform]
 lecture: 11
 ---
 
-*Lecture 11 · Fri Sep 18, 2026 · notes + slides "BIBO stability and causality" · prev: [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] · next: [[3-beyond-midterm-1/index|Lectures 12–14 (not on Midterm 1)]]*
+*Lecture 11 · Fri Sep 18, 2026 · notes + slides "BIBO stability and causality" · prev: [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] · next: [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]]*
 
 > [!abstract] In one breath
 > An LTI system is BIBO stable $\iff \sum_n |h[n]| < \infty \iff$ **the ROC of $H(z)$ contains the unit circle $|z| = 1$.** The *shape* of the ROC says which way $h[n]$ runs: outside a circle (all the way to $\infty$) = causal, inside a circle = left-sided, a ring = two-sided. Put the two together and stability becomes a glance at the poles: a causal system is stable iff every pole is inside the unit circle, an anti-causal one iff every pole is outside, a two-sided one iff its ring straddles $|z| = 1$. Unstable systems blow up for almost any bounded input — unless the input's zero cancels the bad pole. **Marginally stable** systems (poles *on* the unit circle) blow up only when the input puts a pole exactly on one of those poles: **pole matching**, which appears on all seven past exams.
@@ -202,20 +202,20 @@ The pole angles are $0.5\pi$ (the pole $j$) and $0.212\pi = \tfrac23$ rad; the $
 ## 7. How the exam uses this lecture
 
 > [!exam] Unbounded outputs and pole matching — 7/7 exams
-> - [[0-midterm-1/past-exams/fall-2025|FA2025 #8]] (10 pts): (a) causal $H = \dfrac{1-\frac34 z^{-1}}{1+3z^{-1}}$, pole $-3$ **outside** — only inputs whose zero sits at $-3$ give bounded outputs: $\tfrac13(\tfrac12)^n u[n] + (\tfrac12)^{n-1}u[n-1]$ (its $X = \tfrac13\,\frac{1+3z^{-1}}{1-\frac12 z^{-1}}$) and $\delta[n] + 3\delta[n-1]$; $(\tfrac34)^n u[n]$ cancels the *zero*, not the pole (still unbounded). (b) the $e^{j2/3}$ trap above.
-> - [[0-midterm-1/past-exams/spring-2025|SP2025 #6]]: $H = \dfrac{z}{z-e^{j\pi/4}}$, $|z|>1$ — unbounded for $e^{j\pi n/4}u[n]$, $\cos(\tfrac{\pi}{4}n)u[n]$ and $4^n u[n]$; bounded for $u[n]$, $e^{-j\pi n/4}u[n]$, $e^{-j3\pi n/4}u[n]$.
-> - [[0-midterm-1/past-exams/spring-2021|SP2021 #5]]: $H = \dfrac{3z^{-1}}{1+z^{-2}}$, $|z|>1$, $h[n] = 3\sin(\tfrac{\pi}{2}n)u[n]$; unbounded for $j^n u[n]$, $\cos(\tfrac{\pi}{2}n)u[n]$, $\sin(\tfrac{\pi}{2}n)u[n]$.
-> - [[0-midterm-1/past-exams/fall-2023|FA2023 #7(c)]]: poles $\tfrac14, -1$, causal → not stable; $x = \cos(\pi n)u[n] = (-1)^n u[n]$ breaks it.
-> - [[0-midterm-1/past-exams/spring-2023|SP2023 #7]]: $H = \dfrac{z-3}{z-4}$, $|z|>4$: bounded→unbounded ($\delta[n]$), unbounded→bounded ($X = \frac{z-4}{z-3}$, $y = \delta[n]$), bounded→bounded ($x = \delta[n] - 4\delta[n-1]$, $y = \delta[n] - 3\delta[n-1]$).
-> - [[0-midterm-1/past-exams/fall-2024|FA2024 #7(c)–(d)]]: the input's zero at $2$ cancels the system's unstable pole at $2$, so $y[n] = 2n(\tfrac12)^n u[n]$ is bounded. [[0-midterm-1/past-exams/fall-2019|FA2019 #10(d)]]: the zero of $H$ at $2$ cancels the pole of the cascaded unstable $2^n u[n]$, so the cascade is stable ("overall unstable" is False).
+> - [[exams/midterm-1/past-exams/fall-2025|FA2025 #8]] (10 pts): (a) causal $H = \dfrac{1-\frac34 z^{-1}}{1+3z^{-1}}$, pole $-3$ **outside** — only inputs whose zero sits at $-3$ give bounded outputs: $\tfrac13(\tfrac12)^n u[n] + (\tfrac12)^{n-1}u[n-1]$ (its $X = \tfrac13\,\frac{1+3z^{-1}}{1-\frac12 z^{-1}}$) and $\delta[n] + 3\delta[n-1]$; $(\tfrac34)^n u[n]$ cancels the *zero*, not the pole (still unbounded). (b) the $e^{j2/3}$ trap above.
+> - [[exams/midterm-1/past-exams/spring-2025|SP2025 #6]]: $H = \dfrac{z}{z-e^{j\pi/4}}$, $|z|>1$ — unbounded for $e^{j\pi n/4}u[n]$, $\cos(\tfrac{\pi}{4}n)u[n]$ and $4^n u[n]$; bounded for $u[n]$, $e^{-j\pi n/4}u[n]$, $e^{-j3\pi n/4}u[n]$.
+> - [[exams/midterm-1/past-exams/spring-2021|SP2021 #5]]: $H = \dfrac{3z^{-1}}{1+z^{-2}}$, $|z|>1$, $h[n] = 3\sin(\tfrac{\pi}{2}n)u[n]$; unbounded for $j^n u[n]$, $\cos(\tfrac{\pi}{2}n)u[n]$, $\sin(\tfrac{\pi}{2}n)u[n]$.
+> - [[exams/midterm-1/past-exams/fall-2023|FA2023 #7(c)]]: poles $\tfrac14, -1$, causal → not stable; $x = \cos(\pi n)u[n] = (-1)^n u[n]$ breaks it.
+> - [[exams/midterm-1/past-exams/spring-2023|SP2023 #7]]: $H = \dfrac{z-3}{z-4}$, $|z|>4$: bounded→unbounded ($\delta[n]$), unbounded→bounded ($X = \frac{z-4}{z-3}$, $y = \delta[n]$), bounded→bounded ($x = \delta[n] - 4\delta[n-1]$, $y = \delta[n] - 3\delta[n-1]$).
+> - [[exams/midterm-1/past-exams/fall-2024|FA2024 #7(c)–(d)]]: the input's zero at $2$ cancels the system's unstable pole at $2$, so $y[n] = 2n(\tfrac12)^n u[n]$ is bounded. [[exams/midterm-1/past-exams/fall-2019|FA2019 #10(d)]]: the zero of $H$ at $2$ cancels the pole of the cascaded unstable $2^n u[n]$, so the cascade is stable ("overall unstable" is False).
 >
 > Recipes and more worked cases: [[problems/unbounded-outputs-and-pole-matching|unbounded outputs & pole matching]].
 
 > [!exam] Parameters for stability — 3/7 exams
-> A parameter in the numerator can only help by **placing a zero on top of the bad pole**. [[0-midterm-1/past-exams/spring-2025|SP2025 #7]]: causal, poles $-2$ and $\tfrac12$, numerator $1 - \alpha^2 z^{-2} = (1-\alpha z^{-1})(1+\alpha z^{-1})$ → stable iff $\alpha = \pm 2$ (only $\alpha^2$ enters, so both signs). [[0-midterm-1/past-exams/fall-2024|FA2024 #8]]: (a) non-causal first-order $\dfrac{1+3z^{-1}}{1+\alpha z^{-1}}$, ROC $|z| < |\alpha|$ → stable iff $|\alpha| > 1$; (b) causal, poles $2, \tfrac12$ → $\beta = -2$. [[0-midterm-1/past-exams/fall-2023|FA2023 #8]]: (a) causal, poles $\tfrac43, -\tfrac23$ → $\alpha = -4$; (b) two-sided → ROC $\tfrac23 < |z| < \tfrac43$ already contains $|z| = 1$: stable for every $\alpha$. See [[problems/parameters-for-stability|parameters for stability]].
+> A parameter in the numerator can only help by **placing a zero on top of the bad pole**. [[exams/midterm-1/past-exams/spring-2025|SP2025 #7]]: causal, poles $-2$ and $\tfrac12$, numerator $1 - \alpha^2 z^{-2} = (1-\alpha z^{-1})(1+\alpha z^{-1})$ → stable iff $\alpha = \pm 2$ (only $\alpha^2$ enters, so both signs). [[exams/midterm-1/past-exams/fall-2024|FA2024 #8]]: (a) non-causal first-order $\dfrac{1+3z^{-1}}{1+\alpha z^{-1}}$, ROC $|z| < |\alpha|$ → stable iff $|\alpha| > 1$; (b) causal, poles $2, \tfrac12$ → $\beta = -2$. [[exams/midterm-1/past-exams/fall-2023|FA2023 #8]]: (a) causal, poles $\tfrac43, -\tfrac23$ → $\alpha = -4$; (b) two-sided → ROC $\tfrac23 < |z| < \tfrac43$ already contains $|z| = 1$: stable for every $\alpha$. See [[problems/parameters-for-stability|parameters for stability]].
 
 > [!exam] Two-sided systems as recursions — 2/7 exams
-> A stable two-sided $H = H_1 + H_2$ is run as two recursions: the right-sided part forward, the left-sided part **backward in time**. [[0-midterm-1/past-exams/fall-2025|FA2025 #7(b)]]: $H_2 = \dfrac{-5/4}{1+\frac23 z^{-1}}$ (causal) → $y_2[n] = -\tfrac23 y_2[n-1] - \tfrac54 x[n]$; $H_1 = \dfrac{9/4}{1+2z^{-1}}$ (ROC $|z|<2$, anti-causal) → $y_1[n-1] = -\tfrac12 y_1[n] + \tfrac98 x[n]$. See [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]].
+> A stable two-sided $H = H_1 + H_2$ is run as two recursions: the right-sided part forward, the left-sided part **backward in time**. [[exams/midterm-1/past-exams/fall-2025|FA2025 #7(b)]]: $H_2 = \dfrac{-5/4}{1+\frac23 z^{-1}}$ (causal) → $y_2[n] = -\tfrac23 y_2[n-1] - \tfrac54 x[n]$; $H_1 = \dfrac{9/4}{1+2z^{-1}}$ (ROC $|z|<2$, anti-causal) → $y_1[n-1] = -\tfrac12 y_1[n] + \tfrac98 x[n]$. See [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]].
 
 > [!success]- True/False from this lecture (answers)
 > - A bounded $h[n]$ means stable — **F** ($h = u[n]$; FA2025 1(a), FA2024 1(b), FA2019 1(c)).
@@ -226,7 +226,7 @@ The pole angles are $0.5\pi$ (the pole $j$) and $0.212\pi = \tfrac23$ rad; the $
 > - Causal $H = \dfrac{z^{-1}}{1-z^{-1}}$ with input $u[n]$ gives an unbounded output — **T** ($y = n\,u[n]$; SP2021 1(d)).
 > - An unstable system's response to any nonzero input is unbounded — **F** ($u[n] * (\delta[n]-\delta[n-1]) = \delta[n]$; FA2019 1(j)).
 >
-> All of them, with reasons: [[0-midterm-1/true-false-bank|T/F bank]].
+> All of them, with reasons: [[exams/midterm-1/true-false-bank|T/F bank]].
 
 ## Related
 

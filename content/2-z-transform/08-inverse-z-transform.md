@@ -52,7 +52,7 @@ $$
 x[n]=\left(\tfrac12\right)^nu[n]-3\left(-\tfrac15\right)^{n-1}u[n-1].
 $$
 
-The same move handles exam transforms that mix a polynomial with a fraction — [[0-midterm-1/past-exams/fall-2019|FA2019]] #6: $Y(z)=1+z^{-100}+\dfrac{1}{1-5z^{-1}}$, $|z|>5$, is $y[n]=\delta[n]+\delta[n-100]+5^nu[n]$.
+The same move handles exam transforms that mix a polynomial with a fraction — [[exams/midterm-1/past-exams/fall-2019|FA2019]] #6: $Y(z)=1+z^{-100}+\dfrac{1}{1-5z^{-1}}$, $|z|>5$, is $y[n]=\delta[n]+\delta[n-100]+5^nu[n]$.
 
 > [!tip] A $z^{-k}$ in the numerator is a shift, not a reason to expand
 > In (c), $\dfrac{3z^{-1}}{1+\frac15z^{-1}}=z^{-1}\cdot\dfrac{3}{1+\frac15z^{-1}}$: invert the fraction, then delay. Partial fractions are for denominators with **several** poles.
@@ -152,7 +152,7 @@ For a real signal the two conjugate poles always come with conjugate coefficient
 > $$
 > $r=1$: poles on the unit circle, a pure (periodic) sinusoid; $r<1$: decaying; $r>1$: growing. So you only ever compute **one** coefficient per pair. Alternatively match the numerator to the table's $a^n\cos(\omega_0n)u[n]$ and $a^n\sin(\omega_0n)u[n]$ rows ([[2-z-transform/06-the-z-transform|Lecture 6]]): here $\cos\frac\pi3=\frac12$ gives exactly $3\cdot\dfrac{1-\frac12z^{-1}}{1-z^{-1}+z^{-2}}$.
 
-> [!question] [[0-midterm-1/past-exams/spring-2021|SP2021]] #5(a): $H(z)=\dfrac{3z^{-1}}{1+z^{-2}}$, ROC $|z|>1$. Write $h[n]=A\sin(\omega_0 n+\theta)\,u[n]$: find $A$, $\omega_0$, $\theta$
+> [!question] [[exams/midterm-1/past-exams/spring-2021|SP2021]] #5(a): $H(z)=\dfrac{3z^{-1}}{1+z^{-2}}$, ROC $|z|>1$. Write $h[n]=A\sin(\omega_0 n+\theta)\,u[n]$: find $A$, $\omega_0$, $\theta$
 
 > [!success]- Answer
 > Poles $\pm j=e^{\pm j\pi/2}$ ($r=1$), since $1+z^{-2}=(1-jz^{-1})(1+jz^{-1})$. Cover-up at $z=j$ ($z^{-1}=-j$): $A_1=\dfrac{3(-j)}{1+j(-j)}=-\dfrac{3j}{2}$, so $|A_1|=\tfrac32$, $\angle A_1=-\tfrac\pi2$, and $h[n]=3\cos\left(\tfrac\pi2n-\tfrac\pi2\right)u[n]=3\sin\left(\tfrac\pi2n\right)u[n]$: $A=3$, $\omega_0=\tfrac\pi2$, $\theta=0$. (The exam's hint route: the table's $\sin$ row with $\omega_0=\frac\pi2$ is $\frac{z^{-1}}{1+z^{-2}}$, times 3.) Poles on the unit circle mean a bounded $h$ but not a BIBO-stable system ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]]): part (b) asks for a bounded input with an unbounded output, and any input at the pole frequency works — $j^nu[n]$, $\cos(\frac\pi2n)u[n]$ or $\sin(\frac\pi2n)u[n]$.
@@ -195,7 +195,7 @@ Partial fractions do not use the ROC; the ROC enters only when each term is inve
 > - **Listing $2^M$ sign patterns.** Only the $M+1$ nested rings are ROCs; "outer pole right-sided, inner pole left-sided" is always empty.
 > - **Dropping the minus sign on left-sided terms** — $\frac{A}{1-pz^{-1}}$ with $|z|<|p|$ is $-A\,p^nu[-n-1]$.
 
-> [!question] Practice: [[0-midterm-1/past-exams/fall-2019|FA2019]] #7 and [[homework/hw4|HW4]] #1(a)
+> [!question] Practice: [[exams/midterm-1/past-exams/fall-2019|FA2019]] #7 and [[homework/hw4|HW4]] #1(a)
 > (i) $X(z)=\dfrac{1}{1-e^{j\pi/3}z^{-1}}+\dfrac{1}{1-\frac12z^{-1}}$. $\quad$ (ii) $X(z)=\dfrac{z^2-z}{z^2+3z+2}$. For each, give all possible ROCs and $x[n]$ for each.
 
 > [!success]- Answers
@@ -213,7 +213,7 @@ Partial fractions do not use the ROC; the ROC enters only when each term is inve
 > - $|z|<1$: $x[n]=2(-1)^nu[-n-1]-3(-2)^nu[-n-1]$
 
 > [!exam] How Lecture 8 is tested
-> "Inverse z / PFE / all possible ROCs" is on **7 of 7** past exams, usually 15–20 points — [[problems/all-possible-rocs|all possible ROCs]]. Typical forms: all ROCs and all signals ([[0-midterm-1/past-exams/fall-2023|FA2023 #6]]: $\frac{1-z^{-1}}{(1-\frac12z^{-1})(1-2z^{-1})}$ with $A=\tfrac13$ at $\tfrac12$ and $\tfrac23$ at $2$; [[0-midterm-1/past-exams/fall-2019|FA2019 #7]] above), or "the system is stable/causal — find $h[n]$", which picks one ring: [[0-midterm-1/past-exams/fall-2025|FA2025 #7]] (stable ⇒ $\tfrac23<|z|<2$, $h[n]=-\tfrac94(-2)^nu[-n-1]-\tfrac54\left(-\tfrac23\right)^nu[n]$), [[0-midterm-1/past-exams/spring-2025|SP2025 #8]] (stable ⇒ $\tfrac12<|z|<\tfrac32$, $h[n]=-\left(\tfrac12\right)^nu[n]-3\left(-\tfrac32\right)^nu[-n-1]$), [[0-midterm-1/past-exams/fall-2024|FA2024 #7]], [[0-midterm-1/past-exams/spring-2023|SP2023 #6]], [[0-midterm-1/past-exams/spring-2021|SP2021 #5, #7]]. Conjugate poles show up as SP2021 #5's $3\sin(\frac\pi2n)u[n]$. Expect to show the cover-up arithmetic; answers must be closed forms with $u[n]$ / $u[-n-1]$ written out.
+> "Inverse z / PFE / all possible ROCs" is on **7 of 7** past exams, usually 15–20 points — [[problems/all-possible-rocs|all possible ROCs]]. Typical forms: all ROCs and all signals ([[exams/midterm-1/past-exams/fall-2023|FA2023 #6]]: $\frac{1-z^{-1}}{(1-\frac12z^{-1})(1-2z^{-1})}$ with $A=\tfrac13$ at $\tfrac12$ and $\tfrac23$ at $2$; [[exams/midterm-1/past-exams/fall-2019|FA2019 #7]] above), or "the system is stable/causal — find $h[n]$", which picks one ring: [[exams/midterm-1/past-exams/fall-2025|FA2025 #7]] (stable ⇒ $\tfrac23<|z|<2$, $h[n]=-\tfrac94(-2)^nu[-n-1]-\tfrac54\left(-\tfrac23\right)^nu[n]$), [[exams/midterm-1/past-exams/spring-2025|SP2025 #8]] (stable ⇒ $\tfrac12<|z|<\tfrac32$, $h[n]=-\left(\tfrac12\right)^nu[n]-3\left(-\tfrac32\right)^nu[-n-1]$), [[exams/midterm-1/past-exams/fall-2024|FA2024 #7]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #6]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #5, #7]]. Conjugate poles show up as SP2021 #5's $3\sin(\frac\pi2n)u[n]$. Expect to show the cover-up arithmetic; answers must be closed forms with $u[n]$ / $u[-n-1]$ written out.
 
 ## 7. Python: `scipy.signal.residuez`
 
@@ -246,7 +246,7 @@ How to read it:
 
 - `b`, `a` are the coefficients of $z^0,z^{-1},z^{-2},\dots$ in the numerator and denominator, with `a[0] = 1` — the same lists `lfilter(b, a, x)` uses for the LCCDE (Lecture 9).
 - `R` are the $A_k$ and `P` the matching $p_k$, in the same order: here $A=-\tfrac14$ at $p=\tfrac13$ and $A=\tfrac94$ at $p=-1$, as in Example 2.
-- `K` holds the **direct terms** $C_0+C_1z^{-1}+\dots$ that appear when $X(z)$ is not proper: $X(z)=\sum_k\frac{R_k}{1-P_kz^{-1}}+\sum_jK_jz^{-j}$. The second call is [[0-midterm-1/past-exams/fall-2025|FA2025 #6]]'s $H(z)=\frac{1-z^{-2}}{(1-2z^{-1})(1+\frac23z^{-1})}$: `K = [0.75]` is a $\tfrac34\delta[n]$ term next to $\frac{9/16}{1-2z^{-1}}$ and $\frac{-5/16}{1+\frac23z^{-1}}$ ([[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]]).
+- `K` holds the **direct terms** $C_0+C_1z^{-1}+\dots$ that appear when $X(z)$ is not proper: $X(z)=\sum_k\frac{R_k}{1-P_kz^{-1}}+\sum_jK_jz^{-j}$. The second call is [[exams/midterm-1/past-exams/fall-2025|FA2025 #6]]'s $H(z)=\frac{1-z^{-2}}{(1-2z^{-1})(1+\frac23z^{-1})}$: `K = [0.75]` is a $\tfrac34\delta[n]$ term next to $\frac{9/16}{1-2z^{-1}}$ and $\frac{-5/16}{1+\frac23z^{-1}}$ ([[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]]).
 - `residuez` knows nothing about the ROC. The line `x_pfe` makes the right-sided choice for every term (and matches `lfilter`, which always computes the causal response); for any other ring you flip the terms whose poles lie outside it, by hand. Complex poles come back as complex conjugate entries of `P` with conjugate `R` — for Exercise 2 both residues are $1.5$.
 
 ## Related

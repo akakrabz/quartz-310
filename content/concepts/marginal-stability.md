@@ -76,7 +76,7 @@ The matched input grows linearly (about $0.92\,n$); the unmatched one never exce
 - Lectures: [[2-z-transform/11-bibo-stability-and-causality|L11]] §1.2.1 and slides 15–18 (pole matching, the eight-input example).
 - Problem family: [[problems/unbounded-outputs-and-pole-matching]] (7/7 exams).
 - Homework: [[homework/hw4|HW4]] #3(c) ($\frac{z+1}{z-1}$, $x=u[n]$ gives $(2n+1)u[n]$) and #3(d) ($\frac{z-1}{z^2+j}$, poles $e^{-j\pi/4}, e^{j3\pi/4}$; $\cos(\frac{\pi}{4}n)u[n]$ resonates).
-- Past exams: [[0-midterm-1/past-exams/fall-2025|FA2025 #8b]], [[0-midterm-1/past-exams/spring-2025|SP2025 #6]], [[0-midterm-1/past-exams/fall-2023|FA2023 #7c]] (pole at $-1$, input $(-1)^nu[n]$), [[0-midterm-1/past-exams/spring-2021|SP2021 #5]] ($\frac{3z^{-1}}{1+z^{-2}}$: $j^n$, $\cos(\frac{\pi}{2}n)$, $\sin(\frac{\pi}{2}n)$ all resonate) and T/F (d) ($\frac{z^{-1}}{1-z^{-1}}$ with $u[n]$ gives $n\,u[n]$: True); [[0-midterm-1/true-false-bank|T/F bank]].
+- Past exams: [[exams/midterm-1/past-exams/fall-2025|FA2025 #8b]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #6]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #7c]] (pole at $-1$, input $(-1)^nu[n]$), [[exams/midterm-1/past-exams/spring-2021|SP2021 #5]] ($\frac{3z^{-1}}{1+z^{-2}}$: $j^n$, $\cos(\frac{\pi}{2}n)$, $\sin(\frac{\pi}{2}n)$ all resonate) and T/F (d) ($\frac{z^{-1}}{1-z^{-1}}$ with $u[n]$ gives $n\,u[n]$: True); [[exams/midterm-1/true-false-bank|T/F bank]].
 
 Related: [[concepts/bibo-stability]] · [[concepts/region-of-convergence]] · [[concepts/poles-and-zeros]] · [[concepts/pole-zero-cancellation]] · [[concepts/complex-exponential]] · [[concepts/eigenfunctions-of-lti-systems]]
 

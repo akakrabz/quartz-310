@@ -15,28 +15,28 @@ lectures: [4, 8, 9]
 
 **1. Short sequences — deconvolve by inspection** (often with one branch of a series/parallel connection known):
 
-- [[0-midterm-1/past-exams/spring-2025|SP2025 #3]]: parallel $h_1=\delta[n-1]$ and unknown $h_2$; $x=\{\underset{\uparrow}{1},2,1\}\mapsto y=\{1,\underset{\uparrow}{2},2,2,1\}$. Find $h_2$, the overall $h$, causal?
-- [[0-midterm-1/past-exams/fall-2024|FA2024 #3]]: series, $h_2=\{\underset{\uparrow}{2},1\}$ known; $x=\{\underset{\uparrow}{1},-1\}\mapsto y=\{4,\underset{\uparrow}{-2},-2\}$. Find $h_1$, the overall $h$, causal?
-- [[0-midterm-1/past-exams/fall-2019|FA2019 #3]]: $x=2\delta[n-2]\mapsto y=\delta[n-1]+2\delta[n-2]+\delta[n-3]$ (as stem plots). Find $h$, the step response, causal?
+- [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]]: parallel $h_1=\delta[n-1]$ and unknown $h_2$; $x=\{\underset{\uparrow}{1},2,1\}\mapsto y=\{1,\underset{\uparrow}{2},2,2,1\}$. Find $h_2$, the overall $h$, causal?
+- [[exams/midterm-1/past-exams/fall-2024|FA2024 #3]]: series, $h_2=\{\underset{\uparrow}{2},1\}$ known; $x=\{\underset{\uparrow}{1},-1\}\mapsto y=\{4,\underset{\uparrow}{-2},-2\}$. Find $h_1$, the overall $h$, causal?
+- [[exams/midterm-1/past-exams/fall-2019|FA2019 #3]]: $x=2\delta[n-2]\mapsto y=\delta[n-1]+2\delta[n-2]+\delta[n-3]$ (as stem plots). Find $h$, the step response, causal?
 
 **2. Several inputs — build $\delta$ out of them:**
 
-- [[0-midterm-1/past-exams/spring-2023|SP2023 #4]]: $x_1=\{\underset{\uparrow}{1},3,6,-3\}$, $x_2=\{\underset{\uparrow}{1},2,-1,0\}$; express $h$ through $y_1$, $y_2$.
+- [[exams/midterm-1/past-exams/spring-2023|SP2023 #4]]: $x_1=\{\underset{\uparrow}{1},3,6,-3\}$, $x_2=\{\underset{\uparrow}{1},2,-1,0\}$; express $h$ through $y_1$, $y_2$.
 - [[homework/hw2|HW2 #4]]: $x=3^{-n}u[n]\mapsto y=5^{-n}u[n-1]$ (one input, shifted copies of itself).
 
 **3. A step response — difference it:**
 
 - [[homework/hw2|HW2 #3]]: express $y$ through the step response $g=h*u$ and $x$.
-- [[0-midterm-1/past-exams/fall-2023|FA2023 #4]] (multiple choice): $u[n]\mapsto\delta[n]+\delta[n-1]$; which $h$?
+- [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]] (multiple choice): $u[n]\mapsto\delta[n]+\delta[n-1]$; which $h$?
 
 **4. Infinite sequences or transforms — divide, $H=Y/X$:**
 
-- [[0-midterm-1/past-exams/fall-2024|FA2024 #6]]: causal; $\{\underset{\uparrow}{1},\tfrac13,0,\dots\}\mapsto\{\underset{\uparrow}{1},\tfrac12,0,\dots\}$. $H(z)$, $h[n]$, LCCDE.
-- [[0-midterm-1/past-exams/spring-2023|SP2023 #6]] (20 pts, in the Midterm 1 review): causal and stable; $X=\dfrac{1}{(1-2z^{-1})(1-z^{-1})}$, $Y=\dfrac{1}{(1-\frac12z^{-1})(1-z^{-1})(1-\frac14z^{-1})}$. $H$ and ROC, $h$, LCCDE.
-- [[0-midterm-1/past-exams/spring-2021|SP2021 #7]] (21 pts): causal; $x=\tfrac14\left(-\tfrac13\right)^n u[n]-3\cdot4^n u[-n-1]$ and $Y(z)=\dfrac{13/4}{(1-\frac12z^{-1})(1-z^{-1})(1+\frac13z^{-1})}$.
+- [[exams/midterm-1/past-exams/fall-2024|FA2024 #6]]: causal; $\{\underset{\uparrow}{1},\tfrac13,0,\dots\}\mapsto\{\underset{\uparrow}{1},\tfrac12,0,\dots\}$. $H(z)$, $h[n]$, LCCDE.
+- [[exams/midterm-1/past-exams/spring-2023|SP2023 #6]] (20 pts, in the Midterm 1 review): causal and stable; $X=\dfrac{1}{(1-2z^{-1})(1-z^{-1})}$, $Y=\dfrac{1}{(1-\frac12z^{-1})(1-z^{-1})(1-\frac14z^{-1})}$. $H$ and ROC, $h$, LCCDE.
+- [[exams/midterm-1/past-exams/spring-2021|SP2021 #7]] (21 pts): causal; $x=\tfrac14\left(-\tfrac13\right)^n u[n]-3\cdot4^n u[-n-1]$ and $Y(z)=\dfrac{13/4}{(1-\frac12z^{-1})(1-z^{-1})(1+\frac13z^{-1})}$.
 - [[homework/hw4|HW4 #4]]: causal; $x=2^n(u[n]-3u[n-1])\mapsto y=(3^n-2^n)u[n]$. $h$, stable?
 
-**5. A system described in words or by a formula — feed it $\delta$:** [[0-midterm-1/past-exams/fall-2025|FA2025 #4(b)]]: the modified moving average $y[n]=\frac1L\sum_{k=0}^{L-1}x[n-Sk]$ with $L=3$, $S=4$.
+**5. A system described in words or by a formula — feed it $\delta$:** [[exams/midterm-1/past-exams/fall-2025|FA2025 #4(b)]]: the modified moving average $y[n]=\frac1L\sum_{k=0}^{L-1}x[n-Sk]$ with $L=3$, $S=4$.
 
 > [!success]- Answers to every instance
 > | instance | answer |
@@ -163,7 +163,7 @@ All three are verified in `verify/problems/finding_h.py` (convolving back, `scip
 - [[problems/finite-length-convolution|Finite-length convolution]] (this family runs it backwards), [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]] (where move 5 continues), [[problems/all-possible-rocs|inverse z / PFE / all possible ROCs]] (choosing the ROC).
 - Lectures: [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] (LTI ⇒ $y=x*h$), [[2-z-transform/08-inverse-z-transform|Lecture 8]] (PFE), [[2-z-transform/09-transfer-functions|Lecture 9]] ($H=Y/X$, LCCDE ↔ $H$), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (long division; series and parallel connections).
 - Concepts: [[concepts/impulse-response]], [[concepts/step-response]], [[concepts/transfer-function]], [[concepts/system-algebra]], [[concepts/pole-zero-cancellation]].
-- Demos: [[demos/convolution-explorer|convolution explorer]] (check a deconvolution by convolving back), [[demos/difference-equation-simulator|difference-equation simulator]] (check an LCCDE's impulse response), [[0-midterm-1/practice-drills|practice drills]]; all families: [[problems/index|exam problem families]].
+- Demos: [[demos/convolution-explorer|convolution explorer]] (check a deconvolution by convolving back), [[demos/difference-equation-simulator|difference-equation simulator]] (check an LCCDE's impulse response), [[demos/practice-drills|practice drills]]; all families: [[problems/index|exam problem families]].
 
 ### Sources for this page
 

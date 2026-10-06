@@ -123,7 +123,7 @@ These are not on the Lecture 2 slides, but [[homework/hw1|HW1]] #4 asks for the 
 >
 > $z^N = 1$ gives the **$N$-th roots of unity** $e^{j2\pi k/N}$. HW1 #4: $z^4 = 1$ gives $1, j, -1, -j$; $z^4 = -1 = e^{j(\pi + 2\pi k)}$ gives $e^{j(\pi/4 + \pi k/2)} = \dfrac{\pm1 \pm j}{\sqrt2}$ (figure above).
 
-Where roots show up later: the poles of $y[n] = y[n-3] + x[n]$ are the three cube roots of unity ([[0-midterm-1/past-exams/fall-2024|FA2024 #1(e)]], "three distinct poles": True); $1 + z^{-2} = (1 - jz^{-1})(1 + jz^{-1})$ puts poles at $\pm j$ ([[0-midterm-1/past-exams/spring-2021|SP2021 #5]]).
+Where roots show up later: the poles of $y[n] = y[n-3] + x[n]$ are the three cube roots of unity ([[exams/midterm-1/past-exams/fall-2024|FA2024 #1(e)]], "three distinct poles": True); $1 + z^{-2} = (1 - jz^{-1})(1 + jz^{-1})$ puts poles at $\pm j$ ([[exams/midterm-1/past-exams/spring-2021|SP2021 #5]]).
 
 > [!key] Geometric sums
 > $$
@@ -166,14 +166,14 @@ $r < 1$ decays, $r = 1$ stays on the unit circle, $r > 1$ grows; $\omega_0$ sets
 > A term $p^n u[n]$ in an impulse response is exactly a **pole** at $z = p$ in the z-domain ([[2-z-transform/06-the-z-transform|Lecture 6]]); whether $\lvert p\rvert$ is below, on or above $1$ decides decay, persistence or growth, i.e. stability ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]]). And because $n$ is an integer, $e^{j(\omega_0 + 2\pi)n} = e^{j\omega_0 n}$: discrete-time frequencies, like angles, only matter modulo $2\pi$.
 
 > [!trap] Reading angles: $2/3$ is not $2\pi/3$
-> [[0-midterm-1/past-exams/fall-2025|FA2025 #8(b)]] has a pole at $e^{j2/3}$: angle $2/3$ rad $\approx 38°$, not $2\pi/3 = 120°$. An input $\cos(\tfrac{2\pi}{3}n)u[n]$ therefore does **not** hit that pole, and the output stays bounded (key: False). Read exponents character by character.
+> [[exams/midterm-1/past-exams/fall-2025|FA2025 #8(b)]] has a pole at $e^{j2/3}$: angle $2/3$ rad $\approx 38°$, not $2\pi/3 = 120°$. An input $\cos(\tfrac{2\pi}{3}n)u[n]$ therefore does **not** hit that pole, and the output stays bounded (key: False). Read exponents character by character.
 
 ## 6. On the exam
 
 > [!exam] Where Lecture 2 shows up
-> - **Sifting T/F items** need nothing but $\delta$ and the unit circle: [[0-midterm-1/past-exams/spring-2021|SP2021 #1(e)]] ($4\cos(2\pi n + \frac{\pi}{2}) - 6\sin(\pi n) = 0$ for *every* integer $n$, so $\delta[\cdot] = 1$ everywhere and the sum is $\sum_n x[n] = 4$; the statement "$=3$" is False) and [[0-midterm-1/past-exams/fall-2019|FA2019 #1(g)]] ($2^n u[n] - 8 = 0$ only at $n = 3$, so $\sum_n x[n]\,\delta[2^n u[n] - 8] = x[3] = 4$; the statement "$x[3] = 2$" is False).
-> - **Euler inside z-transforms:** [[0-midterm-1/past-exams/fall-2025|FA2025 #5(c)]] rewrites $\cos^2(\frac{\pi}{4}n)u[n] = \big(\tfrac12 + \tfrac14 e^{j\pi n/2} + \tfrac14 e^{-j\pi n/2}\big)u[n]$; [[0-midterm-1/past-exams/fall-2025|FA2025 #5(a)]] needs $e^{-j4\pi/3} = e^{j2\pi/3}$ (principal angle); [[0-midterm-1/past-exams/spring-2021|SP2021 #5]] recognizes $3\sin(\frac{\pi}{2}n)u[n]$ from poles at $\pm j$. See [[problems/z-transform-with-roc]] and [[problems/unbounded-outputs-and-pole-matching]].
-> - **Roots and poles on the unit circle:** [[0-midterm-1/past-exams/fall-2024|FA2024 #1(e)]], [[0-midterm-1/past-exams/spring-2025|SP2025 #6]] (pole $e^{j\pi/4}$), [[0-midterm-1/past-exams/fall-2025|FA2025 #8(b)]] (the $e^{j2/3}$ trap above). No calculator on the exam: know $e^{j\pi/4} = \frac{1+j}{\sqrt2}$, $e^{j\pi/3} = \frac12 + j\frac{\sqrt3}{2}$, $e^{j2\pi/3} = -\frac12 + j\frac{\sqrt3}{2}$.
+> - **Sifting T/F items** need nothing but $\delta$ and the unit circle: [[exams/midterm-1/past-exams/spring-2021|SP2021 #1(e)]] ($4\cos(2\pi n + \frac{\pi}{2}) - 6\sin(\pi n) = 0$ for *every* integer $n$, so $\delta[\cdot] = 1$ everywhere and the sum is $\sum_n x[n] = 4$; the statement "$=3$" is False) and [[exams/midterm-1/past-exams/fall-2019|FA2019 #1(g)]] ($2^n u[n] - 8 = 0$ only at $n = 3$, so $\sum_n x[n]\,\delta[2^n u[n] - 8] = x[3] = 4$; the statement "$x[3] = 2$" is False).
+> - **Euler inside z-transforms:** [[exams/midterm-1/past-exams/fall-2025|FA2025 #5(c)]] rewrites $\cos^2(\frac{\pi}{4}n)u[n] = \big(\tfrac12 + \tfrac14 e^{j\pi n/2} + \tfrac14 e^{-j\pi n/2}\big)u[n]$; [[exams/midterm-1/past-exams/fall-2025|FA2025 #5(a)]] needs $e^{-j4\pi/3} = e^{j2\pi/3}$ (principal angle); [[exams/midterm-1/past-exams/spring-2021|SP2021 #5]] recognizes $3\sin(\frac{\pi}{2}n)u[n]$ from poles at $\pm j$. See [[problems/z-transform-with-roc]] and [[problems/unbounded-outputs-and-pole-matching]].
+> - **Roots and poles on the unit circle:** [[exams/midterm-1/past-exams/fall-2024|FA2024 #1(e)]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #6]] (pole $e^{j\pi/4}$), [[exams/midterm-1/past-exams/fall-2025|FA2025 #8(b)]] (the $e^{j2/3}$ trap above). No calculator on the exam: know $e^{j\pi/4} = \frac{1+j}{\sqrt2}$, $e^{j\pi/3} = \frac12 + j\frac{\sqrt3}{2}$, $e^{j2\pi/3} = -\frac12 + j\frac{\sqrt3}{2}$.
 > - **Homework:** [[homework/hw1|HW1]] #1, #3 (sketching and rewriting with $\delta$ and $u$) and #4 (roots of $z^4 = \pm1$).
 
 ## Related

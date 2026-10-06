@@ -53,7 +53,7 @@ $$
 $$
 a^nu[n]*b^nu[n]=\frac{a^{n+1}-b^{n+1}}{a-b}\,u[n]\ (a\ne b),\qquad a^nu[n]*a^nu[n]=(n+1)\,a^nu[n].
 $$
-Lecture 4's example: $u[n]*(-\tfrac34)^nu[n]=\tfrac47\big(1-(-\tfrac34)^{n+1}\big)u[n]$. A short sequence against a long one is fastest by superposition ([[0-midterm-1/past-exams/fall-2025|FA2025 #3b]]: $x=-\delta[n+1]+\delta[n-1]$ gives $y=-h[n+1]+h[n-1]$).
+Lecture 4's example: $u[n]*(-\tfrac34)^nu[n]=\tfrac47\big(1-(-\tfrac34)^{n+1}\big)u[n]$. A short sequence against a long one is fastest by superposition ([[exams/midterm-1/past-exams/fall-2025|FA2025 #3b]]: $x=-\delta[n+1]+\delta[n-1]$ gives $y=-h[n+1]+h[n-1]$).
 
 ```python
 import numpy as np
@@ -75,16 +75,18 @@ y[3] = -3
 
 > [!trap]
 > - **The $n=0$ arrow.** `np.convolve` and the matrix method return values only; the start index is $n_s+m_s$. Even an official key boxed the wrong values once — SP2025 #4(a) — and the sum check catches it ([[0-toolkit/05-errata|errata]]).
-> - **Length counts interior zeros**: $\{1,2,3,0,-1,-2,-3\}$ has length 7, so with a length-3 $h$ the answer has 9 samples ([[0-midterm-1/past-exams/fall-2025|FA2025 #3a]]).
+> - **Length counts interior zeros**: $\{1,2,3,0,-1,-2,-3\}$ has length 7, so with a length-3 $h$ the answer has 9 samples ([[exams/midterm-1/past-exams/fall-2025|FA2025 #3a]]).
 > - **Flip one signal, not both**, and sum products (not a product of sums).
 > - **$*$ is not $\times$**: $x[n]*\delta[n-k]=x[n-k]$ (the whole signal shifts) but $x[n]\,\delta[n-k]=x[k]\,\delta[n-k]$ (one sample survives).
 > - **Keep the $u[n]$** in infinite-length answers: $y=0$ for $n<0$ came from the limits.
 > - **Two-sided sums can diverge**: $(\tfrac12)^nu[n]*2^{-n}u[-n]$ has infinitely many equal terms at every $n$ ([[homework/hw2|HW2]] #5e).
-> - Causal $*$ causal is causal (start index $0+0$): [[0-midterm-1/past-exams/fall-2025|FA2025 #1b]] is True.
+> - Causal $*$ causal is causal (start index $0+0$): [[exams/midterm-1/past-exams/fall-2025|FA2025 #1b]] is True.
 
-**Where it appears.** [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] (all of it), [[2-z-transform/09-transfer-functions|Lecture 9]] ($Y=HX$), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (series and parallel); [[homework/hw2|HW2]] #3–#5. Problem families: [[problems/finite-length-convolution]] (7/7 exams: [[0-midterm-1/past-exams/fall-2025|FA2025 #3a]], [[0-midterm-1/past-exams/spring-2025|SP2025 #4a]], [[0-midterm-1/past-exams/fall-2024|FA2024 #4a]], [[0-midterm-1/past-exams/fall-2023|FA2023 #3a]], [[0-midterm-1/past-exams/spring-2023|SP2023 #3a]], [[0-midterm-1/past-exams/spring-2021|SP2021 #2]], [[0-midterm-1/past-exams/fall-2019|FA2019 #4]]) and [[problems/infinite-length-convolution]] (5/7). Try it: [[demos/convolution-explorer]].
+**In Unit 3.** [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]] reads the sum as a sliding inner product: with $h$ a time-reversed pattern (a matched filter), $y[n]$ peaks where the input locally looks like the pattern ([[concepts/template-matching|template matching]], also in 2-D for images). [[3-fourier-analysis/14-dtft-properties|Lecture 14]] gives the frequency-domain form of $Y=HX$: $x[n]*h[n]\leftrightarrow X_d(\omega)H_d(\omega)$ ([[concepts/dtft-properties|DTFT properties]]), so an LTI system multiplies each frequency component of its input by $H_d(\omega)$. The dual statement, multiplication in time (windowing), corresponds to a periodic convolution of the two DTFTs divided by $2\pi$.
+
+**Where it appears.** [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] (all of it), [[2-z-transform/09-transfer-functions|Lecture 9]] ($Y=HX$), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (series and parallel); [[homework/hw2|HW2]] #3–#5. Problem families: [[problems/finite-length-convolution]] (7/7 exams: [[exams/midterm-1/past-exams/fall-2025|FA2025 #3a]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #4a]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #4a]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #3a]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #3a]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #2]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #4]]) and [[problems/infinite-length-convolution]] (5/7). Try it: [[demos/convolution-explorer]].
 
 **Related.** [[concepts/lti-system|LTI system]] · [[concepts/impulse-response|impulse response]] · [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/step-response|step response]] · [[concepts/system-algebra|system algebra]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/bibo-stability|BIBO stability]]
 
 ### Sources for this page
-Lecture 4 §2 (definition, properties, start/end/length rules, table, matrix and direct-sum methods, §2.3 finite-by-infinite case); Lecture 4 slides 6–11; HW2 #5; the convolution problems of the seven past exams. Every number checked in `verify/concepts/verify_glossary_time.py` and `verify_systems.py`; the snippet was run as shown.
+Lecture 4 §2 (definition, properties, start/end/length rules, table, matrix and direct-sum methods, §2.3 finite-by-infinite case); Lecture 4 slides 6–11; HW2 #5; the convolution problems of the seven past exams. Every number checked in `verify/concepts/verify_glossary_time.py` and `verify_systems.py`; the snippet was run as shown. The *In Unit 3* paragraph: Lecture 12 §1 (matched filters) and §2 (2-D convolution); Lecture 14 §3 (convolution and multiplication properties); checked in `verify/CLEAN_unit3.py`.

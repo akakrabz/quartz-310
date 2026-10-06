@@ -1,10 +1,10 @@
 ---
 title: "Unit 2 · The z-transform and LTI systems"
-description: "Lectures 6–11: the z-transform and its region of convergence, its properties, the inverse transform by partial fractions, transfer functions of difference equations, improper transfer functions and system algebra, and BIBO stability and causality read off the ROC — the second half of Midterm 1."
+description: "Lectures 6–11: the z-transform and its region of convergence, its properties, the inverse transform by partial fractions, transfer functions of difference equations, improper transfer functions and system algebra, and BIBO stability and causality read off the ROC — the z-domain toolkit that Unit 3's frequency response is built on (tested on Midterm 1)."
 tags: [z-transform, roc, stability, midterm-1]
 ---
 
-Unit 1 described an LTI system by its impulse response and computed outputs by convolution. Unit 2 moves to the z-domain, where convolution becomes multiplication and a system becomes a rational function $H(z)$ you can read at a glance. The unit builds one idea at a time: the transform and its region of convergence (L6); properties that transform almost anything from a few pairs (L7); the way back to time by partial fractions, with the ROC choosing each term's side (L8); transfer functions of LCCDEs and the response $Y=HX$ (L9); improper $H(z)$ and connected systems (L10); and stability and causality as statements about the ROC (L11). **All six lectures are on Midterm 1** (Lecture 12 is not).
+Unit 1 described an LTI system by its impulse response and computed outputs by convolution. Unit 2 moves to the z-domain, where convolution becomes multiplication and a system becomes a rational function $H(z)$ you can read at a glance. The unit builds one idea at a time: the transform and its region of convergence (L6); properties that transform almost anything from a few pairs (L7); the way back to time by partial fractions, with the ROC choosing each term's side (L8); transfer functions of LCCDEs and the response $Y=HX$ (L9); improper $H(z)$ and connected systems (L10); and stability and causality as statements about the ROC (L11). All six lectures were tested on Midterm 1, and [[3-fourier-analysis/index|Unit 3]] builds directly on Lectures 6 and 11: on the unit circle, $H(z)$ becomes the frequency response $H_d(\omega)$.
 
 | # | page | one line |
 |---|---|---|
@@ -24,9 +24,9 @@ Unit 1 described an LTI system by its impulse response and computed outputs by c
 > - **Stability and causality:** causal ⇔ ROC is $|z|>r_{\max}$ including $z=\infty$; BIBO stable ⇔ ROC contains the unit circle; causal **and** stable ⇔ every pole strictly inside $|z|=1$. An input zero can cancel an unstable pole in $Y(z)$.
 
 > [!exam] Which exam problems this unit feeds
-> On a recent Fall exam roughly half to two-thirds of the 100 points come from this unit (z-transforms 9–15, LCCDE/transfer function 15–20, PFE/ROC/stability 15–20, pole matching or a parameter problem 10, plus True/False items).
+> On a recent Fall Midterm 1 roughly half to two-thirds of the 100 points came from this unit (z-transforms 9–15, LCCDE/transfer function 15–20, PFE/ROC/stability 15–20, pole matching or a parameter problem 10, plus True/False items).
 >
-> | problem family | past exams | lectures |
+> | problem family | past Midterm 1 exams | lectures |
 > |---|---|---|
 > | [[problems/z-transform-with-roc\|z-transform with ROC]] | 6/7 | L6, L7 |
 > | [[problems/all-possible-rocs\|inverse z / PFE / all possible ROCs]] | 7/7 | L8, L11 |
@@ -36,7 +36,7 @@ Unit 1 described an LTI system by its impulse response and computed outputs by c
 > | [[problems/parameters-for-stability\|parameters for stability]] | 3/7 | L11 |
 > | [[problems/two-sided-systems-as-recursions\|two-sided systems as recursions]] | 2/7 | L5, L11 |
 >
-> Stability, causality and ROC statements are also regulars in the [[0-midterm-1/true-false-bank|True/False bank]]. Problem-by-problem maps: [[0-midterm-1/past-exams/index|past exams]].
+> Stability, causality and ROC statements are also regulars in the [[exams/midterm-1/true-false-bank|True/False bank]]. Problem-by-problem maps: [[exams/midterm-1/past-exams/index|past exams]].
 
 **Homework for this unit:** [[homework/hw3|HW3]] (z-transforms, properties, inverse transforms, a right-sided system — L6–L9) · [[homework/hw4|HW4]] (all possible ROCs, BIBO stability, finding $h$, systems in series — L8–L11)
 
@@ -44,4 +44,4 @@ Unit 1 described an LTI system by its impulse response and computed outputs by c
 
 **Concepts:** [[concepts/z-transform|z-transform]] · [[concepts/region-of-convergence|ROC]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/z-transform-pairs|pairs]] · [[concepts/z-transform-properties|properties]] · [[concepts/inverse-z-transform|inverse z-transform]] · [[concepts/partial-fraction-expansion|partial fractions]] · [[concepts/transfer-function|transfer function]] · [[concepts/system-algebra|system algebra]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/marginal-stability|marginal stability]] · [[concepts/causality|causality]]
 
-**Before and after:** [[1-signals-and-systems/index|Unit 1 · Signals and systems]] (L1–L5) · [[3-beyond-midterm-1/index|beyond Midterm 1]] (L12–L14, not tested)
+**Before and after:** [[1-signals-and-systems/index|Unit 1 · Signals and systems]] (L1–L5) · [[3-fourier-analysis/index|Unit 3 · Fourier analysis and frequency response]] (L12–L16)

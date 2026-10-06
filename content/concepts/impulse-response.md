@@ -12,7 +12,7 @@ aliases: ["impulse response", "unit pulse response", "unit-pulse response", "uni
 > For an [[concepts/lti-system|LTI system]]: $y=x*h$ for every input, and $H(z)=\mathcal{Z}\{h[n]\}$ is the [[concepts/transfer-function|transfer function]]. Read off $h$: **causal** $\iff h[n]=0$ for $n<0$; **stable** $\iff\sum\lvert h[n]\rvert<\infty$; **FIR** $\iff$ finitely many nonzero samples. Older exams call it the *unit pulse response*.
 
 > [!recipe] Four ways to find $h[n]$
-> 1. **Formula $y[n]=\sum_k c_k\,x[n-k]$:** the coefficients *are* $h$: $h[n]=\sum_k c_k\,\delta[n-k]$. ([[0-midterm-1/past-exams/fall-2025|FA2025 #4b]]: $L=3$, $S=4$ gives $h=\frac13(\delta[n]+\delta[n-4]+\delta[n-8])$.)
+> 1. **Formula $y[n]=\sum_k c_k\,x[n-k]$:** the coefficients *are* $h$: $h[n]=\sum_k c_k\,\delta[n-k]$. ([[exams/midterm-1/past-exams/fall-2025|FA2025 #4b]]: $L=3$, $S=4$ gives $h=\frac13(\delta[n]+\delta[n-4]+\delta[n-8])$.)
 > 2. **LCCDE:** run the recursion with $x=\delta$ at initial rest (Lecture 5), or find $H(z)$ and invert it (Lecture 9). With several input terms, find $\hat h$ for the input $\delta[n]$ alone and superpose shifted copies (Lecture 5, Ex. 1).
 > 3. **An input–output pair of an LTI system:** combine shifted copies of $x$ into $\delta[n]$; the same combination of shifted copies of $y$ is $h$ (HW2 #4, FA2019 #3, SP2023 #4). Or divide: $H(z)=Y(z)/X(z)$ (FA2024 #6, HW4 #4).
 > 4. **The step response:** $h[n]=g[n]-g[n-1]$ ([[concepts/step-response|step response]]; FA2023 #4).
@@ -42,13 +42,13 @@ print(-0.25**n + 0.5 * 0.25**(n - 2.0) * (n >= 2))   # closed form from the note
 ```
 
 > [!trap]
-> - **Only LTI systems are described by $h$** ([[0-midterm-1/past-exams/fall-2024|FA2024 #1a]] F, [[0-midterm-1/past-exams/fall-2019|FA2019 #1b]] F): the median filter and $y=n\,x[n]$ both have $h=0$.
+> - **Only LTI systems are described by $h$** ([[exams/midterm-1/past-exams/fall-2024|FA2024 #1a]] F, [[exams/midterm-1/past-exams/fall-2019|FA2019 #1b]] F): the median filter and $y=n\,x[n]$ both have $h=0$.
 > - **Bounded $h$ is not stable $h$**: $h=u[n]$ ([[concepts/bibo-stability|BIBO stability]]).
 > - **With feedback, $h$ is not the coefficient list**: $y[n]=\frac12y[n-1]+x[n]$ has $h=(\frac12)^nu[n]$, infinitely long ([[concepts/fir-and-iir|FIR and IIR]]).
-> - **Undo shifts as well as scales**: if the input was $2\delta[n-2]$, then $h[n]=\frac12\,y[n+2]$ ([[0-midterm-1/past-exams/fall-2019|FA2019 #3]]: $h=\frac12\delta[n+1]+\delta[n]+\frac12\delta[n-1]$, not causal).
+> - **Undo shifts as well as scales**: if the input was $2\delta[n-2]$, then $h[n]=\frac12\,y[n+2]$ ([[exams/midterm-1/past-exams/fall-2019|FA2019 #3]]: $h=\frac12\delta[n+1]+\delta[n]+\frac12\delta[n-1]$, not causal).
 > - **Keep the unit steps** in pieces like $5^{-(n-1)}u[n-2]$: they say where each term starts.
 
-**Where it appears.** [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] §1, [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] §1, [[2-z-transform/09-transfer-functions|Lecture 9]] §1.1; [[homework/hw2|HW2]] #4, [[homework/hw3|HW3]] #3–#4, [[homework/hw4|HW4]] #4–#6. Problem families: [[problems/finding-h-from-input-output-pairs]] (7/7 exams: [[0-midterm-1/past-exams/fall-2025|FA2025 #4]], [[0-midterm-1/past-exams/spring-2025|SP2025 #3]], [[0-midterm-1/past-exams/fall-2024|FA2024 #3, #6]], [[0-midterm-1/past-exams/fall-2023|FA2023 #4]], [[0-midterm-1/past-exams/spring-2023|SP2023 #4, #6]], [[0-midterm-1/past-exams/spring-2021|SP2021 #7]], [[0-midterm-1/past-exams/fall-2019|FA2019 #3]]) and [[problems/lccde-to-transfer-function-and-response]].
+**Where it appears.** [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] §1, [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] §1, [[2-z-transform/09-transfer-functions|Lecture 9]] §1.1; [[homework/hw2|HW2]] #4, [[homework/hw3|HW3]] #3–#4, [[homework/hw4|HW4]] #4–#6. Problem families: [[problems/finding-h-from-input-output-pairs]] (7/7 exams: [[exams/midterm-1/past-exams/fall-2025|FA2025 #4]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #3, #6]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]], [[exams/midterm-1/past-exams/spring-2023|SP2023 #4, #6]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #7]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #3]]) and [[problems/lccde-to-transfer-function-and-response]].
 
 **Related.** [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|convolution]] · [[concepts/step-response|step response]] · [[concepts/lccde|LCCDE]] · [[concepts/transfer-function|transfer function]] · [[concepts/inverse-z-transform|inverse z-transform]]
 

@@ -1,12 +1,12 @@
 ---
 title: "Course summary sheet"
-description: "The course's own ECE 310 summary (review.pdf) transcribed and organised: the Midterm 1 parts in full — notation, system properties, LSI systems and convolution, LCCDEs, the z-transform, stability and the z-transform table — and the later parts listed and marked after Midterm 1."
-tags: [supplement, midterm-1, systems, z-transform]
+description: "The course's own ECE 310 summary (review.pdf) transcribed and organised: the Midterm 1 parts in full — notation, system properties, LSI systems and convolution, LCCDEs, the z-transform, stability and the z-transform table — then the Unit 3 items (CTFT, DTFT and its properties, the sinusoidal response) linked to Lectures 12–16, and the later parts listed."
+tags: [supplement, midterm-1, systems, z-transform, dtft]
 ---
 
-*Supplement · `suppliment/review.pdf` ("ECE 310: Summary", 8 pages) · Midterm 1 content is on pages 1–3*
+*Supplement · `suppliment/review.pdf` ("ECE 310: Summary", 8 pages) · Midterm 1 content is on pages 1–3, the DTFT and the frequency response (Unit 3) on page 3*
 
-This is the instructors' one-document summary of the whole course. Pages 1–3 are exactly the Midterm 1 toolkit; pages 3–8 are the rest of the semester. Below, the Midterm 1 parts are transcribed in full (in the summary's own notation, with a note wherever it differs from the lectures), and each item is linked to the page on this site that develops it.
+This is the instructors' one-document summary of the whole course. Pages 1–3 are exactly the Midterm 1 toolkit; pages 3–8 are the rest of the semester, starting with Unit 3. Below, the Midterm 1 parts are transcribed in full (in the summary's own notation, with a note wherever it differs from the lectures), and each item is linked to the page on this site that develops it.
 
 ## 1. Notation
 
@@ -40,7 +40,7 @@ These four definitions are the whole of the [[problems/classifying-system-proper
 
 - in the time domain it is a convolution: $y[n] = (x*h)[n] = \sum_{k\in\mathbb Z}x[k]\,h[n-k] = \sum_{k\in\mathbb Z}h[k]\,x[n-k]$ ([[concepts/convolution|convolution]], [[concepts/lti-system|LTI system]]);
 - in the z-domain: $Y(z) = H(z)X(z)$, with $H(z)$ the transfer function = z-transform of the impulse response ([[concepts/transfer-function|transfer function]]);
-- in the frequency (DTFT) domain: $Y_d(\omega) = H_d(\omega)X_d(\omega)$ — *after Midterm 1*.
+- in the frequency (DTFT) domain: $Y_d(\omega) = H_d(\omega)X_d(\omega)$, where $H_d(\omega)$ is the frequency response ([[concepts/frequency-response|frequency response]], [[3-fourier-analysis/15-frequency-response|Lecture 15]]).
 
 **LCCDE** (linear constant-coefficient difference equation):
 
@@ -89,28 +89,28 @@ $$
 (Every row checked numerically with the full tables in [[supplements/transform-tables|transform tables]]; "at least" added — a cancelled pole can enlarge the ROC.)
 
 > [!tip] Using this on exam night
-> These three pages plus the transform table are a complete skeleton for the handwritten sheet; what they leave out is procedure — convolution bookkeeping, the PFE cover-up rule, long division, ROC-from-sidedness, pole matching. Those are on the [[0-midterm-1/cheat-sheet|cheat sheet]] page.
+> These three pages plus the transform table are a complete skeleton for the handwritten sheet; what they leave out is procedure — convolution bookkeeping, the PFE cover-up rule, long division, ROC-from-sidedness, pole matching. Those are on the [[exams/midterm-1/cheat-sheet|cheat sheet]] page.
 
-## 3. The rest of the summary — after Midterm 1
+## 3. The rest of the summary — Unit 3 and later
 
-Listed in the summary's order (pages 3–8), not needed for Midterm 1:
+Listed in the summary's order (pages 3–8). The first four items are Unit 3 ([[3-fourier-analysis/index|Lectures 12–16]]); the rest come after Lecture 16.
 
-- Continuous-time Fourier transform (CTFT) pair, $X_c(\Omega)$.
-- Discrete-time Fourier transform (DTFT) pair, $X_d(\omega)$; DTFT properties: relation to the z-transform $X_d(\omega) = X(z)\vert_{z=e^{j\omega}}$ if the ROC includes the unit circle, $2\pi$-periodicity, conjugate symmetry for real signals, windowing, Parseval.
-- Signal representation via the Fourier transform (a signal as a weighted sum of sinusoids).
-- Sinusoidal response of an LSI system: $e^{j\omega_0 n} \to H_d(\omega_0)e^{j\omega_0 n}$; for real $h$, $\cos(\omega_0 n + \phi) \to \lvert H_d(\omega_0)\rvert\cos(\omega_0 n + \phi + \angle H_d(\omega_0))$ (the frequency-domain face of [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]]).
+- Continuous-time Fourier transform (CTFT) pair, $X_c(\Omega)$ — [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]].
+- Discrete-time Fourier transform (DTFT) pair, $X_d(\omega)$; DTFT properties: relation to the z-transform $X_d(\omega) = X(z)\vert_{z=e^{j\omega}}$ if the ROC includes the unit circle, $2\pi$-periodicity, conjugate symmetry for real signals, windowing, Parseval — [[concepts/dtft|DTFT]], [[concepts/dtft-properties|DTFT properties]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]]; the pairs the summary leaves out are on [[concepts/dtft-pairs|DTFT pairs]].
+- Signal representation via the Fourier transform (a signal as a weighted sum of sinusoids) — [[concepts/fourier-series|Fourier series]] and [[concepts/template-matching|template matching]] ([[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]]: each $X_d(\omega)$ scores how much of $e^{j\omega n}$ the signal holds).
+- Sinusoidal response of an LSI system: $e^{j\omega_0 n} \to H_d(\omega_0)e^{j\omega_0 n}$; for real $h$, $\cos(\omega_0 n + \phi) \to \lvert H_d(\omega_0)\rvert\cos(\omega_0 n + \phi + \angle H_d(\omega_0))$ (the frequency-domain face of [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]]) — [[3-fourier-analysis/15-frequency-response|Lecture 15]], [[concepts/frequency-response|frequency response]].
 - Sampling (ADC) and aliasing; DAC — ideal and zero-order hold.
 - DFT and inverse DFT, DFT properties (relation to the DTFT, circular shift, circular convolution).
 - Linear convolution of finite-length sequences via zero-padding: output length $N = L + M - 1$ — **this length rule is Midterm 1 material** ([[problems/finite-length-convolution|finite-length convolution]]).
 - FFT (decimation in time, butterflies); spectral analysis with the DFT and windowing.
-- Linear-phase and generalized-linear-phase filters; FIR GLP symmetry conditions; the ideal low-pass filter.
+- Linear-phase and generalized-linear-phase filters; FIR GLP symmetry conditions; the ideal low-pass filter. (The summary's GLP phase, $\alpha\omega+\beta$ plus $\pi$ wherever the real amplitude $A(\omega)$ is negative, is the phase rule of [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]]; see [[concepts/group-delay|group delay]].)
 - FIR filter design by windowing (Hamming); IIR design by the bilinear transformation.
 - Downsampling and upsampling in the frequency domain.
 - Signals as vectors; the normalized DFT matrix; linear systems as matrices.
 - Linear regression; **convolution written as a matrix product** $y = X^T w$ — the "convolution matrix" the past exam keys use for finite convolutions (FA2019 #4, SP2021 #2); machine learning and adaptive filters, gradient descent, LMS.
 
-See [[3-beyond-midterm-1/index|beyond Midterm 1]] for Lectures 12–14.
+Lectures 12–16 are developed in [[3-fourier-analysis/index|Unit 3]].
 
 ### Sources for this page
 
-`suppliment/review.pdf` pages 1–8 (pages 2–3 rendered to confirm the table); Lecture 5, 9 and 11 notes for the notes on conventions. The length rule, the convolution-matrix form and the LCCDE sign convention are checked in `verify/hub/supp_summary.py`; the table rows in `verify/hub/supp_tables.py`.
+`suppliment/review.pdf` pages 1–8 (pages 2–3 rendered to confirm the table); Lecture 5, 9 and 11 notes for the notes on conventions; Lectures 12–16 for the Unit 3 links. The length rule, the convolution-matrix form and the LCCDE sign convention are checked in `verify/hub/supp_summary.py`; the table rows in `verify/hub/supp_tables.py`.

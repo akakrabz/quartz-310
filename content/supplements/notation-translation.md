@@ -41,7 +41,7 @@ How to read it: $X_d(\omega)$ and $X(e^{j\omega})$ are the same function — the
 | unstable with poles on $\lvert z\rvert=1$ | "marginally stable" = **not** BIBO stable | Singer & Munson: "in our terminology, simply unstable" — same verdict ([[concepts/marginal-stability\|marginal stability]]) |
 
 > [!trap] The one that costs points
-> Moving a feedback term across the equals sign flips its sign. From $y[n] = \tfrac43 y[n-1] + \tfrac43 y[n-2] + x[n] - x[n-2]$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #6]]) the denominator is $1 - \tfrac43 z^{-1} - \tfrac43 z^{-2}$, and in Python `a = [1, -4/3, -4/3]`. See [[concepts/lccde|LCCDE]].
+> Moving a feedback term across the equals sign flips its sign. From $y[n] = \tfrac43 y[n-1] + \tfrac43 y[n-2] + x[n] - x[n-2]$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #6]]) the denominator is $1 - \tfrac43 z^{-1} - \tfrac43 z^{-2}$, and in Python `a = [1, -4/3, -4/3]`. See [[concepts/lccde|LCCDE]].
 
 ### Sources for this page
 

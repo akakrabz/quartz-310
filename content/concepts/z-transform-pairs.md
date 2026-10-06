@@ -84,7 +84,7 @@ print(np.round(lhs, 10), np.round(rhs, 10), abs(lhs - rhs) < 1e-12)
 - Lectures: [[2-z-transform/06-the-z-transform|L6]] (the table), [[2-z-transform/07-z-transform-properties|L7]] (properties that generate new rows), [[2-z-transform/08-inverse-z-transform|L8]] (read backwards for the inverse).
 - Problem families: [[problems/z-transform-with-roc]] (forward), [[problems/all-possible-rocs]] and [[problems/lccde-to-transfer-function-and-response]] (backwards, after PFE).
 - Homework: [[homework/hw3|HW3]] #1–#3.
-- Past exams: [[0-midterm-1/past-exams/fall-2025|FA2025 #5]], [[0-midterm-1/past-exams/spring-2025|SP2025 #5]], [[0-midterm-1/past-exams/fall-2024|FA2024 #5]], [[0-midterm-1/past-exams/fall-2023|FA2023 #5]], [[0-midterm-1/past-exams/spring-2021|SP2021 #4]], [[0-midterm-1/past-exams/fall-2019|FA2019 #5]] — the z-transform problem appears on 6 of 7 exams. Put this table on your [[0-midterm-1/cheat-sheet|cheat sheet]].
+- Past exams: [[exams/midterm-1/past-exams/fall-2025|FA2025 #5]], [[exams/midterm-1/past-exams/spring-2025|SP2025 #5]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #5]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #5]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #4]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #5]] — the z-transform problem appears on 6 of 7 exams. Put this table on your [[exams/midterm-1/cheat-sheet|cheat sheet]].
 
 Related: [[concepts/z-transform]] · [[concepts/z-transform-properties]] · [[concepts/region-of-convergence]] · [[concepts/inverse-z-transform]] · [[concepts/sided-sequences]] · [[supplements/transform-tables]]
 

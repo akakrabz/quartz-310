@@ -43,26 +43,26 @@ All answers match the official keys. FA2019 used "shift-varying" (SV) for time-v
 
 | system | L | TI | C | S | why | exam |
 |---|---|---|---|---|---|---|
-| $y[n] = \lvert n\rvert\,x[n]$ | Yes | No | Yes | No | gain $\lvert n\rvert$ depends on $n$ (TV) and is unbounded: $x = 1$ gives $\lvert n\rvert$ | [[0-midterm-1/past-exams/fall-2025\|FA2025 #2]] |
-| $y[n] = \lvert x[n]-x[n-1]\rvert$ | No | Yes | Yes | Yes | $\lvert\cdot\rvert$ fails $a=-1$; only present/past samples; $\lvert y\rvert \le 2B$ | [[0-midterm-1/past-exams/fall-2025\|FA2025 #2]] |
-| $y[n] = x[n] * 2^n u[-n]$ | Yes | Yes | No | Yes | convolution ⇒ LTI; $h[-1] = \tfrac12 \ne 0$ ⇒ non-causal; $\sum_{n\le0}2^n = 2$ | [[0-midterm-1/past-exams/fall-2025\|FA2025 #2]] |
-| $y[n] = x[n] * j^n u[n]$ | Yes | Yes | Yes | No | $h = 0$ for $n<0$; $\lvert h[n]\rvert = 1$ for all $n \ge 0$; $x = j^n u[n]$ gives $(n+1)j^n$ | [[0-midterm-1/past-exams/spring-2025\|SP2025 #2]] |
-| $y[n] = 2x[\lvert n\rvert] + 10$ | No | No | No | Yes | $+10$ ⇒ not linear; $x[\lvert n\rvert]$ ⇒ TV; $y[-1] = 2x[1]+10$ (future); $\lvert y\rvert \le 2B+10$ | [[0-midterm-1/past-exams/spring-2025\|SP2025 #2]] |
-| $y[n] = e^{x[n]+1}$ | No | Yes | Yes | Yes | $x = 0$ gives $e \ne 0$; memoryless; $\lvert y\rvert \le e^{B+1}$ | [[0-midterm-1/past-exams/spring-2025\|SP2025 #2]] |
-| $y[n] = x[n]\,x[n+1]$ | No | Yes | No | Yes | product of samples; $x[n+1]$ is a future sample; $\lvert y\rvert \le B^2$ | [[0-midterm-1/past-exams/fall-2024\|FA2024 #2]] |
-| $y[n] = \frac{1}{\lvert n\rvert+1}\,x[n]$ | Yes | No | Yes | Yes | gain depends on $n$ but is $\le 1$ | [[0-midterm-1/past-exams/fall-2024\|FA2024 #2]] |
-| $y[n] = \sin(x[n]) + x[0]$ | No | No | No | Yes | $\sin$ nonlinear; stored $x[0]$ ⇒ TV, and $y[-1]$ needs $x[0]$; $\lvert y\rvert \le 1+B$ | [[0-midterm-1/past-exams/fall-2024\|FA2024 #2]] |
-| $y[n] = \log(\lvert n\rvert+1)\,x[n]$ | Yes | No | Yes | No | gain grows (slowly!) without bound: $x = 1$ gives $\log(\lvert n\rvert+1)$ | [[0-midterm-1/past-exams/fall-2023\|FA2023 #2]] |
-| $y[n] = x[n] * u[n+1]$ | Yes | Yes | No | No | $h[-1] = 1$ ⇒ non-causal; $\sum\lvert h\rvert = \infty$ | [[0-midterm-1/past-exams/fall-2023\|FA2023 #2]] |
-| $y[n] = x[n] + 3$ | No | Yes | Yes | Yes | zero in gives 3 out (affine, not linear) | [[0-midterm-1/past-exams/fall-2023\|FA2023 #2]] |
-| $y[n] = x[n] * (-1)^n u[n]$ | Yes | Yes | Yes | No | $\lvert h\rvert = 1$ for $n \ge 0$; $x = (-1)^n u[n]$ gives $(n+1)(-1)^n$ | [[0-midterm-1/past-exams/spring-2023\|SP2023 #2]] |
-| $y[n] = \dfrac{x[n]}{x[2]}$ | No | No | No | No | scaling $x$ leaves $y$ unchanged; stored $x[2]$ ⇒ TV, and $y[0]$ needs $x[2]$; bounded input with $x[2] = 0$ ⇒ division by zero | [[0-midterm-1/past-exams/spring-2023\|SP2023 #2]] |
-| $y[n] = \cos^2(\tfrac\pi2 n)\,x[n]$ | Yes | No | Yes | Yes | gain is 1 at even $n$, 0 at odd $n$: $\delta[n]$ passes, $\delta[n-1]$ is blocked | [[0-midterm-1/past-exams/spring-2023\|SP2023 #2]] |
-| $y[n] = x[n]\cos(\tfrac\pi3(n-2))$ | Yes | No | Yes | Yes | the $-2$ is inside the cosine, not the input: an $n$-dependent gain, $\le 1$ | [[0-midterm-1/past-exams/spring-2021\|SP2021 #3]] |
-| $y[n] = x[3]\,x[n]$ | No | No | No | Yes | doubling $x$ quadruples $y$; stored $x[3]$ ⇒ TV and non-causal; $\lvert y\rvert \le B^2$ | [[0-midterm-1/past-exams/spring-2021\|SP2021 #3]] |
-| $y[n] = (0.8+0.8j)^n\,x[n]$ | Yes | No | Yes | No | $\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$: $x = 1$ gives $\lvert y\rvert = 1.13^n \to \infty$ | [[0-midterm-1/past-exams/spring-2021\|SP2021 #3]] |
-| $y[n] = x[\lvert n\rvert+n]$ | Yes | No | No | *(Yes)* | index is $2n$ for $n \ge 0$ and $0$ for $n<0$ ⇒ TV; $y[1] = x[2]$ ⇒ non-causal | [[0-midterm-1/past-exams/fall-2019\|FA2019 #2(a)]] |
-| $y[n] = (0.2)^{\lvert n\rvert}\log(x[n])$ | No | No | Yes | *(No)* | $\log$ nonlinear; $n$-dependent factor ⇒ SV; memoryless ⇒ causal; $\log 0 = -\infty$ | [[0-midterm-1/past-exams/fall-2019\|FA2019 #2(b)]] |
+| $y[n] = \lvert n\rvert\,x[n]$ | Yes | No | Yes | No | gain $\lvert n\rvert$ depends on $n$ (TV) and is unbounded: $x = 1$ gives $\lvert n\rvert$ | [[exams/midterm-1/past-exams/fall-2025\|FA2025 #2]] |
+| $y[n] = \lvert x[n]-x[n-1]\rvert$ | No | Yes | Yes | Yes | $\lvert\cdot\rvert$ fails $a=-1$; only present/past samples; $\lvert y\rvert \le 2B$ | [[exams/midterm-1/past-exams/fall-2025\|FA2025 #2]] |
+| $y[n] = x[n] * 2^n u[-n]$ | Yes | Yes | No | Yes | convolution ⇒ LTI; $h[-1] = \tfrac12 \ne 0$ ⇒ non-causal; $\sum_{n\le0}2^n = 2$ | [[exams/midterm-1/past-exams/fall-2025\|FA2025 #2]] |
+| $y[n] = x[n] * j^n u[n]$ | Yes | Yes | Yes | No | $h = 0$ for $n<0$; $\lvert h[n]\rvert = 1$ for all $n \ge 0$; $x = j^n u[n]$ gives $(n+1)j^n$ | [[exams/midterm-1/past-exams/spring-2025\|SP2025 #2]] |
+| $y[n] = 2x[\lvert n\rvert] + 10$ | No | No | No | Yes | $+10$ ⇒ not linear; $x[\lvert n\rvert]$ ⇒ TV; $y[-1] = 2x[1]+10$ (future); $\lvert y\rvert \le 2B+10$ | [[exams/midterm-1/past-exams/spring-2025\|SP2025 #2]] |
+| $y[n] = e^{x[n]+1}$ | No | Yes | Yes | Yes | $x = 0$ gives $e \ne 0$; memoryless; $\lvert y\rvert \le e^{B+1}$ | [[exams/midterm-1/past-exams/spring-2025\|SP2025 #2]] |
+| $y[n] = x[n]\,x[n+1]$ | No | Yes | No | Yes | product of samples; $x[n+1]$ is a future sample; $\lvert y\rvert \le B^2$ | [[exams/midterm-1/past-exams/fall-2024\|FA2024 #2]] |
+| $y[n] = \frac{1}{\lvert n\rvert+1}\,x[n]$ | Yes | No | Yes | Yes | gain depends on $n$ but is $\le 1$ | [[exams/midterm-1/past-exams/fall-2024\|FA2024 #2]] |
+| $y[n] = \sin(x[n]) + x[0]$ | No | No | No | Yes | $\sin$ nonlinear; stored $x[0]$ ⇒ TV, and $y[-1]$ needs $x[0]$; $\lvert y\rvert \le 1+B$ | [[exams/midterm-1/past-exams/fall-2024\|FA2024 #2]] |
+| $y[n] = \log(\lvert n\rvert+1)\,x[n]$ | Yes | No | Yes | No | gain grows (slowly!) without bound: $x = 1$ gives $\log(\lvert n\rvert+1)$ | [[exams/midterm-1/past-exams/fall-2023\|FA2023 #2]] |
+| $y[n] = x[n] * u[n+1]$ | Yes | Yes | No | No | $h[-1] = 1$ ⇒ non-causal; $\sum\lvert h\rvert = \infty$ | [[exams/midterm-1/past-exams/fall-2023\|FA2023 #2]] |
+| $y[n] = x[n] + 3$ | No | Yes | Yes | Yes | zero in gives 3 out (affine, not linear) | [[exams/midterm-1/past-exams/fall-2023\|FA2023 #2]] |
+| $y[n] = x[n] * (-1)^n u[n]$ | Yes | Yes | Yes | No | $\lvert h\rvert = 1$ for $n \ge 0$; $x = (-1)^n u[n]$ gives $(n+1)(-1)^n$ | [[exams/midterm-1/past-exams/spring-2023\|SP2023 #2]] |
+| $y[n] = \dfrac{x[n]}{x[2]}$ | No | No | No | No | scaling $x$ leaves $y$ unchanged; stored $x[2]$ ⇒ TV, and $y[0]$ needs $x[2]$; bounded input with $x[2] = 0$ ⇒ division by zero | [[exams/midterm-1/past-exams/spring-2023\|SP2023 #2]] |
+| $y[n] = \cos^2(\tfrac\pi2 n)\,x[n]$ | Yes | No | Yes | Yes | gain is 1 at even $n$, 0 at odd $n$: $\delta[n]$ passes, $\delta[n-1]$ is blocked | [[exams/midterm-1/past-exams/spring-2023\|SP2023 #2]] |
+| $y[n] = x[n]\cos(\tfrac\pi3(n-2))$ | Yes | No | Yes | Yes | the $-2$ is inside the cosine, not the input: an $n$-dependent gain, $\le 1$ | [[exams/midterm-1/past-exams/spring-2021\|SP2021 #3]] |
+| $y[n] = x[3]\,x[n]$ | No | No | No | Yes | doubling $x$ quadruples $y$; stored $x[3]$ ⇒ TV and non-causal; $\lvert y\rvert \le B^2$ | [[exams/midterm-1/past-exams/spring-2021\|SP2021 #3]] |
+| $y[n] = (0.8+0.8j)^n\,x[n]$ | Yes | No | Yes | No | $\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$: $x = 1$ gives $\lvert y\rvert = 1.13^n \to \infty$ | [[exams/midterm-1/past-exams/spring-2021\|SP2021 #3]] |
+| $y[n] = x[\lvert n\rvert+n]$ | Yes | No | No | *(Yes)* | index is $2n$ for $n \ge 0$ and $0$ for $n<0$ ⇒ TV; $y[1] = x[2]$ ⇒ non-causal | [[exams/midterm-1/past-exams/fall-2019\|FA2019 #2(a)]] |
+| $y[n] = (0.2)^{\lvert n\rvert}\log(x[n])$ | No | No | Yes | *(No)* | $\log$ nonlinear; $n$-dependent factor ⇒ SV; memoryless ⇒ causal; $\log 0 = -\infty$ | [[exams/midterm-1/past-exams/fall-2019\|FA2019 #2(b)]] |
 
 *(Italic)* entries: FA2019 #2 did not ask about stability; these are our answers.
 
@@ -154,7 +154,7 @@ Nonzero past ⇒ non-causal (FA25, FA23). A partial sum that keeps growing with 
 
 ## Related
 
-[[problems/classifying-system-properties|Classifying system properties (recipe)]] · [[0-midterm-1/true-false-bank|True/False bank]] · [[concepts/linearity|Linearity]] · [[concepts/time-invariance|Time-invariance]] · [[concepts/causality|Causality]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|Convolution]] · [[1-signals-and-systems/03-system-properties|Lecture 3]]
+[[problems/classifying-system-properties|Classifying system properties (recipe)]] · [[exams/midterm-1/true-false-bank|True/False bank]] · [[concepts/linearity|Linearity]] · [[concepts/time-invariance|Time-invariance]] · [[concepts/causality|Causality]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|Convolution]] · [[1-signals-and-systems/03-system-properties|Lecture 3]]
 
 ### Sources for this page
 

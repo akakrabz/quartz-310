@@ -19,9 +19,9 @@ The $p_i$ are the roots of $z^2 + az + b = 0$ (multiply through by $z^2$). Guess
 | denominator | poles | where |
 |---|---|---|
 | $1 - 2z^{-1} - 3z^{-2} = (1-3z^{-1})(1+z^{-1})$ | $3,\ -1$ | Lecture 10, Exercise 1 |
-| $1 - \tfrac43 z^{-1} - \tfrac43 z^{-2} = (1-2z^{-1})(1+\tfrac23 z^{-1})$ | $2,\ -\tfrac23$ | [[0-midterm-1/past-exams/fall-2025\|FA2025 #6]] |
-| $1 - \tfrac34 z^{-1} + \tfrac18 z^{-2} = (1-\tfrac12 z^{-1})(1-\tfrac14 z^{-1})$ | $\tfrac12,\ \tfrac14$ | [[0-midterm-1/past-exams/spring-2023\|SP2023 #6]], FA2019 #10 |
-| $1 + z^{-1} - \tfrac34 z^{-2} = (1-\tfrac12 z^{-1})(1+\tfrac32 z^{-1})$ | $\tfrac12,\ -\tfrac32$ | [[0-midterm-1/past-exams/spring-2025\|SP2025 #8]] |
+| $1 - \tfrac43 z^{-1} - \tfrac43 z^{-2} = (1-2z^{-1})(1+\tfrac23 z^{-1})$ | $2,\ -\tfrac23$ | [[exams/midterm-1/past-exams/fall-2025\|FA2025 #6]] |
+| $1 - \tfrac34 z^{-1} + \tfrac18 z^{-2} = (1-\tfrac12 z^{-1})(1-\tfrac14 z^{-1})$ | $\tfrac12,\ \tfrac14$ | [[exams/midterm-1/past-exams/spring-2023\|SP2023 #6]], FA2019 #10 |
+| $1 + z^{-1} - \tfrac34 z^{-2} = (1-\tfrac12 z^{-1})(1+\tfrac32 z^{-1})$ | $\tfrac12,\ -\tfrac32$ | [[exams/midterm-1/past-exams/spring-2025\|SP2025 #8]] |
 | $1 + \tfrac16 z^{-1} - \tfrac13 z^{-2} = (1+\tfrac23 z^{-1})(1-\tfrac12 z^{-1})$ | $-\tfrac23,\ \tfrac12$ | [[homework/hw3\|HW3 #4]] |
 | $1 + z^{-2} = (1-jz^{-1})(1+jz^{-1})$ | $\pm j$ | SP2021 #5 |
 | $1 - 2r\cos\omega_0\,z^{-1} + r^2 z^{-2} = (1-re^{j\omega_0}z^{-1})(1-re^{-j\omega_0}z^{-1})$ | $re^{\pm j\omega_0}$ | table pairs 11–12 |
@@ -39,7 +39,7 @@ Poles and zeros are values of $z$, so rewrite in positive powers first: multiply
 - $\dfrac{1-3z^{-1}+z^{-2}+4z^{-3}}{1-2z^{-1}-3z^{-2}} = \dfrac{z^3-3z^2+z+4}{z\,(z^2-2z-3)}$: poles $3, -1$ **and $0$** — an improper $H$ has poles at the origin (Lecture 10's example).
 
 > [!key] Counting rule
-> With the points $z=0$ and $z=\infty$ included, a rational $H(z)$ has as many poles as zeros. Extra powers of $z^{-1}$ in the numerator ($M>N$) put $M-N$ poles at $z=0$; extra powers in the denominator put zeros at $0$; positive powers of $z$ (e.g. the $z^4$ of [[0-midterm-1/past-exams/fall-2025|FA2025 #5a]]) put poles at $\infty$ — which is why that ROC excludes $\infty$ and the signal is not causal. See [[concepts/poles-and-zeros|poles and zeros]].
+> With the points $z=0$ and $z=\infty$ included, a rational $H(z)$ has as many poles as zeros. Extra powers of $z^{-1}$ in the numerator ($M>N$) put $M-N$ poles at $z=0$; extra powers in the denominator put zeros at $0$; positive powers of $z$ (e.g. the $z^4$ of [[exams/midterm-1/past-exams/fall-2025|FA2025 #5a]]) put poles at $\infty$ — which is why that ROC excludes $\infty$ and the signal is not causal. See [[concepts/poles-and-zeros|poles and zeros]].
 
 ## The cover-up rule (partial fractions)
 
@@ -57,7 +57,7 @@ $$
 
 ## Long division for improper transfer functions (Lecture 10)
 
-If the numerator's highest power of $z^{-1}$ is **at least** the denominator's, the cover-up rule does not apply yet. Divide first:
+If the numerator's highest power of $z^{-1}$ is **at least** the denominator's, the expansion also needs a polynomial part, which cover-up cannot give (it still gives the right $A_k$). Divide first:
 
 $$
 H(z) = \underbrace{\sum_{k=0}^{M-N} C_k z^{-k}}_{\text{quotient} \;\to\; C_k\,\delta[n-k]} + \underbrace{\sum_{k=1}^{N}\frac{A_k}{1-p_k z^{-1}}}_{\text{PFE of remainder / denominator}}

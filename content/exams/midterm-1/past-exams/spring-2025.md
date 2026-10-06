@@ -13,7 +13,7 @@ tags: [exam, midterm-1]
 
 | # | pts | what it asks | problem family | lectures |
 |---|---|---|---|---|
-| 1 | 12 | six True/False statements (graded +2/−1/0) | [[0-midterm-1/true-false-bank\|T/F bank]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]], [[2-z-transform/06-the-z-transform\|L6]], [[2-z-transform/11-bibo-stability-and-causality\|L11]] |
+| 1 | 12 | six True/False statements (graded +2/−1/0) | [[exams/midterm-1/true-false-bank\|T/F bank]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]], [[2-z-transform/06-the-z-transform\|L6]], [[2-z-transform/11-bibo-stability-and-causality\|L11]] |
 | 2 | 12 | linear / shift-invariant / causal / stable for three systems | [[problems/classifying-system-properties\|classifying system properties]] | [[1-signals-and-systems/03-system-properties\|L3]], [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]] |
 | 3 | 10 | parallel connection, $h_1 = \delta[n-1]$: find $h_2$ from one input–output pair; is the whole system causal? | [[problems/finding-h-from-input-output-pairs\|finding h]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]], [[2-z-transform/10-improper-transfer-functions-and-system-algebra\|L10]] |
 | 4 | 16 | (a) finite ∗ finite convolution; (b) $(-\tfrac13)^n u[n] * (\tfrac12)^n u[n-3]$ | [[problems/finite-length-convolution\|finite-length]] · [[problems/infinite-length-convolution\|infinite-length convolution]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]], [[2-z-transform/09-transfer-functions\|L9]] |
@@ -75,7 +75,7 @@ tags: [exam, midterm-1]
 
 > [!trap] Where points go
 > - Row 1: $\lvert j^n\rvert = 1$ is **bounded**, but stability needs $\sum\lvert h\rvert < \infty$ — it isn't.
-> - Row 2: the $+10$ kills linearity by itself; the $\lvert n\rvert$ kills both shift-invariance and causality. More rows: [[0-midterm-1/system-property-bank|system-property bank]].
+> - Row 2: the $+10$ kills linearity by itself; the $\lvert n\rvert$ kills both shift-invariance and causality. More rows: [[exams/midterm-1/system-property-bank|system-property bank]].
 
 ## Problem 3 · Parallel connection: find $h_2$ (10 pts)
 
@@ -296,8 +296,8 @@ sum check: 8 = 2 * 4
 
 ## Related
 
-- [[0-midterm-1/past-exams/index|All past exams]] · previous: [[0-midterm-1/past-exams/fall-2025|Fall 2025]] · next: [[0-midterm-1/past-exams/fall-2024|Fall 2024]]
-- [[0-midterm-1/true-false-bank|T/F bank]] · [[0-midterm-1/system-property-bank|system-property bank]] · [[0-toolkit/05-errata|errata]]
+- [[exams/midterm-1/past-exams/index|All past exams]] · previous: [[exams/midterm-1/past-exams/fall-2025|Fall 2025]] · next: [[exams/midterm-1/past-exams/fall-2024|Fall 2024]]
+- [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|system-property bank]] · [[0-toolkit/05-errata|errata]]
 - [[concepts/region-of-convergence|ROC]] · [[concepts/sided-sequences|sided sequences]] · [[concepts/pole-zero-cancellation|pole–zero cancellation]]
 
 ### Sources for this page

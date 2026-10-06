@@ -1,6 +1,6 @@
 ---
-title: "Past exams"
-description: "All seven past ECE 310 Midterm 1 exams with typed problems and folded solutions: which exam to take first, the problem-family × exam map, the DTFT problems to skip, and every answer-key erratum."
+title: "Past Midterm 1 exams"
+description: "All seven past ECE 310 Midterm 1 exams with typed problems and folded solutions: which exam to take first, the problem-family × exam map, the DTFT items that belong to Unit 3, and every answer-key erratum."
 tags: [exam, midterm-1]
 ---
 
@@ -13,25 +13,25 @@ tags: [exam, midterm-1]
 
 | exam | date | instructors | problems / points | notes |
 |---|---|---|---|---|
-| [[0-midterm-1/past-exams/fall-2025\|Fall 2025]] | Wed Oct 1, 2025, 7–9 pm | Do, Snyder | 8 / 100 | same instructor as this term; handwritten key (1 erratum) |
-| [[0-midterm-1/past-exams/spring-2025\|Spring 2025]] | Wed Feb 26, 2025, 7–9 pm | Liang, Snyder | 8 / 100 | T/F scored +2/−1/0; key's boxed #4(a) is wrong |
-| [[0-midterm-1/past-exams/fall-2024\|Fall 2024]] | Wed Oct 2, 2024, 7–9 pm | Do, Shomorony, Snyder | 8 / 100 | typed key |
-| [[0-midterm-1/past-exams/fall-2023\|Fall 2023]] | Wed Sep 27, 2023, 7–9 pm | Do, Snyder, Moustakides | 8 / 100 | typed key, no errors found |
-| [[0-midterm-1/past-exams/spring-2023\|Spring 2023]] | Wed Mar 1, 2023, 7–9 pm | Liang, Moon, Snyder | 9 / 100 | T/F +2/−1/0; #1(d–e), #8, #9 are DTFT (skip) |
-| [[0-midterm-1/past-exams/spring-2021\|Spring 2021]] | Thu Mar 11, 2021, 7:00–8:50 pm | Moon, Katselis, Shomorony | 7 / 100 | online exam; big property table (24 pts) |
-| [[0-midterm-1/past-exams/fall-2019\|Fall 2019]] | Thu Oct 3, 2019, 7:00–8:30 pm | Kamalabadi, Katselis, Liang | 10 / 100 | 90 min; 10 T/F items; #8, #9 are DTFT (skip) |
+| [[exams/midterm-1/past-exams/fall-2025\|Fall 2025]] | Wed Oct 1, 2025, 7–9 pm | Do, Snyder | 8 / 100 | same instructor as this term; handwritten key (1 erratum) |
+| [[exams/midterm-1/past-exams/spring-2025\|Spring 2025]] | Wed Feb 26, 2025, 7–9 pm | Liang, Snyder | 8 / 100 | T/F scored +2/−1/0; key's boxed #4(a) is wrong |
+| [[exams/midterm-1/past-exams/fall-2024\|Fall 2024]] | Wed Oct 2, 2024, 7–9 pm | Do, Shomorony, Snyder | 8 / 100 | typed key |
+| [[exams/midterm-1/past-exams/fall-2023\|Fall 2023]] | Wed Sep 27, 2023, 7–9 pm | Do, Snyder, Moustakides | 8 / 100 | typed key, no errors found |
+| [[exams/midterm-1/past-exams/spring-2023\|Spring 2023]] | Wed Mar 1, 2023, 7–9 pm | Liang, Moon, Snyder | 9 / 100 | T/F +2/−1/0; #1(d–e), #8, #9 are DTFT (skip) |
+| [[exams/midterm-1/past-exams/spring-2021\|Spring 2021]] | Thu Mar 11, 2021, 7:00–8:50 pm | Moon, Katselis, Shomorony | 7 / 100 | online exam; big property table (24 pts) |
+| [[exams/midterm-1/past-exams/fall-2019\|Fall 2019]] | Thu Oct 3, 2019, 7:00–8:30 pm | Kamalabadi, Katselis, Liang | 10 / 100 | 90 min; 10 T/F items; #8, #9 are DTFT (skip) |
 
 Older exams say **LSI** (linear shift-invariant) where the current course says **LTI** — same thing.
 
-## How to use these today
+## How to use these exams
 
-> [!tip] Plan for exam day
+> [!tip] A plan for the last days before the exam
 > 1. **Fall 2025, timed.** 2 hours, closed book, only your handwritten sheet, no calculator. Then grade yourself with the folded solutions and write down, per lost point, its [[problems/index|problem family]].
 > 2. **Fix the weak families.** Read the family page (recipe + traps) for whatever cost you points; redo that problem cold.
 > 3. **Spring 2025, timed** — same rules. It adds a parameter-for-stability problem and an "all possible outputs" problem that FA2025 lacks.
-> 4. **Flashcards, 10 minutes each:** the [[0-midterm-1/true-false-bank|T/F bank]] and the [[0-midterm-1/system-property-bank|system-property bank]]. Say the *reason* out loud, not just the letter — the reasons repeat across years.
+> 4. **Flashcards, 10 minutes each:** the [[exams/midterm-1/true-false-bank|T/F bank]] and the [[exams/midterm-1/system-property-bank|system-property bank]]. Say the *reason* out loud, not just the letter — the reasons repeat across years.
 > 5. **Older exams as a bank, not as full runs:** pick problems from the families below where you are weakest. Skip the DTFT items (list below).
-> 6. **Last hour:** no new problems. Re-read the [[0-midterm-1/cheat-sheet|cheat sheet]], check your sheet has the z-transform pairs *with ROCs*, and eat something.
+> 6. **Last hour:** no new problems. Re-read the [[exams/midterm-1/cheat-sheet|cheat sheet]], check your sheet has the z-transform pairs *with ROCs*, and eat something.
 
 > [!trap] The pole-matching traps (worth 10 points almost every term)
 > - **Read the pole digit by digit.** FA2025 #8(b): the system pole is $e^{j2/3}$ (angle $\tfrac23$ rad), the input is $\cos(\tfrac{2\pi}{3}n)u[n]$ (angle $\tfrac{2\pi}{3}$) — they do **not** match, so the output is bounded.
@@ -40,17 +40,17 @@ Older exams say **LSI** (linear shift-invariant) where the current course says *
 > - **Check the question's wording:** "produces a bounded output" and "produces an unbounded output" flip every letter.
 > - Recipe: [[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]].
 
-> [!note] DTFT items — not on this term's Midterm 1, skip them
-> Spring 2023 #1(d), #1(e), #8, #9 (12 points) and Fall 2019 #8, #9 (8 points). The four most recent exams (FA2025, SP2025, FA2024, FA2023) and Spring 2021 contain no DTFT at all.
+> [!note] DTFT items — not on the Fall 2026 Midterm 1; use them with Unit 3
+> Spring 2023 #1(d), #1(e), #8, #9 (12 points) and Fall 2019 #8, #9 (8 points) are DTFT problems: skip them when you practise for Midterm 1, and use them as self-tests after [[3-fourier-analysis/14-dtft-properties|Lecture 14]]. The four most recent exams (FA2025, SP2025, FA2024, FA2023) and Spring 2021 contain no DTFT at all.
 
 ## Problem families × exams
 
 Every problem of every exam, sorted into the [[problems/index|exam problem families]] (a cell is the problem number on that exam):
 
-| family | [[0-midterm-1/past-exams/fall-2025\|FA25]] | [[0-midterm-1/past-exams/spring-2025\|SP25]] | [[0-midterm-1/past-exams/fall-2024\|FA24]] | [[0-midterm-1/past-exams/fall-2023\|FA23]] | [[0-midterm-1/past-exams/spring-2023\|SP23]] | [[0-midterm-1/past-exams/spring-2021\|SP21]] | [[0-midterm-1/past-exams/fall-2019\|FA19]] | count |
+| family | [[exams/midterm-1/past-exams/fall-2025\|FA25]] | [[exams/midterm-1/past-exams/spring-2025\|SP25]] | [[exams/midterm-1/past-exams/fall-2024\|FA24]] | [[exams/midterm-1/past-exams/fall-2023\|FA23]] | [[exams/midterm-1/past-exams/spring-2023\|SP23]] | [[exams/midterm-1/past-exams/spring-2021\|SP21]] | [[exams/midterm-1/past-exams/fall-2019\|FA19]] | count |
 |---|---|---|---|---|---|---|---|---|
-| [[0-midterm-1/true-false-bank\|True/False]] | #1 | #1 | #1 | #1 | #1 | #1 | #1 | 7/7 |
-| [[problems/classifying-system-properties\|System-property table]] ([[0-midterm-1/system-property-bank\|bank]]) | #2 | #2 | #2 | #2 | #2 | #3 | #2 | 7/7 |
+| [[exams/midterm-1/true-false-bank\|True/False]] | #1 | #1 | #1 | #1 | #1 | #1 | #1 | 7/7 |
+| [[problems/classifying-system-properties\|System-property table]] ([[exams/midterm-1/system-property-bank\|bank]]) | #2 | #2 | #2 | #2 | #2 | #3 | #2 | 7/7 |
 | [[problems/finite-length-convolution\|Finite-length convolution]] | #3a | #4a | #4a | #3a | #3a | #2 | #4 | 7/7 |
 | [[problems/infinite-length-convolution\|Infinite / mixed convolution]] | #3b | #4b | #4b | #3b | #3b, #3c | — | — | 5/7 |
 | [[problems/finding-h-from-input-output-pairs\|Finding h (or H) from input–output data]] | #4 | #3 | #3, #6 | #4 | #4, #6 | #7 | #3 | 7/7 |
@@ -77,8 +77,8 @@ The official keys are mostly right; where they are not, the exam page gives the 
 
 ## Related
 
-- [[0-midterm-1/index|Midterm 1 survival guide]] · [[0-midterm-1/cheat-sheet|cheat sheet]] · [[0-midterm-1/practice-drills|practice drills]]
-- [[problems/index|Exam problem families]] · [[homework/index|homework]]
+- [[exams/midterm-1/index|Midterm 1 review guide]] · [[exams/midterm-1/cheat-sheet|cheat sheet]] · [[demos/practice-drills|practice drills]]
+- [[problems/index|Problem families]] · [[homework/index|homework]] · [[exams/midterm-2/past-exams/index|past Midterm 2 exams]] · [[exams/index|all exams]]
 
 ### Sources for this page
 

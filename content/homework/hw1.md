@@ -49,7 +49,7 @@ Every solution below is folded: read the question, answer it on paper, then open
 > [!trap] Product vs. difference of steps
 > $u[n]\,u[n-4]$ ("both on") equals $u[n-4]$; $u[n]-u[n-4]$ ("on, then off") is the window $n = 0,\dots,3$. Mixing them up turns (c) into $n(u[n]-u[n-4]) = \{\underset{\uparrow}{0}, 1, 2, 3\}$, a completely different plot.
 
-**On the exam:** [[0-midterm-1/past-exams/fall-2025|FA2025 #3b]] hands you its input as a product of steps, $x[n] = n\,u[n+1]\,u[-n+1]$, which is on only for $-1 \le n \le 1$: $x[n] = \{-1,\ \underset{\uparrow}{0},\ 1\}$. Decoding it is step one of that convolution ([[problems/infinite-length-convolution|infinite-length convolution]]).
+**On the exam:** [[exams/midterm-1/past-exams/fall-2025|FA2025 #3b]] hands you its input as a product of steps, $x[n] = n\,u[n+1]\,u[-n+1]$, which is on only for $-1 \le n \le 1$: $x[n] = \{-1,\ \underset{\uparrow}{0},\ 1\}$. Decoding it is step one of that convolution ([[problems/infinite-length-convolution|infinite-length convolution]]).
 
 ## Problem 2 · Time reversal, shift, and decimation
 
@@ -106,7 +106,7 @@ y, n = -3..6: [0, 3, 7, 5, -2, 0, 1, 4, 2, 0]
 z, n = -2..3: [0, 4, 0, 5, 3, 0]
 ```
 
-**On the exam:** flip-and-shift is exactly the $h[n-k]$ step inside every convolution sum ([[problems/finite-length-convolution|finite-length convolution]], on 7/7 past exams), and index maps such as $x[\lvert n\rvert + n]$ ([[0-midterm-1/past-exams/fall-2019|FA2019 #2]]) and $2x[\lvert n\rvert] + 10$ ([[0-midterm-1/past-exams/spring-2025|SP2025 #2]]) are where "time-varying" and "non-causal" answers come from in the property table.
+**On the exam:** flip-and-shift is exactly the $h[n-k]$ step inside every convolution sum ([[problems/finite-length-convolution|finite-length convolution]], on 7/7 past exams), and index maps such as $x[\lvert n\rvert + n]$ ([[exams/midterm-1/past-exams/fall-2019|FA2019 #2]]) and $2x[\lvert n\rvert] + 10$ ([[exams/midterm-1/past-exams/spring-2025|SP2025 #2]]) are where "time-varying" and "non-causal" answers come from in the property table.
 
 ## Problem 3 · Writing a plotted signal with impulses and steps
 
@@ -149,7 +149,7 @@ z, n = -2..3: [0, 4, 0, 5, 3, 0]
 > [!trap] Off-by-one on the "off" step
 > $3(u[n+3] - u[n-1])$ covers only $n = -3, \dots, 0$ and silently drops the sample at $n = 1$. The second step starts at the first zero after the pulse.
 
-**On the exam:** step forms are what you feed a z-transform: [[0-midterm-1/past-exams/fall-2025|FA2025 #5(b)]] $u[n] - u[n-8] \to \sum_{k=0}^{7} z^{-k}$, [[0-midterm-1/past-exams/spring-2025|SP2025 #5(a)]] $x[n] = \sum_{k=0}^{2} (1/2)^k u[n-k]$, [[0-midterm-1/past-exams/fall-2019|FA2019 #5(a)]] $3^{-n}(u[n-5] - u[n-100])$. See [[problems/z-transform-with-roc|z-transform with ROC]].
+**On the exam:** step forms are what you feed a z-transform: [[exams/midterm-1/past-exams/fall-2025|FA2025 #5(b)]] $u[n] - u[n-8] \to \sum_{k=0}^{7} z^{-k}$, [[exams/midterm-1/past-exams/spring-2025|SP2025 #5(a)]] $x[n] = \sum_{k=0}^{2} (1/2)^k u[n-k]$, [[exams/midterm-1/past-exams/fall-2019|FA2019 #5(a)]] $3^{-n}(u[n-5] - u[n-100])$. See [[problems/z-transform-with-roc|z-transform with ROC]].
 
 ## Problem 4 · The roots of z⁴ = 1 and z⁴ = −1
 
@@ -186,7 +186,7 @@ z, n = -2..3: [0, 4, 0, 5, 3, 0]
 > [!trap] Stopping early
 > $z^4 = 1$ is not just $z = \pm 1$, and $z^4 = -1$ has no real root at all. For $z^N = c$ list all $N$ roots: magnitude $\lvert c\rvert^{1/N}$, angles $(\angle c + 2\pi k)/N$ for $k = 0, \dots, N-1$, evenly spaced by $2\pi/N$.
 
-**On the exam:** this is how poles land on the unit circle. [[0-midterm-1/past-exams/fall-2024|FA2024 T/F 1(e)]]: $y[n] = y[n-3] + x[n]$ has denominator $1 - z^{-3}$, whose roots are the three cube roots of unity, so "three distinct poles" is True. [[0-midterm-1/past-exams/spring-2021|SP2021 #5]]: $1 + z^{-2} = 0$ puts the poles at $\pm j$, so $h[n] = 3\sin(\tfrac{\pi}{2}n)\,u[n]$ and inputs at that frequency give unbounded outputs ([[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]]). Review: [[0-toolkit/01-complex-numbers|complex numbers]].
+**On the exam:** this is how poles land on the unit circle. [[exams/midterm-1/past-exams/fall-2024|FA2024 T/F 1(e)]]: $y[n] = y[n-3] + x[n]$ has denominator $1 - z^{-3}$, whose roots are the three cube roots of unity, so "three distinct poles" is True. [[exams/midterm-1/past-exams/spring-2021|SP2021 #5]]: $1 + z^{-2} = 0$ puts the poles at $\pm j$, so $h[n] = 3\sin(\tfrac{\pi}{2}n)\,u[n]$ and inputs at that frequency give unbounded outputs ([[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]]). Review: [[0-toolkit/01-complex-numbers|complex numbers]].
 
 ## Problem 5 · The clipping system
 
@@ -241,7 +241,7 @@ z, n = -2..3: [0, 4, 0, 5, 3, 0]
 > [!trap] Testing only inputs that stay inside the band
 > $x_1 = x_2 = \delta[n]$ gives $T\{2\delta\} = 2\delta = T\{\delta\} + T\{\delta\}$: the system *looks* linear because nothing got clipped. A linearity proof must cover every input; a disproof needs one input that reaches the nonlinearity.
 
-**On the exam:** memoryless nonlinearities fill the property tables, with the same row as clipping (N Y Y Y): $\lvert x[n] - x[n-1]\rvert$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #2]]), $e^{x[n]+1}$ ([[0-midterm-1/past-exams/spring-2025|SP2025 #2]]), $x[n] + 3$ ([[0-midterm-1/past-exams/fall-2023|FA2023 #2]]). All of them, with reasons: [[0-midterm-1/system-property-bank|system-property bank]].
+**On the exam:** memoryless nonlinearities fill the property tables, with the same row as clipping (N Y Y Y): $\lvert x[n] - x[n-1]\rvert$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #2]]), $e^{x[n]+1}$ ([[exams/midterm-1/past-exams/spring-2025|SP2025 #2]]), $x[n] + 3$ ([[exams/midterm-1/past-exams/fall-2023|FA2023 #2]]). All of them, with reasons: [[exams/midterm-1/system-property-bank|system-property bank]].
 
 ## Problem 6 · The windowing system
 
@@ -287,18 +287,18 @@ z, n = -2..3: [0, 4, 0, 5, 3, 0]
 >
 > Clipping is the second kind, windowing the first.
 
-**On the exam:** gains that depend on $n$ are the classic "linear yes, time-invariant no" rows: $\lvert n\rvert\, x[n]$ ([[0-midterm-1/past-exams/fall-2025|FA2025 #2]], Y N Y N), $x[n]/(\lvert n\rvert + 1)$ ([[0-midterm-1/past-exams/fall-2024|FA2024 #2]], Y N Y Y), $x[n]\cos(\pi(n-2)/3)$ ([[0-midterm-1/past-exams/spring-2021|SP2021 #3]], Y N Y Y). The T/F version: [[0-midterm-1/past-exams/fall-2023|FA2023 1(a)]], "any causal system must also be time-invariant", is False (take $y[n] = n\,x[n]$). More in [[problems/classifying-system-properties|classifying system properties]] and the [[0-midterm-1/true-false-bank|T/F bank]].
+**On the exam:** gains that depend on $n$ are the classic "linear yes, time-invariant no" rows: $\lvert n\rvert\, x[n]$ ([[exams/midterm-1/past-exams/fall-2025|FA2025 #2]], Y N Y N), $x[n]/(\lvert n\rvert + 1)$ ([[exams/midterm-1/past-exams/fall-2024|FA2024 #2]], Y N Y Y), $x[n]\cos(\pi(n-2)/3)$ ([[exams/midterm-1/past-exams/spring-2021|SP2021 #3]], Y N Y Y). The T/F version: [[exams/midterm-1/past-exams/fall-2023|FA2023 1(a)]], "any causal system must also be time-invariant", is False (take $y[n] = n\,x[n]$). More in [[problems/classifying-system-properties|classifying system properties]] and the [[exams/midterm-1/true-false-bank|T/F bank]].
 
 ## What the rubric teaches
 
 - **Plots** (#1, #2, #5a, #6a) are graded on the values and the axis labeling, so mark where $n = 0$ is. A minor slip costs one point; a major mistake costs half to two-thirds of the credit.
-- **Property questions** (#5b–c, #6b–c): the verdict carries almost all the points (6 of 7 even with faulty reasoning, 3 for a wrong verdict). On the midterm's property table no work is graded at all, only the Y/N boxes ([[0-midterm-1/past-exams/fall-2023|FA2023 #2]] says so explicitly), so drill the fast tests until each row takes under a minute.
+- **Property questions** (#5b–c, #6b–c): the verdict carries almost all the points (6 of 7 even with faulty reasoning, 3 for a wrong verdict). On the midterm's property table no work is graded at all, only the Y/N boxes ([[exams/midterm-1/past-exams/fall-2023|FA2023 #2]] says so explicitly), so drill the fast tests until each row takes under a minute.
 - **Expressions and root plots** (#3, #4) are graded 4 points per expression or plot, and a minor slip costs 1: check each one before moving on (step coefficients sum to zero; $N$ roots at equal spacing).
 
 ## Related
 
 - [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/unit-step|unit step]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/linearity|linearity]] · [[concepts/time-invariance|time invariance]] · [[concepts/causality|causality]] · [[concepts/bibo-stability|BIBO stability]]
-- [[0-toolkit/03-sketching-and-transforming-signals|Sketching and transforming signals]] · [[0-midterm-1/system-property-bank|system-property bank]] · next set: [[homework/hw2|HW2]]
+- [[0-toolkit/03-sketching-and-transforming-signals|Sketching and transforming signals]] · [[exams/midterm-1/system-property-bank|system-property bank]] · next set: [[homework/hw2|HW2]]
 
 ### Sources for this page
 

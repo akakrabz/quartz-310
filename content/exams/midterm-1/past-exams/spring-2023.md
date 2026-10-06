@@ -8,15 +8,15 @@ tags: [exam, midterm-1]
 
 | # | pts | what it asks | problem family | lectures |
 |---|---|---|---|---|
-| 1 | 10 | True/False: $h$ and LTI, BIBO with an unbounded input, right-sided vs causal (+ two DTFT items) | [[0-midterm-1/true-false-bank\|True/False bank]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]], [[2-z-transform/11-bibo-stability-and-causality\|L11]] |
-| 2 | 12 | Linear / shift-invariant / causal / stable table, 3 systems | [[problems/classifying-system-properties\|Classifying properties]] · [[0-midterm-1/system-property-bank\|bank]] | [[1-signals-and-systems/03-system-properties\|L3]], [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]] |
+| 1 | 10 | True/False: $h$ and LTI, BIBO with an unbounded input, right-sided vs causal (+ two DTFT items) | [[exams/midterm-1/true-false-bank\|True/False bank]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]], [[2-z-transform/11-bibo-stability-and-causality\|L11]] |
+| 2 | 12 | Linear / shift-invariant / causal / stable table, 3 systems | [[problems/classifying-system-properties\|Classifying properties]] · [[exams/midterm-1/system-property-bank\|bank]] | [[1-signals-and-systems/03-system-properties\|L3]], [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]] |
 | 3 | 15 | (a) finite convolution with $n=0$ bookkeeping; (b) two one-sided exponentials; (c) a 3-tap box against $\log(\lvert n\rvert+1)$ | [[problems/finite-length-convolution\|Finite]] (a) · [[problems/infinite-length-convolution\|Infinite]] (b, c) | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]] |
 | 4 | 6 | $h[n]$ from two input–output pairs | [[problems/finding-h-from-input-output-pairs\|Finding h]] | [[1-signals-and-systems/04-impulse-response-and-convolution\|L4]] |
 | 5 | 20 | LCCDE → $H(z)$, poles, zeros, ROC; response to an input that cancels the unstable pole; stability | [[problems/lccde-to-transfer-function-and-response\|LCCDE ↔ H(z)]] | [[2-z-transform/09-transfer-functions\|L9]]–[[2-z-transform/11-bibo-stability-and-causality\|L11]] |
 | 6 | 20 | $H = Y/X$ and its ROC; PFE for $h[n]$; the difference equation | [[problems/finding-h-from-input-output-pairs\|Finding H]] · [[problems/all-possible-rocs\|PFE]] · [[problems/lccde-to-transfer-function-and-response\|LCCDE]] | [[2-z-transform/08-inverse-z-transform\|L8]], [[2-z-transform/09-transfer-functions\|L9]] |
 | 7 | 9 | Bounded/unbounded inputs and outputs for $H(z) = \frac{z-3}{z-4}$ | [[problems/unbounded-outputs-and-pole-matching\|Pole matching]] | [[2-z-transform/10-improper-transfer-functions-and-system-algebra\|L10]], [[2-z-transform/11-bibo-stability-and-causality\|L11]] |
-| 8 | 4 | DTFT: not on the Fall 2026 Midterm 1 | — | [[3-beyond-midterm-1/index\|L13]] |
-| 9 | 4 | DTFT: not on the Fall 2026 Midterm 1 | — | [[3-beyond-midterm-1/index\|L13]] |
+| 8 | 4 | DTFT: not on the Fall 2026 Midterm 1 | — | [[3-fourier-analysis/index\|L13]] |
+| 9 | 4 | DTFT: not on the Fall 2026 Midterm 1 | — | [[3-fourier-analysis/index\|L13]] |
 
 ## Problem 1 · True/False (10 pts)
 
@@ -34,7 +34,7 @@ tags: [exam, midterm-1]
 > - **(c) False.** Right-sided allows a start at a negative index: $h[n] = u[n+1]$ is right-sided, but $h[-1] = 1$ makes it non-causal.
 > - **(d), (e):** DTFT, not on the Fall 2026 Midterm 1.
 >
-> More statements like these, grouped by topic: [[0-midterm-1/true-false-bank|True/False bank]] (Q4, Q17, Q7).
+> More statements like these, grouped by topic: [[exams/midterm-1/true-false-bank|True/False bank]] (Q4, Q17, Q7).
 
 > [!trap]
 > "Right-sided" is not "causal", and "stable" is a promise about **bounded** inputs only. The −1 per wrong answer still leaves a guess worth $+0.5$ on average.
@@ -59,7 +59,7 @@ tags: [exam, midterm-1]
 > - $\cos^2(\tfrac\pi2 n)$ is 1 for even $n$ and 0 for odd $n$: an $n$-dependent gain. That is linear and memoryless, time-varying ($\delta[n]$ passes but $\delta[n-1]$ is blocked), and stable since the gain is at most 1.
 
 > [!trap]
-> $\lvert h[n]\rvert = 1$ is **bounded**, but the system is still unstable because $\sum\lvert h\rvert$ diverges. All three systems are in the [[0-midterm-1/system-property-bank|system-property bank]] with the fast rules.
+> $\lvert h[n]\rvert = 1$ is **bounded**, but the system is still unstable because $\sum\lvert h\rvert$ diverges. All three systems are in the [[exams/midterm-1/system-property-bank|system-property bank]] with the fast rules.
 
 ## Problem 3 · Convolutions (15 pts)
 
@@ -192,7 +192,7 @@ tags: [exam, midterm-1]
 > [!trap]
 > - "Causal **and** stable" fixes the ROC of $H$ even though $X$ and $Y$ come without ROCs.
 > - In the cover-up, substitute $z^{-1} = 1/p$ (here 2 and 4), not $z^{-1} = p$.
-> - The same $H(z)$ reappears as [[0-midterm-1/past-exams/fall-2019|FA2019 #10]].
+> - The same $H(z)$ reappears as [[exams/midterm-1/past-exams/fall-2019|FA2019 #10]].
 
 ## Problem 7 · Bounded and unbounded inputs and outputs (9 pts)
 
@@ -229,7 +229,7 @@ tags: [exam, midterm-1]
 ## Problems 8 and 9 · DTFT (4 + 4 pts)
 
 > [!note] DTFT: not on the Fall 2026 Midterm 1
-> **#8** asked which sequence has DTFT $X_d(\omega) = 1 + 2\cos(2\omega) - 2j\sin(4\omega)$ (multiple choice). **#9** gave $\{x[n]\}_{n=-1}^{2} = \{1-j,\ 1,\ -1-j,\ 2j\}$ and asked for $X_d(0)$ and $X_d(\pi/2)$ without computing $X_d(\omega)$ everywhere. Both belong to Lectures 13–14; see [[3-beyond-midterm-1/index|beyond Midterm 1]].
+> **#8** asked which sequence has DTFT $X_d(\omega) = 1 + 2\cos(2\omega) - 2j\sin(4\omega)$ (multiple choice). **#9** gave $\{x[n]\}_{n=-1}^{2} = \{1-j,\ 1,\ -1-j,\ 2j\}$ and asked for $X_d(0)$ and $X_d(\pi/2)$ without computing $X_d(\omega)$ everywhere. Both belong to Lectures 13–14; see [[3-fourier-analysis/index|beyond Midterm 1]].
 
 ### Sources for this page
 

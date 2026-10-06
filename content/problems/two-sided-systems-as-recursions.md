@@ -16,10 +16,10 @@ lectures: [5, 9, 10, 11]
 
 It comes right after an [[problems/all-possible-rocs|all-possible-ROCs]] part that produced a two-sided, stable $h[n]$:
 
-- [[0-midterm-1/past-exams/fall-2025|FA2025 #7b]]: "With the above $h[n]$, this LTI system can be implemented as $H(z)=H_1(z)+H_2(z)$ … Determine **BIBO stable difference equations** that implement $H_1$ and $H_2$. Make sure to specify the **directions of recursive computation**, i.e. causal or anti-causal implementations." (#7 is 15 pts in total.)
-- [[0-midterm-1/past-exams/fall-2024|FA2024 #8a]]: "Suppose we have a **non-causal** LTI system described by $y[n]+\alpha y[n-1]=x[n]+3x[n-1]$. For what value(s) of $\alpha$ is it BIBO stable?" (part (a) of a 10-point problem). To answer it you have to know which ROC a non-causal LCCDE has, and why.
+- [[exams/midterm-1/past-exams/fall-2025|FA2025 #7b]]: "With the above $h[n]$, this LTI system can be implemented as $H(z)=H_1(z)+H_2(z)$ … Determine **BIBO stable difference equations** that implement $H_1$ and $H_2$. Make sure to specify the **directions of recursive computation**, i.e. causal or anti-causal implementations." (#7 is 15 pts in total.)
+- [[exams/midterm-1/past-exams/fall-2024|FA2024 #8a]]: "Suppose we have a **non-causal** LTI system described by $y[n]+\alpha y[n-1]=x[n]+3x[n-1]$. For what value(s) of $\alpha$ is it BIBO stable?" (part (a) of a 10-point problem). To answer it you have to know which ROC a non-causal LCCDE has, and why.
 
-Close relatives: [[0-midterm-1/past-exams/fall-2023|FA2023 #8b]] (the same LCCDE, "non-causal and two-sided": stable for every $\alpha$), [[0-midterm-1/past-exams/spring-2025|SP2025 #8c]] (the stable two-sided $h$), and the $h[n]=h_l[n]+h_r[n]$ split in the [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] notes. The parallel connection that justifies adding the two outputs is in [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]].
+Close relatives: [[exams/midterm-1/past-exams/fall-2023|FA2023 #8b]] (the same LCCDE, "non-causal and two-sided": stable for every $\alpha$), [[exams/midterm-1/past-exams/spring-2025|SP2025 #8c]] (the stable two-sided $h$), and the $h[n]=h_l[n]+h_r[n]$ split in the [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] notes. The parallel connection that justifies adding the two outputs is in [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]].
 
 > [!success]- FA2025 #7, answered (the model solution)
 > $H(z) = \dfrac{1-z^{-1}}{(1+2z^{-1})(1+\frac23z^{-1})} = \dfrac{9/4}{1+2z^{-1}} + \dfrac{-5/4}{1+\frac23z^{-1}}$, stable ROC $\tfrac23<\lvert z\rvert<2$, so $h[n] = -\tfrac94(-2)^nu[-n-1]-\tfrac54(-\tfrac23)^nu[n]$.
@@ -158,7 +158,7 @@ The output is nonzero before the input starts (at $n=-1,-2,\dots$): the anti-cau
 - Concepts: [[concepts/lccde|LCCDE]], [[concepts/sided-sequences|sided sequences]], [[concepts/causality|causality]], [[concepts/bibo-stability|BIBO stability]], [[concepts/system-algebra|system algebra]] (parallel connection), [[concepts/partial-fraction-expansion|PFE]].
 - Lectures: [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] ($h = h_l + h_r$, ROC ↔ causality table), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (parallel systems), [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] (recursions, initial rest).
 - Related families: [[problems/all-possible-rocs|all possible ROCs]] (part (a) of the same exam problem), [[problems/parameters-for-stability|parameters for stability]] (FA2024 #8, FA2023 #8), [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]].
-- Try it: [[demos/difference-equation-simulator|difference-equation simulator]], [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]] (see which ROC makes which part left-sided), [[0-midterm-1/practice-drills|practice drills]].
+- Try it: [[demos/difference-equation-simulator|difference-equation simulator]], [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]] (see which ROC makes which part left-sided), [[demos/practice-drills|practice drills]].
 
 ### Sources for this page
 

@@ -71,7 +71,7 @@ $$
 - Lectures: [[2-z-transform/10-improper-transfer-functions-and-system-algebra|L10]] §2 (series/parallel, Table 1, the five-block example); [[1-signals-and-systems/04-impulse-response-and-convolution|L4]] (convolution properties behind it).
 - Problem families: [[problems/finding-h-from-input-output-pairs]] (SP2025 #3, FA2024 #3), [[problems/unbounded-outputs-and-pole-matching]] (FA2019 #10d cascade).
 - Homework: [[homework/hw4|HW4]] #5.
-- Past exams: [[0-midterm-1/past-exams/spring-2025|SP2025 #3]], [[0-midterm-1/past-exams/fall-2024|FA2024 #3]], [[0-midterm-1/past-exams/fall-2019|FA2019 #10d]]; T/F: [[0-midterm-1/past-exams/fall-2025|FA2025 (f)]], [[0-midterm-1/past-exams/spring-2025|SP2025 (d)]], [[0-midterm-1/past-exams/fall-2024|FA2024 (c)]], [[0-midterm-1/past-exams/fall-2023|FA2023 (c), (e)]], [[0-midterm-1/past-exams/spring-2021|SP2021 (c)]], [[0-midterm-1/past-exams/fall-2019|FA2019 (d)]] — collected in the [[0-midterm-1/true-false-bank|T/F bank]].
+- Past exams: [[exams/midterm-1/past-exams/spring-2025|SP2025 #3]], [[exams/midterm-1/past-exams/fall-2024|FA2024 #3]], [[exams/midterm-1/past-exams/fall-2019|FA2019 #10d]]; T/F: [[exams/midterm-1/past-exams/fall-2025|FA2025 (f)]], [[exams/midterm-1/past-exams/spring-2025|SP2025 (d)]], [[exams/midterm-1/past-exams/fall-2024|FA2024 (c)]], [[exams/midterm-1/past-exams/fall-2023|FA2023 (c), (e)]], [[exams/midterm-1/past-exams/spring-2021|SP2021 (c)]], [[exams/midterm-1/past-exams/fall-2019|FA2019 (d)]] — collected in the [[exams/midterm-1/true-false-bank|T/F bank]].
 
 Related: [[concepts/transfer-function]] · [[concepts/convolution]] · [[concepts/pole-zero-cancellation]] · [[concepts/bibo-stability]] · [[concepts/block-diagram]] · [[concepts/lti-system]]
 

@@ -80,7 +80,7 @@ Example: $x = \{\underset{\uparrow}{1},2,3\}$ gives $x_e = \{\tfrac32,1,\underse
 > $$
 > (Part (a) is $3\big(u[n+3]-u[n-2]\big)$, value 3 on $-3\le n\le1$.)
 
-**Products of steps are windows.** $u[n+1]\,u[-n+1] = 1$ exactly for $-1\le n\le1$, so [[0-midterm-1/past-exams/fall-2025|FA2025 #3(b)]]'s input $x[n] = n\,u[n+1]u[-n+1] = \{-1,\underset{\uparrow}{0},1\}$. And $u[n]\,u[n-4] = u[n-4]$ (the later step wins), so HW1 #1(c)'s $n\,u[n]u[n-4]$ is $n\,u[n-4]$ — **not** $n\big(u[n]-u[n-4]\big)$. $4u[3-n]$ is 4 for all $n\le3$ (Lecture 2).
+**Products of steps are windows.** $u[n+1]\,u[-n+1] = 1$ exactly for $-1\le n\le1$, so [[exams/midterm-1/past-exams/fall-2025|FA2025 #3(b)]]'s input $x[n] = n\,u[n+1]u[-n+1] = \{-1,\underset{\uparrow}{0},1\}$. And $u[n]\,u[n-4] = u[n-4]$ (the later step wins), so HW1 #1(c)'s $n\,u[n]u[n-4]$ is $n\,u[n-4]$ — **not** $n\big(u[n]-u[n-4]\big)$. $4u[3-n]$ is 4 for all $n\le3$ (Lecture 2).
 
 ## Python: index bookkeeping with a dictionary
 

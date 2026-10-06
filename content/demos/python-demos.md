@@ -37,7 +37,7 @@ u[n]-u[n-3]  [0 0 0 0 1 1 1 0 0 0 0]
 
 ## 2. Convolution with start-index bookkeeping
 
-`np.convolve` returns the right numbers but always starts them at index 0. The true first index of $y = x * h$ is the sum of the first indices of $x$ and $h$, and the length is $L_x + L_h - 1$. This is [[0-midterm-1/past-exams/fall-2025|FA2025 #3a]]: $h = \{1, 0, \underset{\uparrow}{1}\}$ starts at $n=-2$, so $y$ starts at $n=-2$ and $y[0]=4$, as in the key ([[problems/finite-length-convolution]], [[concepts/convolution]]).
+`np.convolve` returns the right numbers but always starts them at index 0. The true first index of $y = x * h$ is the sum of the first indices of $x$ and $h$, and the length is $L_x + L_h - 1$. This is [[exams/midterm-1/past-exams/fall-2025|FA2025 #3a]]: $h = \{1, 0, \underset{\uparrow}{1}\}$ starts at $n=-2$, so $y$ starts at $n=-2$ and $y[0]=4$, as in the key ([[problems/finite-length-convolution]], [[concepts/convolution]]).
 
 ```python
 import numpy as np
@@ -59,7 +59,7 @@ y[0] = 4   length 9 = 7 + 3 - 1
 
 ## 3. Impulse response of an LCCDE: a loop, then `lfilter`
 
-This follows `demo_difference_equations.ipynb`. The loop runs the recursion exactly as the exam writes it ([[0-midterm-1/past-exams/fall-2025|FA2025 #6]]), starting from rest. `lfilter(b, a, x)` implements the [[2-z-transform/09-transfer-functions|Lecture 9]] form $y[n] + \sum_k a_k\,y[n-k] = \sum_k b_k\,x[n-k]$, so the feedback coefficients **change sign** when they move to the left side: $+\tfrac43$ in the recursion becomes $-\tfrac43$ in `a`. [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] writes the recursion with the opposite sign convention, and mixing them up costs points. The samples roughly double each step because of the pole at 2, so this causal system is unstable ([[concepts/lccde]], [[problems/lccde-to-transfer-function-and-response]]).
+This follows `demo_difference_equations.ipynb`. The loop runs the recursion exactly as the exam writes it ([[exams/midterm-1/past-exams/fall-2025|FA2025 #6]]), starting from rest. `lfilter(b, a, x)` implements the [[2-z-transform/09-transfer-functions|Lecture 9]] form $y[n] + \sum_k a_k\,y[n-k] = \sum_k b_k\,x[n-k]$, so the feedback coefficients **change sign** when they move to the left side: $+\tfrac43$ in the recursion becomes $-\tfrac43$ in `a`. [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] writes the recursion with the opposite sign convention, and mixing them up costs points. The samples roughly double each step because of the pole at 2, so this causal system is unstable ([[concepts/lccde]], [[problems/lccde-to-transfer-function-and-response]]).
 
 ```python
 import numpy as np
@@ -116,7 +116,7 @@ compare: 9/5 = 1.8  7/36 = 0.19444  5/9 = 0.55556
 
 `demo_stability.ipynb` draws pole-zero plots with `tf2zpk`. That function reads the coefficients as powers of $z$, not $z^{-1}$. Padding `b` and `a` with zeros to the same length makes the two readings agree (the notebook's Butterworth `b` and `a` already have equal length). A causal system has ROC $|z| > \max|p_k|$, so it is stable exactly when every pole is inside the unit circle ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]], [[concepts/poles-and-zeros]], [[concepts/bibo-stability]]).
 
-The last line is a trap. `tf2zpk` still lists the pole at 2, but the zero at 2 cancels it, and the [[0-midterm-1/past-exams/fall-2019|FA2019 #10(d)]] cascade is **stable**: the key marks "unstable" False. Cancel common factors before you judge ([[concepts/pole-zero-cancellation]]).
+The last line is a trap. `tf2zpk` still lists the pole at 2, but the zero at 2 cancels it, and the [[exams/midterm-1/past-exams/fall-2019|FA2019 #10(d)]] cascade is **stable**: the key marks "unstable" False. Cancel common factors before you judge ([[concepts/pole-zero-cancellation]]).
 
 ```python
 import numpy as np
@@ -170,7 +170,7 @@ max relative error: 1.1102230246251565e-16
 
 ## 7. A bounded input with an unbounded output (marginal stability)
 
-[[0-midterm-1/past-exams/spring-2021|SP2021 #5]] has $H(z) = 3z^{-1}/(1+z^{-2})$ with poles $\pm j$ on the unit circle, so $h[n] = 3\sin(\tfrac{\pi}{2}n)u[n]$ is bounded but not absolutely summable. Every input below is bounded by 1. $u[n]$ and $(-1)^n u[n]$ oscillate at angles 0 and $\pi$, away from the poles, and give bounded outputs. $\cos(\tfrac{\pi}{2}n)u[n]$ and $j^n u[n]$ oscillate at the pole angle $\tfrac{\pi}{2}$ and grow in proportion to $n$. In the z-domain this is a double pole on the unit circle ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] §1.2.1). The results agree with the key: these inputs give unbounded outputs ([[concepts/marginal-stability]], [[problems/unbounded-outputs-and-pole-matching]]).
+[[exams/midterm-1/past-exams/spring-2021|SP2021 #5]] has $H(z) = 3z^{-1}/(1+z^{-2})$ with poles $\pm j$ on the unit circle, so $h[n] = 3\sin(\tfrac{\pi}{2}n)u[n]$ is bounded but not absolutely summable. Every input below is bounded by 1. $u[n]$ and $(-1)^n u[n]$ oscillate at angles 0 and $\pi$, away from the poles, and give bounded outputs. $\cos(\tfrac{\pi}{2}n)u[n]$ and $j^n u[n]$ oscillate at the pole angle $\tfrac{\pi}{2}$ and grow in proportion to $n$. In the z-domain this is a double pole on the unit circle ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] §1.2.1). The results agree with the key: these inputs give unbounded outputs ([[concepts/marginal-stability]], [[problems/unbounded-outputs-and-pole-matching]]).
 
 ```python
 import numpy as np

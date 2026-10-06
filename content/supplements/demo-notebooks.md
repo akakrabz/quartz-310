@@ -19,14 +19,14 @@ The course ships its Python demos as Jupyter notebooks. Five of them are Midterm
 | `demo_stability` | 2nd-order Butterworth low-pass: pole-zero plot, impulse response, filtering audio; then change one coefficient ($a_2 = 0.1716 \to 1.01$) so the poles move to $\pm j1.005$ — the impulse response and the output blow up | [[2-z-transform/11-bibo-stability-and-causality\|L11]] | **yes** |
 | `demo_filtering` | Butterworth low-/high-pass from `signal.butter`: pole-zero plot, impulse response (Midterm 1), then frequency response $H_d(\omega)$ and DTFT of filtered audio (after) | L9, L11; L13–14 | partly |
 | `demo_inverse_filter` | undoing an FIR blur: factor $B(z)$ into roots inside and outside the unit circle, run the inside part causally and the outside part **anti-causally** (flip, filter, flip back); 1-D and 2-D (image) | L10–L11 ideas, applied later | background |
-| `demo_DTFT` | computing and plotting $\lvert X(e^{j\omega})\rvert$ of short sequences and of audio | [[3-beyond-midterm-1/index\|L13–14]] | no |
+| `demo_DTFT` | computing and plotting $\lvert X(e^{j\omega})\rvert$ of short sequences and of audio | [[3-fourier-analysis/index\|L13–14]] | no |
 | `demo_sampling` | sampling a 30 Hz cosine at 100 Hz and its aliases at 70, 130, 170 Hz | after | no |
 | `demo_DFT` | DFT/IDFT by hand, circular shift, zero padding, compression by discarding coefficients, spectral analysis and windowing | after | no |
 | `demo_filter_design` | FIR design by windowing, equiripple (`remez`), IIR (`iirfilter`), applying the filters to audio | after | no |
 | `demo_adaptivefilter` | LMS adaptive filter identifying an unknown FIR $h = \{1,2,3,4,5\}$ from noisy input–output data | end of course | no |
 
 > [!exam] Why `demo_inverse_filter` is worth five minutes anyway
-> Running an unstable-looking pole "backwards in time" is exactly [[0-midterm-1/past-exams/fall-2025|FA2025 #7(b)]]: the anti-causal part $H_1 = \dfrac{9/4}{1+2z^{-1}}$ is implemented as $y_1[n-1] = -\tfrac12y_1[n] + \tfrac98x[n]$, run from large $n$ down. See [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]].
+> Running an unstable-looking pole "backwards in time" is exactly [[exams/midterm-1/past-exams/fall-2025|FA2025 #7(b)]]: the anti-causal part $H_1 = \dfrac{9/4}{1+2z^{-1}}$ is implemented as $y_1[n-1] = -\tfrac12y_1[n] + \tfrac98x[n]$, run from large $n$ down. See [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]].
 
 ## Midterm 1 numbers from the notebooks (re-run here)
 

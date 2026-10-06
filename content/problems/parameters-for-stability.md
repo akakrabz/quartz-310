@@ -18,11 +18,11 @@ An LCCDE with one unknown coefficient $\alpha$ (or $\beta$), real or complex, pl
 
 | where | system | causality | answer |
 |---|---|---|---|
-| [[0-midterm-1/past-exams/spring-2025\|SP2025 #7]] (6 pts) | $y[n]=-\tfrac32y[n-1]+y[n-2]+x[n]-\alpha^2x[n-2]$, $\alpha\in\mathbb{C}$ | causal | poles $-2,\ \tfrac12$; zeros $\pm\alpha$; stable iff $\alpha=\pm2$: $2$ T, $-2$ T, $j2$ F, $-j2$ F, $\tfrac{\sqrt2}{2}$ F, $\tfrac12$ F |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #8a]] | $y[n]+\alpha y[n-1]=x[n]+3x[n-1]$, $\alpha$ real | non-causal | $H=\dfrac{1+3z^{-1}}{1+\alpha z^{-1}}$, ROC $\lvert z\rvert<\lvert\alpha\rvert$: stable iff $\lvert\alpha\rvert>1$ (the key writes $\lvert a\rvert$) |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #8b]] | $y[n]-\tfrac52y[n-1]+y[n-2]=x[n]+\beta x[n-1]$ | causal | poles $2,\ \tfrac12$: $\beta=-2$ cancels the pole at 2 |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #8a]] | $y[n]-\tfrac23y[n-1]-\tfrac89y[n-2]=3x[n]+\alpha x[n-1]$ | causal | poles $\tfrac43,\ -\tfrac23$: $\alpha=-4$ cancels $\tfrac43$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #8b]] | same LCCDE | two-sided | ROC $\tfrac23<\lvert z\rvert<\tfrac43$ contains $\lvert z\rvert=1$: stable for **every** $\alpha$ |
+| [[exams/midterm-1/past-exams/spring-2025\|SP2025 #7]] (6 pts) | $y[n]=-\tfrac32y[n-1]+y[n-2]+x[n]-\alpha^2x[n-2]$, $\alpha\in\mathbb{C}$ | causal | poles $-2,\ \tfrac12$; zeros $\pm\alpha$; stable iff $\alpha=\pm2$: $2$ T, $-2$ T, $j2$ F, $-j2$ F, $\tfrac{\sqrt2}{2}$ F, $\tfrac12$ F |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #8a]] | $y[n]+\alpha y[n-1]=x[n]+3x[n-1]$, $\alpha$ real | non-causal | $H=\dfrac{1+3z^{-1}}{1+\alpha z^{-1}}$, ROC $\lvert z\rvert<\lvert\alpha\rvert$: stable iff $\lvert\alpha\rvert>1$ (the key writes $\lvert a\rvert$) |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #8b]] | $y[n]-\tfrac52y[n-1]+y[n-2]=x[n]+\beta x[n-1]$ | causal | poles $2,\ \tfrac12$: $\beta=-2$ cancels the pole at 2 |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #8a]] | $y[n]-\tfrac23y[n-1]-\tfrac89y[n-2]=3x[n]+\alpha x[n-1]$ | causal | poles $\tfrac43,\ -\tfrac23$: $\alpha=-4$ cancels $\tfrac43$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #8b]] | same LCCDE | two-sided | ROC $\tfrac23<\lvert z\rvert<\tfrac43$ contains $\lvert z\rvert=1$: stable for **every** $\alpha$ |
 
 Close relatives: the cancellation idea is the same as in [[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]] (an input zero on a bad pole) and FA2019 #10d (a system zero cancelling the pole of $2^nu[n]$ in a cascade). The "non-causal LCCDE" of FA2024 #8a is explained on [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]].
 
@@ -129,7 +129,7 @@ alpha = 0.25j: zeros [ 0.25+0.j -0.25+0.j], surviving poles [-3.], unstable
 - Concepts: [[concepts/bibo-stability|BIBO stability]], [[concepts/pole-zero-cancellation|pole–zero cancellation]], [[concepts/region-of-convergence|ROC]], [[concepts/causality|causality]], [[concepts/marginal-stability|marginal stability]].
 - Lectures: [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] (ROC shape ↔ causality ↔ stability table), [[2-z-transform/09-transfer-functions|Lecture 9]] (LCCDE → $H(z)$).
 - Related families: [[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]], [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]] (what "non-causal LCCDE" means), [[problems/all-possible-rocs|all possible ROCs]].
-- Try it: [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]] (drag the zero onto the pole and watch the ROC change), [[demos/difference-equation-simulator|difference-equation simulator]], [[0-midterm-1/practice-drills|practice drills]].
+- Try it: [[demos/pole-zero-and-roc-explorer|pole–zero and ROC explorer]] (drag the zero onto the pole and watch the ROC change), [[demos/difference-equation-simulator|difference-equation simulator]], [[demos/practice-drills|practice drills]].
 
 ### Sources for this page
 

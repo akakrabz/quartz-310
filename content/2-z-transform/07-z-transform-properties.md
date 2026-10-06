@@ -94,7 +94,7 @@ The fine print is about the new factor: a **delay** ($k>0$) adds $z^{-k}$, which
 > $$
 > X(z)=\frac{e^{-j4\pi/3}\,z^{4}}{1-e^{j\pi/3}z^{-1}},\qquad 1<|z|<\infty
 > $$
-> (the advance excludes $z=\infty$; $e^{-j4\pi/3}=e^{j2\pi/3}$). The handwritten [[0-midterm-1/past-exams/fall-2025|FA2025]] key has a stray $n$ in the denominator — [[0-toolkit/05-errata|errata]].
+> (the advance excludes $z=\infty$; $e^{-j4\pi/3}=e^{j2\pi/3}$). The handwritten [[exams/midterm-1/past-exams/fall-2025|FA2025]] key has a stray $n$ in the denominator — [[0-toolkit/05-errata|errata]].
 
 > [!question] Lecture exercise: prove the time-shift property using the convolution property (§3)
 
@@ -179,7 +179,7 @@ $$
 > $$
 > \mathcal{Z}\{(n+1)x[n]\}=\frac{\frac12z^{-1}}{\left(1-\frac12z^{-1}\right)^2}+\frac{1}{1-\frac12z^{-1}}=\frac{1}{\left(1-\frac12z^{-1}\right)^2},\qquad |z|>\tfrac12 .
 > $$
-> ([[0-midterm-1/past-exams/spring-2021|SP2021]] #4. The same pattern with shifts: [[0-midterm-1/past-exams/fall-2024|FA2024]] #5a, $(n+1)u[n-1]\leftrightarrow\frac{z^{-2}}{(1-z^{-1})^2}+\frac{2z^{-1}}{1-z^{-1}}$, $|z|>1$; [[0-midterm-1/past-exams/fall-2023|FA2023]] #5, $n\,u[n+1]\leftrightarrow\frac{1}{(1-z^{-1})^2}-\frac{z}{1-z^{-1}}$, $1<|z|<\infty$.)
+> ([[exams/midterm-1/past-exams/spring-2021|SP2021]] #4. The same pattern with shifts: [[exams/midterm-1/past-exams/fall-2024|FA2024]] #5a, $(n+1)u[n-1]\leftrightarrow\frac{z^{-2}}{(1-z^{-1})^2}+\frac{2z^{-1}}{1-z^{-1}}$, $|z|>1$; [[exams/midterm-1/past-exams/fall-2023|FA2023]] #5, $n\,u[n+1]\leftrightarrow\frac{1}{(1-z^{-1})^2}-\frac{z}{1-z^{-1}}$, $1<|z|<\infty$.)
 
 ## 5. Scaling: multiplying by aⁿ
 
@@ -208,7 +208,7 @@ $$
 > &=\frac{\frac12}{1-z^{-1}}+\frac{\frac12}{1+z^{-2}},\qquad |z|>1 .
 > \end{aligned}
 > $$
-> All three poles ($1,\ \pm j$) are on the unit circle, so the ROC is $|z|>1$. ([[0-midterm-1/past-exams/fall-2025|FA2025]] #5c.)
+> All three poles ($1,\ \pm j$) are on the unit circle, so the ROC is $|z|>1$. ([[exams/midterm-1/past-exams/fall-2025|FA2025]] #5c.)
 
 ## 6. Time reversal and conjugation
 
@@ -249,7 +249,7 @@ Reversal turns right-sided pairs into left-sided ones: $x[n]=(\tfrac12)^nu[n]$ g
 > 4. **Combine** pieces with linearity, intersect ROCs, and state the final ROC — including "$z\ne0$" or "$|z|<\infty$" when a shift introduced them.
 
 > [!exam] How Lecture 7 is tested
-> The "z-transform with ROC" problem (6 of 7 exams, 9–15 pts — [[problems/z-transform-with-roc|z-transform with ROC]]) is mostly this lecture: [[0-midterm-1/past-exams/spring-2021|SP2021 #4]] ($(n+1)x[n]$: differentiation + linearity), [[0-midterm-1/past-exams/fall-2024|FA2024 #5a]] and [[0-midterm-1/past-exams/fall-2023|FA2023 #5]] (differentiation + shift; watch the advance in $n\,u[n+1]$ excluding $z=\infty$), [[0-midterm-1/past-exams/fall-2025|FA2025 #5a, #5c]] (shift with an advance; Euler + scaling), [[0-midterm-1/past-exams/spring-2025|SP2025 #5a]] ($\sum_{k=0}^{2}(\tfrac12)^ku[n-k]\leftrightarrow\frac{1+\frac12z^{-1}+\frac14z^{-2}}{1-z^{-1}}$, $|z|>1$: shift + linearity) and [[0-midterm-1/past-exams/fall-2019|FA2019 #5]]. The convolution property is the engine of every LCCDE and pole-cancellation problem later ([[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z)]], [[problems/unbounded-outputs-and-pole-matching|pole matching]]), and ROC facts are True/False regulars: [[0-midterm-1/past-exams/spring-2025|SP2025]] 1c ("the z-transform of $e^{j\frac\pi4n}$ does not exist because the ROC is empty" — True: the right half needs $|z|>1$, the left half $|z|<1$) and [[0-midterm-1/past-exams/fall-2023|FA2023]] 1b ("the ROC cannot contain any poles or zeros" — False: zeros are allowed, e.g. $1-z^{-1}$ has ROC $z\ne0$, which contains its zero at $1$). [[homework/hw3|HW3]] #2 is this lecture in five parts.
+> The "z-transform with ROC" problem (6 of 7 exams, 9–15 pts — [[problems/z-transform-with-roc|z-transform with ROC]]) is mostly this lecture: [[exams/midterm-1/past-exams/spring-2021|SP2021 #4]] ($(n+1)x[n]$: differentiation + linearity), [[exams/midterm-1/past-exams/fall-2024|FA2024 #5a]] and [[exams/midterm-1/past-exams/fall-2023|FA2023 #5]] (differentiation + shift; watch the advance in $n\,u[n+1]$ excluding $z=\infty$), [[exams/midterm-1/past-exams/fall-2025|FA2025 #5a, #5c]] (shift with an advance; Euler + scaling), [[exams/midterm-1/past-exams/spring-2025|SP2025 #5a]] ($\sum_{k=0}^{2}(\tfrac12)^ku[n-k]\leftrightarrow\frac{1+\frac12z^{-1}+\frac14z^{-2}}{1-z^{-1}}$, $|z|>1$: shift + linearity) and [[exams/midterm-1/past-exams/fall-2019|FA2019 #5]]. The convolution property is the engine of every LCCDE and pole-cancellation problem later ([[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z)]], [[problems/unbounded-outputs-and-pole-matching|pole matching]]), and ROC facts are True/False regulars: [[exams/midterm-1/past-exams/spring-2025|SP2025]] 1c ("the z-transform of $e^{j\frac\pi4n}$ does not exist because the ROC is empty" — True: the right half needs $|z|>1$, the left half $|z|<1$) and [[exams/midterm-1/past-exams/fall-2023|FA2023]] 1b ("the ROC cannot contain any poles or zeros" — False: zeros are allowed, e.g. $1-z^{-1}$ has ROC $z\ne0$, which contains its zero at $1$). [[homework/hw3|HW3]] #2 is this lecture in five parts.
 
 ## Related
 

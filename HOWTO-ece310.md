@@ -51,45 +51,67 @@ Mermaid diagram). The demos and drills are fully self-contained.
 
 ## 4. Writing conventions (so new pages match)
 
-- One page per lecture in `content/<unit>/NN-slug.md`; frontmatter `title`, `description`, `tags`, `lecture`.
-  Concepts in `content/concepts/`, exam problem families in `content/problems/` (frontmatter also `family_frequency`,
-  `typical_points`, `lectures` — the Bases table reads them), past exams in `content/0-midterm-1/past-exams/`.
+- One page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/` and
+  `3-fourier-analysis/` (each with an `index.md` overview); frontmatter `title`, `description`, `tags`, `lecture`.
+  Concepts in `content/concepts/` (the concept map is `concepts/concept-map.canvas`), problem families in `content/problems/`
+  (frontmatter also `family_frequency`, `typical_points`, `lectures` — the Bases table `problems/exam-problem-families.base`
+  reads them), past exams in `content/exams/midterm-1/past-exams/` and `content/exams/midterm-2/past-exams/` (hub:
+  `exams/index.md`), homework walkthroughs in `content/homework/`, demo pages in `content/demos/` (the drills page is
+  `demos/practice-drills.md`).
 - Link with full paths: `[[concepts/region-of-convergence|ROC]]`. Inside tables escape the pipe: `[[page\|text]]`.
 - Math: `$…$` inline, `$$…$$` on its own lines (every line prefixed with `> ` inside a callout). Use `\lvert z\rvert` instead of `|z|`
   inside tables. No custom macros. Sequences mark $n = 0$ with `\underset{\uparrow}{…}`; transforms are written in powers of $z^{-1}$
   with the ROC; LCCDEs use Lecture 9's form $y[n] + \sum a_k y[n-k] = \sum b_k x[n-k]$ (the same `b, a` as `scipy.signal.lfilter`).
+  Unit 3 writes the DTFT $X_d(\omega)$ and the frequency response $H_d(\omega)$, with $\omega$ in radians per sample plotted on
+  $[-\pi,\pi]$, the phase as a principal angle in $[-\pi,\pi]$ and the magnitude never negative; continuous-time transforms are
+  $X_c(\Omega)$ or $X_a(\Omega)$, as the exams write them.
 - Callouts: the Obsidian types plus this site's `key`, `recipe`, `trap`, `exam`, `intuition`, `derivation` (styled in
   `quartz/styles/custom.scss`). Worked answers go in folded `> [!success]-` callouts so pages work for self-testing.
+  Exam material is one layer: on a lecture page, one `exam` callout near the end; citations name term, exam and problem
+  (`FA2024 MT2 #4`) and link the exam page.
 - Figures: inline `<figure class="ece-fig">…SVG…</figure>` with **no blank lines inside** and **a blank line after**; strokes use
   `currentColor` and the CSS variables `--accent`, `--accent2`, `--hi`, `--muted` so they follow dark mode.
 - Demos: standalone HTML in `quartz/static/demos/<name>/index.html`, embedded with `<iframe src="/static/demos/<name>/">` inside
   `<div class="ece-demo">`.
 - Python snippets are real: each was run and its output pasted underneath.
+- Pages with `draft: true` in the frontmatter (e.g. a homework walkthrough before its due date) are left out of the build by the
+  `remove-draft` filter, so published pages must not link to them. For HW6 (due Fri Oct 9, 2026) every link to `homework/hw6`
+  and every HW6-labelled answer on a published page is wrapped in a comment marker `%%hw6:<base64 of the text>%%<shown now>%%/hw6%%`
+  (Obsidian `%%…%%` comments are stripped by the build). **After the due date run `python3 tools/hw6_release.py`** (add
+  `--dry-run` to preview): it restores the links and labels exactly, updates the "published after the due date" wording on the hub
+  pages and removes the draft flag; then build or commit as usual.
 
 ## 5. Checking a page without building
 
 `python3 tools/check.py content path/to/katex.min.js` validates every wikilink, embed and heading anchor (`.canvas`/`.base` files count
-as targets) and compiles every equation with KaTeX in strict mode. The delivered site passes it: 90 pages, 2,827 links, 12,321 equations.
+as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
+2,827 links, 12,321 equations).
 
-## 6. What's here (build 1, 2026-09-30 — Midterm 1 scope: Lectures 1–11, HW1–HW4, no DTFT)
+## 6. What's here (build 2, October 2026 — Lectures 1–16)
 
-- **Home** with the course map, conventions and callout legend; **Midterm 1 survival guide** (scope, format, frequency of every
-  problem type, a plan for exam day, top traps, the review-lecture problems); **cheat sheet** (what to put on the handwritten page);
-  **concept map** (`0-midterm-1/concept-map.canvas`).
-- **Lectures 1–11** in two units (signals and systems; the z-transform and LTI systems), written from Prof. Snyder's notes and slides;
-  Lectures 12–14 outlined as "beyond Midterm 1".
-- **28 concept pages** (the graph's hubs) and **10 exam problem families** (recipe, traps, every past instance, fresh practice problems
-  with folded solutions), listed in a live table by the Bases plugin (`problems/exam-problem-families.base`).
-- **7 past Midterm 1 exams** (FA2025 … FA2019) typed out with folded solutions, a **true/false bank** (43 statements) and a
-  **system-property bank** (46 systems).
-- **HW1–HW4 walkthroughs**, a **toolkit** (complex numbers, geometric series, signal transformations, factoring and long division,
-  errata in the course materials) and **supplements** (Singer–Munson notes reading guide, notation, course summary, transform tables,
-  the demo notebooks).
-- **Interactive**: convolution explorer, pole-zero & ROC explorer, difference-equation simulator, and autograded randomized
-  **practice drills** (7 drill types, TheorieLearn-style: fresh variants, hints after a wrong answer, worked solutions, exam scoring).
+- **Home**: a learning hub — how to learn with the site (lecture → concept hubs → folded questions → problem families → homework →
+  drills and demos → past exams as self-tests), the course map, the conventions table and the callout legend.
+- **Lectures 1–16** in three units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
+  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`), written from Prof. Snyder's notes and slides.
+  Lectures 17 onward (ideal filters, sampling and reconstruction, the DFT and FFT) are to come.
+- **36 concept pages** (the graph's hubs, 8 of them for Unit 3) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
+- **13 problem families** — 10 from the past Midterm 1 exams, 3 from the past Midterm 2 exams — each with a recipe, traps, every past
+  instance and fresh practice problems with folded solutions, listed in a live table by the Bases plugin
+  (`problems/exam-problem-families.base`).
+- **Exams** (`exams/index.md`, the self-test layer). Midterm 1: a review guide (scope, format, frequency of every problem type, a plan
+  for the last day, top traps, the review-lecture problems), a cheat sheet, a true/false bank (43 statements), a system-property bank
+  (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2: an overview (scope, format, what gets asked on each past exam, a
+  preparation plan and a Unit 3 formula box), a true/false bank (all 43 statements of the seven exams) and 7 past exams
+  (FA2019 … SP2025), typed with folded solutions; the problems on topics after Lecture 16 are marked as later material.
+- **Homework walkthroughs** HW1–HW6; HW6's is written but stays a draft until after its due date (Oct 9) — see §4 for `tools/hw6_release.py`.
+- A **toolkit** (complex numbers, geometric series, signal transformations, factoring and long division, errata in the course
+  materials) and **supplements** (Singer–Munson notes reading guide, notation, course summary, transform tables, the demo notebooks).
+- **Interactive**: convolution explorer, pole-zero & ROC explorer, difference-equation simulator, frequency-response explorer, Python
+  demos, and autograded randomized **practice drills** (TheorieLearn-style: fresh variants, hints after a wrong answer, worked
+  solutions, exam scoring).
 - Plugins added to the 329 setup: `@quartz-community/canvas-page` (renders the `.canvas` concept map) and
   `@quartz-community/bases-page` (renders the `.base` table). Both ship in `node_modules/`; run `npm run install-plugins` once.
 
-Every number on the site was recomputed in Python (numpy/scipy: `np.convolve`, `lfilter`, `residuez`, truncated z-transform sums
-inside the ROC) — about 2,700 scripted checks, plus 47,000 randomized checks of the drill generators. Slips found in the official
-materials are listed on `0-toolkit/05-errata`.
+Every number on the site is recomputed in Python (numpy/scipy) by verification scripts kept outside the repository: about 2,700
+scripted checks plus 47,000 randomized checks of the drill generators in build 1, with more for every Unit 3 page in build 2. Slips
+found in the official materials are listed on `0-toolkit/05-errata`.

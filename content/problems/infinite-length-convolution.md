@@ -15,17 +15,17 @@ One sequence (or both) is infinitely long: an exponential times a shifted step, 
 
 **Kind 1 — exponential * exponential** (a convolution sum and a geometric series):
 
-- [[0-midterm-1/past-exams/spring-2025|SP2025 #4b]]: $x[n]=\left(-\tfrac13\right)^n u[n]$, $h[n]=\left(\tfrac12\right)^n u[n-3]$.
-- [[0-midterm-1/past-exams/spring-2023|SP2023 #3b]]: $x[n]=\left(-\tfrac12\right)^n u[n]$, $h[n]=\left(\tfrac23\right)^n u[n-1]$.
+- [[exams/midterm-1/past-exams/spring-2025|SP2025 #4b]]: $x[n]=\left(-\tfrac13\right)^n u[n]$, $h[n]=\left(\tfrac12\right)^n u[n-3]$.
+- [[exams/midterm-1/past-exams/spring-2023|SP2023 #3b]]: $x[n]=\left(-\tfrac12\right)^n u[n]$, $h[n]=\left(\tfrac23\right)^n u[n-1]$.
 - [[homework/hw2|HW2 #5(d)]]: $(-1)^n u[n] * e^{-n}u[n]$; [[homework/hw2|HW2 #5(e)]]: $0.5^n u[n] * 2^{-n}u[-n]$ — **does not exist** (see below).
 - [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4 §2.2.3]]: $u[n]*\left(-\tfrac34\right)^n u[n]$.
 
 **Kind 2 — finite * infinite** (write the finite one as deltas; the answer is a sum of shifted copies):
 
-- [[0-midterm-1/past-exams/fall-2025|FA2025 #3b]]: $x[n]=n\,u[n+1]\,u[-n+1]$, $h[n]=n\left(\tfrac13\right)^n\cos(n)$.
-- [[0-midterm-1/past-exams/fall-2024|FA2024 #4b]]: $x[n]=e^{-n}u[n]$, $h[n]=(n+1)(u[n]-u[n-3])$.
-- [[0-midterm-1/past-exams/fall-2023|FA2023 #3b]]: $x[n]=\left(\tfrac34\right)^n u[n]$, $h[n]=2u[n]-u[n-1]-u[n-2]$.
-- [[0-midterm-1/past-exams/spring-2023|SP2023 #3c]]: $x[n]=\log(\lvert n\rvert+1)$, $h[n]=u[n+1]-u[n-2]$.
+- [[exams/midterm-1/past-exams/fall-2025|FA2025 #3b]]: $x[n]=n\,u[n+1]\,u[-n+1]$, $h[n]=n\left(\tfrac13\right)^n\cos(n)$.
+- [[exams/midterm-1/past-exams/fall-2024|FA2024 #4b]]: $x[n]=e^{-n}u[n]$, $h[n]=(n+1)(u[n]-u[n-3])$.
+- [[exams/midterm-1/past-exams/fall-2023|FA2023 #3b]]: $x[n]=\left(\tfrac34\right)^n u[n]$, $h[n]=2u[n]-u[n-1]-u[n-2]$.
+- [[exams/midterm-1/past-exams/spring-2023|SP2023 #3c]]: $x[n]=\log(\lvert n\rvert+1)$, $h[n]=u[n+1]-u[n-2]$.
 - [[homework/hw2|HW2 #5(b)]]: $3^{-n}u[n]*\{\underset{\uparrow}{0},1,2\}$; [[homework/hw2|HW2 #5(c)]]: $u[n]*n(u[n]-u[n-4])$; [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4 §2.3]]: $\{\underset{\uparrow}{1},0,2,0,-3\}$ against a sinusoidal $h[n]$.
 
 > [!success]- Answers to the exam and homework instances
@@ -165,7 +165,7 @@ All three are verified in `verify/problems/infinite_convolution.py` (closed form
 - [[problems/finite-length-convolution|Finite-length convolution]] — part (a) of the same exam problem; [[demos/convolution-explorer|convolution explorer]] shows the flip-and-slide for exponentials too.
 - [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] (the convolution sum, the three cases), [[2-z-transform/07-z-transform-properties|Lecture 7]] (convolution ↔ multiplication), [[2-z-transform/08-inverse-z-transform|Lecture 8]] (PFE for the check).
 - Concepts: [[concepts/convolution]], [[concepts/unit-step]], [[concepts/sided-sequences]], [[concepts/region-of-convergence]], [[concepts/partial-fraction-expansion]]; toolkit: [[0-toolkit/02-geometric-series|geometric series]].
-- [[0-midterm-1/practice-drills|Practice drills]]; all families: [[problems/index|exam problem families]].
+- [[demos/practice-drills|Practice drills]]; all families: [[problems/index|exam problem families]].
 
 ### Sources for this page
 

@@ -73,7 +73,7 @@ More from the Lecture 7 slides: $2^n\,n\,(\frac13)^nu[n] = n(\frac23)^nu[n] \lef
 - Lectures: [[2-z-transform/07-z-transform-properties|L7]] (table, proofs, slide Examples 2–3), [[2-z-transform/09-transfer-functions|L9]] (shift + linearity turn an LCCDE into $H(z)$), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|L10]] (convolution → system algebra).
 - Problem families: [[problems/z-transform-with-roc]], [[problems/infinite-length-convolution]] (convolution property), [[problems/lccde-to-transfer-function-and-response]], [[problems/finding-h-from-input-output-pairs]] ($H = Y/X$).
 - Homework: [[homework/hw3|HW3]] #1–#2.
-- Past exams: [[0-midterm-1/past-exams/spring-2021|SP2021 #4]] (differentiation), [[0-midterm-1/past-exams/fall-2024|FA2024 #5a]] ($(n+1)u[n-1]$), [[0-midterm-1/past-exams/fall-2023|FA2023 #5]] ($n\,u[n+1]$), [[0-midterm-1/past-exams/spring-2025|SP2025 #5]] (shift, time reversal), [[0-midterm-1/past-exams/fall-2025|FA2025 #5]] (shift, Euler + linearity), [[0-midterm-1/past-exams/fall-2019|FA2019 #5]].
+- Past exams: [[exams/midterm-1/past-exams/spring-2021|SP2021 #4]] (differentiation), [[exams/midterm-1/past-exams/fall-2024|FA2024 #5a]] ($(n+1)u[n-1]$), [[exams/midterm-1/past-exams/fall-2023|FA2023 #5]] ($n\,u[n+1]$), [[exams/midterm-1/past-exams/spring-2025|SP2025 #5]] (shift, time reversal), [[exams/midterm-1/past-exams/fall-2025|FA2025 #5]] (shift, Euler + linearity), [[exams/midterm-1/past-exams/fall-2019|FA2019 #5]].
 
 Related: [[concepts/z-transform]] · [[concepts/z-transform-pairs]] · [[concepts/region-of-convergence]] · [[concepts/convolution]] · [[concepts/transfer-function]] · [[concepts/pole-zero-cancellation]]
 

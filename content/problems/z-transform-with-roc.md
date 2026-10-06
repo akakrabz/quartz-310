@@ -15,12 +15,12 @@ lectures: [6, 7]
 
 | instance | signals |
 |---|---|
-| [[0-midterm-1/past-exams/fall-2025\|FA2025 #5]] (15) | (a) $e^{j\pi n/3}u[n+4]$ (b) $u[n]-u[n-8]$ (c) $\cos^2\!\left(\tfrac{\pi}{4}n\right)u[n]$ |
-| [[0-midterm-1/past-exams/spring-2025\|SP2025 #5]] (18) | (a) $\sum_{k=0}^{2}\left(\tfrac12\right)^k u[n-k]$ (b) $3^n u[-n+2]$ (c) $\left(\tfrac14\right)^n\left(\tfrac23\right)^{n-2}u[n-1]+\left(\tfrac43\right)^n u[-n-1]$ |
-| [[0-midterm-1/past-exams/fall-2024\|FA2024 #5]] (15) | (a) $(n+1)u[n-1]$ (b) $u[n-1]\,u[3-n]$ (c) $3^{-n}u[n]+3^n u[-n]$ |
-| [[0-midterm-1/past-exams/fall-2023\|FA2023 #5]] (9) | $n\,u[n+1]$ |
-| [[0-midterm-1/past-exams/spring-2021\|SP2021 #4]] (10) | $(n+1)x[n]$, given $x[n]\leftrightarrow\dfrac{1}{1-0.5z^{-1}}$, $\lvert z\rvert>0.5$ |
-| [[0-midterm-1/past-exams/fall-2019\|FA2019 #5]] (10) | (a) $3^{-n}\left(u[n-5]-u[n-100]\right)$ (b) $e^{-n^2}u[n-8]\,u[-n+10]$ |
+| [[exams/midterm-1/past-exams/fall-2025\|FA2025 #5]] (15) | (a) $e^{j\pi n/3}u[n+4]$ (b) $u[n]-u[n-8]$ (c) $\cos^2\!\left(\tfrac{\pi}{4}n\right)u[n]$ |
+| [[exams/midterm-1/past-exams/spring-2025\|SP2025 #5]] (18) | (a) $\sum_{k=0}^{2}\left(\tfrac12\right)^k u[n-k]$ (b) $3^n u[-n+2]$ (c) $\left(\tfrac14\right)^n\left(\tfrac23\right)^{n-2}u[n-1]+\left(\tfrac43\right)^n u[-n-1]$ |
+| [[exams/midterm-1/past-exams/fall-2024\|FA2024 #5]] (15) | (a) $(n+1)u[n-1]$ (b) $u[n-1]\,u[3-n]$ (c) $3^{-n}u[n]+3^n u[-n]$ |
+| [[exams/midterm-1/past-exams/fall-2023\|FA2023 #5]] (9) | $n\,u[n+1]$ |
+| [[exams/midterm-1/past-exams/spring-2021\|SP2021 #4]] (10) | $(n+1)x[n]$, given $x[n]\leftrightarrow\dfrac{1}{1-0.5z^{-1}}$, $\lvert z\rvert>0.5$ |
+| [[exams/midterm-1/past-exams/fall-2019\|FA2019 #5]] (10) | (a) $3^{-n}\left(u[n-5]-u[n-100]\right)$ (b) $e^{-n^2}u[n-8]\,u[-n+10]$ |
 | [[homework/hw3\|HW3 #1]] | (a) $\delta[n+3]+4\delta[n]-\delta[n-2]$ (b) $\left(\tfrac34\right)^{n+3}u[n-2]$ (c) $3^n u[-n]+2^{-n}u[n]$ (d) $\left(\tfrac14\right)^{\lvert n\rvert}$ (e) $n\left(\tfrac12\right)^n\left(u[n]-u[n-5]\right)$ |
 | [[homework/hw3\|HW3 #2]] | properties applied to $x[n]\leftrightarrow\dfrac{1}{1-\frac13z^{-1}}$: $x[n+3]$, $2^n x[n]$, $\cos\!\left(\tfrac{\pi}{4}n\right)x[n]$, $n(n-2)x[n-1]$, $\left(\tfrac15\right)^n u[n]*x[n]$ |
 | [[2-z-transform/06-the-z-transform\|Lecture 6]] | exercises: $u[n]$, $a^n u[n]$; [[2-z-transform/07-z-transform-properties\|Lecture 7]]: why $X(\tfrac14)$ is meaningless for $\left(\tfrac12\right)^n u[n]$ |
@@ -166,7 +166,7 @@ All three are verified by partial sums in `verify/problems/z_transform_roc.py`; 
 
 ## Related
 
-- [[demos/pole-zero-and-roc-explorer|Pole–zero and ROC explorer]] — place poles, pick a ring, see which sequence you get; [[0-midterm-1/practice-drills|practice drills]] for randomized transform/ROC questions.
+- [[demos/pole-zero-and-roc-explorer|Pole–zero and ROC explorer]] — place poles, pick a ring, see which sequence you get; [[demos/practice-drills|practice drills]] for randomized transform/ROC questions.
 - Next step on the exam: [[problems/all-possible-rocs|inverse z / PFE / all possible ROCs]] (the same pairs, read backwards).
 - Lectures: [[2-z-transform/06-the-z-transform|Lecture 6]] (definition, ROC, basic pairs), [[2-z-transform/07-z-transform-properties|Lecture 7]] (properties table, ROC rules for sided and finite sequences), [[2-z-transform/08-inverse-z-transform|Lecture 8]] (going back).
 - Concepts: [[concepts/z-transform]], [[concepts/region-of-convergence]], [[concepts/z-transform-pairs]], [[concepts/z-transform-properties]], [[concepts/sided-sequences]], [[concepts/poles-and-zeros]]; toolkit: [[0-toolkit/02-geometric-series|geometric series]], [[0-toolkit/01-complex-numbers|complex numbers]]; tables: [[supplements/transform-tables|transform tables]]; all families: [[problems/index|exam problem families]].
