@@ -1,0 +1,2000 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECE 310 practice drills — autograded, randomized</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --fg: #23211d; --muted: #7a766e; --line: #e0ddd5; --panel: #f1efe9;
+    --accent: #0e6b73; --accent2: #b5632a; --hi: #d1495b;
+  }
+  :root[data-theme="dark"] {
+    --bg: #161719; --fg: #eceef1; --muted: #9a9ea6; --line: #2f3238; --panel: #1f2125;
+    --accent: #6cc4c9; --accent2: #e8a066; --hi: #f0907c;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 10px 12px 36px; }
+  h2 { font-size: 1.12rem; margin: 0; }
+  sup, sub { font-size: .72em; line-height: 0; }
+  .muted { color: var(--muted); }
+  button, select, input { font: inherit; color: var(--fg); }
+  button, select { padding: 5px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); cursor: pointer; }
+  button:hover, select:hover { border-color: var(--accent); }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  button[disabled] { opacity: .5; cursor: default; }
+
+  /* score strip */
+  .strip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); font-variant-numeric: tabular-nums; }
+  .strip .stat b { color: var(--accent); font-size: 1.05em; }
+  .strip .sub { width: 100%; font-size: 12.5px; color: var(--muted); }
+  .strip button { margin-left: auto; padding: 2px 10px; font-size: 13px; }
+
+  /* drill picker */
+  .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 8px; }
+  .tab { border-radius: 999px; padding: 4px 12px; }
+  .tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  select.picker { display: none; width: 100%; margin: 10px 0 8px; }
+  @media (max-width: 600px) { .tabs { display: none; } select.picker { display: block; } }
+
+  /* drill panel */
+  .panel { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  .dhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .variant { margin-left: auto; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .blurb { margin: 4px 0 8px; color: var(--muted); font-size: 14px; }
+  .stmt { background: var(--panel); border-radius: 8px; padding: 10px 12px; margin: 8px 0 10px; overflow-x: auto; }
+  .stmt p { margin: 4px 0; }
+  .src { display: inline-block; font-size: 12px; color: var(--accent2); border: 1px solid var(--accent2); border-radius: 999px; padding: 0 8px; margin-left: 6px; vertical-align: 1px; }
+  .sys { font-size: 1.12em; }
+  .inputs { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-end; }
+  .fld { display: flex; flex-direction: column; gap: 3px; font-size: 13.5px; color: var(--muted); min-width: 120px; }
+  .fld.wide { flex: 1 1 320px; }
+  .fld input[type=text] { padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font-size: 15px; font-variant-numeric: tabular-nums; width: 100%; }
+  .fld select { padding: 6px 8px; background: var(--bg); font-size: 15px; max-width: 100%; }
+  .fields { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-end; }
+  .cond { font-weight: 600; color: var(--accent2); }
+  .group { width: 100%; }
+  .group > .q { margin: 6px 0 4px; font-weight: 600; }
+  .opts { display: flex; flex-direction: column; gap: 5px; }
+  .opt { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border: 1px solid var(--line); border-radius: 7px; cursor: pointer; }
+  .opt:hover { border-color: var(--accent); }
+  .opt input { margin: 0; flex: none; }
+  .opt.chosen-ok { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .opt.chosen-bad { border-color: var(--hi); background: color-mix(in srgb, var(--hi) 12%, transparent); }
+  .inline-opts { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+  .inline-opts .opt { padding: 4px 12px; }
+  .checks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; width: 100%; }
+  @media (max-width: 600px) { .checks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .checks .opt { justify-content: flex-start; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+
+  /* feedback, hints, solution */
+  .fb:empty, .hints:empty { display: none; }
+  .fb { margin-top: 8px; }
+  .row { padding: 5px 10px; border-left: 3px solid var(--line); margin: 4px 0; border-radius: 0 6px 6px 0; }
+  .row.ok { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+  .row.bad { border-color: var(--hi); background: color-mix(in srgb, var(--hi) 10%, transparent); }
+  .row .pts { float: right; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; margin-left: 8px; }
+  .summary { font-weight: 600; margin: 4px 0; }
+  .summary.ok { color: var(--accent); }
+  .summary.bad { color: var(--hi); }
+  .hints { margin-top: 8px; }
+  .hint { padding: 6px 10px; border-left: 3px solid var(--accent2); background: color-mix(in srgb, var(--accent2) 10%, transparent); border-radius: 0 6px 6px 0; margin: 4px 0; }
+  .hint b:first-child { color: var(--accent2); }
+  .sol { margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--accent); border-radius: 8px; overflow-x: auto; }
+  .sol h3 { font-size: 1rem; margin: 0 0 6px; color: var(--accent); }
+  .sol p { margin: 6px 0; }
+  .sol ul { margin: 4px 0; padding-left: 20px; }
+  .sol a, .blurb a, .hint a, .row a { color: var(--accent); }
+
+  /* math-ish typography */
+  .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 .12em; line-height: 1.25; }
+  .frac > span:first-child { border-bottom: 1px solid currentColor; padding: 0 .25em 1px; }
+  .frac > span:last-child { padding: 1px .25em 0; }
+  .seq { display: inline-block; white-space: nowrap; padding-bottom: .9em; }
+  .sv { display: inline-block; position: relative; min-width: .6em; text-align: center; }
+  .sv.zero::after { content: "\2191"; position: absolute; left: 50%; top: 1.05em; transform: translateX(-50%); color: var(--accent2); font-size: .85em; }
+  table.idx, table.grid { border-collapse: collapse; font-variant-numeric: tabular-nums; margin: 4px 0; }
+  table.idx th, table.idx td, table.grid th, table.grid td { padding: 2px 8px; text-align: center; border: 1px solid var(--line); }
+  table.idx th, table.grid th { color: var(--muted); font-weight: 600; text-align: left; white-space: nowrap; }
+  table.idx td.n0, table.grid td.n0 { background: color-mix(in srgb, var(--accent2) 14%, transparent); }
+  table.grid tr.sum td, table.grid tr.sum th { border-top: 2px solid var(--fg); font-weight: 700; }
+  .matrow { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; margin: 6px 0; }
+  table.mat { border-collapse: separate; border-spacing: 0; border-left: 2px solid currentColor; border-right: 2px solid currentColor; border-radius: 5px; font-variant-numeric: tabular-nums; }
+  table.mat td { padding: 1px 7px; text-align: right; }
+  table.mat td.z { color: var(--muted); }
+  .scroll { overflow-x: auto; }
+  .tick { color: var(--accent); font-weight: 700; }
+  .cross { color: var(--hi); font-weight: 700; }
+  footer { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  footer summary { cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="strip" id="strip" aria-live="polite"></div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="Choose a drill"></div>
+  <select class="picker" id="picker" aria-label="Choose a drill"></select>
+  <div id="panels"></div>
+  <footer>
+    <details>
+      <summary>How grading works</summary>
+      <p>Every drill draws fresh random parameters (<b>New variant</b>). Answers are checked tolerantly: fractions such as <code>9/4</code> or <code>-5/4</code>, decimals within 10<sup>−6</sup>, spaces, and optional braces are all accepted; use <code>-</code> or <code>−</code> for minus.
+      <b>Exam-style points</b> count only your <em>first</em> submission of each variant (on the exam you get one shot); resubmitting still gives feedback and, after a wrong attempt, a hint. Opening the worked solution before submitting scores that variant as a blank.
+      True/False uses the exam rule: +2 correct, −1 wrong, 0 skipped. Scores live in memory only and reset when you reload the page.</p>
+      <p>Unit 3 drills also read <code>π</code> or <code>pi</code>, <code>√3</code> or <code>sqrt(3)</code>, products such as <code>3√2/2</code> and <code>2pi/3</code>, and degrees (<code>60°</code>). Angles are compared modulo 2π, so <code>−π</code> and <code>π</code> are the same answer; decimals are accepted to about three digits.</p>
+    </details>
+    <noscript><p>This page needs JavaScript.</p></noscript>
+  </footer>
+</div>
+
+<script id="drill-core">
+/* ===================== drill core: pure functions, no DOM =====================
+   Exposed as globalThis.ECE310Drills so that the Node tests in verify/drills/ can load
+   this script with vm and check the generators over many random seeds. */
+(function () {
+'use strict';
+const M = '−';                         // typographic minus
+
+/* ---------------- exact rationals ---------------- */
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { const t = a % b; a = b; b = t; } return a; }
+class Fr {
+  constructor(n, d = 1) {
+    if (!Number.isSafeInteger(n) || !Number.isSafeInteger(d)) throw new Error(`Fr: not safe integers ${n}/${d}`);
+    if (d === 0) throw new Error('Fr: zero denominator');
+    if (d < 0) { n = -n; d = -d; }
+    const g = gcd(n, d) || 1;
+    this.n = n / g; this.d = d / g;
+  }
+  static of(x) { return x instanceof Fr ? x : new Fr(x, 1); }
+  add(o) { o = Fr.of(o); return new Fr(this.n * o.d + o.n * this.d, this.d * o.d); }
+  sub(o) { o = Fr.of(o); return new Fr(this.n * o.d - o.n * this.d, this.d * o.d); }
+  mul(o) { o = Fr.of(o); return new Fr(this.n * o.n, this.d * o.d); }
+  div(o) { o = Fr.of(o); if (o.n === 0) throw new Error('Fr: division by zero'); return new Fr(this.n * o.d, this.d * o.n); }
+  neg() { return new Fr(-this.n, this.d); }
+  inv() { return new Fr(this.d, this.n); }
+  pow(k) { let r = new Fr(1); const b = k < 0 ? this.inv() : this; for (let i = 0; i < Math.abs(k); i++) r = r.mul(b); return r; }
+  abs() { return new Fr(Math.abs(this.n), this.d); }
+  sign() { return Math.sign(this.n); }
+  isZero() { return this.n === 0; }
+  eq(o) { o = Fr.of(o); return this.n === o.n && this.d === o.d; }
+  cmp(o) { o = Fr.of(o); return Math.sign(this.n * o.d - o.n * this.d); }
+  lt(o) { return this.cmp(o) < 0; }
+  gt(o) { return this.cmp(o) > 0; }
+  get v() { return this.n / this.d; }
+  toString() { return this.d === 1 ? String(this.n) : `${this.n}/${this.d}`; }
+}
+const F = (n, d = 1) => new Fr(n, d);
+
+/* ---------------- seeded random numbers (mulberry32) ---------------- */
+function rng(seed) {
+  let a = ((Number(seed) >>> 0) ^ 0x9E3779B9) >>> 0;
+  const next = () => {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const int = (lo, hi) => lo + Math.floor(next() * (hi - lo + 1));
+  const pick = arr => arr[Math.floor(next() * arr.length)];
+  const shuffle = arr => { const b = arr.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(next() * (i + 1)); const t = b[i]; b[i] = b[j]; b[j] = t; } return b; };
+  const chance = p => next() < p;
+  return { next, int, pick, shuffle, chance };
+}
+
+/* ---------------- tolerant input parsing ---------------- */
+const VULGAR = { '½': '(1/2)', '⅓': '(1/3)', '⅔': '(2/3)', '¼': '(1/4)', '¾': '(3/4)', '⅛': '(1/8)' };
+function normalize(src) {
+  return String(src == null ? '' : src)
+    .replace(/[−‒–—﹣－]/g, '-')
+    .replace(/[×·⋅]/g, '*').replace(/÷/g, '/')
+    .replace(/[½⅓⅔¼¾⅛]/g, c => VULGAR[c]);
+}
+/* A number typed as an arithmetic expression: 9/4, -5/4, 2.25, (1/2)/(3/4), 2^-2, "A1 = 9/4". NaN if unreadable. */
+function parseNum(src) {
+  let s = normalize(src);
+  if (s.includes('=')) s = s.slice(s.lastIndexOf('=') + 1);
+  s = s.replace(/\s+/g, '');
+  if (/^\{.*\}$/.test(s)) s = s.slice(1, -1);
+  if (!s) return NaN;
+  let i = 0;
+  const peek = () => s[i];
+  function number() {
+    const m = /^(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?/.exec(s.slice(i));
+    if (!m) throw new Error('number expected');
+    i += m[0].length;
+    return parseFloat(m[0]);
+  }
+  function atom() {
+    const c = peek();
+    if (c === '(' || c === '[' || c === '{') {
+      i++; const v = expr();
+      if (!')]}'.includes(s[i] || 'x')) throw new Error('bracket');
+      i++; return v;
+    }
+    return number();
+  }
+  function power() { const b = atom(); if (peek() === '^') { i++; return Math.pow(b, unary()); } return b; }
+  function unary() { if (peek() === '-') { i++; return -unary(); } if (peek() === '+') { i++; return unary(); } return power(); }
+  function term() { let v = unary(); while (peek() === '*' || peek() === '/') { const op = s[i++]; const w = unary(); v = op === '*' ? v * w : v / w; } return v; }
+  function expr() { let v = term(); while (peek() === '+' || peek() === '-') { const op = s[i++]; const w = term(); v = op === '+' ? v + w : v - w; } return v; }
+  try { const v = expr(); return i === s.length && Number.isFinite(v) ? v : NaN; } catch (e) { return NaN; }
+}
+/* A list of numbers: "1, -2, 3/2", "{1 -2 3}", "[1; 2; 3]". null if any entry is unreadable. */
+function parseList(src) {
+  let s = normalize(src).replace(/↑/g, '').trim();
+  if (s.includes('=')) s = s.slice(s.lastIndexOf('=') + 1).trim();
+  s = s.replace(/^[{[]\s*/, '').replace(/\s*[}\]]$/, '');
+  if (!s) return null;
+  const parts = (/[,;]/.test(s) ? s.split(/[,;]/) : s.split(/\s+/)).map(t => t.trim()).filter(t => t !== '');
+  if (!parts.length) return null;
+  const vals = parts.map(parseNum);
+  return vals.some(v => Number.isNaN(v)) ? null : vals;
+}
+const near = (a, b, tol = 1e-6) => Number.isFinite(a) && Math.abs(a - b) <= tol * Math.max(1, Math.abs(b));
+
+/* ---------------- HTML formatting helpers (plain Unicode + <sup>/<sub>) ---------------- */
+const sup = s => `<sup>${s}</sup>`;
+const sub = s => `<sub>${s}</sub>`;
+function num(v) {                                   // Fr, integer or float -> text with a real minus sign
+  if (v instanceof Fr) return v.toString().replace('-', M);
+  if (Number.isInteger(v)) return String(v).replace('-', M);
+  for (let d = 2; d <= 64; d++) { const n = Math.round(v * d); if (Math.abs(n / d - v) < 1e-9) return F(n, d).toString().replace('-', M); }
+  return String(+v.toFixed(6)).replace('-', M);
+}
+function paren(v) {                                 // wrap negatives and fractions: (−2), (3/4)
+  const s = num(v);
+  return /[\/−]/.test(s) ? `(${s})` : s;
+}
+const frac = (a, b) => `<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+function idxStr(k) { return k === 0 ? 'n' : k > 0 ? `n ${M} ${k}` : `n + ${-k}`; }   // n − k
+function zpow(k) {                                  // z^{-k}
+  if (k === 0) return '';
+  if (k === -1) return 'z';
+  return k > 0 ? 'z' + sup(M + k) : 'z' + sup(String(-k));
+}
+/* Σ c_i z^{-(k0+i)} */
+function polyZ(coefs, k0 = 0) {
+  let out = '';
+  coefs.forEach((c, i) => {
+    c = Fr.of(c);
+    if (c.isZero()) return;
+    const zp = zpow(k0 + i), mag = c.abs();
+    const body = zp === '' ? num(mag) : (mag.eq(1) ? '' : paren(mag)) + zp;
+    out += out === '' ? (c.sign() < 0 ? M : '') + body : (c.sign() < 0 ? ` ${M} ` : ' + ') + body;
+  });
+  return out || '0';
+}
+/* (1 − p z^{-1}) */
+function factorZ(p) {
+  p = Fr.of(p);
+  const mag = p.abs();
+  return `(1 ${p.sign() > 0 ? M : '+'} ${mag.eq(1) ? '' : paren(mag)}z${sup(M + '1')})`;
+}
+function stepStr(step) { return step === 'R' ? 'u[n]' : step === 'L' ? `u[${M}n ${M} 1]` : `u[${M}n]`; }
+/* A p^n step-term; t = {A: Fr, p: Fr, step: 'R' | 'L' | 'L0'} */
+function termHTML(t, first) {
+  const neg = t.A.sign() < 0, mag = t.A.abs();
+  const coef = mag.eq(1) ? '' : paren(mag);
+  const base = paren(t.p);
+  const dot = coef && !coef.endsWith(')') && !base.startsWith('(') ? '·' : '';
+  const body = `${coef}${dot}${base}${sup('n')} ${stepStr(t.step)}`;
+  return first ? (neg ? M : '') + body : (neg ? ` ${M} ` : ' + ') + body;
+}
+const termsHTML = ts => ts.map((t, i) => termHTML(t, i === 0)).join('');
+function termVal(t, n) {
+  const on = t.step === 'R' ? n >= 0 : t.step === 'L' ? n <= -1 : n <= 0;
+  return on ? t.A.v * Math.pow(t.p.v, n) : 0;
+}
+const termsVal = (ts, n) => ts.reduce((s, t) => s + termVal(t, n), 0);
+function sameSeq(ta, tb, lo = -12, hi = 12) {
+  for (let n = lo; n <= hi; n++) { const a = termsVal(ta, n), b = termsVal(tb, n); if (Math.abs(a - b) > 1e-9 * Math.max(1, Math.abs(a))) return false; }
+  return true;
+}
+/* A finite sequence with the arrow under n = 0 (exam notation), or its index range if n = 0 is outside it. */
+function seqHTML(vals, n0) {
+  const L = vals.length, has0 = n0 <= 0 && 0 <= n0 + L - 1;
+  const items = vals.map((v, i) => `<span class="sv${n0 + i === 0 ? ' zero' : ''}">${num(v)}</span>`).join(', ');
+  return `<span class="seq">{${items}}</span>` + (has0 ? '' : ` <span class="muted">for n = ${num(n0)} … ${num(n0 + L - 1)}</span>`);
+}
+function idxTable(name, vals, n0) {
+  const cls = i => (n0 + i === 0 ? ' class="n0"' : '');
+  return `<table class="idx"><tr><th>n</th>${vals.map((_, i) => `<td${cls(i)}>${num(n0 + i)}</td>`).join('')}</tr>` +
+         `<tr><th>${name}</th>${vals.map((v, i) => `<td${cls(i)}>${num(v)}</td>`).join('')}</tr></table>`;
+}
+const range = (a, b) => { const r = []; for (let k = a; k <= b; k++) r.push(k); return r; };
+const pageLink = (path, text) => `<a href="../../../${path}" target="_top">${text}</a>`;
+
+const drills = {};
+
+/* =====================================================================================
+   1. Finite convolution
+   ===================================================================================== */
+drills.conv = {
+  gen(seed) {
+    const R = rng(seed);
+    const Lx = R.int(3, 5), Lh = R.int(2, 3);
+    const nz = () => R.pick([-3, -2, -1, 1, 2, 3]);
+    const mk = L => Array.from({ length: L }, (_, i) => (i === 0 || i === L - 1) ? nz() : R.int(-3, 3));
+    const x = mk(Lx), h = mk(Lh);
+    const nx = R.int(-2, 2), nh = R.int(-2, 2);
+    const y = new Array(Lx + Lh - 1).fill(0);
+    for (let i = 0; i < Lx; i++) for (let k = 0; k < Lh; k++) y[i + k] += x[i] * h[k];
+    return { drill: 'conv', seed, x, nx, h, nh, y, ny: nx + nh, maxPts: 8 };
+  },
+  statement(p) {
+    return `<p>Compute <b>y[n] = x[n] ∗ h[n]</b> for</p>
+      <p>x[n] = ${seqHTML(p.x, p.nx)} &nbsp;&nbsp; h[n] = ${seqHTML(p.h, p.nh)}</p>
+      <p class="muted" style="font-size:13px">The arrow ↑ marks n = 0. Index tables:</p>
+      <div class="scroll" style="display:flex;gap:14px;flex-wrap:wrap">${idxTable('x[n]', p.x, p.nx)}${idxTable('h[n]', p.h, p.nh)}</div>
+      <p>Enter y[n] from its first to its last non-zero sample, and the index n of that first sample.</p>`;
+  },
+  answer(p) { return { vals: p.y.join(', '), start: String(p.ny) }; },
+  check(p, r) {
+    const vals = parseList(r.vals), st = parseNum(r.start);
+    const Ly = p.y.length, Lx = p.x.length, Lh = p.h.length;
+    let a = 0, tv = null;
+    if (vals) {
+      let b = vals.length - 1;
+      while (a <= b && Math.abs(vals[a]) < 1e-9) a++;
+      while (b >= a && Math.abs(vals[b]) < 1e-9) b--;
+      tv = vals.slice(a, b + 1);
+    }
+    const valuesOK = !!tv && tv.length === Ly && tv.every((v, i) => near(v, p.y[i]));
+    const stInt = Number.isFinite(st) && Math.abs(st - Math.round(st)) < 1e-9;
+    const startOK = stInt && (valuesOK ? Math.round(st) + a === p.ny : Math.round(st) === p.ny);
+    let vmsg, wrongAt = -1;
+    if (!vals) vmsg = String(r.vals || '').trim() ? 'Could not read the list — type numbers separated by commas, e.g. 2, −1, 0, 5.' : 'No samples entered.';
+    else if (valuesOK) vmsg = `all ${Ly} samples are right.`;
+    else if (tv.length !== Ly) vmsg = `your list has ${tv.length} sample${tv.length === 1 ? '' : 's'} from its first to its last non-zero entry; y[n] has ${Ly}.`;
+    else { const bad = tv.map((v, i) => (near(v, p.y[i]) ? -1 : i)).filter(i => i >= 0); wrongAt = bad[0]; vmsg = `${Ly - bad.length} of ${Ly} samples are right.`; }
+    const smsg = !Number.isFinite(st) ? 'enter the index n of the first sample.' : startOK ? `y[n] starts at n = ${num(p.ny)}.` : 'that is not where y[n] starts.';
+    const parts = [
+      { label: 'Samples of y[n]', ok: valuesOK, pts: valuesOK ? 6 : 0, max: 6, msg: vmsg },
+      { label: 'First index', ok: startOK, pts: startOK ? 2 : 0, max: 2, msg: smsg },
+    ];
+    const h1 = [], h2 = [];
+    if (!valuesOK) {
+      h1.push(`<b>Length and end samples.</b> y has L${sub('x')} + L${sub('h')} − 1 = ${Lx} + ${Lh} − 1 = ${Ly} samples; its first sample is (first x)·(first h) = ${num(p.x[0])}·${paren(p.h[0])} = ${num(p.y[0])} and its last is ${num(p.x[Lx - 1])}·${paren(p.h[Lh - 1])} = ${num(p.y[Ly - 1])}.`);
+      h2.push(wrongAt >= 0
+        ? `<b>Look again at entry ${a + wrongAt + 1} of your list</b> (that is y[${num(p.ny + wrongAt)}]). Recompute it as Σ${sub('k')} x[k]·h[${num(p.ny + wrongAt)} − k] — only the k where both factors are non-zero count.`
+        : '<b>Shift-and-add table.</b> One row per input sample x[k]: a copy of h scaled by x[k], starting at n = k + (first index of h). Add the columns.');
+    }
+    if (!startOK) h1.push('<b>Start rule.</b> First index of y = (first index of x) + (first index of h). The arrow marks n = 0.');
+    const allOk = valuesOK && startOK;
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>') || h2.join(''), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    const Lx = p.x.length, Lh = p.h.length, Ly = p.y.length;
+    const ex = p.nx + Lx - 1, eh = p.nh + Lh - 1, ey = p.ny + Ly - 1;
+    const cols = range(p.ny, ey);
+    const c0 = n => (n === 0 ? ' class="n0"' : '');
+    let t = `<table class="grid"><tr><th>n</th>${cols.map(n => `<td${c0(n)}>${num(n)}</td>`).join('')}</tr>`;
+    for (let k = p.nx; k <= ex; k++) {
+      const xk = p.x[k - p.nx];
+      t += `<tr><th>x[${num(k)}]·h[${idxStr(k)}] = ${paren(xk)}·h[${idxStr(k)}]</th>` + cols.map(n => {
+        const j = n - k - p.nh;
+        return `<td${c0(n)}>${j >= 0 && j < Lh ? num(xk * p.h[j]) : ''}</td>`;
+      }).join('') + '</tr>';
+    }
+    t += `<tr class="sum"><th>y[n] (column sums)</th>${p.y.map((v, i) => `<td${c0(p.ny + i)}>${num(v)}</td>`).join('')}</tr></table>`;
+    let H = '<table class="mat">';
+    for (let i = 0; i < Ly; i++) {
+      H += '<tr>' + range(0, Lx - 1).map(j => { const d = i - j; return d >= 0 && d < Lh ? `<td>${num(p.h[d])}</td>` : '<td class="z">0</td>'; }).join('') + '</tr>';
+    }
+    H += '</table>';
+    const col = v => `<table class="mat">${v.map(e => `<tr><td>${num(e)}</td></tr>`).join('')}</table>`;
+    return `<h3>Worked solution</h3>
+      <p><b>1 · Bookkeeping.</b> x lives on n = ${num(p.nx)} … ${num(ex)} (L${sub('x')} = ${Lx}); h lives on n = ${num(p.nh)} … ${num(eh)} (L${sub('h')} = ${Lh}).
+      So y starts at ${num(p.nx)} + ${paren(p.nh)} = <b>${num(p.ny)}</b>, ends at ${num(ex)} + ${paren(eh)} = ${num(ey)}, and has ${Lx} + ${Lh} − 1 = ${Ly} samples.</p>
+      <p><b>2 · Shift-and-add table</b> (each row is one input sample times a shifted copy of h; flip-and-slide gives the same column sums):</p>
+      <div class="scroll">${t}</div>
+      <p><b>Same thing as the exam's matrix form y = H x</b> (column j of H is h shifted down j places; x as a column, first sample on top):</p>
+      <div class="scroll"><div class="matrow">${H}<span>·</span>${col(p.x)}<span>=</span>${col(p.y)}</div></div>
+      <p><b>Answer.</b> y[n] = ${seqHTML(p.y, p.ny)}, first sample at n = ${num(p.ny)}.</p>
+      <p class="muted">Review: ${pageLink('problems/finite-length-convolution', 'Finite-length convolution (recipe)')} · ${pageLink('1-signals-and-systems/04-impulse-response-and-convolution', 'Lecture 4')}</p>`;
+  },
+};
+
+/* =====================================================================================
+   2. System properties (bank checked by verify/exams/property_bank.py)
+   ===================================================================================== */
+const PROPS = [
+  // [system (HTML), source, 'L TI C S' as Y/N, reasons]
+  ['y[n] = |n| x[n]', 'FA2025 #2', 'YNYN', ['Multiplying by a fixed sequence |n| is linear.', 'The gain |n| depends on n: delay the input and the gain does not move with it.', 'Uses only the present sample x[n].', 'x[n] = 1 is bounded but y[n] = |n| grows without bound.']],
+  [`y[n] = |x[n] ${M} x[n${M}1]|`, 'FA2025 #2', 'NYYY', ['The absolute value breaks homogeneity: −x gives the same output as x, not −y.', 'No explicit n: delaying x delays y by the same amount.', 'Uses x[n] and x[n−1]: present and past.', '|x| ≤ B ⇒ |y| ≤ 2B.']],
+  [`y[n] = x[n] ∗ 2${sup('n')} u[${M}n]`, 'FA2025 #2', 'YYNY', ['Convolution with a fixed h[n] is linear.', 'Convolution with a fixed h[n] is time-invariant.', 'h[n] = 2<sup>n</sup>u[−n] is non-zero for n &lt; 0 (h[−1] = 1/2), so y[n] uses future inputs.', 'Σ|h[n]| = Σ<sub>n≤0</sub> 2<sup>n</sup> = 1 + 1/2 + 1/4 + … = 2 &lt; ∞.']],
+  [`y[n] = x[n] ∗ j${sup('n')} u[n]`, 'SP2025 #2', 'YYYN', ['Convolution with a fixed h[n] is linear.', 'Convolution with a fixed h[n] is time-invariant.', 'h[n] = j<sup>n</sup>u[n] is zero for n &lt; 0.', '|h[n]| = 1 for every n ≥ 0, so Σ|h[n]| = ∞ (pole at z = j on the unit circle).']],
+  ['y[n] = 2x[|n|] + 10', 'SP2025 #2', 'NNNY', ['The +10: x = 0 gives y = 10 ≠ 0.', 'x[|n|] folds the time axis at n = 0; a delayed input is not folded the same way.', 'y[−3] = 2x[3] + 10 needs a future sample.', '|y| ≤ 2B + 10.']],
+  [`y[n] = e${sup('x[n]+1')}`, 'SP2025 #2', 'NYYY', ['x = 0 gives y = e ≠ 0.', 'No explicit n: the same memoryless map at every time.', 'Uses only x[n].', '|x| ≤ B ⇒ 0 &lt; y ≤ e<sup>B+1</sup>.']],
+  ['y[n] = x[n] x[n+1]', 'FA2024 #2', 'NYNY', ['A product of input samples: doubling x quadruples y.', 'No explicit n: shifting x shifts y.', 'Needs x[n+1], a future sample.', '|y| ≤ B².']],
+  [`y[n] = ${frac('x[n]', '|n| + 1')}`, 'FA2024 #2 · Lecture 3', 'YNYY', ['A fixed gain 1/(|n|+1) times x[n] is linear.', 'The gain changes with n.', 'Uses only x[n].', '|n| + 1 ≥ 1, so |y| ≤ |x| ≤ B.']],
+  ['y[n] = sin(x[n]) + x[0]', 'FA2024 #2', 'NNNY', ['sin is not linear: sin(2x) ≠ 2 sin x.', 'x[0] is a fixed-time sample: delay x and y[n] still reads time 0.', 'For n &lt; 0, y[n] needs x[0], a future sample.', '|y| ≤ 1 + B.']],
+  ['y[n] = log(|n| + 1) x[n]', 'FA2023 #2', 'YNYN', ['A fixed gain log(|n|+1) times x[n] is linear.', 'The gain changes with n.', 'Uses only x[n].', 'x = 1 gives y = log(|n|+1) → ∞ (slowly, but without bound).']],
+  ['y[n] = x[n] ∗ u[n+1]', 'FA2023 #2', 'YYNN', ['Convolution with a fixed h[n] is linear.', 'Convolution with a fixed h[n] is time-invariant.', 'h[n] = u[n+1] has h[−1] = 1 ≠ 0.', 'Σ|h[n]| = Σ<sub>n≥−1</sub> 1 = ∞; x = 1 gives an infinite sum.']],
+  ['y[n] = x[n] + 3', 'FA2023 #2', 'NYYY', ['Affine, not linear: x = 0 gives y = 3 ≠ 0.', 'No explicit n.', 'Uses only x[n].', '|y| ≤ B + 3.']],
+  [`y[n] = x[n] ∗ (${M}1)${sup('n')} u[n]`, 'SP2023 #2', 'YYYN', ['Convolution with a fixed h[n] is linear.', 'Convolution with a fixed h[n] is time-invariant.', 'h[n] = (−1)<sup>n</sup>u[n] is zero for n &lt; 0.', '|h[n]| = 1 for n ≥ 0, so Σ|h| = ∞; e.g. x = (−1)<sup>n</sup>u[n] gives y = (n+1)(−1)<sup>n</sup>u[n].']],
+  [`y[n] = ${frac('x[n]', 'x[2]')}`, 'SP2023 #2', 'NNNN', ['Scaling x by 2 leaves y unchanged (the 2 cancels), so homogeneity fails.', 'x[2] is a fixed-time sample.', 'For n &lt; 2, y[n] needs the future sample x[2].', 'A bounded input with x[2] = 0 divides by zero (and x[2] → 0 makes y arbitrarily large).']],
+  ['y[n] = cos²(πn/2) x[n]', 'SP2023 #2', 'YNYY', ['A fixed gain times x[n] is linear.', 'The gain cos²(πn/2) = 1, 0, 1, 0, … depends on n.', 'Uses only x[n].', '|y| ≤ |x| ≤ B.']],
+  [`y[n] = x[n] cos(π(n ${M} 2)/3)`, 'SP2021 #3', 'YNYY', ['A fixed gain times x[n] is linear.', 'The gain cos(π(n−2)/3) depends on n.', 'Uses only x[n].', '|cos| ≤ 1, so |y| ≤ B.']],
+  ['y[n] = x[3] x[n]', 'SP2021 #3', 'NNNY', ['Doubling x quadruples y.', 'x[3] is a fixed-time sample.', 'For n &lt; 3, y[n] needs x[3], a future sample.', '|y| ≤ B².']],
+  [`y[n] = (0.8 + 0.8j)${sup('n')} x[n]`, 'SP2021 #3', 'YNYN', ['A fixed (complex) gain times x[n] is linear.', 'The gain depends on n.', 'Uses only x[n].', '|0.8 + 0.8j| = 0.8√2 ≈ 1.13 &gt; 1: with x = 1, |y[n]| = 1.13<sup>n</sup> → ∞ as n → ∞.']],
+  ['y[n] = x[|n| + n]', 'FA2019 #2a', 'YNNY', ['It only re-indexes x, so it is linear.', 'The index map |n| + n (0 for n ≤ 0, 2n for n &gt; 0) is not a plain shift.', 'y[1] = x[2] needs a future sample.', 'Re-indexing cannot make a bounded signal unbounded.']],
+  [`y[n] = (0.2)${sup('|n|')} log x[n]`, 'FA2019 #2b', 'NNYN', ['log is not linear.', 'The gain (0.2)<sup>|n|</sup> depends on n.', 'Uses only x[n].', 'The bounded input x = 0 gives log 0 = −∞ (the exam asked only L, SI, C).']],
+  ['Clipping: y[n] = b if x[n] ≥ b; x[n] if a &lt; x[n] &lt; b; a if x[n] ≤ a (a = −2, b = 2)', 'HW1 #5', 'NYYY', ['x = 3 gives 2, but x = 6 gives 2, not 4.', 'The clipping rule is the same at every n, so it moves with the input (HW1 key).', 'Uses only x[n].', 'a ≤ y ≤ b always.']],
+  ['Windowing: y[n] = x[n] for 0 ≤ n ≤ N − 1, 0 otherwise (N = 4)', 'HW1 #6', 'YNYY', ['Multiplication by a fixed window w[n] (1 on 0…N−1) is linear.', 'The window stays put: a delayed input loses different samples (HW1 key: {0,1,2,3} vs {−1,0,1,2}).', 'Uses only x[n].', '|y| ≤ |x|.']],
+  [`y[n] = y[n${M}5] + x[n] + 10x[n${M}1] (causal recursion, initially at rest)`, 'HW2 #1a', 'YYYN', ['An LCCDE at rest satisfies superposition (HW2 key).', 'Constant coefficients: time-invariant (HW2 key).', 'Run forward, y[n] uses present/past inputs and past outputs.', `h[n] = 1, 10, 0, 0, 0 repeating forever (poles on the unit circle, H = (1 + 10z${sup(M + '1')})/(1 − z${sup(M + '5')})), so Σ|h| = ∞.`]],
+  [`y[n${M}2] + 2y[n] = cos(πn/6) x[n] (causal recursion, initially at rest)`, 'HW2 #1b', 'YNYY', ['Superposition holds (HW2 key).', 'The input gain cos(πn/6) depends on n (HW2 key: δ[n] vs δ[n−3]).', 'Run forward: y[n] = −½y[n−2] + ½cos(πn/6)x[n].', 'That recursion has poles ±j/√2, inside the unit circle, and a bounded drive ½cos(πn/6)x[n], so y stays bounded.']],
+  [`y[n] = (1/2)${sup('|n|')} x[n]`, 'HW2 #1c', 'YNYY', ['A fixed gain times x[n] is linear (HW2 key).', 'The gain depends on n (HW2 key: δ[n−1] gives ½δ[n−1]).', 'Uses only x[n].', '|y| ≤ |x|.']],
+  [`y[n] = ½x[n] + ½x[n${M}1]`, 'Lecture 3', 'YYYY', ['A weighted sum of input samples is linear.', 'Constant weights, no explicit n.', 'Present and past samples only.', '|y| ≤ ½B + ½B = B.']],
+  ['y[n] = x[n] + 1', 'Lecture 3', 'NYYY', ['x = 0 gives y = 1 ≠ 0.', 'No explicit n.', 'Uses only x[n].', '|y| ≤ B + 1.']],
+  ['y[n] = |x[n]|', 'Lecture 3', 'NYYY', ['|−x| = |x|, not −|x|.', 'No explicit n.', 'Uses only x[n].', '|y| = |x| ≤ B.']],
+  [`y[n] = n(x[n] ${M} x[n${M}1])`, 'Lecture 3', 'YNYN', ['A fixed gain n times a linear combination: linear.', 'The gain n depends on time.', 'Present and past samples only.', 'x = (−1)<sup>n</sup> gives y = 2n(−1)<sup>n</sup>, unbounded.']],
+  [`y[n] = e${sup('x[n]')}`, 'Lecture 3', 'NYYY', ['x = 0 gives y = 1 ≠ 0.', 'No explicit n.', 'Uses only x[n].', '0 &lt; y ≤ e<sup>B</sup>.']],
+  ['y[n] = max{0, x[n]}', 'Lecture 3', 'NYYY', ['x = −1 gives 0, but −x = 1 gives 1 ≠ −0: homogeneity fails for negative scalars.', 'No explicit n.', 'Uses only x[n].', '0 ≤ y ≤ B.']],
+  ['y[n] = x[n] x[0]', 'Lecture 3 (annotated slides)', 'NNNY', ['Doubling x quadruples y.', 'x[0] is a fixed-time sample.', 'For n &lt; 0, y[n] needs x[0], a future sample.', '|y| ≤ B².']],
+  [`y[n] = x[n] ${M} x[n${M}1]`, 'Lecture 3', 'YYYY', ['A difference of input samples is linear.', 'No explicit n.', 'Present and past samples only.', '|y| ≤ 2B.']],
+  ['y[n] = x[2n]', 'Lecture 3', 'YNNY', ['Re-indexing is linear.', 'Downsampling: delaying x by one sample does not delay y by one sample.', 'y[1] = x[2] needs a future sample.', 'Re-indexing keeps |y| ≤ B.']],
+  ['y[n] = x[|n|]', 'Lecture 3', 'YNNY', ['Re-indexing is linear.', 'Folding at n = 0 does not commute with shifts.', 'y[−2] = x[2] needs a future sample.', 'Re-indexing keeps |y| ≤ B.']],
+  [`y[n] = ⅓(x[n] + x[n${M}1] + x[n${M}2])`, 'Lecture 3', 'YYYY', ['A weighted sum of input samples is linear.', 'Constant weights, no explicit n.', 'Present and past samples only.', 'An average of bounded samples: |y| ≤ B.']],
+  [`y[n] = x[|n| ${M} n]`, 'Lecture 3', 'YNNY', ['Re-indexing is linear.', 'The index map |n| − n is not a plain shift.', 'For n &lt; 0, y[n] = x[−2n] is a future sample (y[−1] = x[2]).', 'Re-indexing keeps |y| ≤ B.']],
+  [`y[n] = (n + 1)(x[n] ${M} x[n${M}1])`, 'Lecture 3', 'YNYN', ['A fixed gain (n+1) times a linear combination: linear.', 'The gain depends on n.', 'Present and past samples only.', 'x = (−1)<sup>n</sup> gives y = 2(n+1)(−1)<sup>n</sup>, unbounded.']],
+  ['y[n] = sin²(x[n])', 'Lecture 3', 'NYYY', ['sin² is not linear.', 'No explicit n.', 'Uses only x[n].', '0 ≤ y ≤ 1 whatever the input.']],
+  ['y[n] = ln|x[n]|', 'Lecture 3', 'NYYN', ['ln is not linear (x = 1 gives 0, x = 2 gives ln 2 ≠ 0).', 'No explicit n.', 'Uses only x[n].', 'x[n] = 0 is a bounded input, but ln 0 = −∞.']],
+  [`y[n] = median{x[n], x[n${M}1], x[n${M}2]}`, 'Lecture 3', 'NYYY', ['Windows (1,0,0) and (0,1,0) each have median 0, but their sum (1,1,0) has median 1.', 'The same rule at every n.', 'Present and past samples only.', 'The median is one of the samples, so |y| ≤ B.']],
+  ['y[n] = x²[n]', 'Lecture 3 notes', 'NYYY', ['Doubling x quadruples y.', 'No explicit n.', 'Uses only x[n].', '|y| ≤ B².']],
+  ['y[n] = n x[3n]', 'Lecture 3 notes', 'YNNN', ['Gain times re-indexing: linear.', 'Both the gain n and the index 3n break time-invariance.', 'y[1] = x[3] needs a future sample.', 'x = 1 gives y = n, unbounded.']],
+  [`y[n] = x[n] + x[n${M}2] ${M} x[n${M}4]`, 'Lecture 3 notes', 'YYYY', ['A combination of input samples is linear.', 'Constant coefficients, no explicit n.', 'Present and past samples only.', '|y| ≤ 3B.']],
+  [`y[n] = x${sup('10')}[n] + e${sup('x[n]')}`, 'Lecture 3 notes', 'NYYY', ['Powers and exponentials are not linear.', 'No explicit n.', 'Uses only x[n].', '|y| ≤ B<sup>10</sup> + e<sup>B</sup>.']],
+];
+const PROP_NAMES = ['Linear', 'Time-invariant', 'Causal', 'BIBO stable'];
+drills.props = {
+  bank: PROPS,
+  gen(seed, opts) {
+    const R = rng(seed);
+    const index = opts && Number.isInteger(opts.index) ? opts.index : Math.floor(R.next() * PROPS.length);
+    const [sys, src, ans, why] = PROPS[index];
+    return { drill: 'props', seed, index, sys, src, ans: ans.split('').map(c => c === 'Y'), why, maxPts: 4 };
+  },
+  statement(p) {
+    return `<p>Which properties does this system have? <span class="src">${p.src}</span></p><p class="sys"><b>${p.sys}</b></p>
+      <p class="muted" style="font-size:13px">Tick every property the system <em>has</em>; leave the others blank (a blank box means "No"). Input x[n], output y[n].</p>`;
+  },
+  answer(p) { return { props: p.ans.slice() }; },
+  check(p, r) {
+    const got = (r.props || []).map(Boolean);
+    const parts = PROP_NAMES.map((name, i) => {
+      const ok = got[i] === p.ans[i];
+      return { label: `${name}: ${p.ans[i] ? 'Yes' : 'No'}`, ok, pts: ok ? 1 : 0, max: 1, msg: p.why[i] };
+    });
+    const allOk = parts.every(q => q.ok);
+    const hints = [];
+    if (!allOk) {
+      const tests = {
+        0: '<b>Linear?</b> Two quick kills: does x = 0 give y = 0? does 2x give 2y (watch squares, |·|, offsets, fixed samples like x[0])?',
+        1: '<b>Time-invariant?</b> Any explicit n outside the argument of x (a gain like n or cos(πn/2)), a fixed sample like x[2], or an index like x[2n], x[|n|], x[−n] breaks it. Convolution with a fixed h never does.',
+        2: '<b>Causal?</b> Find one n where y[n] reads a sample x[m] with m &gt; n (try negative n for x[|n|], x[0], x[3]).',
+        3: '<b>Stable?</b> Try the bounded inputs x = 1, x = (−1)<sup>n</sup>, and an x that is 0 somewhere. For a convolution, check Σ|h[n]| &lt; ∞.',
+      };
+      hints.push(parts.map((q, i) => (q.ok ? '' : tests[i])).filter(Boolean).join('<br>'));
+    }
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 4, hints };
+  },
+  solution(p) {
+    return `<h3>Worked solution</h3><p class="sys">${p.sys} <span class="src">${p.src}</span></p><ul>` +
+      PROP_NAMES.map((name, i) => `<li><b>${name}: ${p.ans[i] ? 'Yes' : 'No'}.</b> ${p.why[i]}</li>`).join('') +
+      `</ul><p class="muted">Review: ${pageLink('exams/midterm-1/system-property-bank', 'System-property bank')} · ${pageLink('problems/classifying-system-properties', 'Classifying system properties (recipe)')} · ${pageLink('1-signals-and-systems/03-system-properties', 'Lecture 3')}</p>`;
+  },
+};
+
+/* =====================================================================================
+   3. PFE and the inverse z-transform of a two-pole H(z)
+   ===================================================================================== */
+const PFE_POLES = [[1, 4], [-1, 4], [1, 3], [-1, 3], [1, 2], [-1, 2], [2, 3], [-2, 3], [3, 2], [-3, 2], [2, 1], [-2, 1], [3, 1], [-3, 1]];
+const PFE_B0 = [[1], [2], [3], [-1], [-2], [1, 2], [3, 2], [-1, 2], [-3, 2]];
+const PFE_B1 = [[0], [1], [-1], [2], [-2], [3], [-3], [1, 2], [-1, 2], [3, 2], [-3, 2]];
+function rocText(kind, lo, hi) {
+  if (kind === 'causal') return `|z| &gt; ${num(hi)}`;
+  if (kind === 'anti') return `|z| &lt; ${num(lo)}`;
+  return `${num(lo)} &lt; |z| &lt; ${num(hi)}`;
+}
+drills.pfe = {
+  gen(seed) {
+    const R = rng(seed);
+    let p1, p2, b0, b1, A1, A2;
+    for (let t = 0; ; t++) {
+      if (t > 20000) throw new Error('pfe: no parameters found');
+      p1 = F(...R.pick(PFE_POLES)); p2 = F(...R.pick(PFE_POLES));
+      b0 = F(...R.pick(PFE_B0)); b1 = F(...R.pick(PFE_B1));
+      if (p1.eq(p2)) continue;
+      A1 = b0.mul(p1).add(b1).div(p1.sub(p2));      // cover-up: (b0 + b1/p1)/(1 − p2/p1)
+      A2 = b0.mul(p2).add(b1).div(p2.sub(p1));
+      if (A1.isZero() || A2.isZero()) continue;       // a zero would cancel a pole
+      if (A1.d > 9 || A2.d > 9 || A1.d === 7 || A2.d === 7 || Math.abs(A1.n) > 30 || Math.abs(A2.n) > 30) continue;   // exam-like residues
+      break;
+    }
+    const m1 = p1.abs(), m2 = p2.abs();
+    const lo = m1.lt(m2) ? m1 : m2, hi = m1.lt(m2) ? m2 : m1;
+    const kinds = ['causal', 'anti'];
+    if (!m1.eq(m2)) kinds.push('two', 'two');
+    const roc = R.pick(kinds);
+    const T = (A, p, step) => ({ A, p, step });
+    const small = m1.lt(m2) ? { A: A1, p: p1 } : { A: A2, p: p2 };
+    const big = m1.lt(m2) ? { A: A2, p: p2 } : { A: A1, p: p1 };
+    const answers = {
+      causal: { terms: [T(A1, p1, 'R'), T(A2, p2, 'R')], why: `This is the causal inverse (ROC |z| &gt; ${num(hi)}): both terms right-sided.` },
+      anti: { terms: [T(A1.neg(), p1, 'L'), T(A2.neg(), p2, 'L')], why: `This is the anti-causal inverse (ROC |z| &lt; ${num(lo)}): both terms left-sided.` },
+    };
+    if (!m1.eq(m2)) answers.two = { terms: [T(small.A, small.p, 'R'), T(big.A.neg(), big.p, 'L')], why: `This is the two-sided inverse for the annulus ${num(lo)} &lt; |z| &lt; ${num(hi)}.` };
+    const correct = { terms: answers[roc].terms, why: 'Correct.', correct: true };
+    const pool = [];
+    for (const k of Object.keys(answers)) if (k !== roc) pool.push(answers[k]);
+    if (!m1.eq(m2)) pool.push({ terms: [T(small.A.neg(), small.p, 'L'), T(big.A, big.p, 'R')], why: 'Sides swapped: in an annulus the pole INSIDE the inner radius gives the right-sided term, the pole outside the outer radius the left-sided one.' });
+    pool.push({ terms: [T(A1, p1, 'L'), T(A2, p2, 'L')], why: `Left-sided terms need a minus sign: Z{−p${sup('n')}u[−n−1]} = 1/(1 − pz${sup(M + '1')}), ROC |z| &lt; |p|.` });
+    pool.push({ terms: [T(A1.neg(), p1, 'L0'), T(A2.neg(), p2, 'L0')], why: 'u[−n] instead of u[−n−1]: a left-sided term from 1/(1 − pz<sup>−1</sup>) stops at n = −1 (h[0] would be wrong).' });
+    pool.push({ terms: [T(A2, p1, 'R'), T(A1, p2, 'R')], why: 'The residues are attached to the wrong poles.' });
+    pool.push({ terms: [T(A1.neg(), p1, 'R'), T(A2.neg(), p2, 'R')], why: 'Right-sided terms carry +A, not −A.' });
+    if (!m1.eq(m2)) pool.push({ terms: [T(small.A, small.p, 'R'), T(big.A, big.p, 'L')], why: 'The left-sided term is missing its minus sign.' });
+    const opts = [correct];
+    for (const c of pool) {                          // natural distractors first, then the rest in random order
+      if (opts.length >= 4) break;
+      if (opts.every(o => !sameSeq(o.terms, c.terms))) opts.push(c);
+    }
+    const rest = R.shuffle(pool);
+    for (const c of rest) { if (opts.length >= 4) break; if (opts.every(o => !sameSeq(o.terms, c.terms))) opts.push(c); }
+    const options = R.shuffle(opts);
+    const stable = roc === 'causal' ? hi.lt(1) : roc === 'anti' ? lo.gt(1) : (lo.lt(1) && hi.gt(1));
+    return { drill: 'pfe', seed, p1, p2, b0, b1, A1, A2, lo, hi, roc, options, correctIndex: options.findIndex(o => o.correct), stable, maxPts: 8 };
+  },
+  statement(p) {
+    return `<p>An LTI system has transfer function</p>
+      <p class="sys">H(z) = ${frac(polyZ([p.b0, p.b1]), factorZ(p.p1) + factorZ(p.p2))}</p>
+      <p><b>(a)</b> Write H(z) = ${frac('A' + sub('1'), factorZ(p.p1))} + ${frac('A' + sub('2'), factorZ(p.p2))}. Find A${sub('1')} and A${sub('2')} (exact fractions).</p>
+      <p><b>(b)</b> The ROC is <b>${rocText(p.roc, p.lo, p.hi)}</b>. Which is h[n]?</p>
+      <p><b>(c)</b> With that ROC, is the system BIBO stable?</p>`;
+  },
+  answer(p) { return { A1: p.A1.toString(), A2: p.A2.toString(), opt: p.correctIndex, stable: p.stable ? 'yes' : 'no' }; },
+  check(p, r) {
+    const a1 = parseNum(r.A1), a2 = parseNum(r.A2);
+    const ok1 = near(a1, p.A1.v), ok2 = near(a2, p.A2.v);
+    const okO = r.opt === p.correctIndex, okS = r.stable === (p.stable ? 'yes' : 'no');
+    const chosen = Number.isInteger(r.opt) ? p.options[r.opt] : null;
+    const parts = [
+      { label: `(a) A${sub('1')} (pole ${num(p.p1)})`, ok: ok1, pts: ok1 ? 2 : 0, max: 2, msg: Number.isNaN(a1) ? 'could not read a number.' : ok1 ? `A${sub('1')} = ${num(p.A1)}.` : '' },
+      { label: `(a) A${sub('2')} (pole ${num(p.p2)})`, ok: ok2, pts: ok2 ? 2 : 0, max: 2, msg: Number.isNaN(a2) ? 'could not read a number.' : ok2 ? `A${sub('2')} = ${num(p.A2)}.` : '' },
+      { label: '(b) h[n]', ok: okO, pts: okO ? 3 : 0, max: 3, msg: !chosen ? 'pick one option.' : okO ? 'right pairing of poles and sides.' : chosen.why },
+      { label: '(c) BIBO stable?', ok: okS, pts: okS ? 1 : 0, max: 1, msg: !r.stable ? 'choose yes or no.' : okS ? `${p.stable ? 'Yes' : 'No'}: the ROC ${p.stable ? 'contains' : 'does not contain'} the unit circle.` : '' },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    if (!ok1 || !ok2) {
+      h1.push(`<b>Cover-up.</b> A${sub('1')} = [H(z)·(1 − p${sub('1')}z${sup(M + '1')})] evaluated at z = p${sub('1')}, i.e. put z${sup(M + '1')} = 1/p${sub('1')} into what is left. Self-check: A${sub('1')} + A${sub('2')} must equal ${num(p.b0)} (the value of H at z${sup(M + '1')} = 0).`);
+      h2.push(`<b>For A${sub('1')}:</b> numerator ${num(p.b0)} + (${num(p.b1)})·(1/${paren(p.p1)}) = ${num(p.b0.add(p.b1.div(p.p1)))}; remaining factor 1 − (${num(p.p2)})/(${num(p.p1)}) = ${num(F(1).sub(p.p2.div(p.p1)))}. Divide.`);
+    }
+    if (!okO) h1.push(`<b>Pairing rule.</b> A pole with |p| <em>inside</em> the ROC's inner edge gives Ap${sup('n')}u[n]; a pole <em>outside</em> the ROC's outer edge gives −Ap${sup('n')}u[−n−1].`);
+    if (!okS) h1.push('<b>Stability.</b> BIBO stable ⇔ the ROC contains the unit circle |z| = 1.');
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    const cov = (b0, b1, pa, pb, A, i, j) => {
+      const inv = pa.inv();
+      const numV = b0.add(b1.mul(inv)), denV = F(1).sub(pb.mul(inv));
+      const numS = b1.isZero() ? num(b0) : `${num(b0)} ${b1.sign() < 0 ? M : '+'} ${paren(b1.abs())}·${paren(inv)}`;
+      const denS = `1 ${pb.sign() > 0 ? M : '+'} ${paren(pb.abs())}·${paren(inv)}`;
+      return `A${sub(i)} = ${frac(polyZ([b0, b1]), factorZ(pb))} at z${sup(M + '1')} = 1/p${sub(i)} = ${paren(inv)}: &nbsp; ${frac(numS, denS)} = ${frac(num(numV), num(denV))} = <b>${num(A)}</b>`;
+    };
+    const side = (A, pp) => {
+      const inside = pp.abs().cmp(p.roc === 'causal' ? p.hi : p.roc === 'anti' ? p.lo : p.lo) <= 0 && p.roc !== 'anti';
+      return inside;
+    };
+    void side;
+    const rows = [[p.A1, p.p1, 1], [p.A2, p.p2, 2]].map(([A, pp, i]) => {
+      const m = pp.abs();
+      const right = p.roc === 'causal' || (p.roc === 'two' && m.eq(p.lo));
+      return `<li>Pole p${sub(i)} = ${num(pp)} (|p${sub(i)}| = ${num(m)}) lies ${right ? 'inside' : 'outside'} the ROC's ${right ? 'inner' : 'outer'} edge ⇒ ${right ? 'right-sided' : 'left-sided'}: ${termHTML({ A: right ? A : A.neg(), p: pp, step: right ? 'R' : 'L' }, true)}</li>`;
+    }).join('');
+    const ans = p.options[p.correctIndex].terms;
+    return `<h3>Worked solution</h3>
+      <p><b>(a) Cover-up</b> (set z = p${sub('k')} in everything except the factor 1 − p${sub('k')}z${sup(M + '1')}):</p>
+      <p>${cov(p.b0, p.b1, p.p1, p.p2, p.A1, '1')}</p>
+      <p>${cov(p.b0, p.b1, p.p2, p.p1, p.A2, '2')}</p>
+      <p class="muted">Check: A${sub('1')} + A${sub('2')} = ${num(p.A1.add(p.A2))} = b${sub('0')} ✓ and −(A${sub('1')}p${sub('2')} + A${sub('2')}p${sub('1')}) = ${num(p.A1.mul(p.p2).add(p.A2.mul(p.p1)).neg())} = b${sub('1')} ✓ (recombine the two fractions).</p>
+      <p><b>(b) ROC ${rocText(p.roc, p.lo, p.hi)}.</b></p><ul>${rows}</ul>
+      <p>h[n] = <b>${termsHTML(ans)}</b></p>
+      <p><b>(c)</b> ${p.stable ? 'Stable' : 'Not stable'}: the ROC ${rocText(p.roc, p.lo, p.hi)} ${p.stable ? 'contains' : 'does not contain'} |z| = 1${p.roc === 'causal' ? ` (causal ⇒ stable iff every pole is inside the unit circle; largest |p| = ${num(p.hi)})` : p.roc === 'anti' ? ` (anti-causal ⇒ stable iff every pole is outside the unit circle; smallest |p| = ${num(p.lo)})` : ''}.</p>
+      <p class="muted">All possible ROCs here: |z| &gt; ${num(p.hi)} (causal)${p.lo.eq(p.hi) ? '' : `, ${num(p.lo)} &lt; |z| &lt; ${num(p.hi)} (two-sided)`}, |z| &lt; ${num(p.lo)} (anti-causal). Review: ${pageLink('problems/all-possible-rocs', 'Inverse z / PFE / all possible ROCs')} · ${pageLink('2-z-transform/08-inverse-z-transform', 'Lecture 8')}</p>`;
+  },
+};
+
+/* ---------------- complex numbers (to compare X(z) formulas numerically) ---------------- */
+const cx = (re, im = 0) => ({ re, im });
+const cadd = (a, b) => cx(a.re + b.re, a.im + b.im);
+const csub = (a, b) => cx(a.re - b.re, a.im - b.im);
+const cmul = (a, b) => cx(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re);
+const cdiv = (a, b) => { const d = b.re * b.re + b.im * b.im; return cx((a.re * b.re + a.im * b.im) / d, (a.im * b.re - a.re * b.im) / d); };
+const cabs = a => Math.hypot(a.re, a.im);
+const cpolar = (r, t) => cx(r * Math.cos(t), r * Math.sin(t));
+const cpowi = (z, n) => cpolar(Math.pow(cabs(z), n), Math.atan2(z.im, z.re) * n);
+
+/* X(z) = Σ c·z^{-e} / (1 − p z^{-1})  (p = null: a plain c·z^{-e});  {dne: true}: does not exist */
+function xVal(X, z) {
+  let s = cx(0);
+  for (const t of X.terms) {
+    let v = cmul(cx(t.c.v), cpowi(z, -t.e));
+    if (t.p) v = cdiv(v, csub(cx(1), cmul(cx(t.p.v), cpowi(z, -1))));
+    s = cadd(s, v);
+  }
+  return s;
+}
+const TESTZ = [cpolar(1.37, 0.61), cpolar(0.53, -2.1), cpolar(2.9, 2.6)];
+function sameX(A, B) {
+  if (A.dne || B.dne) return !!A.dne === !!B.dne;
+  return TESTZ.every(z => { const u = xVal(A, z), v = xVal(B, z); return cabs(csub(u, v)) <= 1e-9 * Math.max(1, cabs(u)); });
+}
+function xHTML(X) {
+  if (X.dne) return 'X(z) does not exist (the ROC is empty)';
+  const polys = X.terms.filter(t => !t.p), rats = X.terms.filter(t => t.p);
+  let out = '';
+  if (polys.length) {
+    const es = polys.map(t => t.e), lo = Math.min(...es), hi = Math.max(...es);
+    out = polyZ(range(lo, hi).map(e => polys.filter(t => t.e === e).reduce((s, t) => s.add(t.c), F(0))), lo);
+  }
+  for (const t of rats) {
+    const f = frac(polyZ([t.c.abs()], t.e), factorZ(t.p).slice(1, -1));
+    out += out === '' ? (t.c.sign() < 0 ? M : '') + f : (t.c.sign() < 0 ? ` ${M} ` : ' + ') + f;
+  }
+  return out;
+}
+/* C a^n (step), as the exams write it */
+function sigHTML(C, a, stepHtml, first) {
+  const neg = C.sign() < 0, mag = C.abs();
+  const coef = mag.eq(1) ? '' : paren(mag);
+  const base = paren(a);
+  const dot = coef && !coef.endsWith(')') && !base.startsWith('(') ? '·' : '';
+  const body = `${coef}${dot}${base}${sup('n')} ${stepHtml}`;
+  return first ? (neg ? M : '') + body : (neg ? ` ${M} ` : ' + ') + body;
+}
+function pickDistinct(correct, pool, R, same, n = 4) {
+  const opts = [correct];
+  for (const c of R.shuffle(pool)) { if (opts.length >= n) break; if (opts.every(o => !same(o, c))) opts.push(c); }
+  return R.shuffle(opts);
+}
+
+/* =====================================================================================
+   4. z-transform and ROC of a signal
+   ===================================================================================== */
+const ZR_MAGS = [[1, 4], [1, 3], [1, 2], [2, 3], [3, 4], [4, 3], [3, 2], [2, 1], [3, 1]];
+const ZR_COEF = [[1], [2], [3], [-1], [-2], [1, 2], [-3]];
+const ZR_SHAPES = {        // r = number of radii; reach0/reachInf: the radial region touches 0 / ∞; has0/hasInf: those points belong to it
+  gt:     { label: '|z| > r', r: 1, reach0: false, reachInf: true, has0: false, hasInf: true },
+  gt_fin: { label: 'r < |z| < ∞', r: 1, reach0: false, reachInf: true, has0: false, hasInf: false },
+  lt:     { label: '|z| < r', r: 1, reach0: true, reachInf: false, has0: true, hasInf: false },
+  lt_nz:  { label: '0 < |z| < r', r: 1, reach0: true, reachInf: false, has0: false, hasInf: false },
+  ann:    { label: 'r₁ < |z| < r₂', r: 2, reach0: false, reachInf: false, has0: false, hasInf: false },
+  no0:    { label: 'all z except z = 0', r: 0, reach0: true, reachInf: true, has0: false, hasInf: true },
+  noinf:  { label: 'all z except z = ∞ (|z| < ∞)', r: 0, reach0: true, reachInf: true, has0: true, hasInf: false },
+  no0inf: { label: 'all z except 0 and ∞ (0 < |z| < ∞)', r: 0, reach0: true, reachInf: true, has0: false, hasInf: false },
+  all:    { label: 'every z, including 0 and ∞', r: 0, reach0: true, reachInf: true, has0: true, hasInf: true },
+  empty:  { label: 'empty — X(z) does not exist', r: 0, reach0: false, reachInf: false, has0: false, hasInf: false },
+};
+const ZR_ORDER = ['gt', 'gt_fin', 'lt', 'lt_nz', 'ann', 'no0', 'noinf', 'no0inf', 'all', 'empty'];
+const ZR_NEAR = [['gt', 'gt_fin'], ['lt', 'lt_nz'], ['no0', 'noinf', 'no0inf', 'all']];
+function zrocText(roc) {
+  const r1 = roc.r1 ? num(roc.r1) : '', r2 = roc.r2 ? num(roc.r2) : '';
+  return { gt: `|z| &gt; ${r1}`, gt_fin: `${r1} &lt; |z| &lt; ∞`, lt: `|z| &lt; ${r1}`, lt_nz: `0 &lt; |z| &lt; ${r1}`, ann: `${r1} &lt; |z| &lt; ${r2}`,
+    no0: 'all z except z = 0', noinf: 'all z except z = ∞', no0inf: 'all z except 0 and ∞ (0 &lt; |z| &lt; ∞)', all: 'the whole z-plane', empty: 'empty' }[roc.shape];
+}
+drills.zroc = {
+  SHAPES: ZR_SHAPES, ORDER: ZR_ORDER,
+  gen(seed) {
+    const R = rng(seed);
+    const fam = R.pick(['right', 'right', 'left', 'leftk', 'two', 'two', 'finite', 'finite']);
+    const base = () => { const [n, d] = R.pick(ZR_MAGS); return F(R.chance(0.3) ? -n : n, d); };
+    const coef = () => F(...R.pick(ZR_COEF));
+    const T = (c, e, p) => ({ c, e, p: p || null });
+    const X1 = (...ts) => ({ terms: ts });
+    const DNE = why => ({ dne: true, terms: [], why });
+    let seq, sig, X, roc, pool, deriv, fin = null;
+    if (fam === 'right') {                                       // A a^n u[n − k]
+      const A = coef(), a = base(), k = R.int(-2, 3), ak = a.pow(k);
+      seq = [{ C: A, a, lo: k, hi: null }];
+      sig = sigHTML(A, a, `u[${idxStr(k)}]`, true);
+      X = X1(T(A.mul(ak), k, a));
+      roc = { shape: k >= 0 ? 'gt' : 'gt_fin', r1: a.abs() };
+      pool = [
+        { ...X1(T(A, k, a)), why: `The factor a${sup('k')} = ${num(ak)} is missing: with n = m + k, Σ a${sup('n')}z${sup(M + 'n')} = a${sup('k')}z${sup(M + 'k')} Σ (az${sup(M + '1')})${sup('m')}.` },
+        { ...X1(T(A.mul(ak), -k, a)), why: `Shift direction: the first sample sits at n = ${num(k)}, which gives ${zpow(k) || '1'}, not ${zpow(-k) || '1'}.` },
+        { ...X1(T(A.mul(ak), k, a.inv())), why: `The pole is at z = a = ${num(a)}, so the denominator is 1 − az${sup(M + '1')}, not 1 − (1/a)z${sup(M + '1')}.` },
+        { ...X1(T(A, 0, a)), why: `The shift was dropped: that is the transform of ${sigHTML(A, a, 'u[n]', true)}.` },
+        { ...X1(T(A.mul(ak).neg(), k, a)), why: 'Sign error: a right-sided exponential keeps the sign of its coefficient (only left-sided pairs pick up a minus sign).' },
+        { ...X1(T(A, 1, a)), why: 'An extra delay z<sup>−1</sup> crept in.' },
+        DNE(`It does exist: the series converges for |z| &gt; ${num(a.abs())}.`),
+      ];
+      deriv = `<p>X(z) = Σ${sub('n≥' + num(k))} ${sigHTML(A, a, '', true)}z${sup(M + 'n')}. Put n = m + ${paren(k)}: X(z) = ${paren(A)}·${paren(a)}${sup(num(k))} z${sup(num(-k))} Σ${sub('m≥0')} (${paren(a)}·z${sup(M + '1')})${sup('m')} = ${xHTML(X)},
+        a geometric series that converges iff |${paren(a)}·z${sup(M + '1')}| &lt; 1, i.e. |z| &gt; ${num(a.abs())}.</p>` +
+        (k < 0 ? `<p>The samples at n = ${num(k)} … −1 contribute <em>positive</em> powers of z, which blow up at z = ∞, so ∞ is excluded: ROC ${num(a.abs())} &lt; |z| &lt; ∞.</p>`
+               : `<p>Every power is z${sup(M + 'n')} with n ≥ 0, so z = ∞ is fine: ROC |z| &gt; ${num(a.abs())}.</p>`);
+    } else if (fam === 'left') {                                 // C a^n u[−n − 1]
+      const Cc = coef(), a = base();
+      seq = [{ C: Cc, a, lo: null, hi: -1 }];
+      sig = sigHTML(Cc, a, `u[${M}n ${M} 1]`, true);
+      X = X1(T(Cc.neg(), 0, a));
+      roc = { shape: 'lt', r1: a.abs() };
+      pool = [
+        { ...X1(T(Cc, 0, a)), why: `The pair is a${sup('n')}u[−n−1] ↔ −1/(1 − az${sup(M + '1')}): the minus sign was dropped.` },
+        { ...X1(T(Cc.neg(), 0, a.inv())), why: `The pole is at z = a = ${num(a)}: the denominator is 1 − az${sup(M + '1')}.` },
+        { ...X1(T(Cc.neg(), 1, a)), why: 'u[−n − 1] is the standard left-sided pair; it does not add a factor z<sup>−1</sup>.' },
+        { ...X1(T(Cc, 0, a.inv())), why: 'Both the sign and the pole are off.' },
+        DNE(`It does exist: the series converges for |z| &lt; ${num(a.abs())}.`),
+      ];
+      deriv = `<p>X(z) = Σ${sub('n≤−1')} ${sigHTML(Cc, a, '', true)}z${sup(M + 'n')} = ${paren(Cc)} Σ${sub('m≥1')} (z/${paren(a)})${sup('m')} = ${paren(Cc)}·${frac('z/' + paren(a), '1 − z/' + paren(a))} = ${xHTML(X)}
+        (multiply top and bottom by −az${sup(M + '1')} = ${polyZ([a.neg()], 1)}). It converges iff |z/${paren(a)}| &lt; 1: ROC |z| &lt; ${num(a.abs())}. Only positive powers of z appear, so z = 0 is included.</p>`;
+    } else if (fam === 'leftk') {                                // C a^n u[−n + k], k = 0..3
+      const Cc = coef(), a = base(), k = R.int(0, 3), ak1 = a.pow(k + 1);
+      seq = [{ C: Cc, a, lo: null, hi: k }];
+      sig = sigHTML(Cc, a, k === 0 ? `u[${M}n]` : `u[${M}n + ${k}]`, true);
+      X = X1(T(Cc.mul(ak1).neg(), k + 1, a));
+      roc = { shape: k >= 1 ? 'lt_nz' : 'lt', r1: a.abs() };
+      pool = [
+        { ...X1(T(Cc.mul(ak1), k + 1, a)), why: `Sign: 1/(1 − z/a) = −az${sup(M + '1')}/(1 − az${sup(M + '1')}), so rewriting in powers of z${sup(M + '1')} brings in a minus sign.` },
+        { ...X1(T(Cc.mul(a.pow(k)).neg(), k, a)), why: `Off by one: 1/(1 − z/a) = −az${sup(M + '1')}/(1 − az${sup(M + '1')}) supplies one more factor az${sup(M + '1')}.` },
+        { ...X1(T(Cc.neg(), k + 1, a)), why: `The factor a${sup(String(k + 1))} = ${num(ak1)} is missing.` },
+        { ...X1(T(Cc.mul(ak1).neg(), k + 1, a.inv())), why: `The pole is at z = a = ${num(a)}.` },
+        DNE(`It does exist: the series converges for |z| &lt; ${num(a.abs())}.`),
+      ];
+      deriv = `<p>X(z) = Σ${sub('n≤' + k)} ${sigHTML(Cc, a, '', true)}z${sup(M + 'n')}. Put m = ${k} − n ≥ 0: X(z) = ${paren(Cc)}·${paren(a)}${sup(String(k))}z${sup(num(-k))} Σ${sub('m≥0')} (z/${paren(a)})${sup('m')} = ${frac(`${paren(Cc.mul(a.pow(k)))}z${sup(num(-k))}`, `1 − z/${paren(a)}`)} = ${xHTML(X)}, valid for |z| &lt; ${num(a.abs())}.</p>` +
+        (k >= 1 ? `<p>The samples at n = 1 … ${k} contribute z${sup(M + 'n')} terms, which blow up at z = 0, so 0 is excluded: ROC 0 &lt; |z| &lt; ${num(a.abs())}.</p>`
+                : `<p>All samples sit at n ≤ 0 (positive powers of z only), so z = 0 is included: ROC |z| &lt; ${num(a.abs())}.</p>`);
+    } else if (fam === 'two') {                                  // A a^n u[n] + B b^n u[−n − 1]
+      const A = coef(), B = coef();
+      let a, b;
+      do { a = base(); b = base(); } while (a.abs().eq(b.abs()));
+      const empty = R.chance(0.3);
+      if (empty !== a.abs().gt(b.abs())) { const t = a; a = b; b = t; }
+      seq = [{ C: A, a, lo: 0, hi: null }, { C: B, a: b, lo: null, hi: -1 }];
+      sig = sigHTML(A, a, 'u[n]', true) + sigHTML(B, b, `u[${M}n ${M} 1]`, false);
+      const formula = X1(T(A, 0, a), T(B.neg(), 0, b));
+      if (!empty) {
+        X = formula;
+        roc = { shape: 'ann', r1: a.abs(), r2: b.abs() };
+        pool = [
+          { ...X1(T(A, 0, a), T(B, 0, b)), why: `The left-sided term needs a minus sign: B b${sup('n')}u[−n−1] ↔ −B/(1 − bz${sup(M + '1')}).` },
+          { ...X1(T(A, 0, a.inv()), T(B.neg(), 0, b.inv())), why: 'The poles are at z = a and z = b: the denominators are 1 − az<sup>−1</sup> and 1 − bz<sup>−1</sup>.' },
+          { ...X1(T(A.neg(), 0, a), T(B, 0, b)), why: 'The minus sign belongs to the left-sided term only.' },
+          { ...X1(T(A, 0, b), T(B.neg(), 0, a)), why: 'Each coefficient stays with its own exponential.' },
+          DNE(`It does exist: |z| &gt; ${num(a.abs())} and |z| &lt; ${num(b.abs())} overlap because ${num(a.abs())} &lt; ${num(b.abs())}.`),
+        ];
+      } else {
+        X = { dne: true, terms: [] };
+        roc = { shape: 'empty' };
+        pool = [
+          { ...formula, why: `Each piece has a transform on its own ROC, but |z| &gt; ${num(a.abs())} and |z| &lt; ${num(b.abs())} never overlap (${num(a.abs())} &gt; ${num(b.abs())}): no common ROC, so X(z) does not exist.` },
+          { ...X1(T(A, 0, a), T(B, 0, b)), why: 'No common ROC — and the left-sided term would need a minus sign anyway.' },
+          { ...X1(T(A, 0, a.inv()), T(B.neg(), 0, b.inv())), why: 'No common ROC, so there is no X(z) to write down.' },
+          { ...X1(T(A.neg(), 0, a), T(B, 0, b)), why: 'No common ROC, so there is no X(z) to write down.' },
+        ];
+      }
+      deriv = `<p>Right-sided piece: ${sigHTML(A, a, 'u[n]', true)} ↔ ${xHTML(X1(T(A, 0, a)))}, ROC |z| &gt; ${num(a.abs())}.<br>
+        Left-sided piece: ${sigHTML(B, b, `u[${M}n ${M} 1]`, true)} ↔ ${xHTML(X1(T(B.neg(), 0, b)))}, ROC |z| &lt; ${num(b.abs())} (note the minus sign).</p>` +
+        (empty ? `<p>The sum needs both at once: |z| &gt; ${num(a.abs())} <em>and</em> |z| &lt; ${num(b.abs())}. Since ${num(a.abs())} &gt; ${num(b.abs())} no z qualifies: the ROC is empty and X(z) does not exist.</p>`
+               : `<p>The sum converges where both do: ROC ${num(a.abs())} &lt; |z| &lt; ${num(b.abs())} (an annulus, a two-sided signal), and X(z) = ${xHTML(X)}.</p>`);
+    } else {                                                     // finite sequence
+      const L = R.int(3, 4), s = R.int(-3, 1);
+      const nz = () => R.pick([-3, -2, -1, 1, 2, 3]);
+      const vals = Array.from({ length: L }, (_, i) => (i === 0 || i === L - 1) ? nz() : R.int(-3, 3));
+      fin = { vals, n0: s };
+      seq = vals.map((v, i) => ({ C: F(v), a: F(1), lo: s + i, hi: s + i }));
+      sig = seqHTML(vals, s);
+      X = { terms: vals.map((v, i) => T(F(v), s + i)) };
+      const hasNeg = s < 0, hasPos = s + L - 1 > 0;
+      roc = { shape: hasNeg && hasPos ? 'no0inf' : hasNeg ? 'noinf' : 'no0' };
+      pool = [
+        { terms: vals.map((v, i) => T(F(v), -(s + i))), why: `Each x[n] multiplies z${sup(M + 'n')}: a sample at n = −2 gives z², not z${sup(M + '2')}.` },
+        { terms: vals.map((v, i) => T(F(v), s + i + 1)), why: 'Off by one: re-read where the arrow (n = 0) is.' },
+        { terms: vals.map((v, i) => T(F(v), s + i - 1)), why: 'Off by one: re-read where the arrow (n = 0) is.' },
+        { terms: vals.map((v, i) => T(F(vals[L - 1 - i]), s + i)), why: 'The coefficients are in reverse order.' },
+        DNE('A finite sum of finite terms always exists (except possibly at z = 0 or ∞).'),
+      ];
+      deriv = `<p>A finite sum: X(z) = Σ x[n]z${sup(M + 'n')} = ${xHTML(X)}.</p><p>It converges for every z where no term blows up: ` +
+        `${hasPos ? 'samples at n &gt; 0 give negative powers of z, so z = 0 is excluded' : 'there are no samples at n &gt; 0, so z = 0 is fine'}; ` +
+        `${hasNeg ? 'samples at n &lt; 0 give positive powers of z, so z = ∞ is excluded' : 'there are no samples at n &lt; 0, so z = ∞ is fine'}. ROC: ${zrocText(roc)}.</p>`;
+    }
+    const correct = { ...X, why: 'Correct.', correct: true };
+    const options = pickDistinct(correct, pool, R, sameX);
+    return { drill: 'zroc', seed, fam, seq, sig, fin, X, roc, deriv, options, correctIndex: options.findIndex(o => o.correct), maxPts: 6 };
+  },
+  statement(p) {
+    return `<p>Find the z-transform and its region of convergence for</p>
+      <p class="sys">x[n] = ${p.sig}</p>` + (p.fin ? `<div class="scroll">${idxTable('x[n]', p.fin.vals, p.fin.n0)}</div>` : '') +
+      `<p><b>(a)</b> ROC: choose its shape and enter the radii (exact fractions). <b>(b)</b> Which is X(z)?</p>`;
+  },
+  answer(p) { return { shape: p.roc.shape, r1: p.roc.r1 ? p.roc.r1.toString() : '', r2: p.roc.r2 ? p.roc.r2.toString() : '', opt: p.correctIndex }; },
+  check(p, r) {
+    const want = p.roc, S = ZR_SHAPES[want.shape];
+    const got = ZR_SHAPES[r.shape] ? r.shape : null;
+    const rr1 = parseNum(r.r1), rr2 = parseNum(r.r2);
+    const radiiOK = S.r === 0 || (S.r === 1 ? near(rr1, want.r1.v) : near(rr1, want.r1.v) && near(rr2, want.r2.v));
+    const shapeOK = got === want.shape;
+    const nearShape = !shapeOK && !!got && ZR_NEAR.some(g => g.includes(got) && g.includes(want.shape));
+    let rp = 0, msg;
+    if (!got) msg = 'choose a shape.';
+    else if (shapeOK && radiiOK) { rp = 3; msg = `ROC: ${zrocText(want)}.`; }
+    else if (nearShape && radiiOK) { rp = 2; msg = 'almost — look again at whether z = 0 and z = ∞ belong to the ROC.'; }
+    else if (shapeOK) { rp = 1; msg = 'right shape, wrong radius.'; }
+    else msg = 'not the right region.';
+    const okO = r.opt === p.correctIndex, chosen = Number.isInteger(r.opt) ? p.options[r.opt] : null;
+    const parts = [
+      { label: '(a) ROC', ok: rp === 3, pts: rp, max: 3, msg },
+      { label: '(b) X(z)', ok: okO, pts: okO ? 3 : 0, max: 3, msg: !chosen ? 'pick one option.' : okO ? 'right.' : chosen.why },
+    ];
+    const allOk = rp === 3 && okO;
+    const h1 = [], h2 = [];
+    if (rp < 3) {
+      h1.push(`<b>ROC rules.</b> A right-sided exponential a${sup('n')}u[n − k] converges outside its pole (|z| &gt; |a|), a left-sided one inside (|z| &lt; |a|); a sum converges where every piece does. Finite stretches: samples at n &gt; 0 exclude z = 0, samples at n &lt; 0 exclude z = ∞.`);
+      h2.push(p.fam === 'right' ? 'Where does the sequence start? If it starts at a negative n, its first terms are positive powers of z.'
+        : p.fam === 'leftk' ? 'Where does the sequence end? If it ends at a positive n, its last terms are negative powers of z.'
+        : p.fam === 'two' ? 'Compare the two radii: the right-sided piece needs |z| above one, the left-sided piece needs |z| below the other.'
+        : p.fam === 'finite' ? 'List the indices that carry samples: any n &gt; 0? any n &lt; 0?' : 'The pole of the left-sided pair is the outer edge of the ROC.');
+    }
+    if (!okO) h1.push(`<b>Pairs to use.</b> a${sup('n')}u[n] ↔ 1/(1 − az${sup(M + '1')}), |z| &gt; |a|; −a${sup('n')}u[−n−1] ↔ 1/(1 − az${sup(M + '1')}), |z| &lt; |a|; x[n − k] ↔ z${sup(M + 'k')}X(z).`);
+    return { parts, allOk, pts: rp + (okO ? 3 : 0), max: 6, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    return `<h3>Worked solution</h3>${p.deriv}
+      <p><b>Answer.</b> ${p.X.dne ? 'X(z) does not exist (empty ROC).' : `X(z) = ${xHTML(p.X)}, ROC: ${zrocText(p.roc)}.`}</p>
+      <p class="muted">Review: ${pageLink('problems/z-transform-with-roc', 'z-transform with ROC (recipe)')} · ${pageLink('2-z-transform/06-the-z-transform', 'Lecture 6')} · ${pageLink('2-z-transform/07-z-transform-properties', 'Lecture 7')} · ${pageLink('concepts/z-transform-pairs', 'z-transform pairs')}</p>`;
+  },
+  exportVariant(p) {
+    const fr = f => (f ? [f.n, f.d] : null);
+    return { seed: p.seed, fam: p.fam, seq: p.seq.map(t => ({ C: fr(t.C), a: fr(t.a), lo: t.lo, hi: t.hi })), roc: { shape: p.roc.shape, r1: fr(p.roc.r1), r2: fr(p.roc.r2) },
+      X: p.X.dne ? null : p.X.terms.map(t => ({ c: fr(t.c), e: t.e, p: fr(t.p) })) };
+  },
+};
+
+/* =====================================================================================
+   5. Stability and causality from the ROC
+   ===================================================================================== */
+const RS_REAL = [[1, 4], [1, 3], [1, 2], [2, 3], [3, 4], [4, 3], [3, 2], [2, 1], [3, 1], [5, 4]];
+const RS_PAIR = [[1, 2], [2, 3], [3, 4], [3, 2], [2, 1], [4, 3]];         // poles ±j·r
+const RS_ZERO = [[1], [-1], [1, 2], [-1, 2], [2], [-2], [3], [-3, 2]];
+drills.rocsc = {
+  gen(seed) {
+    const R = rng(seed);
+    for (let t = 0; t < 10000; t++) {
+      const poles = [];                                            // {p: Fr (real) | null, jr: Fr (pair ±j r) | null}
+      const nReal = R.pick([2, 2, 3, 1]);
+      const withPair = nReal === 1 || (nReal === 2 && R.chance(0.25));
+      for (let i = 0; i < nReal; i++) { const [n, d] = R.pick(RS_REAL); poles.push({ p: F(R.chance(0.35) ? -n : n, d) }); }
+      if (withPair) { const [n, d] = R.pick(RS_PAIR); poles.push({ jr: F(n, d) }); }
+      const mags = poles.map(q => (q.p ? q.p.abs() : q.jr));
+      const reals = poles.filter(q => q.p).map(q => q.p);
+      if (reals.some((a, i) => reals.some((b, j) => i < j && a.eq(b)))) continue;         // repeated real pole
+      const distinct = [];
+      for (const m of mags.slice().sort((a, b) => a.cmp(b))) if (!distinct.length || !distinct[distinct.length - 1].eq(m)) distinct.push(m);
+      if (distinct.length < 2) continue;
+      // candidate ROCs: 0 = inside the smallest, k = between distinct[k-1] and distinct[k], last = outside the largest
+      const cands = [{ kind: 'left', lo: null, hi: distinct[0] }];
+      for (let k = 1; k < distinct.length; k++) cands.push({ kind: 'two', lo: distinct[k - 1], hi: distinct[k] });
+      cands.push({ kind: 'right', lo: distinct[distinct.length - 1], hi: null });
+      const contains1 = c => (!c.lo || c.lo.lt(1)) && (!c.hi || c.hi.gt(1));
+      const conds = ['causal', 'stable', 'stable', 'left'];
+      if (cands.length === 3) conds.push('two');
+      if (R.chance(0.3)) conds.push('right');
+      const cond = R.pick(conds);
+      const idx = cond === 'causal' || cond === 'right' ? cands.length - 1 : cond === 'left' ? 0 : cond === 'two' ? 1 : cands.findIndex(contains1);
+      if (cond === 'stable' && cands.filter(contains1).length !== 1) continue;
+      let zero = null;
+      if (R.chance(0.6)) {
+        const [n, d] = R.pick(RS_ZERO); zero = F(n, d);
+        if (reals.some(a => a.eq(zero))) continue;
+      }
+      const roc = cands[idx];
+      return { drill: 'rocsc', seed, poles, zero, cands, cond, correctIndex: idx, stable: contains1(roc), causal: roc.kind === 'right', maxPts: 4 };
+    }
+    throw new Error('rocsc: no parameters found');
+  },
+  denHTML(p) {
+    return p.poles.map(q => (q.p ? factorZ(q.p) : `(1 + ${q.jr.mul(q.jr).eq(1) ? '' : paren(q.jr.mul(q.jr))}z${sup(M + '2')})`)).join('');
+  },
+  candText(c) { return !c.lo ? `|z| &lt; ${num(c.hi)}` : !c.hi ? `|z| &gt; ${num(c.lo)}` : `${num(c.lo)} &lt; |z| &lt; ${num(c.hi)}`; },
+  condText(p) {
+    return { causal: 'the system is causal', stable: 'the system is BIBO stable', left: 'h[n] is left-sided', two: 'h[n] is two-sided', right: 'h[n] is right-sided' }[p.cond];
+  },
+  statement(p) {
+    const numer = p.zero ? polyZ([F(1), p.zero.neg()]) : '1';
+    return `<p>An LTI system has</p><p class="sys">H(z) = ${frac(numer, this.denHTML(p))}</p>
+      <p>and we know that <span class="cond">${this.condText(p)}</span>.</p>
+      <p><b>(a)</b> Which ROC does H(z) have? <b>(b)</b> Is the system BIBO stable? <b>(c)</b> Is it causal?</p>`;
+  },
+  answer(p) { return { opt: p.correctIndex, stable: p.stable ? 'yes' : 'no', causal: p.causal ? 'yes' : 'no' }; },
+  check(p, r) {
+    const okR = r.opt === p.correctIndex, okS = r.stable === (p.stable ? 'yes' : 'no'), okC = r.causal === (p.causal ? 'yes' : 'no');
+    const parts = [
+      { label: '(a) ROC', ok: okR, pts: okR ? 2 : 0, max: 2, msg: !Number.isInteger(r.opt) ? 'pick one.' : okR ? `ROC ${this.candText(p.cands[p.correctIndex])}.` : '' },
+      { label: '(b) BIBO stable?', ok: okS, pts: okS ? 1 : 0, max: 1, msg: !r.stable ? 'choose yes or no.' : okS ? `${p.stable ? 'yes' : 'no'}: the ROC ${p.stable ? 'contains' : 'does not contain'} |z| = 1.` : '' },
+      { label: '(c) Causal?', ok: okC, pts: okC ? 1 : 0, max: 1, msg: !r.causal ? 'choose yes or no.' : okC ? (p.causal ? 'yes: the ROC is the outside of the outermost pole.' : 'no: the ROC is not the outside of the outermost pole.') : '' },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [];
+    if (!okR) h1.push('<b>ROC facts.</b> The ROC is bounded by poles (never by zeros) and contains none. Causal / right-sided ⇒ outside the outermost pole; left-sided ⇒ inside the innermost pole; two-sided ⇒ an annulus between poles; BIBO stable ⇒ the ring that contains |z| = 1.');
+    if (!okS) h1.push('<b>Stability.</b> Stable ⇔ the ROC contains the unit circle. List the pole magnitudes and see where 1 falls.');
+    if (!okC) h1.push('<b>Causality.</b> For a rational H(z) written in powers of z<sup>−1</sup> (numerator degree ≤ denominator degree), causal ⇔ the ROC is |z| &gt; (largest pole magnitude).');
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 4, hints: allOk ? [] : [h1.join('<br>'), `Poles: ${this.poleList(p)}. Draw the circles through them; each ring between circles is one candidate ROC.`] };
+  },
+  poleList(p) {
+    return p.poles.map(q => (q.p ? `${num(q.p)} (|p| = ${num(q.p.abs())})` : `±j${q.jr.eq(1) ? '' : paren(q.jr)} (|p| = ${num(q.jr)})`)).join(', ');
+  },
+  solution(p) {
+    const rows = p.cands.map((c, i) => {
+      const st = (!c.lo || c.lo.lt(1)) && (!c.hi || c.hi.gt(1));
+      return `<tr${i === p.correctIndex ? ' style="font-weight:700"' : ''}><td>${this.candText(c)}</td><td>${c.kind === 'right' ? 'right-sided (causal)' : c.kind === 'left' ? 'left-sided (anti-causal)' : 'two-sided'}</td><td>${st ? 'yes' : 'no'}</td><td>${i === p.correctIndex ? '← ' + this.condText(p) : ''}</td></tr>`;
+    }).join('');
+    return `<h3>Worked solution</h3>
+      <p><b>Poles</b> (zeros of the denominator): ${this.poleList(p)}.${p.zero ? ` The zero at z = ${num(p.zero)} plays no role in the ROC.` : ''}</p>
+      <p>Every possible ROC is a ring bounded by pole circles:</p>
+      <div class="scroll"><table class="grid"><tr><th>ROC</th><th>h[n] is</th><th>stable?</th><th></th></tr>${rows}</table></div>
+      <p><b>(a)</b> "${this.condText(p)}" ⇒ ROC <b>${this.candText(p.cands[p.correctIndex])}</b>. <b>(b)</b> ${p.stable ? 'Stable' : 'Not stable'}: the ROC ${p.stable ? 'contains' : 'does not contain'} |z| = 1. <b>(c)</b> ${p.causal ? 'Causal' : 'Not causal'}${p.causal ? ': outside the outermost pole, with H written in powers of z<sup>−1</sup>.' : ': h[n] extends to n → −∞.'}</p>
+      <p class="muted">Review: ${pageLink('2-z-transform/11-bibo-stability-and-causality', 'Lecture 11')} · ${pageLink('problems/all-possible-rocs', 'All possible ROCs (recipe)')} · ${pageLink('concepts/region-of-convergence', 'ROC')} · ${pageLink('concepts/bibo-stability', 'BIBO stability')}</p>`;
+  },
+  exportVariant(p) {
+    const fr = f => (f ? [f.n, f.d] : null);
+    return { seed: p.seed, poles: p.poles.map(q => ({ p: fr(q.p), jr: fr(q.jr) })), zero: fr(p.zero), cond: p.cond,
+      roc: { lo: fr(p.cands[p.correctIndex].lo), hi: fr(p.cands[p.correctIndex].hi) }, stable: p.stable, causal: p.causal };
+  },
+};
+
+/* =====================================================================================
+   6. Unbounded outputs: pole matching and cancellation
+   ===================================================================================== */
+// an angle is {pi: Fr} (θ = π·value) or {rad: Fr} (θ = value, in radians — the FA2025 #8b trap e^{j2/3})
+const angV = a => (a.pi ? Math.PI * a.pi.v : a.rad.v);
+const angNeg = a => (a.pi ? { pi: a.pi.neg() } : { rad: a.rad.neg() });
+function angStr(a, withN) {                    // "π/4", "3π/4", "2/3"; with n: "πn/4", "2n/3"
+  const f = a.pi || a.rad, neg = f.sign() < 0, n = Math.abs(f.n), d = f.d;
+  const core = a.pi ? `${n === 1 ? '' : n}π${withN ? 'n' : ''}` : `${n}${withN ? 'n' : ''}`;
+  return (neg ? M : '') + core + (d === 1 ? '' : '/' + d);
+}
+function ucName(a) {                             // name of the point e^{jθ}
+  if (a.pi) { const v = a.pi; if (v.isZero()) return '1'; if (v.eq(1) || v.eq(-1)) return M + '1'; if (v.eq(F(1, 2))) return 'j'; if (v.eq(F(-1, 2))) return M + 'j'; }
+  const s = angStr(a, false);
+  return s.startsWith(M) ? `e${sup(M + 'j' + s.slice(1))}` : `e${sup('j' + s)}`;
+}
+const ucPole = a => ({ z: cpolar(1, angV(a)), name: ucName(a), ang: a });
+const realPt = f => ({ z: cx(f.v), name: num(f), fr: f });
+const PM_UC = [
+  { key: '1', angs: [[0, 1]], den: `(1 ${M} z${sup(M + '1')})` },
+  { key: '-1', angs: [[1, 1]], den: `(1 + z${sup(M + '1')})` },
+  { key: 'j', angs: [[1, 2]], den: `(1 ${M} jz${sup(M + '1')})` },
+  { key: '±j', angs: [[1, 2], [-1, 2]], den: `(1 + z${sup(M + '2')})` },
+  { key: 'pi4', angs: [[1, 4]], den: `(1 ${M} e${sup('jπ/4')}z${sup(M + '1')})` },
+  { key: '±pi4', angs: [[1, 4], [-1, 4]], den: `(1 ${M} √2 z${sup(M + '1')} + z${sup(M + '2')})` },
+  { key: '±pi3', angs: [[1, 3], [-1, 3]], den: `(1 ${M} z${sup(M + '1')} + z${sup(M + '2')})` },
+  { key: '2pi3', angs: [[2, 3]], den: `(1 ${M} e${sup('j2π/3')}z${sup(M + '1')})` },
+  { key: '±2pi3', angs: [[2, 3], [-2, 3]], den: `(1 + z${sup(M + '1')} + z${sup(M + '2')})` },
+  { key: 'rad23', rad: true, angs: [[2, 3]], den: `(1 ${M} e${sup('j2/3')}z${sup(M + '1')})` },
+];
+const pmAng = (g, a) => (g.rad ? { rad: F(...a) } : { pi: F(...a) });
+/* inputs: html, poles, zeros (finite, non-zero), and a sample generator x(n) for the tests */
+function expHTML(a) {
+  if (a.pi) {
+    const v = a.pi;
+    if (v.isZero()) return 'u[n]';
+    if (v.eq(1) || v.eq(-1)) return `(${M}1)${sup('n')} u[n]`;
+    if (v.eq(F(1, 2))) return `j${sup('n')} u[n]`;
+    if (v.eq(F(-1, 2))) return `(${M}j)${sup('n')} u[n]`;
+  }
+  const s = angStr(a, true);
+  return (s.startsWith(M) ? `e${sup(M + 'j' + s.slice(1))}` : `e${sup('j' + s)}`) + ' u[n]';
+}
+function inExp(a) {
+  return { html: expHTML(a), poles: [ucPole(a)], zeros: [], spec: { kind: 'exp', th: angV(a) }, key: 'exp' + angV(a).toFixed(9) };
+}
+function inCos(a, sin) {
+  if (angV(a) < 0) a = angNeg(a);                 // cos(−θn) = cos(θn); sin(−θn) = −sin(θn): same poles, show the positive angle
+  const th = angV(a), poles = [ucPole(a), ucPole(angNeg(a))];
+  const zeros = !sin && Math.abs(Math.cos(th)) > 1e-12 ? [{ z: cx(Math.cos(th)), name: `cos(${angStr(a, false)})` }] : [];
+  return { html: `${sin ? 'sin' : 'cos'}(${angStr(a, true)}) u[n]`, poles, zeros, spec: { kind: sin ? 'sin' : 'cos', th }, key: (sin ? 'sin' : 'cos') + th.toFixed(9) };
+}
+function inGeo(a) { return { html: `${paren(a)}${sup('n')} u[n]`, poles: [realPt(a)], zeros: [], spec: { kind: 'geo', a: a.v }, key: 'geo' + a }; }
+function inFIR(pt, label) {                    // δ[n] − p δ[n−1]
+  const neg = label.startsWith(M);
+  const mag = neg ? label.slice(1) : label;
+  const coef = mag === '1' ? '' : (/[\/]/.test(mag) ? `(${mag})` : mag);
+  return { html: `δ[n] ${neg ? '+' : M} ${coef}δ[n ${M} 1]`, poles: [], zeros: [pt], spec: { kind: 'fir', p: [pt.z.re, pt.z.im] }, key: 'fir' + label };
+}
+function inGeoZero(a, p) {                     // a^n u[n] − p a^{n−1} u[n−1]  =>  X = (1 − p z^-1)/(1 − a z^-1)
+  const pn = p.neg();
+  return { html: `${paren(a)}${sup('n')} u[n] ${pn.sign() < 0 ? M : '+'} ${paren(pn.abs())}·${paren(a)}${sup('n' + M + '1')} u[n ${M} 1]`,
+    poles: [realPt(a)], zeros: [realPt(p)], spec: { kind: 'geozero', a: a.v, p: p.v }, key: 'gz' + a + '|' + p };
+}
+const samePt = (u, v) => cabs(csub(u.z, v.z)) < 1e-9;
+function pmAnalyze(H, X) {
+  const poles = H.poles.map(p => ({ ...p, src: 'H' })).concat(X.poles.map(p => ({ ...p, src: 'X' })));
+  const zeros = H.zeros.map(p => ({ ...p, src: 'H' })).concat(X.zeros.map(p => ({ ...p, src: 'X' })));
+  const cancelled = [];
+  for (const zr of zeros) { const i = poles.findIndex(p => samePt(p, zr)); if (i >= 0) { cancelled.push({ pole: poles[i], zero: zr }); poles.splice(i, 1); } }
+  const outside = poles.filter(p => cabs(p.z) > 1 + 1e-9);
+  const onUC = poles.filter(p => Math.abs(cabs(p.z) - 1) <= 1e-9);
+  const doubles = onUC.filter((p, i) => onUC.some((q, j) => j !== i && samePt(p, q)) && onUC.findIndex(q => samePt(p, q)) === i);
+  return { unbounded: outside.length > 0 || doubles.length > 0, outside, doubles, cancelled, onUC };
+}
+drills.poles = {
+  gen(seed) {
+    const R = rng(seed);
+    for (let tries = 0; tries < 5000; tries++) {
+      const g1 = R.pick(PM_UC), groups = [g1];
+      if (R.chance(0.3)) {
+        const g2 = R.pick(PM_UC);
+        const pts = g => g.angs.map(a => ucPole(pmAng(g, a)));
+        if (g2.key === g1.key || (g1.rad && g2.rad) || pts(g1).some(p => pts(g2).some(q => samePt(p, q)))) continue;
+        if ((g1.rad || g2.rad) && [g1.key, g2.key].some(k => k === '2pi3' || k === '±2pi3')) continue;   // keep the e^{j2/3} trap honest
+        groups.push(g2);
+      }
+      const hasTrap = groups.some(g => g.rad);
+      const inside = R.chance(0.5) ? F(...R.pick([[1, 2], [3, 4], [-1, 3], [2, 3], [-1, 2]])) : null;
+      const outside = !hasTrap && R.chance(0.4) ? F(...R.pick([[2], [-3], [3, 2], [-2], [3]])) : null;
+      const ucAngs = groups.flatMap(g => g.angs.map(a => pmAng(g, a)));
+      const H = { poles: ucAngs.map(ucPole).concat(inside ? [realPt(inside)] : [], outside ? [realPt(outside)] : []), zeros: [] };
+      let zero = null;
+      if (R.chance(0.35)) {
+        zero = F(...R.pick([[1, 2], [-1, 2], [3, 4], [1], [-1]]));
+        if (H.poles.some(p => samePt(p, realPt(zero)))) continue;
+        H.zeros.push(realPt(zero));
+      }
+      // candidate inputs, by role
+      const match = [], miss = [], cancel = [], generic = [];
+      for (const a of ucAngs) {
+        if (a.pi && (a.pi.isZero() || a.pi.eq(1))) { match.push(inExp(a)); continue; }
+        match.push(inExp(a), inCos(a, false), inCos(a, true));
+        if (!H.poles.some(p => samePt(p, ucPole(angNeg(a))))) miss.push(inExp(angNeg(a)));
+      }
+      if (hasTrap) { miss.push(inCos({ pi: F(2, 3) }, false), inExp({ pi: F(2, 3) }), inCos({ pi: F(2, 3) }, true)); }
+      for (const o of [[1, 4], [3, 4], [1, 3], [2, 3], [1, 2], [1, 6]]) {
+        const a = { pi: F(...o) };
+        if (!H.poles.some(p => samePt(p, ucPole(a)))) miss.push(R.chance(0.5) ? inCos(a, false) : inExp(a));
+      }
+      if (outside) { cancel.push(inFIR(realPt(outside), num(outside)), inGeoZero(F(1, 2), outside)); }
+      if (inside) cancel.push(inFIR(realPt(inside), num(inside)));
+      for (const a of ucAngs) if (a.pi && (a.pi.isZero() || a.pi.eq(1) || a.pi.eq(F(1, 2)))) cancel.push(inFIR(ucPole(a), ucName(a)));
+      generic.push(inExp({ pi: F(0) }), inExp({ pi: F(1) }), inExp({ pi: F(1, 2) }), inGeo(F(2, 3)), inGeo(F(-1, 2)), inGeo(F(3, 4)));
+      const chosen = [], keys = new Set();
+      const take = (list, k) => { for (const c of R.shuffle(list)) { if (k <= 0) break; if (!keys.has(c.key)) { keys.add(c.key); chosen.push(c); k--; } } };
+      const total = R.int(5, 6);
+      take(match, R.int(1, 2)); take(miss, R.int(1, 2)); take(cancel, R.int(0, 1)); take(generic, total - chosen.length);
+      take([...match, ...miss, ...cancel], total - chosen.length);
+      const inputs = R.shuffle(chosen).map(x => ({ ...x, an: pmAnalyze(H, x) }));
+      const nUnb = inputs.filter(x => x.an.unbounded).length;
+      if (nUnb === 0 || nUnb === inputs.length) continue;
+      return { drill: 'poles', seed, groups: groups.map(g => g.key), den: groups.map(g => g.den).join('') + (inside ? factorZ(inside) : '') + (outside ? factorZ(outside) : ''),
+        zero, inside, outside, hasTrap, H, inputs, maxPts: inputs.length };
+    }
+    throw new Error('poles: no parameters found');
+  },
+  poleList(p) {
+    const uc = p.H.poles.filter(q => Math.abs(cabs(q.z) - 1) < 1e-9).map(q => q.name).join(', ');
+    return `on the unit circle: ${uc}` + (p.inside ? `; inside: ${num(p.inside)}` : '') + (p.outside ? `; <b>outside</b>: ${num(p.outside)}` : '');
+  },
+  reason(p, x) {
+    const an = x.an, out = [];
+    const xp = x.poles.length ? `X has pole${x.poles.length > 1 ? 's' : ''} at ${x.poles.map(q => q.name).join(', ')}` : 'X has no poles (FIR input)';
+    const xz = x.zeros.length ? ` and a zero at ${x.zeros.map(q => q.name).join(', ')}` : '';
+    out.push(xp + xz + '.');
+    for (const c of an.cancelled) out.push(`${c.zero.src === 'X' ? 'The input’s' : 'H’s'} zero at ${c.zero.name} cancels ${c.pole.src === 'X' ? 'the input’s' : 'H’s'} pole there.`);
+    if (an.doubles.length) out.push(`It lands on H’s unit-circle pole ${an.doubles.map(q => q.name).join(', ')}: Y has a <b>double pole on the unit circle</b>, so y grows like n (resonance).`);
+    if (an.outside.length) out.push(`H’s pole at ${an.outside.map(q => q.name).join(', ')} (outside the unit circle) is not cancelled: y grows exponentially.`);
+    if (!an.unbounded) out.push('Every remaining pole of Y is inside the unit circle or a simple pole on it: <b>bounded</b>.');
+    if (p.hasTrap && x.poles.some(q => q.ang && q.ang.pi && Math.abs(Math.abs(q.ang.pi.v) - 2 / 3) < 1e-12)) out.push(`Trap: H’s pole is e${sup('j2/3')} (angle 2/3 rad ≈ 38°), not e${sup('j2π/3')} (120°).`);
+    return out.join(' ');
+  },
+  statement(p) {
+    const numer = p.zero ? polyZ([F(1), p.zero.neg()]) : '1';
+    return `<p>A <b>causal</b> LTI system has</p><p class="sys">H(z) = ${frac(numer, p.den)}, &nbsp; ROC outside the outermost pole.</p>
+      <p>Tick every bounded input below that produces an <b>unbounded</b> output (leave the others blank).</p>`;
+  },
+  answer(p) { return { marks: p.inputs.map(x => x.an.unbounded) }; },
+  check(p, r) {
+    const marks = (r.marks || []).map(Boolean);
+    const parts = p.inputs.map((x, i) => {
+      const ok = marks[i] === x.an.unbounded;
+      return { label: `x[n] = ${x.html}: ${x.an.unbounded ? 'unbounded' : 'bounded'}`, ok, pts: ok ? 1 : 0, max: 1, msg: this.reason(p, x) };
+    });
+    const allOk = parts.every(q => q.ok);
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: parts.length,
+      hints: allOk ? [] : [`<b>Rule.</b> Y(z) = H(z)X(z). After cancelling common factors, the output is unbounded ⇔ Y has a pole <em>outside</em> the unit circle or a <em>repeated</em> pole <em>on</em> it. Poles of H — ${this.poleList(p)}.`,
+        'Two things to look for: an input pole that lands exactly on one of H’s unit-circle poles (check the angle carefully), and an input zero that sits exactly on H’s pole outside the circle (it cancels it).'] };
+  },
+  solution(p) {
+    const rows = p.inputs.map(x => `<li><b>${x.html}</b> → ${x.an.unbounded ? '<span class="cross">unbounded</span>' : '<span class="tick">bounded</span>'}. ${this.reason(p, x)}</li>`).join('');
+    return `<h3>Worked solution</h3>
+      <p><b>Poles of H</b> — ${this.poleList(p)}.${p.zero ? ` Zero of H: ${num(p.zero)}.` : ''} ${p.outside ? `Because the system is causal and has a pole outside the unit circle, h[n] itself grows: almost every input gives an unbounded output — unless its z-transform has a zero exactly at ${num(p.outside)}.` : 'All poles are on or inside the unit circle: h[n] is bounded but (with unit-circle poles) not absolutely summable, so the system is not BIBO stable — some bounded inputs make it blow up.'}</p>
+      <ul>${rows}</ul>
+      <p class="muted">Review: ${pageLink('problems/unbounded-outputs-and-pole-matching', 'Unbounded outputs and pole matching (recipe)')} · ${pageLink('concepts/marginal-stability', 'marginal stability')} · ${pageLink('concepts/pole-zero-cancellation', 'pole-zero cancellation')} · ${pageLink('2-z-transform/11-bibo-stability-and-causality', 'Lecture 11')}</p>`;
+  },
+  exportVariant(p) {
+    const pt = q => [q.z.re, q.z.im];
+    const ang = q => (q.ang ? (q.ang.pi ? { pi: [q.ang.pi.n, q.ang.pi.d] } : { rad: [q.ang.rad.n, q.ang.rad.d] }) : null);
+    return { seed: p.seed, hasTrap: p.hasTrap, inside: p.inside ? [p.inside.n, p.inside.d] : null, outside: p.outside ? [p.outside.n, p.outside.d] : null,
+      zero: p.zero ? [p.zero.n, p.zero.d] : null, ucAngles: p.H.poles.filter(q => q.ang).map(ang),
+      inputs: p.inputs.map(x => ({ html: x.html, spec: x.spec, unbounded: x.an.unbounded })) };
+  },
+};
+
+/* =====================================================================================
+   7. True/False rapid fire: every non-DTFT statement of the seven past exams (official answers)
+   ===================================================================================== */
+const zi = k => `z${sup(M + k)}`;
+const TF = [
+  // [source, statement (HTML), answer, reason]
+  ['FA2025 #1(a)', 'The impulse response of a given LTI system is known to be a bounded sequence. This system must be BIBO stable.', false, 'Bounded is not enough: h = u[n] is bounded but Σ|h[n]| = ∞. BIBO stability needs absolute summability.'],
+  ['FA2025 #1(b)', 'The convolution of two causal signals always results in a causal signal. (A causal signal is zero for all negative time values.)', true, 'For n &lt; 0 every term x[k]h[n−k] has k &lt; 0 or n − k &lt; 0, so it vanishes: y[n] = 0.'],
+  ['FA2025 #1(c)', 'A BIBO stable LTI system has a transfer function with two poles at z = 1/4 and z = 3. The impulse response of this system must be two-sided.', true, 'Stable ⇒ the ROC contains |z| = 1 ⇒ ROC 1/4 &lt; |z| &lt; 3, an annulus ⇒ h[n] is two-sided.'],
+  ['FA2025 #1(d)', 'An LTI system with a left-sided impulse response can never be causal.', true, 'Key: True — a left-sided h[n] extends to n → −∞, so it is non-zero at some n &lt; 0. (Pedantic caveat: δ[n] is technically both left-sided and causal.)'],
+  ['FA2025 #1(e)', 'An unbounded signal is passed as input to a BIBO stable LTI system. The resulting output is always an unbounded signal.', false, `h = δ[n] − 2δ[n−1] is stable and maps x = 2${sup('n')}u[n] to y = δ[n]: the zero at z = 2 cancels the input's pole.`],
+  ['FA2025 #1(f)', 'The parallel connection of two unstable LTI systems always forms another unstable LTI system.', false, 'h₁ = u[n] and h₂ = δ[n] − u[n] are both unstable, but h₁ + h₂ = δ[n] is stable.'],
+  ['SP2025 #1(a)', `If the output of a system is related to its input by y[n] = Σ${sub('ℓ=−∞')}${sup('∞')} h[ℓ]x[n−ℓ] for some well-defined function h[n], the system must be causal.`, false, 'Only if h[ℓ] = 0 for ℓ &lt; 0. With h = δ[n+1], y[n] = x[n+1] depends on the future.'],
+  ['SP2025 #1(b)', 'If the unit pulse response h[n] of a system S is absolutely summable, then S must be BIBO stable regardless of whether S is LSI or not.', false, 'Σ|h| &lt; ∞ proves stability only for LSI systems: y[n] = n x[n] has h = nδ[n] = 0, yet x = 1 gives y = n.'],
+  ['SP2025 #1(c)', `The z-transform of x[n] = e${sup('jπn/4')} does not exist because the ROC is empty.`, true, 'x is two-sided with |x[n]| = 1: the n ≥ 0 half needs |z| &gt; 1, the n &lt; 0 half needs |z| &lt; 1. No overlap.'],
+  ['SP2025 #1(d)', 'The parallel connection of two BIBO stable LTI systems always results in another BIBO stable LTI system.', true, 'Σ|h₁ + h₂| ≤ Σ|h₁| + Σ|h₂| &lt; ∞.'],
+  ['SP2025 #1(e)', `A BIBO stable LTI system has transfer function H(z) = 1/(1 − √2 ${zi(1)}). This system must be anti-causal.`, true, `The only pole, √2, is outside the unit circle; stable ⇒ ROC |z| &lt; √2 ⇒ h = −(√2)${sup('n')}u[−n−1], zero for all n ≥ 0.`],
+  ['SP2025 #1(f)', 'An LTI system with a two-sided impulse response is never BIBO stable.', false, `h = (1/2)${sup('|n|')} is two-sided with Σ|h| = 3.`],
+  ['FA2024 #1(a)', 'For a discrete-time system with impulse response h[n], the system output y[n] to any input signal x[n] is always determined using h[n].', false, 'Only LTI systems are characterized by h[n]. Example: y = x² has impulse response δ[n], but it is not y = x.'],
+  ['FA2024 #1(b)', 'The impulse response h[n] of an unstable LTI system will always be an unbounded sequence.', false, 'h = u[n] is bounded yet not absolutely summable, so the system is unstable.'],
+  ['FA2024 #1(c)', 'Two BIBO stable LTI systems connected in parallel will always form a BIBO stable LTI system.', true, 'Σ|h₁ + h₂| ≤ Σ|h₁| + Σ|h₂| &lt; ∞.'],
+  ['FA2024 #1(d)', 'An LCCDE system can only have a finite number of poles.', true, 'H(z) is a ratio of polynomials of finite degree, so it has finitely many poles.'],
+  ['FA2024 #1(e)', 'An LTI system given by y[n] = y[n − 3] + x[n] will have three distinct poles in its transfer function.', true, `H = 1/(1 − ${zi(3)}): the poles are the three cube roots of unity, 1 and e${sup('±j2π/3')}.`],
+  ['FA2024 #1(f)', `An LTI system with transfer function H(z) = 1/(1 − 0.5${zi(1)}) + 1/(1 − 2${zi(1)}) must not be BIBO stable.`, false, 'Take the ROC 1/2 &lt; |z| &lt; 2: it contains the unit circle, so that (two-sided) system is stable.'],
+  ['FA2023 #1(a)', 'Any causal discrete-time system must also be time-invariant.', false, 'y[n] = n x[n] is causal but time-varying.'],
+  ['FA2023 #1(b)', 'The ROC of a given z-transform cannot contain any poles or zeros.', false, `It never contains poles, but zeros are allowed: X = 1 − ${zi(1)} has its zero z = 1 inside its ROC (z ≠ 0).`],
+  ['FA2023 #1(c)', 'Two BIBO stable systems connected in parallel always form a BIBO stable system.', true, 'A bounded input gives two bounded outputs, and their sum is bounded — no LTI assumption needed.'],
+  ['FA2023 #1(d)', 'For a discrete-time system with impulse response h[n], the system output y[n] to any input signal x[n] is always given by y[n] = x[n] ∗ h[n].', false, 'Only for LTI systems.'],
+  ['FA2023 #1(e)', 'Two LTI systems given by impulse responses h₁[n] and h₂[n] are connected in series in some order. For the same input x[n], we receive the same output for either ordering.', true, 'Convolution is commutative and associative: x ∗ h₁ ∗ h₂ = x ∗ h₂ ∗ h₁.'],
+  ['FA2023 #1(f)', `A BIBO stable LTI system with transfer function H(z) = 1/(1 − 3${zi(1)}) must be non-causal.`, true, `Pole at 3, outside the unit circle; stable ⇒ ROC |z| &lt; 3 ⇒ h = −3${sup('n')}u[−n−1] (anti-causal).`],
+  ['SP2023 #1(a)', 'If the system response y[n] of a discrete-time system to any possible input x[n] is fully described by its unit pulse response, then the system must be LTI.', true, 'If y = x ∗ h for every input, the system inherits linearity and shift-invariance from convolution (HW2 #2).'],
+  ['SP2023 #1(b)', 'If a system is BIBO stable, any unbounded input will produce an unbounded output.', false, `h = δ[n] − 2δ[n−1] is stable and maps 2${sup('n')}u[n] to δ[n].`],
+  ['SP2023 #1(c)', 'If a system has a right-sided unit pulse response, then it must be causal.', false, 'Right-sided means h[n] = 0 for n &lt; n₀; with n₀ &lt; 0 (e.g. h = δ[n+1]) it is not causal.'],
+  ['SP2021 #1(a)', `An LTI system with transfer function H(z) = (1 − ${zi(1)})/(1 − 2${zi(1)}) cannot be stable.`, false, `With ROC |z| &lt; 2 (contains the unit circle) it is stable, just not causal: h = −2${sup('n')}u[−n−1] + 2${sup('n−1')}u[−n].`],
+  ['SP2021 #1(b)', 'Let X₁(z), X₂(z) be the rational z-transforms of x₁[n], x₂[n]. Then the poles of X₁(z) and X₂(z) must be poles of the z-transform of x[n] = x₁[n] + x₂[n].', false, `Poles can cancel in a sum: x₁ = (1/2)${sup('n')}u[n], x₂ = δ[n] − (1/2)${sup('n')}u[n] ⇒ X₁ + X₂ = 1.`],
+  ['SP2021 #1(c)', 'Cascade of two BIBO unstable LTI systems cannot be stable.', false, `The causal systems (1 − 2${zi(1)})/(1 − 3${zi(1)}) and (1 − 3${zi(1)})/(1 − 2${zi(1)}) are both unstable; their cascade is H = 1, h = δ[n].`],
+  ['SP2021 #1(d)', `A causal LTI system with transfer function H(z) = ${zi(1)}/(1 − ${zi(1)}) produces an unbounded output for input x[n] = u[n].`, true, 'y = n u[n]: the input pole at z = 1 lands on the system pole at z = 1 (double pole on the unit circle).'],
+  ['SP2021 #1(e)', 'Suppose Σ<sub>n</sub> x[n] δ[4cos(2nπ + π/2) − 6 sin(nπ)] = 4. Then Σ<sub>n</sub> x[n] = 3.', false, 'The argument 4cos(2πn + π/2) − 6sin(πn) is 0 for every integer n, so the δ equals 1 everywhere and Σx[n] = 4.'],
+  ['FA2019 #1(a)', 'An LSI system specified by the difference equation y[n] − ½y[n − 1] = x[n] can be causal or anti-causal.', true, `The equation alone does not fix the ROC: (1/2)${sup('n')}u[n] and −(1/2)${sup('n')}u[−n−1] both satisfy it (key: we do not know whether y[n] or y[n−1] is the output being computed).`],
+  ['FA2019 #1(b)', 'The input and output relationship of an arbitrary system is completely determined by the system’s unit pulse response.', false, 'Only for LSI systems.'],
+  ['FA2019 #1(c)', 'If an LSI system is BIBO unstable, its unit pulse response h[n] must be unbounded.', false, 'h = u[n] is bounded but not absolutely summable.'],
+  ['FA2019 #1(d)', 'Let h[n] = h₁[n] ∗ h₂[n] be the unit pulse response of two serial subsystems. If h₁ or h₂ is BIBO unstable, h must be BIBO unstable.', false, 'u[n] ∗ (δ[n] − δ[n−1]) = δ[n]: unstable ∗ stable can be stable.'],
+  ['FA2019 #1(e)', 'An LSI system with a finite-length impulse response can be BIBO stable or unstable.', false, 'FIR ⇒ Σ|h| is a finite sum of finite numbers ⇒ always stable.'],
+  ['FA2019 #1(f)', 'A time-varying system cannot be causal.', false, 'y[n] = n x[n] is time-varying and causal.'],
+  ['FA2019 #1(g)', `Let Σ<sub>n</sub> x[n] δ[2${sup('n')}u[n] − 8] = 4. Then x[3] = 2.`, false, `2${sup('n')}u[n] − 8 = 0 only at n = 3, so the sum picks out x[3] = 4, not 2.`],
+  ['FA2019 #1(h)', 'Suppose the step response g[n] of an LSI system (the output for x[n] = u[n]) has a z-transform with a pole at z = 1/2. Then H(z) also has a pole at z = 1/2.', true, `G(z) = H(z)/(1 − ${zi(1)}): the factor 1/(1 − ${zi(1)}) only adds a pole at z = 1, so the pole at 1/2 comes from H.`],
+  ['FA2019 #1(i)', `If the response y[n] of an LSI system to the input x[n] = 3${sup('n')}u[n] is unbounded, the system must be BIBO unstable.`, false, `That input is itself unbounded: the stable h = δ[n] returns 3${sup('n')}u[n].`],
+  ['FA2019 #1(j)', 'The response y[n] of a BIBO unstable LSI system to any non-zero input x[n] is always unbounded.', false, 'u[n] ∗ (δ[n] − δ[n−1]) = δ[n]: an unstable system can give a bounded output.'],
+];
+drills.tf = {
+  bank: TF,
+  gen(seed, opts) {
+    const R = rng(seed);
+    const index = opts && Number.isInteger(opts.index) ? opts.index : Math.floor(R.next() * TF.length);
+    const [src, text, ans, why] = TF[index];
+    return { drill: 'tf', seed, index, src, text, ans, why, maxPts: 2 };
+  },
+  answer(p) { return { choice: p.ans ? 'T' : 'F' }; },
+  check(p, r) {
+    if (r.choice !== 'T' && r.choice !== 'F') return { skipped: true, allOk: false, pts: 0, max: 2 };
+    const ok = (r.choice === 'T') === p.ans;
+    return { skipped: false, allOk: ok, pts: ok ? 2 : -1, max: 2 };
+  },
+};
+
+/* =====================================================================================
+   8–10. Unit 3: DTFT values, sinusoidal response, magnitude & phase of linear-phase FIRs
+   ===================================================================================== */
+const PI = Math.PI;
+/* A real number typed with π, √ and degrees: 2π/3, -pi/2, 3√2/2, sqrt(3)/2, 2(1/3), 60°, 1.047 rad.
+   Returns {v, pi}: pi is true when π (or a degree sign) was used. v is NaN if unreadable. */
+function parseVal(src) {
+  let s = normalize(src).toLowerCase();
+  if (s.includes('=')) s = s.slice(s.lastIndexOf('=') + 1);
+  s = s.replace(/\s+/g, '').replace(/rad(ians?)?$/, '');
+  let deg = false;
+  const dm = /(°|deg(rees?)?)$/.exec(s);
+  if (dm) { deg = true; s = s.slice(0, dm.index); }
+  s = s.replace(/π|pi/g, 'p').replace(/√|sqrt/g, 'r');
+  if (/^\{.*\}$/.test(s)) s = s.slice(1, -1);
+  if (!s) return { v: NaN, pi: false };
+  let i = 0, usedPi = false;
+  const peek = () => s[i];
+  const startsAtom = c => !!c && /[0-9.([{pr]/.test(c);
+  function number() {
+    const m = /^(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?/.exec(s.slice(i));
+    if (!m) throw new Error('number expected');
+    i += m[0].length;
+    return parseFloat(m[0]);
+  }
+  function atom() {
+    const c = peek();
+    if (c === '(' || c === '[' || c === '{') {
+      i++; const v = expr();
+      if (!')]}'.includes(s[i] || 'x')) throw new Error('bracket');
+      i++; return v;
+    }
+    if (c === 'p') { i++; usedPi = true; return PI; }
+    if (c === 'r') { i++; const v = power(); if (v < 0) throw new Error('sqrt'); return Math.sqrt(v); }
+    return number();
+  }
+  function power() { const b = atom(); if (peek() === '^') { i++; return Math.pow(b, unary()); } return b; }
+  function unary() { if (peek() === '-') { i++; return -unary(); } if (peek() === '+') { i++; return unary(); } return power(); }
+  function term() {
+    let v = unary();
+    for (;;) {
+      const c = peek();
+      if (c === '*' || c === '/') { i++; const w = unary(); v = c === '*' ? v * w : v / w; }
+      else if (startsAtom(c)) v *= power();                       // implicit product: 2π, 3√2, 2(1/3)
+      else break;
+    }
+    return v;
+  }
+  function expr() { let v = term(); while (peek() === '+' || peek() === '-') { const op = s[i++]; const w = term(); v = op === '+' ? v + w : v - w; } return v; }
+  try {
+    const v = expr();
+    if (i !== s.length || !Number.isFinite(v)) return { v: NaN, pi: false };
+    return { v: deg ? v * PI / 180 : v, pi: usedPi || deg };
+  } catch (e) { return { v: NaN, pi: false }; }
+}
+const valOf = src => parseVal(src).v;
+/* a "multiple of π" field: −14 and −14π both mean −14 */
+const piMultiple = src => { const r = parseVal(src); return r.pi ? r.v / PI : r.v; };
+const wrapPi = t => { let v = ((t + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI; if (v <= -PI + 1e-12) v = PI; return v; };   // (−π, π]
+const angClose = (u, v, tol = 5e-3) => Number.isFinite(u) && Math.abs(wrapPi(u - v)) <= tol;
+const numClose = (u, v) => Number.isFinite(u) && Math.abs(u - v) <= Math.max(3e-3 * Math.abs(v), 1e-3);
+function ratOf(x, maxDen = 64, tol = 1e-9) {                    // continued fractions
+  if (!Number.isFinite(x)) return null;
+  const sg = x < 0 ? -1 : 1, ax = Math.abs(x);
+  let h0 = 0, h1 = 1, k0 = 1, k1 = 0, b = ax;
+  for (let it = 0; it < 40; it++) {
+    const a = Math.floor(b), h2 = a * h1 + h0, k2 = a * k1 + k0;
+    if (k2 > maxDen) break;
+    h0 = h1; h1 = h2; k0 = k1; k1 = k2;
+    if (Math.abs(ax - h1 / k1) <= tol * Math.max(1, ax)) return { p: sg * h1, q: k1 };
+    const f = b - a; if (f < 1e-12) break;
+    b = 1 / f;
+  }
+  return null;
+}
+/* exact-looking text for a value: π/3 (angles), 7/4, 3√3/2, √2, else a 4-decimal number */
+function valStr(x, allowPi = true) {
+  if (!Number.isFinite(x)) return '—';
+  if (Math.abs(x) < 1e-12) return '0';
+  if (allowPi) {
+    const q = ratOf(x / PI, 24);
+    if (q) { const p = Math.abs(q.p); return (q.p < 0 ? M : '') + (p === 1 ? '' : p) + 'π' + (q.q === 1 ? '' : '/' + q.q); }
+  }
+  const q = ratOf(x, 64);
+  if (q) return num(F(q.p, q.q));
+  const q2 = ratOf(x * x, 400);
+  if (q2 && q2.p > 0) {
+    let a = 1, b = q2.p * q2.q;
+    for (let f = 2; f * f <= b; f++) while (b % (f * f) === 0) { b /= f * f; a *= f; }
+    const g = gcd(a, q2.q), nn = a / g, dd = q2.q / g;
+    if (b > 1) return (x < 0 ? M : '') + (nn === 1 ? '' : nn) + '√' + b + (dd === 1 ? '' : '/' + dd);
+  }
+  return String(+x.toFixed(4)).replace('-', M);
+}
+const parS = t => (/[\/−√]/.test(t) ? `(${t})` : t);       // parenthesize a displayed value
+const isNice = x => !/\d\.\d/.test(valStr(x, false));
+/* what answer() puts in a field: the exact text when it is exact, else full precision */
+function ansStr(x, allowPi = true) {
+  const s = valStr(x, allowPi);
+  return Math.abs(valOf(s) - x) < 1e-12 * Math.max(1, Math.abs(x)) ? s : String(x);
+}
+/* signed term inside a sum: " + 3", " − 2" (first term without the plus) */
+const signed = (s, first) => (s.startsWith(M) ? (first ? M : ` ${M} `) + s.slice(1) : (first ? '' : ' + ') + s);
+/* ω/π as Fr -> "π/3"; with n: "πn/3" */
+const wpi = (f, withN) => (f.isZero() ? '0' : angStr({ pi: f }, withN));
+
+/* ---- linear-phase FIR: H_d = e^{−jMω}A(ω) (symmetric) or j e^{−jMω}A(ω) (antisymmetric), A real ---- */
+function linPhase(h, n0) {
+  const L = h.length, c2 = L - 1;                           // 2·(centre offset)
+  const sym = h.every((v, k) => v === h[L - 1 - k]), anti = h.every((v, k) => v === -h[L - 1 - k]);
+  if (!sym && !anti) return null;
+  const terms = [];                                         // A(ω) = Σ coef·cos(mult·ω)   (or sin for anti)
+  if (sym && L % 2 === 1 && h[c2 / 2] !== 0) terms.push({ coef: h[c2 / 2], mult: F(0) });
+  for (let k = 0; 2 * k < c2; k++) if (h[k] !== 0) terms.push({ coef: 2 * h[k], mult: F(c2 - 2 * k, 2) });
+  return { kind: sym ? 'sym' : 'anti', M: F(2 * n0 + c2, 2), terms };
+}
+const Aval = (lp, w) => lp.terms.reduce((s, t) => s + t.coef * (lp.kind === 'sym' ? Math.cos(t.mult.v * w) : Math.sin(t.mult.v * w)), 0);
+function multW(m) { return m.d === 1 ? (m.n === 1 ? 'ω' : `${m.n}ω`) : `${m.n === 1 ? '' : m.n}ω/${m.d}`; }
+function aHTML(lp) {
+  let out = '';
+  lp.terms.forEach(t => {
+    const fn = t.mult.isZero() ? '' : `${lp.kind === 'sym' ? 'cos' : 'sin'}(${multW(t.mult)})`;
+    const mag = Math.abs(t.coef);
+    const body = fn ? (mag === 1 ? '' : num(mag)) + fn : num(mag);
+    out += out === '' ? (t.coef < 0 ? M : '') + body : (t.coef < 0 ? ` ${M} ` : ' + ') + body;
+  });
+  return out || '0';
+}
+/* the same A(ω) with ω = w0 substituted, term by term: "2cos(π/3) + 1" */
+function aSubHTML(lp, w0) {
+  let out = '';
+  lp.terms.forEach(t => {
+    const arg = t.mult.mul(w0), fn = t.mult.isZero() ? '' : `${lp.kind === 'sym' ? 'cos' : 'sin'}(${wpi(arg)})`;
+    const mag = Math.abs(t.coef);
+    const body = fn ? (mag === 1 ? '' : num(mag)) + fn : num(mag);
+    out += out === '' ? (t.coef < 0 ? M : '') + body : (t.coef < 0 ? ` ${M} ` : ' + ') + body;
+  });
+  return out || '0';
+}
+const coefW = a => (a.eq(1) ? '' : a.d === 1 ? num(a) : `(${num(a)})`);          // the c in "cω"
+const ejw = Mv => (Mv.isZero() ? '' : `e<sup>${Mv.sign() > 0 ? M : ''}j${coefW(Mv.abs())}ω</sup>`);
+const hPrefix = lp => (lp.kind === 'anti' ? 'j' : '') + ejw(lp.M);                // H_d = prefix·A(ω)
+function linPh(lp) {                                                               // text of −Mω (+ π/2)
+  let t = lp.M.isZero() ? '' : (lp.M.sign() > 0 ? M : '') + coefW(lp.M.abs()) + 'ω';
+  if (lp.kind === 'anti') t += t ? ' + π/2' : 'π/2';
+  return t || '0';
+}
+const Hd = sub('d');
+const L13 = () => pageLink('3-fourier-analysis/13-fourier-analysis-and-the-dtft', 'Lecture 13');
+const L14 = () => pageLink('3-fourier-analysis/14-dtft-properties', 'Lecture 14');
+const L15 = () => pageLink('3-fourier-analysis/15-frequency-response', 'Lecture 15');
+const L16 = () => pageLink('3-fourier-analysis/16-magnitude-and-phase-response', 'Lecture 16');
+
+/* ---------------- 8. DTFT values without the DTFT ---------------- */
+drills.dtftv = {
+  gen(seed) {
+    const R = rng(seed);
+    const nz = () => R.pick([-3, -2, -1, 1, 2, 3]);
+    let x;
+    if (R.chance(0.2)) {                                          // exam style (FA2019 MT2 #3): symmetric, odd length, centred
+      const Lh = R.int(2, 3), half = Array.from({ length: Lh }, (_, i) => (i === 0 ? nz() : R.int(-3, 3)));
+      x = half.concat([R.int(-4, 4) || 1], half.slice().reverse());
+    } else {
+      const L = R.int(3, 6);
+      x = Array.from({ length: L }, (_, i) => (i === 0 || i === L - 1) ? nz() : R.int(-3, 3));
+    }
+    const L = x.length;
+    const n0 = -(x.length % 2 === 1 && R.chance(0.35) ? (L - 1) / 2 : R.int(0, L - 1));   // first index; n = 0 always inside
+    const ns = x.map((_, i) => n0 + i);
+    const sgn = n => (Math.abs(n) % 2 === 0 ? 1 : -1);
+    const X0 = x.reduce((s, v) => s + v, 0);
+    const Xpi = x.reduce((s, v, i) => s + sgn(ns[i]) * v, 0);
+    const x0 = x[-n0];
+    const E = x.reduce((s, v) => s + v * v, 0);
+    return { drill: 'dtftv', seed, x, n0, X0, Xpi, x0, I1: 2 * x0, E, I2: 2 * E, maxPts: 8 };
+  },
+  statement(p) {
+    return `<p>A finite-length sequence (the arrow ↑ marks n = 0):</p>
+      <p class="sys">x[n] = ${seqHTML(p.x, p.n0)}</p>
+      <div class="scroll">${idxTable('x[n]', p.x, p.n0)}</div>
+      <p>Its DTFT is X${Hd}(ω) = Σ x[n]e<sup>${M}jωn</sup>. Find, without writing X${Hd}(ω) out in full:</p>
+      <p><b>(a)</b> X${Hd}(0) &nbsp; <b>(b)</b> X${Hd}(π) &nbsp; <b>(c)</b> ∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω) dω &nbsp; <b>(d)</b> ∫<sub>${M}π</sub><sup>π</sup> |X${Hd}(ω)|² dω</p>
+      <p class="muted" style="font-size:13px">Enter (c) and (d) as multiples of π: for 6π type 6 (or 6π).</p>`;
+  },
+  answer(p) { return { a: String(p.X0), b: String(p.Xpi), c: String(p.I1), d: String(p.I2) }; },
+  check(p, r) {
+    const a = valOf(r.a), b = valOf(r.b), c = piMultiple(r.c), d = piMultiple(r.d);
+    const okA = near(a, p.X0), okB = near(b, p.Xpi), okC = near(c, p.I1), okD = near(d, p.I2);
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read a number.' : '');
+    const sgnFirst = p.x.reduce((s, v, i) => s + (i % 2 === 0 ? 1 : -1) * v, 0);
+    let mB = blank(r.b, b);
+    if (!mB && !okB && near(b, sgnFirst) && sgnFirst !== p.Xpi) mB = 'the sign pattern (−1)<sup>n</sup> follows the index n, not the position in the list: x[0] always gets +.';
+    let mC = blank(r.c, c);
+    if (!mC && !okC && near(c, p.x0) && p.x0 !== 0) mC = 'that is x[0] — the inverse DTFT has 1/(2π) in front, so the integral is 2π·x[0].';
+    let mD = blank(r.d, d);
+    if (!mD && !okD && near(d, p.E)) mD = 'that is Σ|x[n]|² — Parseval has 1/(2π) in front, so the integral is 2π times it.';
+    const parts = [
+      { label: `(a) X${Hd}(0)`, ok: okA, pts: okA ? 2 : 0, max: 2, msg: okA ? `Σ x[n] = ${num(p.X0)}.` : blank(r.a, a) },
+      { label: `(b) X${Hd}(π)`, ok: okB, pts: okB ? 2 : 0, max: 2, msg: okB ? `Σ (${M}1)<sup>n</sup>x[n] = ${num(p.Xpi)}.` : mB },
+      { label: `(c) ∫X${Hd}(ω)dω`, ok: okC, pts: okC ? 2 : 0, max: 2, msg: okC ? `2π·x[0] = ${num(p.I1)}π.` : mC },
+      { label: `(d) ∫|X${Hd}(ω)|²dω`, ok: okD, pts: okD ? 2 : 0, max: 2, msg: okD ? `2π·Σ|x[n]|² = ${num(p.I2)}π.` : mD },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    const signs = p.x.map((_, i) => ((Math.abs(p.n0 + i) % 2 === 0) ? '+' : M)).join(' ');
+    if (!okA) { h1.push(`<b>ω = 0.</b> Every e<sup>${M}j0n</sup> = 1, so X${Hd}(0) = Σ x[n].`); h2.push(`(a) Add the samples: ${p.x.map(v => paren(v)).join(' + ')}.`); }
+    if (!okB) { h1.push(`<b>ω = π.</b> e<sup>${M}jπn</sup> = (${M}1)<sup>n</sup>: + for even n, ${M} for odd n (negative n too: (${M}1)<sup>${M}3</sup> = ${M}1).`); h2.push(`(b) Signs by index n = ${num(p.n0)} … ${num(p.n0 + p.x.length - 1)}: ${signs}.`); }
+    if (!okC) { h1.push(`<b>Inverse DTFT at n = 0.</b> x[0] = (1/2π)∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω) dω.`); h2.push(`(c) The sample under the arrow is x[0] = ${num(p.x0)}.`); }
+    if (!okD) { h1.push(`<b>Parseval</b> (${L14()}): Σ|x[n]|² = (1/2π)∫<sub>${M}π</sub><sup>π</sup> |X${Hd}(ω)|² dω.`); h2.push(`(d) Squares: ${p.x.map(v => v * v).join(' + ')}.`); }
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    const ns = p.x.map((_, i) => p.n0 + i), c0 = n => (n === 0 ? ' class="n0"' : '');
+    const sg = n => (Math.abs(n) % 2 === 0 ? 1 : -1);
+    const row = (name, f) => `<tr><th>${name}</th>${ns.map((n, i) => `<td${c0(n)}>${num(f(n, i))}</td>`).join('')}</tr>`;
+    const t = `<table class="grid"><tr><th>n</th>${ns.map(n => `<td${c0(n)}>${num(n)}</td>`).join('')}</tr>` +
+      row('x[n]', (n, i) => p.x[i]) + row(`(${M}1)<sup>n</sup>`, n => sg(n)) + row(`(${M}1)<sup>n</sup>x[n]`, (n, i) => sg(n) * p.x[i]) + row('|x[n]|²', (n, i) => p.x[i] * p.x[i]) + '</table>';
+    return `<h3>Worked solution</h3>
+      <p>Each quantity is a value of the DTFT sum or of an inverse-DTFT identity, so no closed form of X${Hd}(ω) is needed.</p>
+      <div class="scroll">${t}</div>
+      <p><b>(a)</b> X${Hd}(0) = Σ x[n]·1 = <b>${num(p.X0)}</b>.</p>
+      <p><b>(b)</b> X${Hd}(π) = Σ x[n]e<sup>${M}jπn</sup> = Σ (${M}1)<sup>n</sup>x[n] = <b>${num(p.Xpi)}</b> (the (${M}1)<sup>n</sup>x[n] row of the table, summed).</p>
+      <p><b>(c)</b> The synthesis equation x[n] = (1/2π)∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω)e<sup>jωn</sup> dω at n = 0 gives ∫<sub>${M}π</sub><sup>π</sup> X${Hd}(ω) dω = 2π·x[0] = 2π·${paren(p.x0)} = <b>${num(p.I1)}π</b>.</p>
+      <p><b>(d)</b> Parseval: ∫<sub>${M}π</sub><sup>π</sup> |X${Hd}(ω)|² dω = 2π Σ|x[n]|² = 2π·${p.E} = <b>${num(p.I2)}π</b>.</p>
+      <p class="muted">Why it works: the e<sup>${M}jωn</sup> with n ≠ 0 integrate to zero over a full period, which is also why only x[0] survives in (c). HW5 #2 asks all four, FA2019 MT2 #3 asks (a)–(c) and FA2023 MT2 #2 asks (a)–(b); (d) is Parseval's relation from Lecture 14. Review: ${L13()} · ${L14()} · ${pageLink('concepts/dtft', 'DTFT')} · ${pageLink('concepts/dtft-properties', 'DTFT properties')} · ${pageLink('problems/dtft-and-inverse-dtft', 'DTFT and inverse DTFT (recipe)')}</p>`;
+  },
+};
+
+/* ---------------- 9. Response to a sum of sinusoids ---------------- */
+/* Formula systems: H = R(ω)·e^{jψ(ω)}, R real (may be negative), all with Hermitian symmetry (real h[n]) */
+const SR_FORMULAS = [
+  { id: 'F1', html: `|H${Hd}(ω)| = cos²(ω), &nbsp; ∠H${Hd}(ω) = sin(ω), &nbsp; ${M}π ≤ ω ≤ π`, src: 'Lecture 15 concept check',
+    R: w => Math.cos(w) ** 2, psi: w => Math.sin(w), Rtxt: 'cos²(ω)', psiTxt: 'sin(ω)', given: true },
+  { id: 'F2', html: `H${Hd}(ω) = e<sup>${M}jω</sup>(1 + cos ω)`, src: '', R: w => 1 + Math.cos(w), psi: w => -w, Rtxt: '1 + cos ω', psiTxt: `${M}ω` },
+  { id: 'F3', html: `H${Hd}(ω) = e<sup>${M}j2ω</sup>(1 + 2cos ω)`, src: '', R: w => 1 + 2 * Math.cos(w), psi: w => -2 * w, Rtxt: '1 + 2cos ω', psiTxt: `${M}2ω` },
+  { id: 'F4', html: `H${Hd}(ω) = 2j e<sup>${M}jω</sup> sin ω`, src: 'Lecture 16, Exercise 1', R: w => 2 * Math.sin(w), psi: w => PI / 2 - w, Rtxt: '2 sin ω', psiTxt: `π/2 ${M} ω` },
+  { id: 'F5', html: `H${Hd}(ω) = 2e<sup>${M}j3ω</sup> cos 3ω`, src: 'SP2023 MT2 #5', R: w => 2 * Math.cos(3 * w), psi: w => -3 * w, Rtxt: '2cos 3ω', psiTxt: `${M}3ω` },
+  { id: 'F6', html: `|H${Hd}(ω)| = |ω|/π, &nbsp; ∠H${Hd}(ω) = ${M}2ω, &nbsp; ${M}π ≤ ω ≤ π`, src: '', R: w => Math.abs(w) / PI, psi: w => -2 * w, Rtxt: '|ω|/π', psiTxt: `${M}2ω`, given: true },
+];
+function srSystem(p) {                                     // R and ψ for this variant
+  if (p.fam === 'formula') { const f = SR_FORMULAS.find(q => q.id === p.fid); return { R: f.R, psi: f.psi }; }
+  return { R: w => Aval(p.lp, w), psi: w => -p.lp.M.v * w + (p.lp.kind === 'anti' ? PI / 2 : 0) };
+}
+function srEval(p, w) {                                    // {mag, ph (principal, NaN if 0), H (complex)}
+  const s = srSystem(p), Rv = s.R(w), ps = s.psi(w);
+  const mag = Math.abs(Rv) < 1e-12 ? 0 : Math.abs(Rv);
+  return { R: Rv, mag, ph: mag === 0 ? NaN : wrapPi(ps + (Rv < 0 ? PI : 0)), H: cpolar(Rv, ps) };
+}
+drills.sinr = {
+  gen(seed) {
+    const R = rng(seed);
+    for (let t = 0; t < 5000; t++) {
+      const fam = R.chance(0.6) ? 'fir' : 'formula';
+      let h = null, n0 = 0, lp = null, fid = null;
+      if (fam === 'fir') {
+        const a = R.pick([1, 2, -1, 0.5, 1]), L = R.pick([2, 3, 3]);
+        const anti = R.chance(0.35);
+        h = L === 2 ? (anti ? [a, -a] : [a, a]) : (anti ? [a, 0, -a] : [a, R.pick([1, 2, 3, -1, -2, 0]), a]);
+        n0 = L === 3 && R.chance(0.3) ? -1 : (L === 2 && R.chance(0.15) ? -1 : 0);
+        lp = linPhase(h, n0);
+      } else fid = R.pick(SR_FORMULAS).id;
+      const w1 = F(...R.pick([[1, 2], [1, 3], [1, 3], [2, 3]]));               // ω1/π
+      const th = F(...R.pick([[0], [0], [1, 4], [-1, 4], [1, 6], [-1, 3], [1, 3], [1, 2], [-1, 2]]));   // θ1/π (cosine form)
+      const wsin = R.chance(0.3);                                             // show the middle term as a sine
+      const thShown = wsin ? th.add(F(1, 2)) : th;                            // sin(α + π/2) = cos(α)
+      if (wsin && thShown.abs().gt(1)) continue;
+      const A0 = R.pick([1, 2, 3, 4, -1, -2, 5]), A1 = R.pick([1, 2, 3, 4]), A2 = R.pick([1, 2, 3, -1, -2]);
+      const p = { drill: 'sinr', seed, fam, h, n0, lp, fid, w1, th, wsin, thShown, A0, A1, A2, maxPts: 8 };
+      const E0 = srEval(p, 0), E1 = srEval(p, PI * w1.v), Epi = srEval(p, PI);
+      if (E1.mag === 0 && !R.chance(0.25)) continue;                         // a blocked cosine now and then, not often
+      if (E0.mag === 0 && Epi.mag === 0 && E1.mag === 0) continue;
+      const clean = v => (Math.abs(v) < 1e-12 ? 0 : v);
+      const H0 = clean(E0.H.re), Hpi = clean(Epi.H.re);                       // real for a real system
+      if (!isNice(H0) || !isNice(Hpi) || !isNice(E1.mag)) continue;
+      const B = A1 * E1.mag;
+      const phi = E1.mag === 0 ? 0 : wrapPi(PI * th.v + E1.ph);
+      return { ...p, E0, E1, Epi, H0, Hpi, c0: A0 * H0, c2: A2 * Hpi, B, phi, blocked: E1.mag === 0 };
+    }
+    throw new Error('sinr: no parameters found');
+  },
+  inputHTML(p) {
+    const fn = p.wsin ? 'sin' : 'cos';
+    const arg = wpi(p.w1, true) + (p.thShown.isZero() ? '' : (p.thShown.sign() < 0 ? ` ${M} ` : ' + ') + wpi(p.thShown.abs()));
+    const mid = `${p.A1 === 1 ? '' : p.A1}${fn}(${arg})`;
+    const a2 = Math.abs(p.A2) === 1 ? '' : Math.abs(p.A2);
+    return `${num(p.A0)} + ${mid} ${p.A2 < 0 ? M : '+'} ${a2}(${M}1)<sup>n</sup>`;
+  },
+  sysHTML(p) {
+    if (p.fam === 'fir') return `<p>A real LTI system has impulse response</p><p class="sys">h[n] = ${seqHTML(p.h, p.n0)}</p>`;
+    const f = SR_FORMULAS.find(q => q.id === p.fid);
+    return `<p>A real LTI system has frequency response${f.src ? ` <span class="src">${f.src}</span>` : ''}</p><p class="sys">${f.html}</p>`;
+  },
+  statement(p) {
+    return this.sysHTML(p) + `<p>The input is</p><p class="sys">x[n] = ${this.inputHTML(p)}</p>
+      <p>Write the output as <b>y[n] = c${sub('0')} + B cos(${wpi(p.w1, true)} + φ) + c${sub('2')}(${M}1)<sup>n</sup></b> with B ≥ 0, and enter c${sub('0')}, B, φ (radians) and c${sub('2')}.</p>`;
+  },
+  answer(p) { return { c0: ansStr(p.c0, false), B: ansStr(p.B, false), phi: p.blocked ? '0' : ansStr(p.phi), c2: ansStr(p.c2, false) }; },
+  check(p, r) {
+    const c0 = valOf(r.c0), B = valOf(r.B), phi = valOf(r.phi), c2 = valOf(r.c2);
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read it — numbers, fractions, π, √ and ° are accepted.' : '');
+    const ok0 = numClose(c0, p.c0), ok2 = numClose(c2, p.c2);
+    // the middle term: compare phasors B·e^{jφ}, so −B with φ ± π also counts
+    const okB = Number.isFinite(B) && numClose(Math.abs(B), p.B);
+    const phiU = Number.isFinite(phi) ? phi : (p.blocked || (okB && p.B === 0) ? 0 : NaN);
+    const okPhi = okB && (p.blocked ? true : angClose(phiU + (B < 0 ? PI : 0), p.phi));
+    const thV = PI * p.th.v, ang = p.E1.ph;
+    let mPhi = '';
+    if (!okPhi && Number.isFinite(phi)) {
+      if (!p.blocked && angClose(phi, thV) && !angClose(thV, p.phi)) mPhi = `that is the input phase alone — the system adds ∠H${Hd}(ω₁).`;
+      else if (!p.blocked && angClose(phi, thV - ang) && !angClose(thV - ang, p.phi)) mPhi = `∠H${Hd}(ω₁) is added to the input phase, not subtracted.`;
+      else if (!p.blocked && p.wsin && angClose(phi, PI * p.thShown.v + ang)) mPhi = 'convert the sine first: sin(α) = cos(α − π/2).';
+    }
+    let m2 = blank(r.c2, c2);
+    if (!m2 && !ok2 && numClose(c2, -p.c2) && p.c2 !== 0) m2 = `check the sign of H${Hd}(π).`;
+    else if (!m2 && !ok2 && numClose(c2, p.A2 * p.H0) && p.H0 !== p.Hpi) m2 = `(${M}1)<sup>n</sup> = cos(πn) is the frequency ω = π: it is scaled by H${Hd}(π), not H${Hd}(0).`;
+    const parts = [
+      { label: `c${sub('0')} (the constant)`, ok: ok0, pts: ok0 ? 2 : 0, max: 2, msg: ok0 ? `${num(p.A0)}·H${Hd}(0) = ${valStr(p.c0, false)}.` : blank(r.c0, c0) },
+      { label: 'B (amplitude)', ok: okB, pts: okB ? 2 : 0, max: 2, msg: okB ? `${p.A1}·|H${Hd}(ω₁)| = ${valStr(p.B, false)}${B < 0 ? ' (written with B ≥ 0 that is ' + valStr(p.B, false) + ')' : ''}.` : blank(r.B, B) },
+      { label: 'φ (phase)', ok: okPhi, pts: okPhi ? 2 : 0, max: 2, msg: okPhi ? (p.blocked ? `the cosine is blocked (H${Hd}(ω₁) = 0), so any phase is fine.` : `φ = ${valStr(p.phi)}.`) : (!okB && Number.isFinite(phi) ? 'fix the amplitude first.' : mPhi || blank(r.phi, phi)) },
+      { label: `c${sub('2')} (the (${M}1)<sup>n</sup> term)`, ok: ok2, pts: ok2 ? 2 : 0, max: 2, msg: ok2 ? `${num(p.A2)}·H${Hd}(π) = ${valStr(p.c2, false)}.` : m2 },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    if (!ok0 || !ok2) h1.push(`<b>Each piece is an eigenfunction.</b> A constant is the frequency ω = 0 and (${M}1)<sup>n</sup> = cos(πn) is ω = π: multiply them by H${Hd}(0) and H${Hd}(π), which are real for a real h[n].`);
+    if (!okB || !okPhi) h1.push(`<b>The cosine</b> (${L15()}): A cos(ω₁n + θ) → A|H${Hd}(ω₁)| cos(ω₁n + θ + ∠H${Hd}(ω₁)).${p.wsin ? ' Rewrite the sine first: sin(α) = cos(α − π/2).' : ''}`);
+    if (p.fam === 'fir') h1.push(`<b>From h[n]:</b> H${Hd}(0) = Σ h[n], H${Hd}(π) = Σ (${M}1)<sup>n</sup>h[n]; for ω₁, pair the ${p.lp.kind === 'anti' ? 'antisymmetric' : 'symmetric'} taps about their centre M and factor out e<sup>${M}jMω</sup>.`);
+    else if (!SR_FORMULAS.find(q => q.id === p.fid).given) h1.push(`<b>Read magnitude and phase off the formula</b>, but watch the real factor: where it is negative, |H${Hd}| is its absolute value and the phase picks up ±π.`);
+    const wS = wpi(p.w1);
+    h2.push(`Here H${Hd}(0) = ${valStr(p.H0, false)}, H${Hd}(π) = ${valStr(p.Hpi, false)}, and |H${Hd}(${wS})| = ${valStr(p.E1.mag, false)}${p.blocked ? '' : `, ∠H${Hd}(${wS}) = ${valStr(p.E1.ph)}`}. The input phase θ (cosine form) is ${valStr(PI * p.th.v)}.`);
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  /* how H_d(ω) is written as R(ω)e^{jψ(ω)} for this variant */
+  formHTML(p) {
+    if (p.fam === 'formula') {
+      const f = SR_FORMULAS.find(q => q.id === p.fid);
+      return f.given ? `The magnitude and phase are given: |H${Hd}(ω)| = ${f.Rtxt}, ∠H${Hd}(ω) = ${f.psiTxt}.`
+        : `Write H${Hd}(ω) = R(ω)e<sup>jψ(ω)</sup> with R(ω) = ${f.Rtxt} real and ψ(ω) = ${f.psiTxt}. Where R ≥ 0: |H${Hd}| = R and ∠H${Hd} = ψ; where R &lt; 0: |H${Hd}| = −R and ∠H${Hd} = ψ ± π.`;
+    }
+    const lp = p.lp, anti = lp.kind === 'anti', pre = hPrefix(lp);
+    return `H${Hd}(ω) = Σ h[n]e<sup>${M}jωn</sup>. The taps are ${anti ? 'antisymmetric' : 'symmetric'} about n = ${num(lp.M)}, so pairing them gives H${Hd}(ω) = ${pre ? pre + '·' : ''}A(ω) with A(ω) = ${aHTML(lp)} real: |H${Hd}| = |A| and ∠H${Hd} = ${linPh(lp)}, plus π where A &lt; 0.`;
+  },
+  evalLine(p, wF, E) {
+    const wS = wpi(wF), s = srSystem(p), w = PI * wF.v, Rv = s.R(w), ps = s.psi(w);
+    const Rname = p.fam === 'fir' ? 'A' : 'R';
+    const rTxt = p.fam === 'fir' ? `${aSubHTML(p.lp, wF)} = ${valStr(Rv, false)}` : valStr(Rv, false);
+    const given = p.fam === 'formula' && SR_FORMULAS.find(q => q.id === p.fid).given;
+    if (given) return `ω = ${wS}: |H${Hd}(${wS})| = ${valStr(E.mag, false)}${E.mag === 0 ? '' : `, ∠H${Hd}(${wS}) = ${valStr(ps)}${Math.abs(wrapPi(ps) - ps) > 1e-9 ? ` = ${valStr(E.ph)} (principal value)` : ''}`}.`;
+    if (E.mag === 0) return `ω = ${wS}: ${Rname}(${wS}) = ${rTxt}, so H${Hd}(${wS}) = 0.`;
+    return `ω = ${wS}: ${Rname}(${wS}) = ${rTxt}${Rv < 0 ? ' (negative)' : ''}, ψ = ${valStr(ps)} ⇒ |H${Hd}(${wS})| = ${valStr(E.mag, false)}, ∠H${Hd}(${wS}) = ${valStr(E.ph)}${Rv < 0 || Math.abs(wrapPi(ps) - ps) > 1e-9 ? ' (principal value)' : ''}.`;
+  },
+  solution(p) {
+    const wS = wpi(p.w1), thS = valStr(PI * p.th.v);
+    const yTerms = [];
+    if (Math.abs(p.c0) > 1e-12) yTerms.push(valStr(p.c0, false));
+    const frP = t => (t.includes('/') ? `(${t})` : t);           // (1/2)cos(…), not 1/2cos(…)
+    const rawPhi = PI * p.th.v + (p.blocked ? 0 : p.E1.ph);         // θ + ∠H before reducing to [−π, π]
+    const phiTail = Math.abs(rawPhi - p.phi) <= 1e-9 ? `<b>${valStr(p.phi)}</b>`
+      : Math.abs(Math.abs(rawPhi) - PI) <= 1e-9 ? `${valStr(rawPhi)}, the same angle as <b>${valStr(p.phi)}</b>`
+      : `${valStr(rawPhi)}, principal value <b>${valStr(p.phi)}</b>`;
+    if (p.B > 1e-12) yTerms.push(`${Math.abs(p.B - 1) < 1e-12 ? '' : frP(valStr(p.B, false))}cos(${wpi(p.w1, true)}${Math.abs(p.phi) < 1e-12 ? '' : signed(valStr(p.phi), false)})`);
+    if (Math.abs(p.c2) > 1e-12) yTerms.push(`${valStr(p.c2, false).replace(/^(−?)1$/, '$1')}(${M}1)<sup>n</sup>`);
+    const y = yTerms.length ? yTerms.map((t, i) => signed(t, i === 0)).join('') : '0';
+    return `<h3>Worked solution</h3>
+      <p><b>1 · The system.</b> ${this.formHTML(p)}</p>
+      <p><b>2 · Evaluate at the three input frequencies</b> (a constant is ω = 0, (${M}1)<sup>n</sup> = cos(πn) is ω = π):</p>
+      <ul><li>${this.evalLine(p, F(0), p.E0)} H${Hd}(0) = <b>${valStr(p.H0, false)}</b>.</li>
+      <li>${this.evalLine(p, p.w1, p.E1)}</li>
+      <li>${this.evalLine(p, F(1), p.Epi)} H${Hd}(π) = <b>${valStr(p.Hpi, false)}</b>.</li></ul>
+      <p><b>3 · Scale and shift each piece.</b> ${p.wsin ? `First ${p.A1 === 1 ? '' : p.A1}sin(${wpi(p.w1, true)}${p.thShown.isZero() ? '' : signed(valStr(PI * p.thShown.v), false)}) = ${p.A1 === 1 ? '' : p.A1}cos(${wpi(p.w1, true)}${p.th.isZero() ? '' : signed(thS, false)}), since sin(α) = cos(α − π/2). ` : ''}
+      c${sub('0')} = ${num(p.A0)}·${parS(valStr(p.H0, false))} = <b>${valStr(p.c0, false)}</b>;
+      B = ${p.A1}·${frP(valStr(p.E1.mag, false))} = <b>${valStr(p.B, false)}</b>${p.blocked ? ' (the cosine is blocked)' : `, φ = θ + ∠H${Hd}(${wS}) = ${thS}${signed(valStr(p.E1.ph), false)} = ${phiTail}`};
+      c${sub('2')} = ${num(p.A2)}·${parS(valStr(p.Hpi, false))} = <b>${valStr(p.c2, false)}</b>.</p>
+      <p><b>Answer.</b> y[n] = ${y}</p>
+      <p class="muted">Only the frequencies already in the input come out: an LTI system can rescale and shift each sinusoid, never create a new frequency. Review: ${L15()} · ${L16()} · ${pageLink('concepts/frequency-response', 'frequency response')} · ${pageLink('concepts/eigenfunctions-of-lti-systems', 'eigenfunctions of LTI systems')} · ${pageLink('problems/lti-response-to-sinusoids', 'LTI response to sinusoids (recipe)')}</p>`;
+  },
+};
+
+/* ---------------- 10. Magnitude, phase and group delay of a linear-phase FIR ---------------- */
+drills.magph = {
+  gen(seed) {
+    const R = rng(seed);
+    for (let t = 0; t < 5000; t++) {
+      const L = R.pick([2, 3, 3, 4, 5]), anti = R.chance(0.4);
+      const e = () => R.pick([1, 2, 3, -1, -2, -3]), f = () => R.int(-3, 3);
+      let h;
+      if (L === 2) { const a = e(); h = anti ? [a, -a] : [a, a]; }
+      else if (L === 3) { const a = e(); h = anti ? [a, 0, -a] : [a, f(), a]; }
+      else if (L === 4) { const a = e(), b = f(); h = anti ? [a, b, -b, -a] : [a, b, b, a]; }
+      else { const a = e(), b = f(); h = anti ? [a, b, 0, -b, -a] : [a, b, f(), b, a]; }
+      const n0 = -R.int(0, L - 1);
+      const lp = linPhase(h, n0);
+      const w0 = F(...R.pick([[1, 2], [1, 3], [2, 3], [1, 1], [1, 4], [3, 4], [1, 6]]));
+      const w = PI * w0.v, A = Aval(lp, w);
+      if (Math.abs(A) < 1e-9 || !isNice(A)) continue;                     // H(ω0) = 0 (phase undefined) or a messy value
+      const ph = wrapPi(-lp.M.v * w + (anti ? PI / 2 : 0) + (A < 0 ? PI : 0));
+      return { drill: 'magph', seed, h, n0, lp, w0, A, mag: Math.abs(A), ph, maxPts: 8 };
+    }
+    throw new Error('magph: no parameters found');
+  },
+  statement(p) {
+    const anti = p.lp.kind === 'anti';
+    return `<p>An LTI system has impulse response (the arrow ↑ marks n = 0)</p>
+      <p class="sys">h[n] = ${seqHTML(p.h, p.n0)}</p>
+      <div class="scroll">${idxTable('h[n]', p.h, p.n0)}</div>
+      <p>The taps are <b>${anti ? 'antisymmetric' : 'symmetric'}</b>, so H${Hd}(ω) = ${anti ? 'j ' : ''}e<sup>${M}jMω</sup>A(ω) with A(ω) real. At ω₀ = <b>${wpi(p.w0)}</b> find</p>
+      <p><b>(a)</b> the group delay τ${sub('gd')}(ω) = M &nbsp; <b>(b)</b> A(ω₀) (with its sign) &nbsp; <b>(c)</b> |H${Hd}(ω₀)| &nbsp; <b>(d)</b> ∠H${Hd}(ω₀) as a principal value in [${M}π, π]</p>`;
+  },
+  answer(p) { return { M: num(p.lp.M), A: ansStr(p.A, false), mag: ansStr(p.mag, false), ph: ansStr(p.ph) }; },
+  check(p, r) {
+    const Mu = valOf(r.M), Au = valOf(r.A), mu = valOf(r.mag), pu = valOf(r.ph);
+    const lp = p.lp, Mv = lp.M.v, anti = lp.kind === 'anti', w = PI * p.w0.v;
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read it — numbers, fractions, π, √ and ° are accepted.' : '');
+    const okM = near(Mu, Mv), okA = numClose(Au, p.A), okm = numClose(mu, p.mag), okp = angClose(pu, p.ph);
+    let mM = blank(r.M, Mu);
+    if (!mM && !okM && near(Mu, -Mv) && Mv !== 0) mM = `e<sup>${M}jMω</sup> is a delay by M: the sign is the other way.`;
+    else if (!mM && !okM && near(Mu, (p.h.length - 1) / 2) && p.n0 !== 0) mM = 'that is the centre counted from the first tap — count from n = 0 (the arrow).';
+    let mA = blank(r.A, Au);
+    if (!mA && !okA && numClose(Au, -p.A)) mA = `right size, wrong sign — check ${anti ? 'which tap of each pair carries the minus sign (the j is outside A)' : 'the cosines at ω₀'}.`;
+    let mm = blank(r.mag, mu);
+    if (!mm && !okm && numClose(mu, p.A) && p.A < 0) mm = 'a magnitude is never negative: |H<sub>d</sub>(ω₀)| = |A(ω₀)|.';
+    let mp = blank(r.ph, pu);
+    if (!mp && !okp && Number.isFinite(pu)) {
+      const base = -Mv * w;
+      if (p.A < 0 && angClose(pu, base + (anti ? PI / 2 : 0))) mp = 'A(ω₀) is negative, and −1 = e<sup>±jπ</sup> adds ±π to the phase.';
+      else if (anti && angClose(pu, base + (p.A < 0 ? PI : 0))) mp = 'the j in front contributes +π/2.';
+      else if (angClose(pu, -base + (anti ? PI / 2 : 0) + (p.A < 0 ? PI : 0))) mp = `the linear phase is ${M}Mω₀, not +Mω₀.`;
+    } else if (okp && Number.isFinite(pu) && Math.abs(pu - p.ph) > 1e-3 && !(Math.abs(Math.abs(p.ph) - PI) < 1e-9)) mp = `the same angle; its principal value is ${valStr(p.ph)}.`;
+    const parts = [
+      { label: '(a) group delay', ok: okM, pts: okM ? 2 : 0, max: 2, msg: okM ? `τ${sub('gd')} = M = ${num(lp.M)} sample${Math.abs(Mv) === 1 ? '' : 's'}.` : mM },
+      { label: '(b) A(ω₀)', ok: okA, pts: okA ? 2 : 0, max: 2, msg: okA ? `A(${wpi(p.w0)}) = ${valStr(p.A, false)}.` : mA },
+      { label: `(c) |H${Hd}(ω₀)|`, ok: okm, pts: okm ? 2 : 0, max: 2, msg: okm ? `${valStr(p.mag, false)}.` : mm },
+      { label: `(d) ∠H${Hd}(ω₀)`, ok: okp, pts: okp ? 2 : 0, max: 2, msg: okp ? (mp || `${valStr(p.ph)}${Math.abs(Math.abs(p.ph) - PI) < 1e-9 ? ' (π and −π are the same angle)' : ''}.`) : mp },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [], h2 = [];
+    h1.push(`<b>Pair the taps</b> around the centre M = (first index + last index)/2: h[M−m]e<sup>${M}jω(M−m)</sup> + h[M+m]e<sup>${M}jω(M+m)</sup> = e<sup>${M}jMω</sup>·${anti ? '2j·h[M−m] sin(mω)' : '2h[M−m] cos(mω)'}. What is left after factoring out ${anti ? 'j' : ''}e<sup>${M}jMω</sup> is the real A(ω).`);
+    if (!okp || !okm) h1.push(`<b>Magnitude and phase</b> (${L16()}): |H${Hd}| = |A|; ∠H${Hd} = ${M}Mω₀${anti ? ' + π/2' : ''}, plus π if A(ω₀) &lt; 0, then reduce to [${M}π, π].`);
+    if (!okM) h1.push(`<b>Group delay</b> τ${sub('gd')} = ${M}d∠H${Hd}/dω: the linear phase ${M}Mω gives M; the π jumps where A changes sign do not change the slope.`);
+    h2.push(`Here M = ${num(lp.M)} and A(ω) = ${aHTML(lp)}, so A(${wpi(p.w0)}) = ${aSubHTML(lp, p.w0)}.`);
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')].filter(Boolean) };
+  },
+  solution(p) {
+    const lp = p.lp, anti = lp.kind === 'anti', w = PI * p.w0.v, wS = wpi(p.w0);
+    const first = p.n0, last = p.n0 + p.h.length - 1;
+    const lin = -lp.M.v * w, raw = lin + (anti ? PI / 2 : 0) + (p.A < 0 ? PI : 0);
+    const terms = [valStr(lin)], why = [];
+    if (anti) { terms.push('π/2'); why.push('π/2 from the j'); }
+    if (p.A < 0) { terms.push('π'); why.push('π because A(ω₀) &lt; 0, and −1 = e<sup>jπ</sup>'); }
+    const linTxt = lp.M.isZero() ? `${M}Mω₀ = 0` : `${M}Mω₀ = ${M}${parS(num(lp.M))}·${wS} = ${valStr(lin)}`;
+    const sumTxt = terms.length > 1 ? ` = ${terms.map((t, i) => signed(t, i === 0)).join('')}` : '';
+    // the value of the sum, reduced to [−π, π] when needed (±π: either sign is the same angle)
+    const atPi = Math.abs(Math.abs(raw) - PI) < 1e-9, wrapped = !atPi && Math.abs(wrapPi(raw) - raw) > 1e-9;
+    const fin = atPi ? `<b>${valStr(raw)}</b> (equivalently ${valStr(-raw)})` : `<b>${valStr(p.ph)}</b>${Math.abs(Math.abs(p.ph) - PI) < 1e-9 ? ` (equivalently ${M}π)` : ''}`;
+    const phTail = wrapped ? `${terms.length > 1 ? ` = ${valStr(raw)}` : ''}, principal value ${fin}` : ` = ${fin}`;
+    const cS = (re, im) => { const r0 = Math.abs(re) < 1e-12 ? 0 : re, i0 = Math.abs(im) < 1e-12 ? 0 : im;
+      if (!i0) return valStr(r0, false); const iS = Math.abs(Math.abs(i0) - 1) < 1e-12 ? 'j' : `j${parS(valStr(Math.abs(i0), false))}`;
+      return r0 ? `${valStr(r0, false)} ${i0 < 0 ? M : '+'} ${iS}` : `${i0 < 0 ? M : ''}${iS}`; };
+    return `<h3>Worked solution</h3>
+      <p><b>1 · Centre and pairing.</b> h[n] runs from n = ${num(first)} to n = ${num(last)}, so it is ${anti ? 'antisymmetric' : 'symmetric'} about M = (${num(first)} + ${parS(num(last))})/2 = <b>${num(lp.M)}</b>. Pairing the taps:</p>
+      <p class="sys">H${Hd}(ω) = ${hPrefix(lp) ? hPrefix(lp) + '·' : ''}[${aHTML(lp)}]</p>
+      <p><b>(a)</b> ∠H${Hd}(ω) = ${linPh(lp)} (+π where A &lt; 0) is linear in ω, so τ${sub('gd')}(ω) = ${M}d∠H${Hd}/dω = <b>${num(lp.M)}</b> sample${Math.abs(lp.M.v) === 1 ? '' : 's'} at every ω where H${Hd} ≠ 0. ${lp.M.sign() < 0 ? 'A negative group delay is an advance: this h[n] is non-causal.' : lp.M.isZero() ? `With M = 0, H${Hd}(ω) is ${anti ? 'purely imaginary' : 'real'}.` : ''}</p>
+      <p><b>(b)</b> A(${wS}) = ${aSubHTML(lp, p.w0)} = <b>${valStr(p.A, false)}</b>.</p>
+      <p><b>(c)</b> |H${Hd}(${wS})| = |A(${wS})| = <b>${valStr(p.mag, false)}</b>.</p>
+      <p><b>(d)</b> ${linTxt}. ∠H${Hd}(${wS}) = ${M}Mω₀${anti ? ' + π/2' : ''}${p.A < 0 ? ' + π' : ''}${sumTxt}${phTail}${why.length ? ` — ${why.join('; ')}` : ''}.</p>
+      <p class="muted">Check: H${Hd}(${wS}) = Σ h[n]e<sup>${M}jω₀n</sup> = ${cS(p.mag * Math.cos(p.ph), p.mag * Math.sin(p.ph))}. Review: ${L16()} · ${pageLink('concepts/magnitude-and-phase-response', 'magnitude and phase response')} · ${pageLink('concepts/group-delay', 'group delay')} · ${pageLink('problems/magnitude-phase-and-group-delay', 'magnitude, phase and group delay (recipe)')}</p>`;
+  },
+};
+
+globalThis.ECE310Drills = { Fr, F, rng, parseNum, parseList, near, num, paren, polyZ, factorZ, termsHTML, termsVal, sameSeq, seqHTML, drills, PROP_NAMES,
+  cx, cadd, csub, cmul, cdiv, cabs, cpolar, cpowi, xVal, sameX, xHTML, ZR_SHAPES, ZR_ORDER,
+  parseVal, piMultiple, wrapPi, valStr, linPhase, Aval, SR_FORMULAS, srEval };
+})();
+</script>
+
+<script id="drill-ui">
+(function () {
+'use strict';
+const C = globalThis.ECE310Drills;
+const $ = (sel, el) => (el || document).querySelector(sel);
+const $$ = (sel, el) => Array.from((el || document).querySelectorAll(sel));
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+const newSeed = () => 1 + Math.floor(Math.random() * 999999);
+
+/* ---- theme: follow the embedding Quartz page if same-origin, else the OS (as in the ECE 329 demos) */
+function syncTheme() {
+  let t = null;
+  try { t = window.parent && window.parent !== window ? window.parent.document.documentElement.getAttribute('saved-theme') : null; } catch (e) {}
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  if (document.documentElement.getAttribute('data-theme') !== t) document.documentElement.setAttribute('data-theme', t);
+}
+syncTheme();
+try {
+  if (window.parent && window.parent !== window) {
+    new MutationObserver(syncTheme).observe(window.parent.document.documentElement, { attributes: true, attributeFilter: ['saved-theme'] });
+  }
+} catch (e) {}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+/* ---- score (in memory only) */
+const score = { att: 0, cor: 0, pts: 0, max: 0, by: {} };
+let current = null;
+function record(id, pts, max, allOk) {
+  const b = score.by[id] || (score.by[id] = { att: 0, cor: 0, pts: 0, max: 0 });
+  for (const o of [score, b]) { o.att += 1; o.cor += allOk ? 1 : 0; o.pts += pts; o.max += max; }
+  renderStrip();
+}
+function renderStrip() {
+  const pct = score.max ? Math.round(100 * score.pts / score.max) + '%' : '—';
+  const b = current && score.by[current.id];
+  $('#strip').innerHTML =
+    `<span class="stat">Attempted <b>${score.att}</b></span>` +
+    `<span class="stat">Correct <b>${score.cor}</b></span>` +
+    `<span class="stat">Exam-style <b>${C.num(score.pts)}</b> / ${score.max} pts <span class="muted">(${pct})</span></span>` +
+    `<button type="button" id="reset" title="Zero all scores">Reset</button>` +
+    `<span class="sub">${current ? `This drill: ${b ? `${b.att} attempted · ${b.cor} fully right · ${C.num(b.pts)}/${b.max} pts` : 'nothing submitted yet'}` : ''} · "Correct" = fully right on the first submission; points count first submissions only.</span>`;
+  $('#reset').onclick = () => { score.att = score.cor = score.pts = score.max = 0; score.by = {}; renderStrip(); };
+}
+
+/* ---- input widgets for each drill: build the form, return a function that reads the response */
+function enterSubmits(root, submit) {
+  $$('input[type=text]', root).forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submit(); } }));
+}
+function textField(label, cls, ph, wide) {
+  return `<label class="fld${wide ? ' wide' : ''}"><span>${label}</span><input type="text" class="${cls}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${ph}"></label>`;
+}
+function radioGroup(name, options, inline) {
+  return `<div class="opts${inline ? ' inline-opts' : ''}">` + options.map((o, i) =>
+    `<label class="opt"><input type="radio" name="${name}" value="${i}"><span>${o}</span></label>`).join('') + '</div>';
+}
+function markChoice(root, name, chosen, ok) {
+  $$(`input[name="${name}"]`, root).forEach(inp => {
+    const lab = inp.closest('.opt');
+    lab.classList.remove('chosen-ok', 'chosen-bad');
+    if (inp.checked) lab.classList.add(ok ? 'chosen-ok' : 'chosen-bad');
+  });
+}
+let uid = 0;
+const INPUTS = {
+  conv(p, root, submit) {
+    root.innerHTML = textField('y[n] samples, first to last non-zero (comma-separated)', 'vals', 'e.g. 2, −1, 0, 5', true) +
+                     textField('first index n =', 'start', 'e.g. −3', false);
+    enterSubmits(root, submit);
+    return () => ({ vals: $('.vals', root).value, start: $('.start', root).value });
+  },
+  props(p, root) {
+    root.innerHTML = '<div class="checks">' + C.PROP_NAMES.map((n, i) =>
+      `<label class="opt"><input type="checkbox" data-i="${i}"><span>${n}</span></label>`).join('') + '</div>';
+    return () => ({ props: $$('input[type=checkbox]', root).map(c => c.checked) });
+  },
+  pfe(p, root, submit) {
+    const n = 'pfe' + (++uid);
+    root.innerHTML =
+      textField(`(a) A<sub>1</sub> (pole ${C.num(p.p1)})`, 'a1', 'e.g. 9/4', false) +
+      textField(`(a) A<sub>2</sub> (pole ${C.num(p.p2)})`, 'a2', 'e.g. −5/4', false) +
+      `<div class="group"><div class="q">(b) h[n] =</div>${radioGroup(n + 'o', p.options.map(o => C.termsHTML(o.terms)))}</div>` +
+      `<div class="group"><div class="q">(c) BIBO stable?</div>${radioGroup(n + 's', ['Yes', 'No'], true)}</div>`;
+    enterSubmits(root, submit);
+    return () => {
+      const o = $(`input[name="${n}o"]:checked`, root), s = $(`input[name="${n}s"]:checked`, root);
+      return { A1: $('.a1', root).value, A2: $('.a2', root).value, opt: o ? +o.value : null, stable: s ? (s.value === '0' ? 'yes' : 'no') : null, _names: [n + 'o', n + 's'] };
+    };
+  },
+};
+INPUTS.zroc = function (p, root, submit) {
+  const n = 'zr' + (++uid);
+  const shapes = C.ZR_ORDER.map(k => `<option value="${k}">${C.ZR_SHAPES[k].label}</option>`).join('');
+  root.innerHTML =
+    `<div class="group"><div class="q">(a) ROC</div><div class="fields">
+       <label class="fld"><span>shape</span><select class="shape"><option value="">— choose —</option>${shapes}</select></label>
+       ${textField('<span class="r1lab">r</span>', 'r1', 'e.g. 1/2', false)}${textField('r<sub>2</sub>', 'r2', 'e.g. 3', false)}</div></div>` +
+    `<div class="group"><div class="q">(b) X(z) =</div>${radioGroup(n, p.options.map(o => C.xHTML(o)))}</div>`;
+  const upd = () => {
+    const k = $('.shape', root).value, nr = k ? C.ZR_SHAPES[k].r : 1;
+    $('.r1', root).closest('.fld').hidden = nr < 1;
+    $('.r2', root).closest('.fld').hidden = nr < 2;
+    $('.r1lab', root).innerHTML = nr === 2 ? 'r<sub>1</sub>' : 'r';
+  };
+  $('.shape', root).onchange = upd; upd();
+  enterSubmits(root, submit);
+  return () => {
+    const o = $(`input[name="${n}"]:checked`, root);
+    return { shape: $('.shape', root).value, r1: $('.r1', root).value, r2: $('.r2', root).value, opt: o ? +o.value : null, _names: [n] };
+  };
+};
+INPUTS.rocsc = function (p, root) {
+  const n = 'rs' + (++uid);
+  root.innerHTML =
+    `<div class="group"><div class="q">(a) ROC</div>${radioGroup(n + 'r', p.cands.map(c => C.drills.rocsc.candText(c)), true)}</div>` +
+    `<div class="group"><div class="q">(b) BIBO stable?</div>${radioGroup(n + 's', ['Yes', 'No'], true)}</div>` +
+    `<div class="group"><div class="q">(c) Causal?</div>${radioGroup(n + 'c', ['Yes', 'No'], true)}</div>`;
+  return () => {
+    const g = s => $(`input[name="${n}${s}"]:checked`, root);
+    const yn = e => (e ? (e.value === '0' ? 'yes' : 'no') : null);
+    return { opt: g('r') ? +g('r').value : null, stable: yn(g('s')), causal: yn(g('c')), _names: [n + 'r', n + 's', n + 'c'] };
+  };
+};
+INPUTS.poles = function (p, root) {
+  root.innerHTML = '<div class="group"><div class="q">Unbounded output?</div><div class="opts">' + p.inputs.map((x, i) =>
+    `<label class="opt"><input type="checkbox" data-i="${i}"><span>x[n] = ${x.html}</span></label>`).join('') + '</div></div>';
+  return () => ({ marks: $$('input[type=checkbox]', root).map(c => c.checked) });
+};
+INPUTS.dtftv = function (p, root, submit) {
+  root.innerHTML = textField('(a) X<sub>d</sub>(0) =', 'u3fa', 'e.g. 3', false) + textField('(b) X<sub>d</sub>(π) =', 'u3fb', 'e.g. −5', false) +
+    textField('(c) ∫X<sub>d</sub>(ω) dω = ___ · π', 'u3fc', 'e.g. −14', false) + textField('(d) ∫|X<sub>d</sub>(ω)|² dω = ___ · π', 'u3fd', 'e.g. 44', false);
+  enterSubmits(root, submit);
+  return () => ({ a: $('.u3fa', root).value, b: $('.u3fb', root).value, c: $('.u3fc', root).value, d: $('.u3fd', root).value });
+};
+INPUTS.sinr = function (p, root, submit) {
+  root.innerHTML = textField('c<sub>0</sub> (the constant)', 'u3f0', 'e.g. 6', false) + textField('B (amplitude, ≥ 0)', 'u3fB', 'e.g. 2√3', false) +
+    textField('φ (radians)', 'u3fp', 'e.g. −π/6', false) + textField('c<sub>2</sub> (multiplies (−1)<sup>n</sup>)', 'u3f2', 'e.g. −1', false);
+  enterSubmits(root, submit);
+  return () => ({ c0: $('.u3f0', root).value, B: $('.u3fB', root).value, phi: $('.u3fp', root).value, c2: $('.u3f2', root).value });
+};
+INPUTS.magph = function (p, root, submit) {
+  root.innerHTML = textField('(a) τ<sub>gd</sub> = M', 'u3fM', 'e.g. 3/2', false) + textField('(b) A(ω₀)', 'u3fA', 'e.g. −√3', false) +
+    textField('(c) |H<sub>d</sub>(ω₀)|', 'u3fm', 'e.g. √3', false) + textField('(d) ∠H<sub>d</sub>(ω₀)', 'u3fp', 'e.g. 2π/3', false);
+  enterSubmits(root, submit);
+  return () => ({ M: $('.u3fM', root).value, A: $('.u3fA', root).value, mag: $('.u3fm', root).value, ph: $('.u3fp', root).value });
+};
+/* after grading, colour the chosen multiple-choice options */
+const DECORATE = {
+  pfe(p, root, r, res) {
+    markChoice(root, r._names[0], r.opt, res.parts[2].ok);
+    markChoice(root, r._names[1], r.stable, res.parts[3].ok);
+  },
+  zroc(p, root, r, res) { markChoice(root, r._names[0], r.opt, res.parts[1].ok); },
+  rocsc(p, root, r, res) { r._names.forEach((nm, i) => markChoice(root, nm, null, res.parts[i].ok)); },
+};
+
+/* ---- drill registry (order = tab order) */
+const UIS = [
+  { id: 'conv', label: 'Convolution', title: 'Finite-length convolution',
+    blurb: 'On every past exam (7/7, 8–10 pts). Watch the start index: first index of y = first index of x + first index of h.' },
+  { id: 'props', label: 'System properties', title: 'Linear · time-invariant · causal · stable',
+    blurb: 'The property table is on every past exam (7/7, 12 pts, one per box). 45 systems from the exams, HW1–HW2 and Lecture 3; each checked against the official keys.', deck: true },
+  { id: 'pfe', label: 'PFE & inverse z', title: 'Partial fractions → h[n] for a given ROC',
+    blurb: 'Cover-up for the residues, then pair each pole with a side of the ROC. Inverse z / all-possible-ROCs is on 7/7 exams.' },
+  { id: 'zroc', label: 'z-transform & ROC', title: 'z-transform with its ROC',
+    blurb: 'On 6/7 past exams (9–15 pts). Right-sided pieces converge outside their pole, left-sided pieces inside; finite stretches only lose z = 0 and/or z = ∞.' },
+  { id: 'rocsc', label: 'ROC → stable / causal', title: 'Stability and causality from the ROC',
+    blurb: 'Every inverse-z problem starts here: draw the pole circles, pick the ring the problem forces, then read off stability (unit circle inside?) and causality (outside the outermost pole?).' },
+  { id: 'poles', label: 'Unbounded outputs', title: 'Which bounded inputs blow the output up?',
+    blurb: 'On 7/7 past exams (about 10 pts, one per input). Resonance: an input pole on top of one of H’s unit-circle poles. Rescue: an input zero on top of H’s pole outside the circle.' },
+  { id: 'dtftv', label: 'DTFT values', title: 'DTFT values straight from x[n]',
+    blurb: 'Four numbers you can read off a short sequence without computing X<sub>d</sub>(ω): the sum of the samples, the alternating sum (signs set by the index n), 2π·x[0] from the inverse DTFT, and 2π times the energy from Parseval. Lectures 13–14.' },
+  { id: 'sinr', label: 'Sinusoidal response', title: 'A real LTI system driven by a sum of sinusoids',
+    blurb: 'Split the input by frequency: a constant is ω = 0, (−1)<sup>n</sup> is ω = π, and a cosine keeps its frequency while H<sub>d</sub> scales it by |H<sub>d</sub>| and shifts it by ∠H<sub>d</sub>. Systems come as taps h[n] or as a formula for H<sub>d</sub>(ω). Lecture 15.' },
+  { id: 'magph', label: 'Magnitude & phase', title: 'Magnitude, phase and group delay of a linear-phase FIR',
+    blurb: 'Factor e<sup>−jMω</sup> out of symmetric (or antisymmetric) taps. What is left is real, so the magnitude is its absolute value, the phase is linear with π jumps where it changes sign, and the group delay is M. Lecture 16.' },
+  { id: 'tf', label: 'True / False', title: 'True/False rapid fire',
+    blurb: 'All 42 non-DTFT True/False statements from the seven past exams, with the official answers. Exam scoring: +2 right, −1 wrong, 0 skipped — skip when you would be guessing. Keyboard: T, F, S, then N for the next one.', custom: buildTF },
+];
+
+/* ---- True/False panel: one statement at a time, answered once */
+function buildTF(ui) {
+  const core = C.drills.tf;
+  const panel = el('section', 'panel');
+  panel.id = 'panel-tf'; panel.setAttribute('role', 'tabpanel'); panel.hidden = true;
+  panel.innerHTML = `
+    <div class="dhead"><h2>${ui.title}</h2><span class="variant"></span></div>
+    <p class="blurb">${ui.blurb}</p>
+    <div class="stmt tfstmt"></div>
+    <div class="btns">
+      <button type="button" class="primary tf-t">True</button>
+      <button type="button" class="primary tf-f">False</button>
+      <button type="button" class="tf-s">Skip</button>
+      <button type="button" class="tf-next" hidden>Next statement →</button>
+    </div>
+    <div class="fb" aria-live="polite"></div>
+    <p class="muted tfsess" style="font-size:13px"></p>`;
+  const st = { deck: [], p: null, answered: false, round: 1, sess: { n: 0, right: 0, wrong: 0, skip: 0, pts: 0 } };
+  const btns = ['.tf-t', '.tf-f', '.tf-s'].map(c => $(c, panel));
+  function sessLine() {
+    const q = st.sess;
+    $('.tfsess', panel).textContent = q.n ? `This session: ${q.n} answered · ${q.right} right · ${q.wrong} wrong · ${q.skip} skipped · ${q.pts >= 0 ? '+' : '−'}${Math.abs(q.pts)} pts` : '';
+  }
+  function next() {
+    if (!st.deck.length) {
+      if (st.p) st.round += 1;
+      st.deck = C.rng(newSeed()).shuffle(core.bank.map((_, i) => i));
+    }
+    st.p = core.gen(1, { index: st.deck.pop() });
+    st.answered = false;
+    panel.dataset.index = String(st.p.index);
+    $('.variant', panel).textContent = `statement ${core.bank.length - st.deck.length} of ${core.bank.length}${st.round > 1 ? ' · round ' + st.round : ''}`;
+    $('.tfstmt', panel).innerHTML = `<p><span class="src" style="margin-left:0">${st.p.src}</span></p><p class="sys">${st.p.text}</p>`;
+    $('.fb', panel).innerHTML = '';
+    btns.forEach(b => { b.disabled = false; });
+    $('.tf-next', panel).hidden = true;
+  }
+  function answer(choice) {
+    if (st.answered) return;
+    const res = core.check(st.p, { choice });
+    st.answered = true;
+    record('tf', res.pts, 2, res.allOk);
+    const q = st.sess; q.n += 1; q.pts += res.pts;
+    if (res.skipped) q.skip += 1; else if (res.allOk) q.right += 1; else q.wrong += 1;
+    $('.fb', panel).innerHTML =
+      `<div class="summary ${res.skipped ? '' : res.allOk ? 'ok' : 'bad'}">${res.skipped ? 'Skipped — 0 points' : res.allOk ? '✓ Correct — +2' : '✗ Wrong — −1'}</div>` +
+      `<div class="row ${res.skipped ? '' : res.allOk ? 'ok' : 'bad'}"><b>Official answer: ${st.p.ans ? 'True' : 'False'}.</b> ${st.p.why}</div>`;
+    btns.forEach(b => { b.disabled = true; });
+    const nx = $('.tf-next', panel); nx.hidden = false; nx.focus({ preventScroll: true });
+    sessLine();
+  }
+  $('.tf-t', panel).onclick = () => answer('T');
+  $('.tf-f', panel).onclick = () => answer('F');
+  $('.tf-s', panel).onclick = () => answer(null);
+  $('.tf-next', panel).onclick = next;
+  document.addEventListener('keydown', e => {
+    if (panel.hidden || e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|SELECT|TEXTAREA)$/.test((e.target && e.target.tagName) || '')) return;
+    const k = e.key.toLowerCase();
+    if (!st.answered && (k === 't' || k === 'f' || k === 's')) { e.preventDefault(); answer(k === 's' ? null : k.toUpperCase()); }
+    else if (st.answered && k === 'n') { e.preventDefault(); next(); }
+  });
+  next();
+  return panel;
+}
+
+/* ---- standard drill panel */
+function buildPanel(ui) {
+  const core = C.drills[ui.id];
+  const panel = el('section', 'panel');
+  panel.id = 'panel-' + ui.id;
+  panel.setAttribute('role', 'tabpanel');
+  panel.hidden = true;
+  panel.innerHTML = `
+    <div class="dhead"><h2>${ui.title}</h2><span class="variant"></span></div>
+    <p class="blurb">${ui.blurb}</p>
+    <div class="stmt"></div>
+    <div class="inputs"></div>
+    <div class="btns">
+      <button type="button" class="primary submit">Submit</button>
+      <button type="button" class="newv">New variant</button>
+      <button type="button" class="showsol">Show worked solution</button>
+    </div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="hints"></div>
+    <div class="sol" hidden></div>`;
+  const st = { p: null, tries: 0, scored: false, read: null, deck: [] };
+  function nextIndex() {
+    if (!st.deck.length) { st.deck = C.rng(newSeed()).shuffle(Array.from({ length: core.bank.length }, (_, i) => i)); }
+    return st.deck.pop();
+  }
+  function newVariant() {
+    const seed = newSeed();
+    st.p = core.gen(seed, ui.deck ? { index: nextIndex() } : undefined);
+    st.tries = 0; st.scored = false;
+    $('.variant', panel).textContent = ui.deck ? `system ${st.p.index + 1} of ${core.bank.length}` : `variant #${seed}`;
+    $('.stmt', panel).innerHTML = core.statement(st.p);
+    st.read = INPUTS[ui.id](st.p, $('.inputs', panel), submit);
+    $('.fb', panel).innerHTML = '';
+    $('.hints', panel).innerHTML = '';
+    const sol = $('.sol', panel); sol.hidden = true; sol.innerHTML = '';
+    $('.showsol', panel).textContent = 'Show worked solution';
+  }
+  function submit() {
+    const r = st.read();
+    const res = core.check(st.p, r);
+    st.tries += 1;
+    const first = !st.scored;
+    if (first) { st.scored = true; record(ui.id, res.pts, res.max, res.allOk); }
+    $('.fb', panel).innerHTML =
+      `<div class="summary ${res.allOk ? 'ok' : 'bad'}">${res.allOk ? '✓ All correct' : '✗ Not quite'} — ${C.num(res.pts)}/${res.max} points` +
+      `${first ? '' : ' <span class="muted">(attempt ' + st.tries + ': feedback only — exam-style points count the first submission)</span>'}</div>` +
+      res.parts.map(q => `<div class="row ${q.ok ? 'ok' : 'bad'}"><span class="pts">${C.num(q.pts)}/${q.max}</span><b>${q.ok ? '✓' : '✗'} ${q.label}</b>${q.msg ? ' — ' + q.msg : ''}</div>`).join('');
+    const hs = res.allOk ? [] : res.hints.slice(0, Math.min(st.tries, res.hints.length));
+    $('.hints', panel).innerHTML = hs.map((h, i) => `<div class="hint">${i === 0 ? '<b>Hint.</b> ' : '<b>Hint 2.</b> '}${h}</div>`).join('') +
+      (!res.allOk && st.tries >= 2 ? '<div class="hint muted">Stuck? “Show worked solution” walks through it; then try a new variant.</div>' : '');
+    if (DECORATE[ui.id]) DECORATE[ui.id](st.p, panel, r, res);
+  }
+  function toggleSol() {
+    const sol = $('.sol', panel);
+    if (!st.scored) { st.scored = true; record(ui.id, 0, st.p.maxPts, false); }
+    if (sol.hidden) { sol.innerHTML = core.solution(st.p); sol.hidden = false; $('.showsol', panel).textContent = 'Hide worked solution'; }
+    else { sol.hidden = true; $('.showsol', panel).textContent = 'Show worked solution'; }
+  }
+  $('.submit', panel).onclick = submit;
+  $('.newv', panel).onclick = newVariant;
+  $('.showsol', panel).onclick = toggleSol;
+  newVariant();
+  return panel;
+}
+
+/* ---- tabs / picker */
+function show(id) {
+  const ui = UIS.find(u => u.id === id) || UIS[0];
+  current = ui;
+  UIS.forEach(u => {
+    $('#panel-' + u.id).hidden = u.id !== ui.id;
+    const tab = $('#tab-' + u.id);
+    tab.setAttribute('aria-selected', u.id === ui.id ? 'true' : 'false');
+    tab.tabIndex = u.id === ui.id ? 0 : -1;
+  });
+  $('#picker').value = ui.id;
+  renderStrip();
+}
+UIS.forEach(ui => {
+  const tab = el('button', 'tab', ui.label);
+  tab.type = 'button'; tab.id = 'tab-' + ui.id; tab.setAttribute('role', 'tab');
+  tab.onclick = () => { show(ui.id); try { history.replaceState(null, '', '#' + ui.id); } catch (e) {} };
+  $('#tabs').appendChild(tab);
+  const o = el('option', null, ui.label); o.value = ui.id; $('#picker').appendChild(o);
+  $('#panels').appendChild(ui.custom ? ui.custom(ui) : buildPanel(ui));
+});
+$('#picker').onchange = e => { show(e.target.value); try { history.replaceState(null, '', '#' + e.target.value); } catch (err) {} };
+show((location.hash || '').slice(1));
+})();
+</script>
+</body>
+</html>

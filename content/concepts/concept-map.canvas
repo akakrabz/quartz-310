@@ -1,0 +1,524 @@
+{
+  "nodes": [
+    {
+      "id": "legend",
+      "type": "text",
+      "x": 0,
+      "y": -270,
+      "width": 2390,
+      "height": 210,
+      "color": "6",
+      "text": "## Midterm 1 concept map\nEach box is a page of this site — click its title to open it, hover for a preview. Arrows read **“leads to”**; the label says how; plain lines link a box to the lecture that teaches it or to its sister problem. Top band: the time domain (Lectures 1–5). Middle band: the z-domain (Lectures 6–10). Bottom band: stability and causality (Lecture 11) and the exam problem families where all of it is tested.\n\nThree chains carry the exam: **δ → h → ∗ → LTI → H(z)** · **z-transform → ROC → sidedness → causality / stability** · **poles on the unit circle → marginal stability → unbounded outputs**."
+    },
+    {
+      "id": "g-signals",
+      "type": "group",
+      "x": 0,
+      "y": 0,
+      "width": 2390,
+      "height": 550,
+      "label": "Signals & systems · Lectures 1–5",
+      "color": "5"
+    },
+    {
+      "id": "g-zdomain",
+      "type": "group",
+      "x": 0,
+      "y": 700,
+      "width": 2390,
+      "height": 550,
+      "label": "z-domain · Lectures 6–10",
+      "color": "4"
+    },
+    {
+      "id": "g-stability",
+      "type": "group",
+      "x": 0,
+      "y": 1400,
+      "width": 2390,
+      "height": 550,
+      "label": "Stability & exam problem families · Lecture 11 + past exams",
+      "color": "2"
+    },
+    {
+      "id": "linearity",
+      "type": "file",
+      "file": "concepts/linearity.md",
+      "x": 1260,
+      "y": 80,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "time-invariance",
+      "type": "file",
+      "file": "concepts/time-invariance.md",
+      "x": 1660,
+      "y": 80,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "delta",
+      "type": "file",
+      "file": "concepts/kronecker-delta.md",
+      "x": 60,
+      "y": 350,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "impulse-response",
+      "type": "file",
+      "file": "concepts/impulse-response.md",
+      "x": 460,
+      "y": 350,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "convolution",
+      "type": "file",
+      "file": "concepts/convolution.md",
+      "x": 860,
+      "y": 350,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "lti",
+      "type": "file",
+      "file": "concepts/lti-system.md",
+      "x": 1260,
+      "y": 350,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "lecture-4",
+      "type": "file",
+      "file": "1-signals-and-systems/04-impulse-response-and-convolution.md",
+      "x": 460,
+      "y": 80,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "pfe",
+      "type": "file",
+      "file": "concepts/partial-fraction-expansion.md",
+      "x": 60,
+      "y": 780,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "pairs",
+      "type": "file",
+      "file": "concepts/z-transform-pairs.md",
+      "x": 460,
+      "y": 780,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "z-transform",
+      "type": "file",
+      "file": "concepts/z-transform.md",
+      "x": 860,
+      "y": 780,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "transfer-function",
+      "type": "file",
+      "file": "concepts/transfer-function.md",
+      "x": 1260,
+      "y": 780,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "lccde",
+      "type": "file",
+      "file": "concepts/lccde.md",
+      "x": 1660,
+      "y": 780,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "inverse-z",
+      "type": "file",
+      "file": "concepts/inverse-z-transform.md",
+      "x": 60,
+      "y": 1050,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "sided",
+      "type": "file",
+      "file": "concepts/sided-sequences.md",
+      "x": 460,
+      "y": 1050,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "roc",
+      "type": "file",
+      "file": "concepts/region-of-convergence.md",
+      "x": 860,
+      "y": 1050,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "poles-zeros",
+      "type": "file",
+      "file": "concepts/poles-and-zeros.md",
+      "x": 1260,
+      "y": 1050,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "cancellation",
+      "type": "file",
+      "file": "concepts/pole-zero-cancellation.md",
+      "x": 1660,
+      "y": 1050,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "fam-all-rocs",
+      "type": "file",
+      "file": "problems/all-possible-rocs.md",
+      "x": 60,
+      "y": 1480,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "fam-z-roc",
+      "type": "file",
+      "file": "problems/z-transform-with-roc.md",
+      "x": 60,
+      "y": 1750,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "causality",
+      "type": "file",
+      "file": "concepts/causality.md",
+      "x": 460,
+      "y": 1480,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "bibo",
+      "type": "file",
+      "file": "concepts/bibo-stability.md",
+      "x": 860,
+      "y": 1480,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "marginal",
+      "type": "file",
+      "file": "concepts/marginal-stability.md",
+      "x": 1260,
+      "y": 1480,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "fam-unbounded",
+      "type": "file",
+      "file": "problems/unbounded-outputs-and-pole-matching.md",
+      "x": 1660,
+      "y": 1480,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "fam-classifying",
+      "type": "file",
+      "file": "problems/classifying-system-properties.md",
+      "x": 460,
+      "y": 1750,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "fam-parameters",
+      "type": "file",
+      "file": "problems/parameters-for-stability.md",
+      "x": 860,
+      "y": 1750,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "fam-lccde",
+      "type": "file",
+      "file": "problems/lccde-to-transfer-function-and-response.md",
+      "x": 2060,
+      "y": 1480,
+      "width": 270,
+      "height": 150
+    },
+    {
+      "id": "lecture-11",
+      "type": "file",
+      "file": "2-z-transform/11-bibo-stability-and-causality.md",
+      "x": 1260,
+      "y": 1750,
+      "width": 270,
+      "height": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "e00-delta-impulse-response",
+      "fromNode": "delta",
+      "fromSide": "right",
+      "toNode": "impulse-response",
+      "toSide": "left",
+      "label": "δ[n] in, h[n] out"
+    },
+    {
+      "id": "e01-impulse-response-convolution",
+      "fromNode": "impulse-response",
+      "fromSide": "right",
+      "toNode": "convolution",
+      "toSide": "left",
+      "label": "superpose"
+    },
+    {
+      "id": "e02-convolution-lti",
+      "fromNode": "convolution",
+      "fromSide": "right",
+      "toNode": "lti",
+      "toSide": "left",
+      "label": "y = x∗h"
+    },
+    {
+      "id": "e03-linearity-lti",
+      "fromNode": "linearity",
+      "fromSide": "bottom",
+      "toNode": "lti",
+      "toSide": "top",
+      "label": "superposition"
+    },
+    {
+      "id": "e04-time-invariance-lti",
+      "fromNode": "time-invariance",
+      "fromSide": "left",
+      "toNode": "lti",
+      "toSide": "right",
+      "label": "shift in ⇒ shift out"
+    },
+    {
+      "id": "e05-lecture-4-impulse-response",
+      "fromNode": "lecture-4",
+      "fromSide": "bottom",
+      "toNode": "impulse-response",
+      "toSide": "top",
+      "label": "Lecture 4",
+      "toEnd": "none"
+    },
+    {
+      "id": "e06-lti-transfer-function",
+      "fromNode": "lti",
+      "fromSide": "bottom",
+      "toNode": "transfer-function",
+      "toSide": "top",
+      "label": "Y(z) = H(z)X(z)"
+    },
+    {
+      "id": "e07-convolution-z-transform",
+      "fromNode": "convolution",
+      "fromSide": "bottom",
+      "toNode": "z-transform",
+      "toSide": "top",
+      "label": "∗ becomes ×"
+    },
+    {
+      "id": "e08-z-transform-transfer-function",
+      "fromNode": "z-transform",
+      "fromSide": "right",
+      "toNode": "transfer-function",
+      "toSide": "left",
+      "label": "H = Z{h}"
+    },
+    {
+      "id": "e09-lccde-transfer-function",
+      "fromNode": "lccde",
+      "fromSide": "left",
+      "toNode": "transfer-function",
+      "toSide": "right",
+      "label": "B(z)/A(z)"
+    },
+    {
+      "id": "e10-z-transform-pairs",
+      "fromNode": "z-transform",
+      "fromSide": "left",
+      "toNode": "pairs",
+      "toSide": "right",
+      "label": "table"
+    },
+    {
+      "id": "e11-z-transform-roc",
+      "fromNode": "z-transform",
+      "fromSide": "bottom",
+      "toNode": "roc",
+      "toSide": "top",
+      "label": "converges on a ring"
+    },
+    {
+      "id": "e12-transfer-function-poles-zeros",
+      "fromNode": "transfer-function",
+      "fromSide": "bottom",
+      "toNode": "poles-zeros",
+      "toSide": "top",
+      "label": "roots of A(z) and B(z)"
+    },
+    {
+      "id": "e13-poles-zeros-roc",
+      "fromNode": "poles-zeros",
+      "fromSide": "left",
+      "toNode": "roc",
+      "toSide": "right",
+      "label": "poles bound it"
+    },
+    {
+      "id": "e14-roc-sided",
+      "fromNode": "roc",
+      "fromSide": "left",
+      "toNode": "sided",
+      "toSide": "right",
+      "label": "ring ⇔ side"
+    },
+    {
+      "id": "e15-poles-zeros-cancellation",
+      "fromNode": "poles-zeros",
+      "fromSide": "right",
+      "toNode": "cancellation",
+      "toSide": "left",
+      "label": "common factor"
+    },
+    {
+      "id": "e16-pfe-inverse-z",
+      "fromNode": "pfe",
+      "fromSide": "bottom",
+      "toNode": "inverse-z",
+      "toSide": "top",
+      "label": "one term per pole"
+    },
+    {
+      "id": "e17-pairs-inverse-z",
+      "fromNode": "pairs",
+      "fromSide": "left",
+      "toNode": "inverse-z",
+      "toSide": "right",
+      "label": "look up"
+    },
+    {
+      "id": "e18-inverse-z-fam-all-rocs",
+      "fromNode": "inverse-z",
+      "fromSide": "bottom",
+      "toNode": "fam-all-rocs",
+      "toSide": "top",
+      "label": "one X, one h per ROC"
+    },
+    {
+      "id": "e19-sided-causality",
+      "fromNode": "sided",
+      "fromSide": "bottom",
+      "toNode": "causality",
+      "toSide": "top",
+      "label": "causal ⇔ outside, ∋ ∞"
+    },
+    {
+      "id": "e20-roc-bibo",
+      "fromNode": "roc",
+      "fromSide": "bottom",
+      "toNode": "bibo",
+      "toSide": "top",
+      "label": "stable ⇔ ROC ∋ unit circle"
+    },
+    {
+      "id": "e21-poles-zeros-marginal",
+      "fromNode": "poles-zeros",
+      "fromSide": "bottom",
+      "toNode": "marginal",
+      "toSide": "top",
+      "label": "poles on |z| = 1"
+    },
+    {
+      "id": "e22-cancellation-fam-unbounded",
+      "fromNode": "cancellation",
+      "fromSide": "bottom",
+      "toNode": "fam-unbounded",
+      "toSide": "top",
+      "label": "input zero cancels a pole"
+    },
+    {
+      "id": "e23-marginal-fam-unbounded",
+      "fromNode": "marginal",
+      "fromSide": "right",
+      "toNode": "fam-unbounded",
+      "toSide": "left",
+      "label": "double pole"
+    },
+    {
+      "id": "e24-causality-fam-classifying",
+      "fromNode": "causality",
+      "fromSide": "bottom",
+      "toNode": "fam-classifying",
+      "toSide": "top",
+      "label": "property table"
+    },
+    {
+      "id": "e25-bibo-fam-parameters",
+      "fromNode": "bibo",
+      "fromSide": "bottom",
+      "toNode": "fam-parameters",
+      "toSide": "top",
+      "label": "all poles inside"
+    },
+    {
+      "id": "e26-lecture-11-marginal",
+      "fromNode": "lecture-11",
+      "fromSide": "top",
+      "toNode": "marginal",
+      "toSide": "bottom",
+      "label": "Lecture 11",
+      "toEnd": "none"
+    },
+    {
+      "id": "e27-fam-all-rocs-fam-z-roc",
+      "fromNode": "fam-all-rocs",
+      "fromSide": "bottom",
+      "toNode": "fam-z-roc",
+      "toSide": "top",
+      "label": "inverse ⇄ forward",
+      "toEnd": "none"
+    },
+    {
+      "id": "e28-lccde-fam-lccde",
+      "fromNode": "lccde",
+      "fromSide": "right",
+      "toNode": "fam-lccde",
+      "toSide": "left",
+      "label": "LCCDE ⇄ H ⇄ h"
+    }
+  ]
+}

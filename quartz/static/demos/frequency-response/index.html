@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frequency-response explorer — ECE 310</title>
+<style>
+  :root {
+    --bg:#fbfaf7; --fg:#23211d; --muted:#7a766e; --line:#e0ddd5; --panel:#f1efe9;
+    --accent:#0e6b73; --accent2:#b5632a; --hi:#d1495b;
+  }
+  :root[data-theme="dark"] {
+    --bg:#161719; --fg:#eceef1; --muted:#9a9ea6; --line:#2f3238; --panel:#1f2125;
+    --accent:#6cc4c9; --accent2:#e8a066; --hi:#f0907c;
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 "Source Sans 3", system-ui, sans-serif; }
+  .wrap { display:grid; grid-template-columns:minmax(0,1fr); gap:8px; padding:8px; }
+  .bar { display:flex; flex-wrap:wrap; gap:6px 8px; align-items:flex-end; }
+  .fld { display:flex; flex-direction:column; gap:2px; flex:1 1 150px; min-width:0; }
+  .fld.preset { flex:3 1 280px; }
+  .fld.narrow { flex:0 1 92px; }
+  .fld > span { font-size:12px; color:var(--muted); }
+  .fld > select, .fld > input { width:100%; }
+  input[type=text], select, button { font:inherit; color:var(--fg); background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:5px 8px; min-width:0; }
+  input[type=text]:focus, select:focus { outline:2px solid var(--accent); outline-offset:-1px; }
+  input[type=text].bad { border-color:var(--hi); }
+  button { cursor:pointer; padding:5px 12px; }
+  button:hover { border-color:var(--accent); }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .seg button { border:0; border-radius:0; background:var(--panel); padding:5px 10px; }
+  .seg button + button { border-left:1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background:var(--accent); color:var(--bg); font-weight:600; }
+  .note { color:var(--muted); font-size:13px; }
+  .msgs { display:grid; gap:4px; }
+  .msgs:empty { display:none; }
+  .msg { font-size:13px; padding:4px 8px; border-left:3px solid var(--accent2); background:var(--panel); border-radius:4px; }
+  .msg.err { border-left-color:var(--hi); }
+  .top { display:grid; grid-template-columns:minmax(0,260px) minmax(0,1fr); gap:10px; align-items:start; }
+  @media (max-width:620px) { .top { grid-template-columns:minmax(0,1fr); } #zp { max-width:300px; margin:0 auto; } }
+  canvas { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:6px; background:var(--bg); }
+  #zp { touch-action:none; cursor:default; }
+  .plot { touch-action:pan-y; cursor:crosshair; }
+  .card { background:var(--panel); border-radius:6px; padding:7px 10px; min-width:0; }
+  .card h3 { margin:0 0 4px; font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .formula { font-size:15px; overflow-wrap:anywhere; line-height:1.7; }
+  .formula .lbl { color:var(--muted); font-size:12.5px; margin-right:4px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; }
+  .frac > span:first-child { border-bottom:1px solid currentColor; padding:0 4px 1px; }
+  .frac > span:last-child { padding:1px 4px 0; }
+  .seq { display:inline-block; white-space:nowrap; padding-bottom:.9em; }
+  .sv { display:inline-block; position:relative; min-width:.6em; text-align:center; }
+  .sv.zero::after { content:"\2191"; position:absolute; left:50%; top:1.05em; transform:translateX(-50%); color:var(--accent2); font-size:.85em; }
+  .legend { font-size:12px; color:var(--muted); display:flex; flex-wrap:wrap; gap:2px 14px; margin-top:4px; }
+  .legend b { font-weight:700; }
+  label.chk { display:inline-flex; gap:6px; align-items:center; font-size:13px; }
+  .w0row { display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; }
+  .w0row input[type=range] { flex:1 1 220px; accent-color:var(--accent); }
+  .w0row .fld { flex:0 1 120px; }
+  .read { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:2px 16px; margin-top:6px; font-variant-numeric:tabular-nums; }
+  .read div { padding:1px 0; }
+  .read .k { color:var(--muted); font-size:12.5px; margin-right:4px; }
+  .out { margin-top:6px; font-size:15px; overflow-wrap:anywhere; }
+  .stems { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+  @media (max-width:620px) { .stems { grid-template-columns:minmax(0,1fr); } }
+  .yes { color:var(--accent); font-weight:600; }
+  .no { color:var(--hi); font-weight:600; }
+  sup, sub { font-size:.72em; line-height:0; }
+  p.t { margin:2px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <label class="fld preset"><span>Preset (lectures, past exams, classic shapes)</span><select id="preset"></select></label>
+    <div class="fld" style="flex:0 1 auto"><span>Define the system by</span>
+      <div class="seg" role="group" aria-label="input mode"><button type="button" id="mCoef" aria-pressed="true">taps / coefficients</button><button type="button" id="mPZ" aria-pressed="false">poles &amp; zeros</button></div>
+    </div>
+  </div>
+  <div class="bar" id="coefBar">
+    <label class="fld"><span>b — taps h[n₀], h[n₀+1], … (FIR) or numerator coefficients of z<sup>0</sup>, z<sup>−1</sup>, …</span><input id="b" type="text" spellcheck="false" autocomplete="off"></label>
+    <label class="fld"><span>a — denominator (a[0] = 1; just 1 for FIR)</span><input id="a" type="text" spellcheck="false" autocomplete="off"></label>
+    <label class="fld narrow"><span>n₀ (first tap)</span><input id="n0" type="text" spellcheck="false" autocomplete="off"></label>
+  </div>
+  <div class="bar" id="pzBar" hidden>
+    <label class="fld"><span>zeros (conjugates added for you)</span><input id="zs" type="text" spellcheck="false" autocomplete="off"></label>
+    <label class="fld"><span>poles (conjugates added for you)</span><input id="ps" type="text" spellcheck="false" autocomplete="off"></label>
+    <label class="fld narrow"><span>gain b[0]</span><input id="K" type="text" spellcheck="false" autocomplete="off"></label>
+    <label class="fld narrow"><span>n₀ (delay)</span><input id="n0b" type="text" spellcheck="false" autocomplete="off"></label>
+  </div>
+  <div class="note" id="howto">Comma-separated; 1/3, −1/2, sqrt(2)/2 all work. H<sub>d</sub>(ω) = e<sup>−jωn₀</sup>·B(e<sup>−jω</sup>)/A(e<sup>−jω</sup>), so n₀ = −1 centers a 3-tap filter. Drag a zero (○) or pole (×) on the z-plane to reshape the response.</div>
+  <div class="msgs" id="msgs"></div>
+  <div class="top">
+    <div>
+      <canvas id="zp" width="260" height="260" aria-label="z-plane with the poles and zeros; drag them"></canvas>
+      <div class="legend"><span><b style="color:var(--accent2)">○</b> zero</span><span><b style="color:var(--hi)">×</b> pole</span><span>dashed = unit circle</span><span><b style="color:var(--accent)">●</b> e<sup>jω₀</sup></span></div>
+    </div>
+    <div class="card"><h3>The system</h3><div class="formula" id="sys"></div><div id="sysnote" class="note"></div></div>
+  </div>
+  <div class="bar">
+    <label class="chk"><input type="checkbox" id="db"> magnitude in dB</label>
+    <label class="chk"><input type="checkbox" id="unwrap"> unwrap the phase (remove 2π wraps)</label>
+    <span class="note">Click or drag on a plot to move ω₀.</span>
+  </div>
+  <canvas id="cMag" class="plot" width="900" height="200" aria-label="magnitude response"></canvas>
+  <canvas id="cPh" class="plot" width="900" height="200" aria-label="phase response"></canvas>
+  <canvas id="cGd" class="plot" width="900" height="170" aria-label="group delay"></canvas>
+  <div class="card">
+    <h3>One frequency in, the same frequency out</h3>
+    <div class="note">x[n] = cos(ω₀n + θ) for all n &nbsp;→&nbsp; y[n] = |H<sub>d</sub>(ω₀)| cos(ω₀n + θ + ∠H<sub>d</sub>(ω₀)) &nbsp;(real h[n], Lecture 15)</div>
+    <div class="w0row">
+      <input type="range" id="w0r" min="0" max="2400" step="1" aria-label="omega zero from 0 to pi">
+      <label class="fld"><span>ω₀ (0 … π)</span><input id="w0" type="text" spellcheck="false" autocomplete="off"></label>
+      <label class="fld"><span>θ (input phase)</span><input id="th" type="text" spellcheck="false" autocomplete="off"></label>
+    </div>
+    <div class="read" id="read"></div>
+    <div class="out" id="out"></div>
+  </div>
+  <div class="stems">
+    <canvas id="cIn" width="460" height="210" aria-label="input stem plot"></canvas>
+    <canvas id="cOut" width="460" height="210" aria-label="output stem plot"></canvas>
+  </div>
+  <div class="legend"><span><b style="color:var(--accent)">●</b> samples</span><span>dashed = the underlying cosine</span><span><b style="color:var(--accent2)">○</b> direct check: y[n] = Σ<sub>k</sub> h[k] x[n−k] (eternal input)</span></div>
+</div>
+
+<script id="fr-core">
+/* ===================== fr-core: pure math, no DOM =====================
+   Complex arithmetic, the course demos' expression parser (1/3, sqrt(2)/2, e^(jπ/3), …),
+   polynomial roots (Aberth, as in the pole-zero demo), and the frequency-response math:
+   H_d(ω) = e^{−jωn0} B(e^{−jω}) / A(e^{−jω}), principal and unwrapped phase, group delay,
+   and the steady-state response to cos(ω0 n + θ).
+   verify/INT_fr_dump.js loads this block in Node; verify/INT_fr_check.py compares it with numpy/scipy. */
+const MINUS = '−';
+
+const Cx = (() => {
+  const C = (re, im = 0) => ({ re, im });
+  const add = (a, b) => C(a.re + b.re, a.im + b.im);
+  const sub = (a, b) => C(a.re - b.re, a.im - b.im);
+  const mul = (a, b) => C(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re);
+  const div = (a, b) => {
+    if (Math.abs(b.re) >= Math.abs(b.im)) {
+      if (b.re === 0) return C(NaN, NaN);
+      const r = b.im / b.re, d = b.re + b.im * r;
+      return C((a.re + a.im * r) / d, (a.im - a.re * r) / d);
+    }
+    const r = b.re / b.im, d = b.re * r + b.im;
+    return C((a.re * r + a.im) / d, (a.im * r - a.re) / d);
+  };
+  const neg = a => C(-a.re, -a.im);
+  const scale = (a, s) => C(a.re * s, a.im * s);
+  const abs = a => Math.hypot(a.re, a.im);
+  const arg = a => Math.atan2(a.im, a.re);
+  const conj = a => C(a.re, -a.im);
+  const exp = a => { const m = Math.exp(a.re); return C(m * Math.cos(a.im), m * Math.sin(a.im)); };
+  const log = a => C(Math.log(abs(a)), arg(a));
+  const sqrt = a => {
+    const r = abs(a); if (r === 0) return C(0);
+    const t = Math.sqrt((r + Math.abs(a.re)) / 2);
+    return a.re >= 0 ? C(t, a.im / (2 * t)) : C(Math.abs(a.im) / (2 * t), a.im >= 0 ? t : -t);
+  };
+  const powInt = (a, n) => {
+    let r = C(1), b = a, k = Math.abs(n);
+    while (k) { if (k & 1) r = mul(r, b); b = mul(b, b); k = Math.floor(k / 2); }
+    return n < 0 ? div(C(1), r) : r;
+  };
+  const pow = (a, b) => {
+    if (b.im === 0 && Number.isInteger(b.re) && Math.abs(b.re) <= 1e6) return powInt(a, b.re);
+    if (a.re === 0 && a.im === 0) return C(0);
+    return exp(mul(b, log(a)));
+  };
+  const cos = a => scale(add(exp(C(-a.im, a.re)), exp(C(a.im, -a.re))), 0.5);
+  const sin = a => div(sub(exp(C(-a.im, a.re)), exp(C(a.im, -a.re))), C(0, 2));
+  return { C, add, sub, mul, div, neg, scale, abs, arg, conj, exp, log, sqrt, powInt, pow, cos, sin };
+})();
+
+/* ---- expression / list parser (same grammar as the pole-zero demo) ---- */
+const Parse = (() => {
+  const { C, add, sub, mul, div, neg, exp, sqrt, pow, cos, sin } = Cx;
+  const NAMES = ['sqrt', 'exp', 'cos', 'sin', 'pi', 'π', 'j', 'i', 'e'];
+  function tokenize(src) {
+    const s = src.replace(/[−–]/g, '-').replace(/[·×]/g, '*').replace(/√/g, 'sqrt');
+    const toks = [];
+    let i = 0;
+    while (i < s.length) {
+      const ch = s[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      const m = /^(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?/.exec(s.slice(i));
+      if (m) { toks.push({ t: 'num', v: parseFloat(m[0]), s: m[0] }); i += m[0].length; continue; }
+      if ('+-*/^()'.includes(ch)) { toks.push({ t: ch }); i++; continue; }
+      const w = /^[a-zA-Zπ]+/.exec(s.slice(i));
+      if (w) {
+        let word = w[0].toLowerCase(); i += w[0].length;
+        while (word.length) {
+          const nm = NAMES.filter(n => word.startsWith(n)).sort((a, b) => b.length - a.length)[0];
+          if (!nm) throw new Error(`unknown name "${w[0]}"`);
+          toks.push({ t: 'id', v: nm }); word = word.slice(nm.length);
+        }
+        continue;
+      }
+      throw new Error(`unexpected character "${ch}"`);
+    }
+    return toks;
+  }
+  function expr(src) {
+    const toks = tokenize(src);
+    if (!toks.length) throw new Error('empty entry');
+    let p = 0, lastId = false;                // lastId: the factor just read was j, π or e (so "j2π/3" means j·2π/3)
+    const peek = () => toks[p], next = () => toks[p++];
+    const isFn = t => t && t.t === 'id' && ['sqrt', 'exp', 'cos', 'sin'].includes(t.v);
+    function sum() {
+      let v = product();
+      while (peek() && (peek().t === '+' || peek().t === '-')) { const op = next().t; const r = product(); v = op === '+' ? add(v, r) : sub(v, r); }
+      return v;
+    }
+    function product() {
+      let v = unary();
+      for (;;) {
+        const t = peek(); if (!t) break;
+        if (t.t === '*' || t.t === '/') { next(); const r = unary(); v = t.t === '*' ? mul(v, r) : div(v, r); continue; }
+        if (t.t === 'id' || t.t === '(') { v = mul(v, power()); continue; }
+        if (t.t === 'num') { if (lastId) { v = mul(v, power()); continue; } throw new Error('two numbers in a row — separate the entries with commas'); }
+        break;
+      }
+      return v;
+    }
+    function unary() {
+      const t = peek();
+      if (t && (t.t === '-' || t.t === '+')) { next(); const v = unary(); return t.t === '-' ? neg(v) : v; }
+      return power();
+    }
+    function power() { const b = atom(); if (peek() && peek().t === '^') { next(); return pow(b, unary()); } return b; }
+    function atom() {
+      const t = next();
+      if (!t) throw new Error('incomplete expression');
+      lastId = false;
+      if (t.t === 'num') return C(t.v);
+      if (t.t === '(') { const v = sum(); const c = next(); if (!c || c.t !== ')') throw new Error('missing ")"'); lastId = false; return v; }
+      if (t.t === 'id') {
+        if (t.v === 'pi' || t.v === 'π') { lastId = true; return C(Math.PI); }
+        if (t.v === 'j' || t.v === 'i') { lastId = true; return C(0, 1); }
+        if (t.v === 'e') { lastId = true; return C(Math.E); }
+        if (isFn(t)) {
+          const o = next(); if (!o || o.t !== '(') throw new Error(`${t.v} needs parentheses, e.g. ${t.v}(2)`);
+          const v = sum(); const c = next(); if (!c || c.t !== ')') throw new Error('missing ")"');
+          return { sqrt, exp, cos, sin }[t.v](v);
+        }
+      }
+      throw new Error(`unexpected "${t.t === 'id' ? t.v : t.t}"`);
+    }
+    const v = sum();
+    if (p < toks.length) { const t = toks[p]; throw new Error(`unexpected "${t.t === 'num' ? t.s : t.t === 'id' ? t.v : t.t}"`); }
+    if (!isFinite(v.re) || !isFinite(v.im)) throw new Error('value is not finite');
+    return v;
+  }
+  function splitTop(s) {
+    const out = []; let d = 0, cur = '';
+    for (const ch of s) {
+      if (ch === '(') d++;
+      if (ch === ')') d--;
+      if ((ch === ',' || ch === ';') && d === 0) { out.push(cur); cur = ''; } else cur += ch;
+    }
+    out.push(cur);
+    return out;
+  }
+  const hasTopComma = s => splitTop(s).length > 1;
+  function list(s) {
+    if (!s || !s.trim()) return [];
+    return splitTop(s).map((x, i) => {
+      if (!x.trim()) throw new Error(`entry ${i + 1} is empty`);
+      try { return expr(x); } catch (e) { throw new Error(`entry ${i + 1} ("${x.trim()}"): ${e.message}`); }
+    });
+  }
+  function poly(s, polyMul) {
+    const t = (s || '').trim();
+    if (!t) throw new Error('empty list');
+    if (hasTopComma(t)) return list(t);
+    const groups = [];
+    let i = 0, ok = true;
+    while (i < t.length) {
+      if (/[\s*·]/.test(t[i])) { i++; continue; }
+      if (t[i] !== '(') { ok = false; break; }
+      let d = 0, j = i;
+      for (; j < t.length; j++) { if (t[j] === '(') d++; else if (t[j] === ')') { d--; if (d === 0) break; } }
+      if (d !== 0) throw new Error('unbalanced parentheses');
+      groups.push(t.slice(i + 1, j)); i = j + 1;
+    }
+    if (ok && groups.length && groups.every(hasTopComma)) return groups.map(list).reduce((acc, f) => polyMul(acc, f));
+    return list(t);
+  }
+  return { expr, list, poly };
+})();
+
+/* ---- formatting ---- */
+const Fmt = (() => {
+  const { abs } = Cx;
+  const sgn = s => String(s).replace(/-/g, MINUS);
+  function rat(x, maxDen = 64, tol = 1e-9) {
+    if (!isFinite(x)) return null;
+    const s = x < 0 ? -1 : 1, ax = Math.abs(x);
+    let h0 = 0, h1 = 1, k0 = 1, k1 = 0, b = ax;
+    for (let it = 0; it < 40; it++) {
+      const a = Math.floor(b), h2 = a * h1 + h0, k2 = a * k1 + k0;
+      if (k2 > maxDen) break;
+      h0 = h1; h1 = h2; k0 = k1; k1 = k2;
+      if (Math.abs(ax - h1 / k1) <= tol * Math.max(1, ax)) return { p: s * h1, q: k1 };
+      const f = b - a; if (f < 1e-12) break;
+      b = 1 / f;
+    }
+    return null;
+  }
+  function dec(x, sig = 4) {
+    if (!isFinite(x)) return x > 0 ? '∞' : x < 0 ? MINUS + '∞' : '—';
+    if (Math.abs(x) < 1e-12) return '0';
+    return sgn(parseFloat(x.toPrecision(sig)).toString());
+  }
+  function num(x, maxDen = 64) {
+    if (!isFinite(x)) return dec(x);
+    if (Math.abs(x) < 1e-12) return '0';
+    const r = Math.round(x);
+    if (Math.abs(x - r) <= 1e-9 * Math.max(1, Math.abs(x))) return sgn(String(r));
+    const q = rat(x, maxDen); if (q) return sgn(`${q.p}/${q.q}`);
+    return dec(x);
+  }
+  function cnum(z) {
+    const tol = 1e-10 * Math.max(1, abs(z));
+    if (Math.abs(z.im) <= tol) return num(z.re);
+    const im = Math.abs(z.im), im0 = Math.abs(im - 1) <= 1e-12 ? '' : num(im);
+    const imS = im0.includes('/') ? '(' + im0 + ')' : im0;
+    if (Math.abs(z.re) <= tol) return (z.im < 0 ? MINUS : '') + imS + 'j';
+    return num(z.re) + (z.im < 0 ? ' ' + MINUS + ' ' : ' + ') + imS + 'j';
+  }
+  /* exact-looking magnitude: 3/2, √3, √3/2, 2√2, √(7/3), else a decimal */
+  function mag(x) {
+    if (!isFinite(x)) return dec(x);
+    if (Math.abs(x) < 1e-12) return '0';
+    const q = rat(x, 64); if (q) return num(x);
+    const q2 = rat(x * x, 64);
+    if (q2 && q2.p > 0) {
+      // √(p/q) = (a√b)/c with b square-free
+      const sq = n => { let a = 1, b = n; for (let f = 2; f * f <= b; f++) while (b % (f * f) === 0) { b /= f * f; a *= f; } return [a, b]; };
+      const [a1, b1] = sq(q2.p * q2.q); // √(p/q) = √(p q)/q
+      const g = (x, y) => { while (y) { const t = x % y; x = y; y = t; } return x; };
+      let nn = a1, dd = q2.q; const gg = g(nn, dd); nn /= gg; dd /= gg;
+      if (b1 > 1 && b1 <= 99) return (nn === 1 ? '' : nn) + '√' + b1 + (dd === 1 ? '' : '/' + dd);
+    }
+    return dec(x);
+  }
+  function angle(th, maxDen = 24) {
+    if (!isFinite(th)) return '—';
+    const q = rat(th / Math.PI, maxDen, 1e-9);
+    if (q) {
+      if (q.p === 0) return '0';
+      const p = Math.abs(q.p);
+      return (q.p < 0 ? MINUS : '') + (p === 1 ? '' : p) + 'π' + (q.q === 1 ? '' : '/' + q.q);
+    }
+    return dec(th, 4);
+  }
+  /* "πn/3" style: ω0·n */
+  function angN(th) {
+    const q = rat(th / Math.PI, 24, 1e-9);
+    if (q) {
+      if (q.p === 0) return '0';
+      const p = Math.abs(q.p);
+      return (q.p < 0 ? MINUS : '') + (p === 1 ? '' : p) + 'πn' + (q.q === 1 ? '' : '/' + q.q);
+    }
+    return dec(th, 4) + 'n';
+  }
+  /* value for an input field: integer, short decimal, small fraction */
+  function field(x) {
+    if (Math.abs(x) < 1e-12) return '0';
+    const r = Math.round(x);
+    if (Math.abs(x - r) < 1e-9) return String(r);
+    const d = parseFloat(x.toFixed(4));
+    if (Math.abs(d - x) < 1e-9) return String(d);
+    const q = rat(x, 24, 1e-9); if (q) return `${q.p}/${q.q}`;
+    return String(parseFloat(x.toFixed(4)));
+  }
+  return { rat, dec, num, cnum, mag, angle, angN, field, sgn };
+})();
+
+/* ---- polynomials (ascending powers of w = z^-1, complex) ---- */
+const Poly = (() => {
+  const { C, add, sub, mul, div, neg, scale, abs } = Cx;
+  function mulP(p, q) {
+    if (!p.length || !q.length) return [];
+    const r = Array.from({ length: p.length + q.length - 1 }, () => C(0));
+    p.forEach((a, i) => q.forEach((b, j) => { r[i + j] = add(r[i + j], mul(a, b)); }));
+    return r;
+  }
+  function fromRoots(rs) { return rs.reduce((acc, r) => mulP(acc, [C(1), neg(r)]), [C(1)]); }   // Π (1 − r w)
+  function roots(desc) {                                  // roots of a DESCENDING-power polynomial (Aberth–Ehrlich)
+    let c = desc.slice();
+    while (c.length && abs(c[0]) === 0) c.shift();
+    const n = c.length - 1;
+    if (n < 1) return [];
+    const a0 = c[0]; c = c.map(x => div(x, a0));
+    if (n === 1) return [neg(c[1])];
+    if (n === 2) {
+      const b = c[1], cc = c[2];
+      let s = Cx.sqrt(sub(mul(b, b), scale(cc, 4)));
+      if (b.re * s.re + b.im * s.im < 0) s = neg(s);
+      const q = scale(add(b, s), -0.5);
+      if (abs(q) === 0) return [C(0), C(0)];
+      return [q, div(cc, q)];
+    }
+    const f = z => { let p = C(1), dp = C(0); for (let k = 1; k <= n; k++) { dp = add(mul(dp, z), p); p = add(mul(p, z), c[k]); } return [p, dp]; };
+    const r0 = abs(c[n]) > 0 ? Math.pow(abs(c[n]), 1 / n) : 1;
+    let z = Array.from({ length: n }, (_, k) => { const t = 2 * Math.PI * k / n + 0.4; return C(r0 * Math.cos(t), r0 * Math.sin(t)); });
+    for (let it = 0; it < 800; it++) {
+      let maxStep = 0;
+      for (let i = 0; i < n; i++) {
+        const [p, dp] = f(z[i]);
+        if (abs(p) === 0) continue;
+        const ratio = div(p, dp);
+        let s = C(0);
+        for (let j = 0; j < n; j++) if (j !== i) s = add(s, div(C(1), sub(z[i], z[j])));
+        const w = div(ratio, sub(C(1), mul(ratio, s)));
+        if (!isFinite(w.re) || !isFinite(w.im)) { z[i] = add(z[i], C(1e-3 * r0, 7e-4 * r0)); maxStep = Infinity; continue; }
+        z[i] = sub(z[i], w);
+        maxStep = Math.max(maxStep, abs(w) / Math.max(1, abs(z[i])));
+      }
+      if (maxStep < 1e-16) break;
+    }
+    for (let i = 0; i < n; i++) {
+      for (let k = 0; k < 4; k++) {
+        const [p, dp] = f(z[i]); if (abs(dp) === 0 || abs(p) === 0) break;
+        const zn = sub(z[i], div(p, dp));
+        if (abs(f(zn)[0]) < abs(p)) z[i] = zn; else break;
+      }
+    }
+    // A root of multiplicity m comes out as m approximations a few 1e-6 apart (p cannot be evaluated more
+    // accurately than that near it), which would show as a fake complex pair. It is a simple root of the
+    // (m−1)-th derivative, though: refine it there with Newton and use it for all m members, so that
+    // (1 + z^-1)^3 shows the zero −1 three times.
+    const size = zz => { let s = 0, pw = 1; for (let k = n; k >= 0; k--) { s += abs(c[k]) * pw; pw *= abs(zz); } return s; };
+    const deriv = j => c.slice(0, n - j + 1).map((a, k) => { let fct = 1; for (let t = 0; t < j; t++) fct *= n - k - t; return scale(a, fct); });
+    const horner = (d, zz) => { let p = C(0), dp = C(0); for (const a of d) { dp = add(mul(dp, zz), p); p = add(mul(p, zz), a); } return [p, dp]; };
+    const used = z.map(() => false);
+    for (let i = 0; i < n; i++) {
+      if (used[i]) continue;
+      const grp = [i];
+      for (let j = i + 1; j < n; j++) if (!used[j] && abs(sub(z[j], z[i])) <= 1e-2 * Math.max(1, abs(z[i]))) grp.push(j);
+      if (grp.length < 2) continue;
+      const mean = scale(grp.reduce((s, k) => add(s, z[k]), C(0)), 1 / grp.length);
+      if (!(abs(f(mean)[0]) <= 1e-10 * size(mean))) continue;           // close but distinct roots: leave them
+      const d = deriv(grp.length - 1);
+      let r = mean;
+      for (let it = 0; it < 40; it++) {
+        const [q, dq] = horner(d, r);
+        if (abs(dq) === 0) break;
+        const st = div(q, dq);
+        r = sub(r, st);
+        if (abs(st) <= 1e-15 * Math.max(1, abs(r))) break;
+      }
+      if (!(abs(sub(r, mean)) <= 1e-2 * Math.max(1, abs(mean)))) r = mean;
+      grp.forEach(k => { z[k] = r; used[k] = true; });
+    }
+    return z;
+  }
+  return { mul: mulP, fromRoots, roots };
+})();
+
+/* ---- the frequency-response math ---- */
+const FR = (() => {
+  const { C, add, sub, mul, div, abs, conj } = Cx;
+  const fieldErr = (field, msg) => { const e = new Error(msg); e.field = field; return e; };
+  function realCoefs(list, field) {
+    return list.map((z, i) => {
+      if (Math.abs(z.im) > 1e-12 * Math.max(1, abs(z))) throw fieldErr(field, `entry ${i + 1} is complex — this explorer handles real systems (real h[n]) only`);
+      return z.re;
+    });
+  }
+  function parseInt0(s, field) {
+    const t = String(s == null ? '' : s).trim();
+    if (!t) return 0;
+    let v;
+    try { v = Parse.expr(t); } catch (e) { throw fieldErr(field, 'n₀: ' + e.message); }
+    if (Math.abs(v.im) > 1e-12 || Math.abs(v.re - Math.round(v.re)) > 1e-9) throw fieldErr(field, 'n₀ must be an integer');
+    return Math.round(v.re);
+  }
+  const isReal = z => Math.abs(z.im) <= 1e-9 * Math.max(1, abs(z));
+  /* group roots: real ones, plus ONE member (Im > 0) of each conjugate pair */
+  function pairUp(rs) {
+    const used = rs.map(() => false), out = [];
+    rs.forEach((z, i) => {
+      if (used[i]) return;
+      used[i] = true;
+      if (isReal(z)) { out.push({ z: C(z.re, 0), pair: false }); return; }
+      // the partner is the closest unused root to conj(z); a real polynomial always has one, so a root left
+      // without a partner is a real root blurred by rounding (counting it as a pair would add a root)
+      let j = -1, best = 1e-3 * Math.max(1, abs(z));
+      rs.forEach((u, k) => { const d = abs(sub(u, conj(z))); if (!used[k] && d <= best) { best = d; j = k; } });
+      if (j < 0) { out.push({ z: C(z.re, 0), pair: false }); return; }
+      used[j] = true;
+      out.push({ z: z.im > 0 ? z : conj(z), pair: true });
+    });
+    return out;
+  }
+  const expand = groups => groups.flatMap(g => (g.pair ? [g.z, conj(g.z)] : [g.z]));
+  /* parse a root list and add missing conjugates */
+  function parseRoots(s, field) {
+    let l;
+    try { l = Parse.list(s); } catch (e) { throw fieldErr(field, e.message); }
+    const groups = [];
+    for (const z of l) {
+      if (isReal(z)) groups.push({ z: C(z.re, 0), pair: false });
+      else {
+        // typing both members of a pair gives one pair; typing the same root twice gives a double pair
+        const up = z.im > 0, zz = up ? z : conj(z);
+        const g = groups.find(q => q.pair && !q.both && q.up !== up && abs(sub(q.z, zz)) <= 1e-9 * Math.max(1, abs(zz)));
+        if (g) g.both = true; else groups.push({ z: zz, pair: true, up });
+      }
+    }
+    return groups.map(g => ({ z: g.z, pair: g.pair }));
+  }
+  /* a system: real b (as typed, from n0), real a (a[0] = 1), integer n0, and its finite non-zero roots */
+  function finish(b, a, n0, zg, pg) {
+    while (b.length > 1 && Math.abs(b[b.length - 1]) < 1e-300) b.pop();
+    while (a.length > 1 && Math.abs(a[a.length - 1]) < 1e-300) a.pop();
+    if (!b.some(v => v !== 0)) throw fieldErr('b', 'all taps are zero: H is identically 0');
+    let lead = 0; while (b[lead] === 0) lead++;
+    if (!zg) zg = pairUp(Poly.roots(b.slice(lead).map(v => C(v))));
+    if (!pg) pg = pairUp(Poly.roots(a.map(v => C(v))));
+    const zeros = expand(zg).filter(z => abs(z) > 1e-12), poles = expand(pg).filter(z => abs(z) > 1e-12);
+    // H(z) = z^{-n0} z^{-(Lb-1)} P_B(z) / (z^{-(La-1)} P_A(z)), P_B, P_A descending polynomials with non-zero roots:
+    // the leftover power of z is a zero (e > 0) or pole (e < 0) at the origin
+    const e = (a.length - 1) - (b.length - 1) - n0;
+    const fir = a.length === 1;
+    const maxPole = poles.reduce((m, p) => Math.max(m, abs(p)), 0);
+    return { b, a, n0, lead, fir, zg, pg, zeros, poles, originZ: Math.max(0, e), originP: Math.max(0, -e), maxPole };
+  }
+  function fromCoefs(bStr, aStr, n0Str) {
+    let bl, al;
+    try { bl = Parse.poly(bStr, Poly.mul); } catch (e) { throw fieldErr('b', 'b: ' + e.message); }
+    try { al = (aStr || '').trim() ? Parse.poly(aStr, Poly.mul) : [C(1)]; } catch (e) { throw fieldErr('a', 'a: ' + e.message); }
+    let b = realCoefs(bl, 'b'), a = realCoefs(al, 'a');
+    if (!a.length || a[0] === 0) throw fieldErr('a', 'a[0] must be non-zero (it multiplies y[n])');
+    if (a[0] !== 1) { const a0 = a[0]; b = b.map(v => v / a0); a = a.map(v => v / a0); }
+    if (b.length > 64 || a.length > 32) throw fieldErr('b', 'too many coefficients for this explorer (max 64 taps, 32 denominator terms)');
+    return finish(b, a, parseInt0(n0Str, 'n0'), null, null);
+  }
+  function fromRoots(zStr, pStr, kStr, n0Str) {
+    const zg = parseRoots(zStr, 'zs'), pg = parseRoots(pStr, 'ps');
+    let K;
+    try { K = (kStr || '').trim() ? Parse.expr(kStr) : C(1); } catch (e) { throw fieldErr('K', 'gain: ' + e.message); }
+    if (Math.abs(K.im) > 1e-12 || K.re === 0) throw fieldErr('K', 'the gain must be a non-zero real number');
+    if (expand(zg).length > 40 || expand(pg).length > 30) throw fieldErr('zs', 'too many roots for this explorer');
+    const b = Poly.fromRoots(expand(zg)).map(z => z.re * K.re);
+    const a = Poly.fromRoots(expand(pg)).map(z => z.re);
+    return finish(b, a, parseInt0(n0Str, 'n0b'), zg, pg);
+  }
+  /* H_d(ω) and the group delay τ(ω) = n0 + Re{Σ k b_k w^k / B} − Re{Σ k a_k w^k / A}, w = e^{−jω} */
+  function evalBA(c, w) {                         // Horner: Σ c_k w^k and Σ k c_k w^k
+    let p = C(0), dp = C(0);
+    for (let k = c.length - 1; k >= 0; k--) { p = add(mul(p, w), C(c[k])); }
+    for (let k = c.length - 1; k >= 1; k--) { dp = add(mul(dp, w), C(k * c[k])); }
+    return { p, kp: mul(dp, w) };
+  }
+  function Hd(sys, om) {
+    const w = C(Math.cos(om), -Math.sin(om));
+    const B = evalBA(sys.b, w).p, A = evalBA(sys.a, w).p;
+    const lin = C(Math.cos(om * sys.n0), -Math.sin(om * sys.n0));
+    return mul(lin, div(B, A));
+  }
+  function tau(sys, om) {
+    const w = C(Math.cos(om), -Math.sin(om));
+    const eb = evalBA(sys.b, w), ea = evalBA(sys.a, w);
+    return sys.n0 + div(eb.kp, eb.p).re - div(ea.kp, ea.p).re;
+  }
+  /* principal phase with the course's conventions: a (numerically) negative real value gets +π for ω ≥ 0 and −π
+     for ω < 0 (odd symmetry of a real system); undefined (NaN) where |H| is ~0 */
+  function phase(H, om, scale) {
+    const m = abs(H);
+    if (!(m > 1e-9 * scale)) return NaN;
+    let im = H.im;
+    if (Math.abs(im) <= 1e-12 * scale) im = 0;
+    if (im === 0) return H.re > 0 ? 0 : (om < 0 ? -Math.PI : Math.PI);
+    return Math.atan2(im, H.re);
+  }
+  /* numpy.unwrap (discont = π), skipping undefined samples */
+  function unwrap(ph) {
+    const out = ph.slice();
+    let corr = 0, prev = null;
+    for (let i = 0; i < ph.length; i++) {
+      if (!isFinite(ph[i])) { out[i] = NaN; continue; }
+      if (prev !== null) {
+        const d = ph[i] - prev;
+        let dd = ((d + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+        if (dd === -Math.PI && d > 0) dd = Math.PI;
+        if (Math.abs(d) >= Math.PI) corr += dd - d;
+      }
+      prev = ph[i];
+      out[i] = ph[i] + corr;
+    }
+    return out;
+  }
+  /* unwrap outward from ω = 0 (the middle sample), so the unwrapped phase of a real system is odd */
+  function unwrap0(ph) {
+    const i0 = (ph.length - 1) / 2;
+    const right = unwrap(ph.slice(i0)), left = unwrap(ph.slice(0, i0 + 1).reverse()).reverse();
+    return left.slice(0, i0).concat(right);
+  }
+  function sample(sys, N = 2401) {                     // N odd: ω = 0 is the middle sample
+    const om = [], H = [], mag = [];
+    for (let i = 0; i < N; i++) { const w = -Math.PI + 2 * Math.PI * i / (N - 1); om.push(w); const h = Hd(sys, w); H.push(h); mag.push(abs(h)); }
+    const scale = Math.max(...mag.filter(isFinite), 1e-300);
+    const ph = om.map((w, i) => phase(H[i], w, scale));
+    const gd = om.map((w, i) => (mag[i] > 1e-7 * scale && isFinite(mag[i]) ? tau(sys, w) : NaN));
+    return { om, H, mag, ph, phU: unwrap0(ph), gd, scale };
+  }
+  /* the unwrapped phase at any ω, continued from the nearest grid sample */
+  function unwrappedAt(S, om, ph) {
+    if (!isFinite(ph)) return NaN;
+    const N = S.om.length, step = 2 * Math.PI / (N - 1);
+    let i = Math.round((om + Math.PI) / step), best = NaN;
+    for (let d = 0; d < 40 && !isFinite(best); d++) for (const j of [i - d, i + d]) if (j >= 0 && j < N && isFinite(S.phU[j]) && !isFinite(best)) best = S.phU[j] + (((ph - S.ph[j] + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI);
+    return best;
+  }
+  const SLOW = Math.exp(Math.log(1e-13) / 40000);      // 0.99925…: a pole beyond this needs > 40 000 samples to fade to 1e-13
+  /* y[n] for x[n] = cos(ω0 n + θ) applied for all n (steady state):
+     FIR: the convolution sum directly; IIR: run the causal recursion from far in the past (needs every pole inside |z| = 1) */
+  function directResponse(sys, om0, th, ns) {
+    if (sys.fir) return ns.map(n => sys.b.reduce((s, bk, k) => s + bk * Math.cos(om0 * (n - sys.n0 - k) + th), 0));
+    if (!(sys.maxPole < 1 - 1e-9)) return null;
+    if (sys.maxPole > SLOW) return null;                 // the transient would not fade within 40 000 samples
+    const K = Math.ceil(Math.log(1e-13) / Math.log(Math.max(sys.maxPole, 1e-3))) + sys.b.length + 10;   // r^K < 1e-13
+    const nmax = Math.max(...ns) - sys.n0, start = -K;
+    const L = nmax - start + 1;
+    if (L > 60000) return null;
+    const y = new Float64Array(L);
+    const x = m => Math.cos(om0 * m + th);
+    for (let i = 0; i < L; i++) {
+      const m = start + i;
+      let s = 0;
+      for (let k = 0; k < sys.b.length; k++) if (i - k >= 0) s += sys.b[k] * x(m - k);
+      for (let k = 1; k < sys.a.length; k++) if (i - k >= 0) s -= sys.a[k] * y[i - k];
+      y[i] = s;
+    }
+    return ns.map(n => y[n - sys.n0 - start]);
+  }
+  /* symmetry of a real FIR: h[k] = ±h[L−1−k] → linear phase about the centre M = n0 + (L−1)/2 */
+  function symmetry(sys) {
+    if (!sys.fir) return null;
+    const h = sys.b, L = h.length;
+    const tol = 1e-12 * Math.max(...h.map(Math.abs));
+    const sym = h.every((v, k) => Math.abs(v - h[L - 1 - k]) <= tol), anti = h.every((v, k) => Math.abs(v + h[L - 1 - k]) <= tol);
+    if (!sym && !anti) return null;
+    return { kind: sym ? 'sym' : 'anti', M: sys.n0 + (L - 1) / 2 };
+  }
+  return { fromCoefs, fromRoots, Hd, tau, phase, unwrap, unwrap0, unwrappedAt, sample, directResponse, symmetry, pairUp, expand, isReal, SLOW };
+})();
+
+/* ---- presets ---- */
+const PRESETS = [
+  { g: 'Lecture 16', name: 'h[n] = δ[n] − δ[n−2] — Exercise 1 (slides: Example 2, {1, 0, −1})', b: '1, 0, -1', a: '1', n0: '0', w0: 'pi/2', th: '0',
+    note: 'H_d(ω) = 1 − e^{−j2ω} = 2j e^{−jω} sin ω: |H_d| = 2|sin ω|, phase π/2 − ω plus a π jump at ω = 0 where sin ω changes sign. Group delay 1 everywhere it is defined.' },
+  { g: 'Lecture 16', name: 'h[n] = {3, 2, 1} — Exercise 2 (slides: Example 3)', b: '3, 2, 1', a: '1', n0: '0', w0: 'pi/3', th: '0',
+    note: '|H_d|² = 14 + 16 cos ω + 6 cos 2ω never reaches 0, so the phase has no jumps — but it is not linear, and the group delay changes with ω.' },
+  { g: 'Lecture 16', name: 'h[n] = {1, 0, 1} — slides Example 1', b: '1, 0, 1', a: '1', n0: '0', w0: 'pi/4', th: '0',
+    note: 'H_d(ω) = 1 + e^{−j2ω} = 2 cos ω · e^{−jω}: zeros on the unit circle at ω = ±π/2, a π jump in phase at each.' },
+  { g: 'Lecture 16', name: 'Pure delay H_d(ω) = e^(−j2ω), h[n] = δ[n−2] — "what does the phase do?"', b: '0, 0, 1', a: '1', n0: '0', w0: 'pi/2', th: '0',
+    note: '|H_d| = 1 and ∠H_d = −2ω (wrapped into [−π, π]): every cosine comes out unchanged in size, two samples later. Try ω₀ = π/2 and 3π/4 (the slides’ questions).' },
+  { g: 'Moving averages (Lectures 3, 5 and 15)', name: '3-point moving average, causal: y[n] = ⅓(x[n] + x[n−1] + x[n−2])', b: '1/3, 1/3, 1/3', a: '1', n0: '0', w0: 'pi/3', th: '0',
+    note: 'H_d(ω) = e^{−jω}(1 + 2cos ω)/3: a low-pass with a zero at ω = 2π/3 (that cosine is wiped out) and group delay 1.' },
+  { g: 'Moving averages (Lectures 3, 5 and 15)', name: '3-point moving average, centred (n₀ = −1): ⅓{1, 1, 1} around n = 0', b: '1/3, 1/3, 1/3', a: '1', n0: '-1', w0: '5pi/6', th: '0',
+    note: 'Centred, H_d(ω) = (1 + 2cos ω)/3 is real: phase 0 where it is positive, ±π where it is negative (|ω| > 2π/3), group delay 0.' },
+  { g: 'First-order IIR: h[n] = aⁿu[n] (Lecture 14)', name: 'H(z) = 1/(1 − 0.8z⁻¹): low-pass', b: '1', a: '1, -0.8', n0: '0', w0: 'pi/6', th: '0',
+    note: 'Pole at 0.8, inside the unit circle: the causal system is stable and H_d(ω) = 1/(1 − 0.8e^{−jω}). Peak 5 at ω = 0, 5/9 at ω = π.' },
+  { g: 'First-order IIR: h[n] = aⁿu[n] (Lecture 14)', name: 'H(z) = 1/(1 + 0.8z⁻¹): high-pass', b: '1', a: '1, 0.8', n0: '0', w0: '5pi/6', th: '0',
+    note: 'Pole at −0.8: the response peaks at ω = π, next to the pole.' },
+  { g: 'Past Midterm 2 exams', name: 'SP2021 #3: x[n] = 3δ[n+1] − 3δ[n−7]', b: '3, 0, 0, 0, 0, 0, 0, 0, -3', a: '1', n0: '-1', w0: 'pi/8', th: '0',
+    note: 'X_d(ω) = 3e^{jω} − 3e^{−j7ω} = 6j e^{−j3ω} sin 4ω (key: A = 6j, B = 3, C = 4). Antisymmetric about n = 3: group delay 3.' },
+  { g: 'Past Midterm 2 exams', name: 'SP2023 #5: h[n] = δ[n] + δ[n−6]', b: '1, 0, 0, 0, 0, 0, 1', a: '1', n0: '0', w0: 'pi/3', th: '0',
+    note: 'H_d(ω) = 2e^{−j3ω} cos 3ω: |H_d| = 2|cos 3ω| with zeros at ω = ±π/6, ±π/2, ±5π/6, and a π jump at each.' },
+  { g: 'Past Midterm 2 exams', name: 'FA2024 #3: h[n] = δ[n+2] + δ[n] + δ[n−2]', b: '1, 0, 1, 0, 1', a: '1', n0: '-2', w0: 'pi/2', th: '0',
+    note: 'H_d(ω) = 1 + 2cos 2ω is real (key: H_d(0) = 3, H_d(π/2) = −1, H_d(π) = 3).' },
+  { g: 'Poles and zeros (drag them)', name: 'Notch: zeros at e^(±jπ/3), on the unit circle', mode: 'pz', zs: 'e^(jπ/3)', ps: '', K: '1', n0b: '0', w0: 'pi/3', th: '0',
+    note: 'A zero on the unit circle at angle π/3 makes H_d(π/3) = 0: that cosine is removed completely. Drag the zero off the circle and the notch becomes a dip.' },
+  { g: 'Poles and zeros (drag them)', name: 'Resonator: poles at 0.9e^(±jπ/3)', mode: 'pz', zs: '', ps: '0.9e^(jπ/3)', K: '1', n0b: '0', w0: 'pi/3', th: '0',
+    note: 'A pole near the unit circle makes a peak at its angle. Drag it toward the circle: taller, narrower peak, and a big group delay there.' },
+  { g: 'Poles and zeros (drag them)', name: 'Sharp notch: zeros e^(±jπ/3), poles 0.9e^(±jπ/3)', mode: 'pz', zs: 'e^(jπ/3)', ps: '0.9e^(jπ/3)', K: '1', n0b: '0', w0: 'pi/3', th: '0',
+    note: 'The poles right behind the zeros flatten the response everywhere except near π/3.' },
+];
+
+globalThis.FRCore = { Cx, Parse, Fmt, Poly, FR, PRESETS };
+</script>
+
+<script>
+(() => {
+  const { Cx, Parse, Fmt, FR, PRESETS } = globalThis.FRCore;
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const M_ = MINUS;
+  const NSTEM = Array.from({ length: 21 }, (_, i) => i);          // n = 0 … 20
+  const state = { mode: 'coef', sys: null, S: null, w0: Math.PI / 3, th: 0, preset: null, drag: null, zmarks: [] };
+
+  // ---- theme: follow the embedding Quartz page if same-origin, else the OS
+  function syncTheme() {
+    let t = null;
+    try { t = window.parent && window.parent !== window ? window.parent.document.documentElement.getAttribute('saved-theme') : null; } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') !== t) document.documentElement.setAttribute('data-theme', t);
+  }
+  syncTheme();
+  try {
+    if (window.parent && window.parent !== window) {
+      new MutationObserver(syncTheme).observe(window.parent.document.documentElement, { attributes: true, attributeFilter: ['saved-theme'] });
+    }
+  } catch (e) {}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+  // ---- grow the embedding iframe to fit (same-origin only)
+  function fitFrame() {
+    try {
+      const fe = window.frameElement;
+      if (fe) { const h = Math.ceil(document.documentElement.scrollHeight) + 2; if (Math.abs(parseFloat(fe.style.height || 0) - h) > 3) fe.style.height = h + 'px'; }
+    } catch (e) {}
+  }
+
+  const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  // light markup for preset notes: e^{…} → superscript, _d → subscript
+  const rich = s => esc(s).replace(/\^\{([^}]*)\}/g, '<sup>$1</sup>').replace(/_d/g, '<sub>d</sub>');
+
+  // ---- presets
+  (function buildPresets() {
+    const sel = $('preset'), groups = {};
+    PRESETS.forEach((p, i) => {
+      if (!groups[p.g]) { groups[p.g] = document.createElement('optgroup'); groups[p.g].label = p.g; sel.appendChild(groups[p.g]); }
+      const o = document.createElement('option'); o.value = String(i); o.textContent = p.name; groups[p.g].appendChild(o);
+    });
+    const c = document.createElement('option'); c.value = 'custom'; c.textContent = 'Your own system…'; sel.appendChild(c);
+  })();
+  function setMode(m) {
+    state.mode = m;
+    $('mCoef').setAttribute('aria-pressed', String(m === 'coef'));
+    $('mPZ').setAttribute('aria-pressed', String(m === 'pz'));
+    $('coefBar').hidden = m !== 'coef';
+    $('pzBar').hidden = m !== 'pz';
+  }
+  function loadPreset(i) {
+    const p = PRESETS[i]; if (!p) return;
+    state.preset = p; state.carry = null;
+    $('preset').value = String(i);
+    if (p.mode === 'pz') { setMode('pz'); $('zs').value = p.zs; $('ps').value = p.ps; $('K').value = p.K; $('n0b').value = p.n0b; }
+    else { setMode('coef'); $('b').value = p.b; $('a').value = p.a; $('n0').value = p.n0; }
+    $('w0').value = p.w0; $('th').value = p.th;
+    readW0(); readTh();
+    rebuild();
+  }
+
+  // ---- reading the fields
+  function clearBad() { ['b', 'a', 'n0', 'zs', 'ps', 'K', 'n0b', 'w0', 'th'].forEach(id => $(id).classList.remove('bad')); }
+  function rebuild() {
+    clearBad();
+    let sys;
+    try {
+      // right after a switch between the two modes, the fields show the same system rounded for display:
+      // keep computing with the exact system until a field is edited
+      const c = state.carry;
+      if (c && c.mode === state.mode && Object.keys(c.fields).every(id => $(id).value === c.fields[id])) sys = c.sys;
+      else sys = state.mode === 'coef' ? FR.fromCoefs($('b').value, $('a').value, $('n0').value) : FR.fromRoots($('zs').value, $('ps').value, $('K').value, $('n0b').value);
+    } catch (e) {
+      if (e.field && $(e.field)) $(e.field).classList.add('bad');
+      $('msgs').innerHTML = '<div class="msg err">' + esc(e.message) + '</div>';
+      fitFrame();
+      return;
+    }
+    state.sys = sys;
+    state.S = FR.sample(sys);
+    const p = state.preset;
+    const same = p && (p.mode === 'pz' ? state.mode === 'pz' && p.zs === $('zs').value && p.ps === $('ps').value && p.K === $('K').value && p.n0b === $('n0b').value
+                                        : state.mode === 'coef' && p.b === $('b').value && p.a === $('a').value && p.n0 === $('n0').value);
+    if (!same) $('preset').value = 'custom';
+    render();
+  }
+  function evalAngle(s) {
+    const v = Parse.expr(s);
+    if (Math.abs(v.im) > 1e-12) throw new Error('must be real');
+    return v.re;
+  }
+  function readW0() {
+    $('w0').classList.remove('bad');
+    try {
+      let v = evalAngle($('w0').value || '0');
+      if (v < 0 || v > Math.PI + 1e-12) throw new Error('range');
+      state.w0 = Math.min(Math.PI, v);
+      $('w0r').value = String(Math.round(state.w0 / Math.PI * 2400));
+    } catch (e) { $('w0').classList.add('bad'); }
+  }
+  function readTh() {
+    $('th').classList.remove('bad');
+    try { state.th = evalAngle($('th').value || '0'); } catch (e) { $('th').classList.add('bad'); }
+  }
+  function niceW(w) {                      // snap to a multiple of π/24 when close
+    const k = Math.round(w / (Math.PI / 24));
+    return Math.abs(w - k * Math.PI / 24) < 0.012 ? k * Math.PI / 24 : w;
+  }
+  function setW0(w, fromSlider) {
+    w = Math.max(0, Math.min(Math.PI, w));
+    if (!fromSlider) w = niceW(w);
+    state.w0 = w;
+    const a = Fmt.angle(w);
+    $('w0').value = /π/.test(a) || a === '0' ? a.replace(/π/g, 'pi').replace(/−/g, '-') : String(+w.toFixed(4));
+    $('w0').classList.remove('bad');
+    $('w0r').value = String(Math.round(w / Math.PI * 2400));
+    renderPoint();
+  }
+
+  // ---- system card
+  function coefS(v) {                     // a coefficient magnitude: integer, simple fraction (not fifths/tenths), else short decimal
+    const r = Math.round(v); if (Math.abs(v - r) < 1e-9) return String(r);
+    const q = Fmt.rat(v, 12); if (q && q.q % 5 !== 0) return q.p + '/' + q.q;
+    return Fmt.dec(v, 4);
+  }
+  const coefSigned = v => (v < 0 ? M_ : '') + coefS(Math.abs(v));
+  const par = c => (c.includes('/') ? '(' + c + ')' : c);
+  function seqHTML(vals, n0) {
+    const L = vals.length, has0 = n0 <= 0 && 0 <= n0 + L - 1;
+    const items = vals.map((v, i) => '<span class="sv' + (n0 + i === 0 ? ' zero' : '') + '">' + coefSigned(v) + '</span>').join(', ');
+    return '<span class="seq">{' + items + '}</span>' + (has0 ? '' : ' <span class="note">for n = ' + Fmt.sgn(n0) + ' … ' + Fmt.sgn(n0 + L - 1) + '</span>');
+  }
+  function expTerm(k) {                     // e^{−jkω}
+    if (k === 0) return '';
+    return 'e<sup>' + (k > 0 ? M_ : '') + 'j' + (Math.abs(k) === 1 ? '' : Math.abs(k)) + 'ω</sup>';
+  }
+  function sumHTML(c, k0) {                 // Σ c_i e^{−j(k0+i)ω}
+    let out = '';
+    c.forEach((v, i) => {
+      if (Math.abs(v) < 1e-15) return;
+      const e = expTerm(k0 + i), m = Math.abs(v), coef = e && Math.abs(m - 1) < 1e-12 ? '' : (e ? par(coefS(m)) : coefS(m));
+      const body = coef + e || '1';
+      out += out === '' ? (v < 0 ? M_ : '') + body : (v < 0 ? ' ' + M_ + ' ' : ' + ') + body;
+    });
+    return out || '0';
+  }
+  function polyZ(c) {                       // Σ c_k z^{-k}
+    let out = '';
+    c.forEach((v, k) => {
+      if (Math.abs(v) < 1e-15) return;
+      const zp = k === 0 ? '' : 'z<sup>' + M_ + k + '</sup>', m = Math.abs(v);
+      const body = zp === '' ? coefS(m) : (Math.abs(m - 1) < 1e-12 ? '' : par(coefS(m))) + zp;
+      out += out === '' ? (v < 0 ? M_ : '') + body : (v < 0 ? ' ' + M_ + ' ' : ' + ') + body;
+    });
+    return out || '0';
+  }
+  function rootStr(g) {
+    const z = g.z, r = Cx.abs(z);
+    if (!g.pair) return coefSigned(z.re);
+    const th = Cx.arg(z);
+    return (Math.abs(r - 1) < 1e-9 ? '' : par(coefS(r))) + 'e<sup>±j' + Fmt.angle(th) + '</sup>';
+  }
+  function renderSys() {
+    const s = state.sys;
+    let h = '';
+    if (s.fir) {
+      h += '<div><span class="lbl">impulse response</span>h[n] = ' + seqHTML(s.b, s.n0) + '</div>';
+      h += '<div><span class="lbl">frequency response</span>H<sub>d</sub>(ω) = Σ h[n]e<sup>' + M_ + 'jωn</sup> = ' + sumHTML(s.b, s.n0) + '</div>';
+    } else {
+      const pre = s.n0 ? 'z<sup>' + (s.n0 > 0 ? M_ : '') + Math.abs(s.n0) + '</sup>·' : '';
+      h += '<div><span class="lbl">transfer function</span>H(z) = ' + pre + '<span class="frac"><span>' + polyZ(s.b) + '</span><span>' + polyZ(s.a) + '</span></span></div>';
+      h += '<div><span class="lbl">frequency response</span>H<sub>d</sub>(ω) = H(z)|<sub>z = e<sup>jω</sup></sub> ' + (s.maxPole < 1 ? '(the causal system is stable: its ROC contains |z| = 1)' : '') + '</div>';
+    }
+    const zl = s.zg.filter(g => Cx.abs(g.z) > 1e-12).map(rootStr), pl = s.pg.filter(g => Cx.abs(g.z) > 1e-12).map(rootStr);
+    const rootList = (l, o) => [l.join(', '), o ? o + '× at z = 0' : ''].filter(Boolean).join(' · ') || 'none';
+    h += '<div class="note">zeros: ' + rootList(zl, s.originZ) + ' &nbsp;·&nbsp; poles: ' + rootList(pl, s.originP) + '</div>';
+    $('sys').innerHTML = h;
+    // notes
+    const notes = [];
+    const sym = FR.symmetry(s);
+    if (sym) {
+      const Ms = Fmt.num(sym.M), Ma = Fmt.num(Math.abs(sym.M));
+      const lin = Math.abs(sym.M) < 1e-12 ? '' : 'e<sup>' + (sym.M > 0 ? M_ : '') + 'j' + (Ma === '1' ? '' : par(Ma)) + 'ω</sup>';   // e^{−jMω}
+      notes.push(sym.kind === 'sym'
+        ? 'Symmetric taps: H<sub>d</sub>(ω) = ' + lin + 'A(ω) with A(ω) real. Linear phase, group delay ' + Ms + '; the phase jumps by π only where A(ω) changes sign.'
+        : 'Antisymmetric taps: H<sub>d</sub>(ω) = j' + (lin ? ' ' + lin : '') + 'A(ω) with A(ω) real. Linear phase (plus π/2), group delay ' + Ms + '.');
+    }
+    if (state.preset && $('preset').value !== 'custom') notes.unshift(rich(state.preset.note));
+    $('sysnote').innerHTML = notes.map(t => '<p class="t">' + t + '</p>').join('');
+    // messages
+    const m = [];
+    if (!s.fir && s.maxPole >= 1 - 1e-9) {
+      const on = s.poles.some(p => Math.abs(Cx.abs(p) - 1) < 1e-9);
+      m.push(['err', on ? 'A pole lies ON the unit circle: no ROC contains |z| = 1, so H_d(ω) does not exist (the curves blow up at that angle). The causal system is not BIBO stable.'
+                        : 'A pole lies outside the unit circle, so the causal system is unstable and its DTFT does not exist. The curves show H(z) on |z| = 1 — the frequency response of the one stable (non-causal) system with this H(z). No direct check below.']);
+    } else if (!s.fir && s.maxPole > FR.SLOW) {
+      m.push(['', 'A pole this close to the unit circle (|p| > 0.99925) makes the start-up transient fade too slowly for the direct check below, so it is left out. The curves are exact.']);
+    }
+    $('msgs').innerHTML = m.map(([c, t]) => '<div class="msg ' + c + '">' + esc(t).replace(/H_d/g, 'H<sub>d</sub>') + '</div>').join('');
+  }
+
+  // ---- canvases sized to CSS width × devicePixelRatio
+  function prep(cv, hOf) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const w = Math.max(220, Math.round(cv.clientWidth || cv.parentElement.clientWidth || 600));
+    const h = Math.round(hOf(w));
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, W: w, H: h };
+  }
+  function niceStep(span, n = 4) { const raw = span / n, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; }
+  const PI_TICKS = [[-Math.PI, M_ + 'π'], [-Math.PI / 2, M_ + 'π/2'], [0, '0'], [Math.PI / 2, 'π/2'], [Math.PI, 'π']];
+  const geo = {};
+  /* generic ω-plot: series y over state.S.om, with gaps; opts: {lo, hi, ticks:[[v,label]], title, jumpMarks} */
+  function drawW(id, y, o) {
+    const cv = $(id), { ctx, W, H } = prep(cv, w => Math.max(150, Math.min(o.h || 200, w * 0.32)));
+    const muted = css('--muted'), line = css('--line'), accent = css('--accent'), accent2 = css('--accent2');
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '12px system-ui, sans-serif';
+    const L = Math.max(44, 10 + Math.max(...o.ticks.map(t => ctx.measureText(t[1]).width))), R = 12, T = 22, B = 22;
+    const om = state.S.om;
+    const X = w => L + (w + Math.PI) / (2 * Math.PI) * (W - L - R);
+    const Y = v => T + (o.hi - v) / (o.hi - o.lo) * (H - T - B);
+    geo[id] = { L, R, W };
+    // grid
+    ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.fillStyle = muted; ctx.textAlign = 'right';
+    for (const [v, lab] of o.ticks) { const yy = Y(v); ctx.beginPath(); ctx.moveTo(L, yy); ctx.lineTo(W - R, yy); ctx.stroke(); ctx.fillText(lab, L - 6, yy + 4); }
+    ctx.textAlign = 'center';
+    for (const [v, lab] of PI_TICKS) { const xx = X(v); ctx.beginPath(); ctx.moveTo(xx, T); ctx.lineTo(xx, H - B); ctx.stroke(); ctx.fillText(lab, xx, H - 6); }
+    ctx.textAlign = 'left'; ctx.fillStyle = muted; fillRich(ctx, o.title, L, 15);
+    ctx.textAlign = 'right'; ctx.fillText('ω', W - 2, H - 6);
+    // curve with gaps
+    ctx.save(); ctx.beginPath(); ctx.rect(L, T - 2, W - L - R, H - T - B + 4); ctx.clip();
+    ctx.strokeStyle = accent; ctx.lineWidth = 2;
+    let pen = false, prev = null, jumps = [];
+    ctx.beginPath();
+    for (let i = 0; i < om.length; i++) {
+      const v = y[i];
+      if (!isFinite(v)) { pen = false; continue; }                   // undefined sample (H = 0): leave a gap
+      const vv = Math.max(o.lo - 0.05 * (o.hi - o.lo), Math.min(o.hi + 0.05 * (o.hi - o.lo), v));
+      if (prev !== null && o.gapAt && Math.abs(v - prev.v) > o.gapAt) { jumps.push([prev.x, Y(prev.vv), X(om[i]), Y(vv)]); pen = false; }
+      if (!pen) { ctx.moveTo(X(om[i]), Y(vv)); pen = true; } else ctx.lineTo(X(om[i]), Y(vv));
+      prev = { v, vv, x: X(om[i]) };
+    }
+    ctx.stroke();
+    // jumps: thin dotted connectors (not part of the curve)
+    ctx.setLineDash([2, 3]); ctx.strokeStyle = muted; ctx.lineWidth = 1;
+    for (const [x1, y1, x2, y2] of jumps) { const xm = (x1 + x2) / 2; ctx.beginPath(); ctx.moveTo(xm, y1); ctx.lineTo(xm, y2); ctx.stroke(); }
+    ctx.setLineDash([]);
+    ctx.restore();
+    // cursor at +ω0 (solid) and −ω0 (dashed)
+    for (const [w, dash] of [[state.w0, []], [-state.w0, [4, 4]]]) {
+      ctx.setLineDash(dash); ctx.strokeStyle = accent2; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(X(w), T); ctx.lineTo(X(w), H - B); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    if (o.point && isFinite(o.point)) {
+      const vv = Math.max(o.lo, Math.min(o.hi, o.point));
+      ctx.fillStyle = accent2; ctx.beginPath(); ctx.arc(X(state.w0), Y(vv), 4.5, 0, 2 * Math.PI); ctx.fill();
+    }
+  }
+  /* canvas text with one-character subscripts written "_d" (H_d) */
+  function fillRich(ctx, s, x, y) {
+    const base = ctx.font, m = /(\d+(\.\d+)?)px/.exec(base), size = m ? parseFloat(m[1]) : 12;
+    const small = base.replace(/(\d+(\.\d+)?)px/, (size * 0.75).toFixed(1) + 'px');
+    let cx = x;
+    for (const p of s.split(/(_.)/)) {
+      if (!p) continue;
+      if (p.length === 2 && p[0] === '_') { ctx.font = small; ctx.fillText(p[1], cx, y + size * 0.28); cx += ctx.measureText(p[1]).width; ctx.font = base; }
+      else { ctx.fillText(p, cx, y); cx += ctx.measureText(p).width; }
+    }
+  }
+  function piTicks(lo, hi) {               // ticks at multiples of π/2 (or π) for the unwrapped phase
+    const span = hi - lo, stepK = span > 12 * Math.PI ? Math.ceil(span / (6 * Math.PI)) * 2 : span > 5 * Math.PI ? 2 : 1;
+    const out = [];
+    for (let k = Math.ceil(lo / (Math.PI / 2 * stepK)); k * Math.PI / 2 * stepK <= hi + 1e-9; k++) {
+      const v = k * Math.PI / 2 * stepK;
+      out.push([v, Fmt.angle(v)]);
+    }
+    return out;
+  }
+  function robustRange(y, keep) {
+    const f = y.filter(isFinite).slice().sort((a, b) => a - b);
+    if (!f.length) return [0, 1];
+    const q = p => f[Math.min(f.length - 1, Math.max(0, Math.round(p * (f.length - 1))))];
+    let lo = q(0.005), hi = q(0.995);
+    for (const v of keep) if (isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    return [lo, hi];
+  }
+  function drawPlots() {
+    const S = state.S;
+    const H0 = FR.Hd(state.sys, state.w0), m0 = Cx.abs(H0);
+    // magnitude
+    const dB = $('db').checked;
+    if (dB) {
+      const mdb = S.mag.map(m => 20 * Math.log10(Math.max(m, 1e-300)));
+      const top = Math.max(...mdb.filter(isFinite));
+      const hi = Math.ceil((top + 3) / 10) * 10, lo = hi - 70;
+      const ticks = []; for (let v = Math.ceil(lo / 20) * 20; v <= hi + 1e-9; v += 20) ticks.push([v, Fmt.sgn(v) + ' dB']);
+      drawW('cMag', mdb, { lo, hi, ticks, title: '|H_d(ω)| in dB = 20 log₁₀|H_d(ω)|', point: 20 * Math.log10(Math.max(m0, 1e-300)), h: 210 });
+    } else {
+      const top = Math.max(...S.mag.filter(isFinite)), capped = Math.min(top, 1e6);
+      const hi = capped > 0 ? capped * 1.12 : 1, st = niceStep(hi), ticks = [];
+      for (let v = 0; v <= hi + 1e-12; v += st) ticks.push([v, Fmt.dec(v, 3)]);
+      drawW('cMag', S.mag, { lo: 0, hi: Math.max(hi, ticks[ticks.length - 1][0]), ticks, title: '|H_d(ω)|  magnitude response', point: m0, h: 210 });
+    }
+    // phase
+    const ph0 = FR.phase(H0, state.w0, S.scale);
+    if ($('unwrap').checked) {
+      const [lo0, hi0] = robustRange(S.phU, []);
+      const lo = Math.floor((lo0 - 0.2) / (Math.PI / 2)) * Math.PI / 2, hi = Math.ceil((hi0 + 0.2) / (Math.PI / 2)) * Math.PI / 2;
+      drawW('cPh', S.phU, { lo, hi, ticks: piTicks(lo, hi), title: 'unwrapped phase, from ω = 0 outward (2π wraps removed; π jumps at zeros on the circle stay)', point: FR.unwrappedAt(S, state.w0, ph0), gapAt: 1.5, h: 210 });
+    } else {
+      drawW('cPh', S.ph, { lo: -Math.PI * 1.08, hi: Math.PI * 1.08, ticks: PI_TICKS, title: '∠H_d(ω)  principal value in [−π, π]', point: ph0, gapAt: 1.5, h: 210 });
+    }
+    // group delay
+    const g0 = isFinite(ph0) ? FR.tau(state.sys, state.w0) : NaN;
+    let [lo, hi] = robustRange(S.gd, [0, g0]);
+    if (hi - lo < 2) { const c = (hi + lo) / 2; lo = c - 1; hi = c + 1; }
+    const pad = 0.12 * (hi - lo); lo -= pad; hi += pad;
+    const st = niceStep(hi - lo), ticks = [];
+    for (let v = Math.ceil(lo / st) * st; v <= hi + 1e-9; v += st) ticks.push([v, Fmt.dec(v, 3)]);
+    drawW('cGd', S.gd, { lo, hi, ticks, title: 'group delay τ(ω) = −d∠H_d/dω  (samples)', point: g0, h: 180 });
+  }
+
+  // ---- z-plane
+  function drawZ() {
+    const s = state.sys, { ctx, W, H } = prep($('zp'), w => w);
+    const fg = css('--fg'), muted = css('--muted'), line = css('--line'), accent = css('--accent'), accent2 = css('--accent2'), hi = css('--hi');
+    ctx.clearRect(0, 0, W, H);
+    const all = s.zeros.concat(s.poles).map(Cx.abs);
+    const Rm = Math.max(1.35, Math.min(3, 1.15 * Math.max(0, ...all)));
+    const cx = W / 2, cy = H / 2, sc = (W / 2 - 16) / Rm;
+    state.zgeo = { cx, cy, sc, Rm };
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(W, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
+    ctx.setLineDash([6, 5]); ctx.strokeStyle = fg; ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.arc(cx, cy, sc, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = muted; ctx.font = '11px system-ui, sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('Re z', W - 30, cy - 5); ctx.fillText('Im z', cx + 5, 12); ctx.fillText('1', cx + sc + 3, cy + 12);
+    // e^{jω0} and its mirror
+    const P = z => [cx + z.re * sc, cy - z.im * sc];
+    ctx.strokeStyle = accent; ctx.lineWidth = 1.2; ctx.setLineDash([3, 3]);
+    const [ux, uy] = P(Cx.C(Math.cos(state.w0), Math.sin(state.w0)));
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ux, uy); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = accent; ctx.beginPath(); ctx.arc(ux, uy, 4.5, 0, 2 * Math.PI); ctx.fill();
+    // markers (clamped to the visible disc)
+    state.zmarks = [];
+    const clampP = z => { const m = Cx.abs(z), lim = Rm * 0.97; return m > lim ? Cx.scale(z, lim / m) : z; };
+    const drawO = (z, col) => { const [x, y] = P(clampP(z)); ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 6, 0, 2 * Math.PI); ctx.stroke(); return [x, y]; };
+    const drawX = (z, col) => { const [x, y] = P(clampP(z)); ctx.strokeStyle = col; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(x - 6, y - 6); ctx.lineTo(x + 6, y + 6); ctx.moveTo(x - 6, y + 6); ctx.lineTo(x + 6, y - 6); ctx.stroke(); return [x, y]; };
+    s.zg.forEach((g, i) => { if (Cx.abs(g.z) <= 1e-12) return; const [x, y] = drawO(g.z, accent2); state.zmarks.push({ kind: 'z', i, x, y }); if (g.pair) drawO(Cx.conj(g.z), accent2); });
+    s.pg.forEach((g, i) => { if (Cx.abs(g.z) <= 1e-12) return; const [x, y] = drawX(g.z, hi); state.zmarks.push({ kind: 'p', i, x, y }); if (g.pair) drawX(Cx.conj(g.z), hi); });
+    const mult = (n, col, dy) => { if (n) { ctx.fillStyle = col; ctx.font = 'bold 11px system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.fillText(n > 1 ? String(n) : '', cx + 7, cy + dy); } };
+    if (s.originZ) { drawO(Cx.C(0), accent2); mult(s.originZ, accent2, 15); }
+    if (s.originP) { drawX(Cx.C(0), hi); mult(s.originP, hi, -8); }
+  }
+  // dragging a zero or pole (pairs move together; real roots stay on the real axis)
+  function zFromEvent(e) {
+    const r = $('zp').getBoundingClientRect(), g = state.zgeo;
+    const x = (e.clientX - r.left) * ($('zp').clientWidth / r.width), y = (e.clientY - r.top) * ($('zp').clientHeight / r.height);
+    return { x, y, z: Cx.C((x - g.cx) / g.sc, (g.cy - y) / g.sc) };
+  }
+  function rootField(groups) {
+    return groups.map(g => {
+      if (!g.pair) return Fmt.field(g.z.re);
+      const r = Cx.abs(g.z), th = Cx.arg(g.z), a = Fmt.angle(th, 24);
+      const ang = /π/.test(a) ? a.replace(M_, '-') : '*' + String(+th.toFixed(4));
+      return (Math.abs(r - 1) < 1e-9 ? '' : Fmt.field(r)) + 'e^(j' + ang + ')';
+    }).join(', ');
+  }
+  function toPZMode() {
+    const s = state.sys;
+    if (state.mode === 'pz') return;
+    // carry the current roots over to the pole-zero fields (leading zero taps become delay)
+    setMode('pz');
+    $('K').value = Fmt.field(s.b[s.lead]);
+    $('n0b').value = String(s.n0 + s.lead);
+    $('zs').value = rootField(s.zg); $('ps').value = rootField(s.pg);
+    state.carry = { mode: 'pz', sys: s, fields: { zs: $('zs').value, ps: $('ps').value, K: $('K').value, n0b: $('n0b').value } };
+  }
+  $('zp').addEventListener('pointerdown', e => {
+    if (!state.sys) return;
+    const { x, y } = zFromEvent(e);
+    let best = null, bd = 16;
+    for (const m of state.zmarks) { const d = Math.hypot(m.x - x, m.y - y); if (d < bd) { bd = d; best = m; } }
+    if (!best) return;
+    e.preventDefault();
+    toPZMode();
+    state.drag = best;
+    $('zp').setPointerCapture(e.pointerId);
+  });
+  $('zp').addEventListener('pointermove', e => {
+    if (!state.sys) return;
+    const { x, y, z } = zFromEvent(e);
+    if (!state.drag) { $('zp').style.cursor = state.zmarks.some(m => Math.hypot(m.x - x, m.y - y) < 16) ? 'grab' : 'default'; return; }
+    const s = state.sys, groups = state.drag.kind === 'z' ? s.zg : s.pg, g = groups[state.drag.i];
+    let nz;
+    if (!g.pair) nz = Cx.C(z.re, 0);
+    else nz = Cx.C(z.re, Math.max(0, z.im));
+    let r = Cx.abs(nz), th = Math.atan2(nz.im, nz.re);
+    const k = Math.round(th / (Math.PI / 12));
+    if (g.pair && Math.abs(th - k * Math.PI / 12) < 0.035) th = k * Math.PI / 12;      // snap the angle to multiples of π/12
+    if (Math.abs(r - 1) < 0.035) r = 1;                                               // snap onto the unit circle
+    if (state.drag.kind === 'p') r = Math.min(r, 0.98);                               // keep dragged poles inside (DTFT exists)
+    r = Math.min(r, state.zgeo.Rm * 0.97);
+    if (!g.pair) { const sgn = nz.re < 0 ? -1 : 1; r = Math.abs(nz.re) < 1e-3 ? 0.001 : r; nz = Cx.C(sgn * r, 0); }
+    else nz = Cx.C(r * Math.cos(th), r * Math.sin(th));
+    g.z = nz;
+    state.carry = null;                                                               // the system really changes now
+    $('zs').value = rootField(s.zg); $('ps').value = rootField(s.pg);
+    if (!state.raf) state.raf = requestAnimationFrame(() => { state.raf = null; rebuild(); });
+  });
+  const endDrag = () => { state.drag = null; };
+  $('zp').addEventListener('pointerup', endDrag);
+  $('zp').addEventListener('pointercancel', endDrag);
+
+  // ---- the ω0 readout and the stem plots
+  function renderPoint() {
+    if (!state.sys) return;
+    const s = state.sys, w0 = state.w0, th = state.th;
+    const H0 = FR.Hd(s, w0), m0 = Cx.abs(H0), ph0 = FR.phase(H0, w0, state.S.scale), g0 = isFinite(ph0) ? FR.tau(s, w0) : NaN;
+    const angS = isFinite(ph0) ? (Math.abs(Math.abs(ph0) - Math.PI) < 1e-9 ? 'π (≡ ' + M_ + 'π)' : Fmt.angle(ph0)) : 'undefined (H = 0)';
+    const deg = isFinite(ph0) ? ' = ' + Fmt.dec(ph0 * 180 / Math.PI, 4) + '°' : '';
+    const phu = FR.unwrappedAt(state.S, w0, ph0);
+    const pd = isFinite(phu) && w0 > 1e-9 ? Fmt.num(-phu / w0) : '—';
+    const gS = isFinite(g0) ? Fmt.num(g0) : '—', unit = t => (t === '1' || t === M_ + '1' ? 'sample' : 'samples');
+    const zero = !(m0 > 1e-9 * state.S.scale);           // the same test that makes the phase undefined
+    $('read').innerHTML =
+      '<div><span class="k">ω₀ =</span>' + Fmt.angle(w0) + (/π/.test(Fmt.angle(w0)) ? ' <span class="note">(' + Fmt.dec(w0, 4) + ' rad/sample)</span>' : '') + '</div>' +
+      '<div><span class="k">H<sub>d</sub>(ω₀) =</span>' + Fmt.cnum(H0) + '</div>' +
+      '<div><span class="k">|H<sub>d</sub>(ω₀)| =</span>' + Fmt.mag(m0) + (Fmt.mag(m0) !== Fmt.dec(m0) ? ' <span class="note">≈ ' + Fmt.dec(m0, 4) + '</span>' : '') + ' <span class="note">(' + (zero ? '−∞ dB' : Fmt.dec(20 * Math.log10(m0), 3) + ' dB') + ')</span></div>' +
+      '<div><span class="k">∠H<sub>d</sub>(ω₀) =</span>' + angS + '<span class="note">' + deg + '</span></div>' +
+      '<div><span class="k">group delay τ(ω₀) =</span>' + gS + ' <span class="note">' + unit(gS) + '</span></div>' +
+      '<div><span class="k">phase delay −φ(ω₀)/ω₀ =</span>' + pd + ' <span class="note">' + unit(pd) + ' (φ = unwrapped phase)</span></div>';
+    const tot = isFinite(ph0) ? th + ph0 : NaN;
+    const term = (t) => (Math.abs(t) < 1e-12 ? '' : (t < 0 ? ' ' + M_ + ' ' : ' + ') + Fmt.angle(Math.abs(t)));
+    $('out').innerHTML = m0 < 1e-9 * state.S.scale
+      ? 'y[n] = |H<sub>d</sub>(ω₀)| cos(ω₀n + θ + ∠H<sub>d</sub>(ω₀)) = <b>0</b> — ω₀ sits on a zero of H<sub>d</sub>, so this cosine is blocked completely.'
+      : 'y[n] = |H<sub>d</sub>(ω₀)| cos(ω₀n + θ + ∠H<sub>d</sub>(ω₀)) = <b>' + (Math.abs(m0 - 1) < 1e-12 ? '' : Fmt.mag(m0) + ' ') + 'cos(' + Fmt.angN(w0) + term(th) + term(ph0) + ')</b>' +
+        (Math.abs(th) > 1e-12 && Math.abs(ph0) > 1e-12 || Fmt.mag(m0) !== Fmt.dec(m0, 4) ? ' <span class="note">= ' + Fmt.dec(m0, 4) + ' cos(' + Fmt.angN(w0) + term(wrapPi(tot)) + ')</span>' : '') +
+        (w0 > Math.PI - 1e-9 || w0 < 1e-9 ? ' <span class="note">(at ω₀ = 0 or π the input is a constant or (−1)<sup>n</sup>, and H<sub>d</sub>(ω₀) is real)</span>' : '');
+    drawZ();
+    drawPlots();
+    drawStems(H0, m0, ph0);
+    fitFrame();
+  }
+  const wrapPi = t => { let v = ((t + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI; if (Math.abs(v + Math.PI) < 1e-12) v = Math.PI; return v; };
+  function drawStem(id, vals, cont, check, title, amp) {
+    const { ctx, W, H } = prep($(id), w => Math.max(170, Math.min(230, w * 0.46)));
+    const muted = css('--muted'), line = css('--line'), accent = css('--accent'), accent2 = css('--accent2');
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '12px system-ui, sans-serif';
+    const top = Math.max(1, amp) * 1.18, L = 38, R = 10, T = 22, B = 22;
+    const X = n => L + (n + 0.5) * (W - L - R) / 21;
+    const Y = v => T + (top - v) / (2 * top) * (H - T - B);
+    ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.fillStyle = muted; ctx.textAlign = 'right';
+    const tk = [Math.max(1, amp), 0, -Math.max(1, amp)];
+    for (const v of tk) { ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(W - R, Y(v)); ctx.stroke(); ctx.fillText(Fmt.dec(v, 3), L - 5, Y(v) + 4); }
+    ctx.textAlign = 'center';
+    for (let n = 0; n <= 20; n += 5) ctx.fillText(String(n), X(n), H - 6);
+    ctx.textAlign = 'left'; fillRich(ctx, title, L, 15);
+    ctx.textAlign = 'right'; ctx.fillText('n', W - 2, H - 6);
+    // underlying cosine
+    ctx.setLineDash([3, 4]); ctx.strokeStyle = muted; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let i = 0; i <= 400; i++) { const t = -0.5 + 21 * i / 400, v = cont(t); if (i === 0) ctx.moveTo(X(t), Y(v)); else ctx.lineTo(X(t), Y(v)); }
+    ctx.stroke(); ctx.setLineDash([]);
+    // stems
+    vals.forEach((v, n) => {
+      ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.lineWidth = W < 420 ? 1.5 : 1.9;
+      ctx.beginPath(); ctx.moveTo(X(n), Y(0)); ctx.lineTo(X(n), Y(v)); ctx.stroke();
+      ctx.beginPath(); ctx.arc(X(n), Y(v), W < 420 ? 3 : 3.6, 0, 2 * Math.PI); ctx.fill();
+    });
+    if (check) {
+      ctx.strokeStyle = accent2; ctx.lineWidth = 1.6;
+      check.forEach((v, n) => { ctx.beginPath(); ctx.arc(X(n), Y(v), W < 420 ? 5.5 : 6.5, 0, 2 * Math.PI); ctx.stroke(); });
+    }
+  }
+  function drawStems(H0, m0, ph0) {
+    const w0 = state.w0, th = state.th, s = state.sys;
+    const ok = isFinite(ph0) ? ph0 : 0;
+    const xin = NSTEM.map(n => Math.cos(w0 * n + th));
+    const yout = NSTEM.map(n => m0 * Math.cos(w0 * n + th + ok));
+    const chk = FR.directResponse(s, w0, th, NSTEM);
+    const amp = Math.max(1, m0);
+    drawStem('cIn', xin, t => Math.cos(w0 * t + th), null, 'input x[n] = cos(ω₀n + θ)', amp);
+    drawStem('cOut', yout, t => m0 * Math.cos(w0 * t + th + ok), chk, 'output y[n] = |H_d(ω₀)| cos(ω₀n + θ + ∠H_d(ω₀))', amp);
+  }
+  function render() { renderSys(); renderPoint(); }
+
+  // ---- plot interaction: click / drag sets ω0 = |ω|
+  function plotPick(id, e) {
+    const g = geo[id]; if (!g || !state.S) return;
+    const r = $(id).getBoundingClientRect();
+    const x = (e.clientX - r.left) * g.W / r.width;
+    const w = -Math.PI + (x - g.L) / (g.W - g.L - g.R) * 2 * Math.PI;
+    if (w < -Math.PI - 0.2 || w > Math.PI + 0.2) return;
+    setW0(Math.abs(w));
+  }
+  for (const id of ['cMag', 'cPh', 'cGd']) {
+    let down = false;
+    $(id).addEventListener('pointerdown', e => { down = true; plotPick(id, e); });
+    $(id).addEventListener('pointermove', e => { if (down) plotPick(id, e); });
+    window.addEventListener('pointerup', () => { down = false; });
+  }
+
+  // ---- wiring
+  $('preset').addEventListener('change', e => { if (e.target.value !== 'custom') loadPreset(+e.target.value); });
+  $('mCoef').addEventListener('click', () => {
+    if (state.mode === 'coef') return;
+    if (state.sys) {
+      const s = state.sys; $('b').value = s.b.map(Fmt.field).join(', '); $('a').value = s.a.map(Fmt.field).join(', '); $('n0').value = String(s.n0);
+      state.carry = { mode: 'coef', sys: s, fields: { b: $('b').value, a: $('a').value, n0: $('n0').value } };
+    }
+    setMode('coef'); rebuild();
+  });
+  $('mPZ').addEventListener('click', () => {
+    if (state.mode === 'pz') return;
+    if (state.sys) toPZMode();
+    setMode('pz'); rebuild();
+  });
+  let tmr = null;
+  for (const id of ['b', 'a', 'n0', 'zs', 'ps', 'K', 'n0b']) {
+    $(id).addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(rebuild, 450); });
+    $(id).addEventListener('keydown', e => { if (e.key === 'Enter') { clearTimeout(tmr); rebuild(); } });
+  }
+  $('w0r').addEventListener('input', () => setW0(+$('w0r').value / 2400 * Math.PI, true));
+  $('w0').addEventListener('change', () => { readW0(); renderPoint(); });
+  $('w0').addEventListener('keydown', e => { if (e.key === 'Enter') { readW0(); renderPoint(); } });
+  $('th').addEventListener('change', () => { readTh(); renderPoint(); });
+  $('th').addEventListener('keydown', e => { if (e.key === 'Enter') { readTh(); renderPoint(); } });
+  $('db').addEventListener('change', () => renderPoint());
+  $('unwrap').addEventListener('change', () => renderPoint());
+  new MutationObserver(() => { if (state.sys) renderPoint(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  let rz = null;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (state.sys) renderPoint(); fitFrame(); }, 80); });
+  if (window.ResizeObserver) new ResizeObserver(fitFrame).observe(document.body);
+  loadPreset(0);
+})();
+</script>
+</body>
+</html>
