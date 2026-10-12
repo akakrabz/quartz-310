@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sampling explorer — ECE 310</title>
+<style>
+  :root {
+    --bg:#fbfaf7; --fg:#23211d; --muted:#7a766e; --line:#e0ddd5; --panel:#f1efe9;
+    --accent:#0e6b73; --accent2:#b5632a; --hi:#d1495b;
+  }
+  :root[data-theme="dark"] {
+    --bg:#161719; --fg:#eceef1; --muted:#9a9ea6; --line:#2f3238; --panel:#1f2125;
+    --accent:#6cc4c9; --accent2:#e8a066; --hi:#f0907c;
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 "Source Sans 3", system-ui, sans-serif; }
+  .wrap { display:grid; grid-template-columns:minmax(0,1fr); gap:8px; padding:8px; }
+  .bar { display:flex; flex-wrap:wrap; gap:6px 8px; align-items:flex-end; }
+  .fld { display:flex; flex-direction:column; gap:2px; flex:1 1 150px; min-width:0; }
+  .fld.preset { flex:3 1 280px; }
+  .fld.shape { flex:2 1 220px; }
+  .fld.narrow { flex:0 1 110px; }
+  .fld > span { font-size:12px; color:var(--muted); }
+  .fld > select, .fld > input { width:100%; }
+  input[type=text], select, button { font:inherit; color:var(--fg); background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:5px 8px; min-width:0; }
+  input[type=text]:focus, select:focus { outline:2px solid var(--accent); outline-offset:-1px; }
+  input[type=text].bad { border-color:var(--hi); }
+  button { cursor:pointer; padding:5px 12px; }
+  button:hover { border-color:var(--accent); }
+  .seg { display:inline-flex; flex-wrap:wrap; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .seg button { border:0; border-radius:0; background:var(--panel); padding:5px 10px; }
+  .seg button + button { border-left:1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background:var(--accent); color:var(--bg); font-weight:600; }
+  .note { color:var(--muted); font-size:13px; }
+  .msgs { display:grid; gap:4px; }
+  .msgs:empty { display:none; }
+  .msg { font-size:13px; padding:4px 8px; border-left:3px solid var(--accent2); background:var(--panel); border-radius:4px; }
+  .msg.err { border-left-color:var(--hi); }
+  canvas { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:6px; background:var(--bg); }
+  .card { background:var(--panel); border-radius:6px; padding:7px 10px; min-width:0; }
+  .card h3 { margin:0 0 4px; font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .fsrow { display:flex; flex-wrap:wrap; gap:6px 12px; align-items:flex-end; }
+  .slider { flex:1 1 260px; min-width:0; }
+  .slider input[type=range] { width:100%; accent-color:var(--accent); margin:6px 0 0; display:block; }
+  .ticks { position:relative; height:30px; font-size:11px; color:var(--muted); }
+  .ticks span { position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; text-align:center; line-height:1.15; }
+  .ticks span::before { content:""; display:block; width:1px; height:5px; background:var(--muted); margin:0 auto 1px; }
+  .ticks span.nyq { color:var(--accent2); font-weight:600; }
+  .ticks span.nyq::before { background:var(--accent2); height:7px; width:2px; }
+  .fsrow .fld { flex:0 1 110px; }
+  .read { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:2px 16px; margin-top:6px; font-variant-numeric:tabular-nums; }
+  .read div { padding:1px 0; overflow-wrap:anywhere; }
+  .read .k { color:var(--muted); font-size:12.5px; margin-right:4px; }
+  .verdict { margin-top:8px; font-size:14px; padding:6px 10px; border-left:3px solid var(--accent); background:var(--bg); border-radius:4px; }
+  .verdict.at { border-left-color:var(--accent2); }
+  .verdict.below { border-left-color:var(--hi); }
+  .verdict b.v { font-weight:700; }
+  .formula { font-size:14.5px; overflow-wrap:anywhere; line-height:1.75; }
+  .formula .lbl { color:var(--muted); font-size:12.5px; margin-right:4px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; line-height:1.15; }
+  .frac > span:first-child { border-bottom:1px solid currentColor; padding:0 4px 1px; }
+  .frac > span:last-child { padding:1px 4px 0; }
+  .legend { font-size:12px; color:var(--muted); display:flex; flex-wrap:wrap; gap:2px 14px; margin-top:2px; }
+  .legend b { font-weight:700; }
+  .legend .sw { display:inline-block; width:14px; height:3px; vertical-align:middle; margin-right:4px; border-radius:2px; }
+  .yes { color:var(--accent); font-weight:600; }
+  .no { color:var(--hi); font-weight:600; }
+  sup, sub { font-size:.72em; line-height:0; }
+  p.t { margin:2px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <label class="fld preset"><span>Preset (Lecture 17 examples, past exams, shapes to explore)</span><select id="preset"></select></label>
+    <label class="fld shape"><span>Analog spectrum X<sub>a</sub>(Ω)</span><select id="shape"></select></label>
+    <label class="fld narrow"><span>bandlimit B (Hz)</span><input id="B" type="text" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+    <label class="fld narrow" id="f1fld" hidden><span>lower tone f₁ (Hz), f₁ &lt; B</span><input id="f1" type="text" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="card">
+    <h3>Sampling rate f<sub>s</sub> = 1/T, from 0.4× to 6× the Nyquist rate 2B</h3>
+    <div class="fsrow">
+      <div class="slider">
+        <input type="range" id="fsr" min="0" max="1000" step="1" aria-label="sampling frequency, logarithmic, from 0.4 to 6 times the Nyquist rate">
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <label class="fld"><span>f<sub>s</sub> (Hz)</span><input id="fs" type="text" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+      <label class="fld"><span>T = 1/f<sub>s</sub> (s)</span><input id="T" type="text" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+      <div class="fld" style="flex:0 1 auto"><span>jump to</span>
+        <div class="seg" role="group" aria-label="sampling rate presets">
+          <button type="button" data-r="0.5">f<sub>s</sub> = B</button>
+          <button type="button" data-r="0.75">1.5B</button>
+          <button type="button" data-r="1">2B (Nyquist rate)</button>
+          <button type="button" data-r="1.5">3B</button>
+          <button type="button" data-r="2">4B</button>
+        </div>
+      </div>
+    </div>
+    <div class="read" id="read"></div>
+    <div class="verdict" id="verdict"></div>
+  </div>
+  <canvas id="cXa" width="900" height="170" aria-label="the analog spectrum X_a of Omega"></canvas>
+  <canvas id="cXs" width="900" height="220" aria-label="the spectrum X_s of the impulse-train-sampled signal: shifted copies and their sum"></canvas>
+  <canvas id="cXd" width="900" height="220" aria-label="the DTFT X_d of omega of the sampled sequence on minus three pi to three pi"></canvas>
+  <div class="legend"><span><span class="sw" style="background:var(--accent)"></span>sum (1/T) Σ<sub>n</sub> X<sub>a</sub>(Ω − 2πn/T)</span><span><span class="sw" style="background:var(--accent2);opacity:.55"></span>the individual shifted copies</span><span><span class="sw" style="background:var(--accent2)"></span>band edge 2πB (and the next copy’s edge)</span><span>shaded: guard band (light) or overlap = aliasing (red)</span></div>
+  <canvas id="cT" width="900" height="200" aria-label="the analog signal in time with its samples at multiples of T"></canvas>
+  <div class="legend"><span>dashed = x<sub>a</sub>(t)</span><span><b style="color:var(--accent)">●</b> samples x[n] = x<sub>a</sub>(nT)</span><span>window: −2/B … 2/B seconds (the main lobe of a bandlimited pulse is about 1/B wide)</span></div>
+  <div class="card"><h3>The formulas with these numbers (Lecture 17)</h3><div class="formula" id="sys"></div><div id="sysnote" class="note"></div></div>
+</div>
+
+<script id="samp-core">
+/* ===================== samp-core: pure math, no DOM =====================
+   The analog spectra X_a(Ω) (brick-wall, triangle, trapezoid, raised cosine, two tones), their time signals,
+   the impulse-train-sampled spectrum X_s(Ω) = (1/T) Σ_n X_a(Ω − 2πn/T), the DTFT X_d(ω) = X_s(ω/T), and the
+   Nyquist classification. verify/L17_INT_demo_dump.js loads this block in Node; verify/L17_INT_demo_check.py
+   compares it with numpy. */
+const MINUS = '−';
+const PI = Math.PI;
+
+/* ---- a small real-valued expression parser: 1/150, 2*pi, 0.5e-3, (1+2)/3 ---- */
+const Parse = (() => {
+  function expr(src) {
+    let s = String(src == null ? '' : src).replace(/[−–]/g, '-').replace(/[·×]/g, '*').replace(/π/g, 'pi').replace(/\s+/g, '').toLowerCase();
+    if (s.includes('=')) s = s.slice(s.lastIndexOf('=') + 1);
+    s = s.replace(/(hz|sec|s|ms)$/, (m) => (m === 'ms' ? '*1e-3' : ''));
+    if (!s) throw new Error('empty entry');
+    let i = 0;
+    const peek = () => s[i];
+    function number() {
+      const m = /^(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?/.exec(s.slice(i));
+      if (!m) throw new Error('number expected');
+      i += m[0].length; return parseFloat(m[0]);
+    }
+    function atom() {
+      const c = peek();
+      if (c === '(') { i++; const v = sum(); if (s[i] !== ')') throw new Error('missing ")"'); i++; return v; }
+      if (s.startsWith('pi', i)) { i += 2; return PI; }
+      return number();
+    }
+    function power() { const b = atom(); if (peek() === '^') { i++; return Math.pow(b, unary()); } return b; }
+    function unary() { if (peek() === '-') { i++; return -unary(); } if (peek() === '+') { i++; return unary(); } return power(); }
+    function term() {
+      let v = unary();
+      for (;;) {
+        const c = peek();
+        if (c === '*' || c === '/') { i++; const w = unary(); v = c === '*' ? v * w : v / w; }
+        else if (c === '(' || s.startsWith('pi', i)) v *= power();        // implicit product: 2pi, 3(1/2)
+        else break;
+      }
+      return v;
+    }
+    function sum() { let v = term(); while (peek() === '+' || peek() === '-') { const op = s[i++]; const w = term(); v = op === '+' ? v + w : v - w; } return v; }
+    const v = sum();
+    if (i !== s.length) throw new Error(`unexpected "${s[i]}"`);
+    if (!Number.isFinite(v)) throw new Error('not a finite number');
+    return v;
+  }
+  return { expr };
+})();
+
+/* ---- formatting ---- */
+const Fmt = (() => {
+  const sgn = s => String(s).replace(/-/g, MINUS);
+  function rat(x, maxDen = 64, tol = 1e-9) {                // continued fractions
+    if (!Number.isFinite(x)) return null;
+    const s = x < 0 ? -1 : 1, ax = Math.abs(x);
+    let h0 = 0, h1 = 1, k0 = 1, k1 = 0, b = ax;
+    for (let it = 0; it < 40; it++) {
+      const a = Math.floor(b), h2 = a * h1 + h0, k2 = a * k1 + k0;
+      if (k2 > maxDen) break;
+      h0 = h1; h1 = h2; k0 = k1; k1 = k2;
+      if (Math.abs(ax - h1 / k1) <= tol * Math.max(1, ax)) return { p: s * h1, q: k1 };
+      const f = b - a; if (f < 1e-12) break;
+      b = 1 / f;
+    }
+    return null;
+  }
+  function dec(x, sig = 4) {
+    if (!Number.isFinite(x)) return x > 0 ? '∞' : x < 0 ? MINUS + '∞' : '—';
+    if (Math.abs(x) < 1e-12) return '0';
+    return sgn(parseFloat(x.toPrecision(sig)).toString());
+  }
+  function num(x, maxDen = 64) {                              // integer, short decimal (37.5, 12.5), small fraction (1/3), else 4 significant digits
+    if (!Number.isFinite(x)) return dec(x);
+    if (Math.abs(x) < 1e-12) return '0';
+    const r = Math.round(x);
+    if (Math.abs(x - r) <= 1e-9 * Math.max(1, Math.abs(x))) return sgn(String(r));
+    const q = rat(x, maxDen);
+    if (q) {                                                  // a denominator of 2s and 5s is an exact short decimal: write it that way (Hz, s)
+      let d = q.q; while (d % 2 === 0) d /= 2; while (d % 5 === 0) d /= 5;
+      if (d === 1) return sgn(String(parseFloat(x.toPrecision(12))));
+      return sgn(`${q.p}/${q.q}`);
+    }
+    return dec(x);
+  }
+  /* a frequency in rad/s or rad/sample as a multiple of π: 100π, 2π/3, 0.8π, 4π/15 */
+  function pi(x, maxDen = 64) {
+    if (!Number.isFinite(x)) return dec(x);
+    if (Math.abs(x) < 1e-12) return '0';
+    const q = rat(x / PI, maxDen, 1e-9);
+    if (q) {
+      const p = Math.abs(q.p);
+      return (q.p < 0 ? MINUS : '') + (p === 1 ? '' : p) + 'π' + (q.q === 1 ? '' : '/' + q.q);
+    }
+    return dec(x / PI, 4) + 'π';
+  }
+  /* seconds: 1/150 (unit fraction), 0.001, else 4 digits */
+  function sec(T) {
+    if (!Number.isFinite(T) || T <= 0) return dec(T);
+    const q = rat(T, 1e6, 1e-9);
+    if (q && q.p === 1) return '1/' + q.q;
+    if (q && q.q <= 1000) return `${q.p}/${q.q}`;
+    return dec(T, 4);
+  }
+  /* what goes into a text field */
+  function field(x) { const r = Math.round(x); if (Math.abs(x - r) < 1e-9 * Math.max(1, Math.abs(x))) return String(r); return String(parseFloat(x.toPrecision(6))); }
+  return { rat, dec, num, pi, sec, field, sgn };
+})();
+
+/* ---- the analog spectra ----
+   Each spectrum: W = 2πB (rad/s), Xa(Ω) (continuous part, 0 for the tone pair), imps (impulses {O, A}: area A at Ω = O),
+   breaks (Ω where Xa is not smooth, so plots put grid points there), xt(t) = x_a(t), peak (max of Xa), x0 = x_a(0). */
+const SHAPES = {
+  rect: { label: 'Brick-wall: Xa(Ω) = 1 for |Ω| < 2πB  (rect(Ω/4πB); Lecture 17 Example 1)', time: 'x_a(t) = sin(2πBt)/(πt) = 2B sinc(2Bt)' },
+  tri: { label: 'Triangle: Xa(Ω) = 1 − |Ω|/2πB for |Ω| ≤ 2πB  (Lecture 17 Example 2; notes Figures 2–3)', time: 'x_a(t) = B sinc²(Bt)' },
+  trap: { label: 'Trapezoid: 1 up to |Ω| = πB, then straight down to 0 at 2πB', time: 'x_a(t) = (2/B)·sin(3πBt/2)·sin(πBt/2)/(πt)²' },
+  rcos: { label: 'Raised-cosine bump: Xa(Ω) = ½(1 + cos(Ω/2B)) for |Ω| ≤ 2πB', time: 'x_a(t) = ½s(t) + ¼s(t + 1/2B) + ¼s(t − 1/2B), s(t) = sin(2πBt)/(πt)' },
+  tones: { label: 'Two tones: xa(t) = cos(2πf₁t) + ½cos(2πBt) — impulses at ±2πf₁ (area π) and ±2πB (area π/2)', time: 'x_a(t) = cos(2πf₁t) + ½cos(2πBt)' },
+};
+const SHAPE_ORDER = ['rect', 'tri', 'trap', 'rcos', 'tones'];
+const sW = (Wk, t) => (Math.abs(t) < 1e-14 ? Wk / PI : Math.sin(Wk * t) / (PI * t));     // inverse CTFT of a unit rect of half-width Wk
+const sinc = x => (Math.abs(x) < 1e-14 ? 1 : Math.sin(PI * x) / (PI * x));
+function makeSpec(shape, B, f1) {
+  const W = 2 * PI * B;
+  const base = { shape, B, W, f1: null, imps: [], breaks: [], peak: 1 };
+  switch (shape) {
+    case 'rect':
+      return { ...base, Xa: O => (Math.abs(O) < W ? 1 : Math.abs(O) === W ? 0.5 : 0), breaks: [-W, W], xt: t => sW(W, t), x0: W / PI };
+    case 'tri':
+      return { ...base, Xa: O => Math.max(0, 1 - Math.abs(O) / W), breaks: [-W, 0, W], xt: t => B * sinc(B * t) ** 2, x0: B };
+    case 'trap': {
+      const a = 0.5, W1 = W * (1 + a) / 2, W2 = W * (1 - a) / 2;
+      return { ...base, Xa: O => Math.min(1, Math.max(0, (W - Math.abs(O)) / (W - a * W))), breaks: [-W, -a * W, a * W, W],
+        xt: t => (PI / W2) * sW(W1, t) * sW(W2, t), x0: W1 / PI };
+    }
+    case 'rcos':
+      return { ...base, Xa: O => (Math.abs(O) <= W ? 0.5 * (1 + Math.cos(PI * O / W)) : 0), breaks: [-W, W],
+        xt: t => 0.5 * sW(W, t) + 0.25 * (sW(W, t + PI / W) + sW(W, t - PI / W)), x0: B };
+    case 'tones': {
+      const O1 = 2 * PI * f1, A1 = 1, A2 = 0.5;
+      return { ...base, f1, Xa: () => 0, peak: 0,
+        imps: [{ O: -W, A: PI * A2 }, { O: -O1, A: PI * A1 }, { O: O1, A: PI * A1 }, { O: W, A: PI * A2 }],
+        xt: t => A1 * Math.cos(O1 * t) + A2 * Math.cos(W * t), x0: A1 + A2 };
+    }
+  }
+  throw new Error('unknown shape ' + shape);
+}
+
+/* X_a(Ω) itself on [lo, hi], with grid points at its break points */
+function evalXa(spec, lo, hi, N = 1201) {
+  const xs = [];
+  for (let i = 0; i < N; i++) xs.push(lo + (hi - lo) * i / (N - 1));
+  const eps = 1e-9 * (hi - lo);
+  for (const b of spec.breaks) if (b > lo && b < hi) xs.push(b - eps, b, b + eps);
+  xs.sort((a, b) => a - b);
+  const x = Float64Array.from(xs);
+  return { x, y: x.map(v => spec.Xa(v)) };
+}
+/* X_s(Ω) = (1/T) Σ_n X_a(Ω − 2πn/T) on [lo, hi]: the copies that reach the window, one by one, and their sum.
+   The grid is N uniform points plus every shifted break point (± a hair, so a rectangle keeps its vertical edges).
+   Impulses: each one of X_a appears at O + 2πn/T with area A/T. */
+function periodize(spec, T, lo, hi, N = 1201) {
+  const S = 2 * PI / T, W = spec.W;
+  const nLo = Math.ceil((lo - W) / S), nHi = Math.floor((hi + W) / S);
+  const xs = [];
+  for (let i = 0; i < N; i++) xs.push(lo + (hi - lo) * i / (N - 1));
+  const eps = 1e-9 * (hi - lo);
+  for (let n = nLo; n <= nHi; n++) for (const b of spec.breaks) { const v = b + n * S; if (v > lo && v < hi) xs.push(v - eps, v, v + eps); }
+  xs.sort((a, b) => a - b);
+  const x = Float64Array.from(xs);
+  const copies = [], sum = new Float64Array(x.length);
+  for (let n = nLo; n <= nHi; n++) {
+    const y = new Float64Array(x.length);
+    let any = false;
+    for (let i = 0; i < x.length; i++) { const v = spec.Xa(x[i] - n * S) / T; y[i] = v; if (v !== 0) any = true; }
+    if (!any) continue;
+    copies.push({ n, y });
+    for (let i = 0; i < x.length; i++) sum[i] += y[i];
+  }
+  const imps = [];
+  for (let n = nLo; n <= nHi; n++) for (const im of spec.imps) { const v = im.O + n * S; if (v >= lo - eps && v <= hi + eps) imps.push({ x: v, A: im.A / T, n }); }
+  imps.sort((a, b) => a.x - b.x);
+  // impulses that land on top of each other (copies touching, or a tone aliasing onto another) add their areas
+  const merged = [];
+  for (const im of imps) {
+    const last = merged[merged.length - 1];
+    if (last && Math.abs(last.x - im.x) <= 1e-9 * Math.max(1, Math.abs(im.x))) { last.A += im.A; last.parts.push(im); }
+    else merged.push({ x: im.x, A: im.A, parts: [im] });
+  }
+  return { x, copies, sum, imps: merged, S, nLo, nHi };
+}
+/* X_d(ω) on [lo, hi] (rad/sample): X_s at Ω = ω/T, with ω = ΩT; an impulse of area A/T in Ω has area A in ω */
+function dtft(spec, T, lo, hi, N = 1201) {
+  const P = periodize(spec, T, lo / T, hi / T, N);
+  return { x: P.x.map(v => v * T), copies: P.copies, sum: P.sum, imps: P.imps.map(im => ({ x: im.x * T, A: im.A * T, parts: im.parts })), S: 2 * PI };
+}
+/* the Nyquist picture: band edge 2πB against the left edge 2π/T − 2πB of the next copy */
+function classify(B, T) {
+  const W = 2 * PI * B, S = 2 * PI / T, nextLeft = S - W, tol = 1e-9 * S;
+  const r = 1 / (2 * B * T);                                      // f_s / (2B)
+  if (nextLeft > W + tol) return { kind: 'above', r, W, S, nextLeft, guard: nextLeft - W };
+  if (Math.abs(nextLeft - W) <= tol) return { kind: 'at', r, W, S, nextLeft, guard: 0 };
+  return { kind: 'below', r, W, S, nextLeft, overlap: W - nextLeft };
+}
+/* X_d(0) term by term: (1/T) Σ_n X_a(−2πn/T), listing the n that contribute */
+function dcTerms(spec, T) {
+  const S = 2 * PI / T, out = [];
+  for (let n = -12; n <= 12; n++) { const v = spec.Xa(-n * S); if (v !== 0) out.push({ n, v }); }
+  return out;
+}
+const wrapPi = t => { let v = ((t + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI; if (v <= -PI + 1e-12) v = PI; return v; };   // (−π, π]
+
+/* ---- presets: shape, B, f_s (and f₁ for the tones) ---- */
+const PRESETS = [
+  { g: 'Lecture 17 — Example 1 (annotated slides)', name: '(a) Xa(Ω) = rect(Ω/20π), T = 1/20 s: copies every 40π of height 20', shape: 'rect', B: 5, fs: 20,
+    note: 'rect(Ω/20π) is 1 for |Ω| < 10π, so B = 5 Hz and the Nyquist rate is 10 Hz. With T = 1/20 s the copies sit every 2π/T = 40π with height 1/T = 20 and a guard band between 10π and 30π: f_s = 20 Hz is twice the Nyquist rate.' },
+  { g: 'Lecture 17 — Example 1 (annotated slides)', name: '(b) the same rect, T = 1/10 s: copies every 20π of height 10 — they touch', shape: 'rect', B: 5, fs: 10,
+    note: 'T = 1/10 s is exactly the Nyquist rate. Copies of width 20π every 20π: they touch edge to edge, and X_s(Ω) is flat at 1/T = 10 — the picture Prof. Snyder drew on the slide. In ω the band edge is 10π·(1/10) = π.' },
+  { g: 'Lecture 17 — Example 2 (sampling around the Nyquist rate)', name: '(a) triangle 1 − |Ω|/100π, T = 1/150 s: above the Nyquist rate', shape: 'tri', B: 50, fs: 150,
+    note: 'B = 50 Hz, Nyquist rate 100 Hz, f_s = 150 Hz. X_d(ω) is a triangle of height 150 on |ω| ≤ 100π/150 = 2π/3, and the next copy starts at 2π − 2π/3 = 4π/3: a guard band of width 2π/3.' },
+  { g: 'Lecture 17 — Example 2 (sampling around the Nyquist rate)', name: '(b) the same triangle, T = 1/100 s: exactly the Nyquist rate', shape: 'tri', B: 50, fs: 100,
+    note: 'f_s = 2B. The band edge maps to ω = 100π/100 = π, so the triangles of height 100 touch at ±π, ±3π, …: no overlap, no guard band.' },
+  { g: 'Lecture 17 — Example 2 (sampling around the Nyquist rate)', name: '(c) the same triangle, T = 1/75 s: below the Nyquist rate (aliasing)', shape: 'tri', B: 50, fs: 75,
+    note: 'f_s = 75 Hz < 100 Hz. The band edge maps to 4π/3 > π, so neighbouring copies overlap on 2π/3 ≤ |ω| ≤ 4π/3. A descending and an ascending ramp of the same slope add to a constant: X_d(ω) is flat at 37.5 = (1/T)/2 on 2π/3 ≤ |ω| ≤ π (75(1 − 3ω/4π) + 75(1 − 3(2π − ω)/4π) = 75/2), and only the tip of the triangle, |ω| < 2π/3, keeps its shape.' },
+  { g: 'Past Midterm 2 exams', name: 'FA2024 #5: triangle to 1000π, T = TN = 1 ms (height 1000, copies touch)', shape: 'tri', B: 500, fs: 1000,
+    note: 'Ω_max = 1000π rad/s is 500 Hz, so f_N = 1000 Hz and T_N = 1 ms. X_d is a triangle of height 1/T = 1000 reaching exactly ±π.' },
+  { g: 'Past Midterm 2 exams', name: 'FA2024 #5: the same triangle, T = 2TN = 2 ms (Xd is flat at 500)', shape: 'tri', B: 500, fs: 500,
+    note: 'f_s = B: each copy is as wide as two periods, and on [0, 2π] the copies from n = 0 and n = 1 overlap everywhere: 500(1 − ω/2π) + 500(1 − (2π − ω)/2π) = 500. The whole shape is lost.' },
+  { g: 'Past Midterm 2 exams', name: 'FA2019 #9(a): bandlimited to 1000π rad/s, sampled at the Nyquist interval 1 ms (shape not given: a bump is used)', shape: 'rcos', B: 500, fs: 1000,
+    note: 'The exam gives only Ω_max = 1000π rad/s: f_max = 500 Hz, Nyquist rate 1 kHz, Nyquist interval T_NYQ = 1 ms. Whatever the shape inside the band, at T_NYQ the copies touch at ω = ±π.' },
+  { g: 'Shapes to explore', name: 'Brick-wall, B = 50 Hz, fs = 300 Hz (3× Nyquist): wide guard band', shape: 'rect', B: 50, fs: 300,
+    note: 'A brick-wall spectrum belongs to a sinc pulse, x_a(t) = 2B sinc(2Bt). Six samples per main lobe at 3× the Nyquist rate; drag f_s down to 2B and only two remain.' },
+  { g: 'Shapes to explore', name: 'Trapezoid, B = 50 Hz, fs = 125 Hz (1.25× Nyquist)', shape: 'trap', B: 50, fs: 125,
+    note: 'Flat up to πB, then a straight edge down to 2πB. Only the band edge matters for Nyquist: the copies touch at f_s = 100 Hz no matter what the shape is.' },
+  { g: 'Shapes to explore', name: 'Raised-cosine bump, B = 50 Hz, at the Nyquist rate', shape: 'rcos', B: 50, fs: 100,
+    note: 'The bump goes to zero smoothly at ±2πB, so at the Nyquist rate the copies touch with no kink in the sum.' },
+  { g: 'Shapes to explore', name: 'Two tones 20 Hz + 50 Hz, fs = 150 Hz: impulses at ω₁ = 4π/15 and ω₂ = 2π/3', shape: 'tones', B: 50, f1: 20, fs: 150,
+    note: 'A sum of cosines has a line spectrum: impulses. The 50 Hz tone sets B. In X_d the impulse areas are π and π/2 — the T in the change of variable cancels the 1/T, which is why the DTFT of cos(ω₀n) has area π regardless of T.' },
+  { g: 'Shapes to explore', name: 'Two tones 20 Hz + 50 Hz, fs = 80 Hz: the 50 Hz tone aliases to 30 Hz', shape: 'tones', B: 50, f1: 20, fs: 80,
+    note: 'f_s = 80 Hz < 100 Hz. ω₂ = 2π·50/80 = 5π/4 ≡ −3π/4: the samples of the 50 Hz cosine are those of a 30 Hz cosine (= f_s − 50), as the stems in the time strip show. The 20 Hz tone (ω₁ = π/2) is fine.' },
+];
+
+globalThis.SampCore = { Parse, Fmt, SHAPES, SHAPE_ORDER, makeSpec, evalXa, periodize, dtft, classify, dcTerms, wrapPi, PRESETS, PI };
+</script>
+
+<script>
+(() => {
+  const { Parse, Fmt, SHAPES, SHAPE_ORDER, makeSpec, periodize, dtft, classify, dcTerms, wrapPi, PRESETS } = globalThis.SampCore;
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const M_ = MINUS;
+  const RMIN = 0.4, RMAX = 6;                                            // f_s / (2B) covered by the slider
+  const state = { shape: 'tri', B: 50, f1: 20, fs: 150, preset: null };
+
+  // ---- theme: follow the embedding Quartz page if same-origin, else the OS
+  function syncTheme() {
+    let t = null;
+    try { t = window.parent && window.parent !== window ? window.parent.document.documentElement.getAttribute('saved-theme') : null; } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') !== t) document.documentElement.setAttribute('data-theme', t);
+  }
+  syncTheme();
+  try {
+    if (window.parent && window.parent !== window) {
+      new MutationObserver(syncTheme).observe(window.parent.document.documentElement, { attributes: true, attributeFilter: ['saved-theme'] });
+    }
+  } catch (e) {}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+  // ---- grow the embedding iframe to fit (same-origin only)
+  function fitFrame() {
+    try {
+      const fe = window.frameElement;
+      if (fe) { const h = Math.ceil(document.documentElement.scrollHeight) + 2; if (Math.abs(parseFloat(fe.style.height || 0) - h) > 3) fe.style.height = h + 'px'; }
+    } catch (e) {}
+  }
+
+  const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const rich = s => esc(s).replace(/_([ads]|max|Nyquist|NYQ|N|s)\b/g, '<sub>$1</sub>').replace(/\^\{([^}]*)\}/g, '<sup>$1</sup>');
+
+  // ---- controls
+  (function build() {
+    const sel = $('preset'), groups = {};
+    PRESETS.forEach((p, i) => {
+      if (!groups[p.g]) { groups[p.g] = document.createElement('optgroup'); groups[p.g].label = p.g; sel.appendChild(groups[p.g]); }
+      const o = document.createElement('option'); o.value = String(i); o.textContent = p.name; groups[p.g].appendChild(o);
+    });
+    const c = document.createElement('option'); c.value = 'custom'; c.textContent = 'Your own settings…'; sel.appendChild(c);
+    const sh = $('shape');
+    for (const k of SHAPE_ORDER) { const o = document.createElement('option'); o.value = k; o.textContent = SHAPES[k].label; sh.appendChild(o); }
+    // tick labels under the slider (log scale)
+    const tk = $('ticks');
+    for (const [r, lab, cls] of [[0.5, 'B', ''], [1, '2B = Nyquist rate', 'nyq'], [2, '4B', ''], [4, '8B', ''], [6, '12B', '']]) {
+      const s = document.createElement('span'); s.textContent = lab; if (cls) s.className = cls;
+      const f = Math.log(r / RMIN) / Math.log(RMAX / RMIN);
+      s.style.left = `calc(8px + ${f} * (100% - 16px))`;
+      tk.appendChild(s);
+    }
+  })();
+  const ratio = () => state.fs / (2 * state.B);
+  const sliderPos = r => Math.round(1000 * Math.log(Math.max(RMIN, Math.min(RMAX, r)) / RMIN) / Math.log(RMAX / RMIN));
+  const sliderR = v => RMIN * Math.pow(RMAX / RMIN, v / 1000);
+  const NICE_R = [0.4, 0.5, 0.6, 0.75, 0.8, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6];
+  function setFs(fs, fromSlider) {
+    let r = fs / (2 * state.B);
+    if (fromSlider) { for (const k of NICE_R) if (Math.abs(Math.log(r / k)) < 0.025) r = k; }       // snap to the round ratios (±2.5 %, a few pixels of slider)
+    r = Math.max(RMIN, Math.min(RMAX, r));
+    state.fs = r * 2 * state.B;
+    syncFields();
+  }
+  function syncFields() {
+    $('fsr').value = String(sliderPos(ratio()));
+    $('fs').value = Fmt.field(state.fs); $('fs').classList.remove('bad');
+    $('T').value = Fmt.sec(1 / state.fs); $('T').classList.remove('bad');
+    $('B').value = Fmt.field(state.B); $('B').classList.remove('bad');
+    $('f1').value = Fmt.field(state.f1); $('f1').classList.remove('bad');
+    $('shape').value = state.shape;
+    $('f1fld').hidden = state.shape !== 'tones';
+    document.querySelectorAll('.seg button[data-r]').forEach(b => b.setAttribute('aria-pressed', String(Math.abs(ratio() - +b.dataset.r) < 1e-9)));
+  }
+  function loadPreset(i) {
+    const p = PRESETS[i]; if (!p) return;
+    state.preset = p; state.shape = p.shape; state.B = p.B; state.fs = p.fs; if (p.f1 != null) state.f1 = p.f1;
+    if (state.shape === 'tones' && !(state.f1 < state.B)) state.f1 = 0.4 * state.B;
+    $('preset').value = String(i);
+    syncFields(); render();
+  }
+  function markCustom() {                 // after any edit: show the preset these settings belong to (sliding Example 2 to T = 1/75 lands on 2(c) and its note), else "custom"
+    const same = p => p.shape === state.shape && Math.abs(p.B - state.B) < 1e-9 && Math.abs(p.fs - state.fs) < 1e-9 * p.fs && (p.shape !== 'tones' || Math.abs(p.f1 - state.f1) < 1e-9);
+    const i = state.preset && same(state.preset) ? PRESETS.indexOf(state.preset) : PRESETS.findIndex(same);
+    state.preset = i >= 0 ? PRESETS[i] : null;
+    $('preset').value = i >= 0 ? String(i) : 'custom';
+  }
+  function readField(id, lo, hi, what) {
+    const el = $(id); el.classList.remove('bad');
+    try {
+      const v = Parse.expr(el.value);
+      if (!(v >= lo && v <= hi)) throw new Error(`${what} must lie between ${Fmt.num(lo)} and ${Fmt.num(hi)}`);
+      $('msgs').innerHTML = ''; return v;
+    } catch (e) { el.classList.add('bad'); $('msgs').innerHTML = '<div class="msg err">' + esc(what + ': ' + e.message) + '</div>'; fitFrame(); return null; }
+  }
+
+  // ---- canvases sized to CSS width × devicePixelRatio
+  function prep(cv, hOf) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const w = Math.max(220, Math.round(cv.clientWidth || cv.parentElement.clientWidth || 600));
+    const h = Math.round(hOf(w));
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, W: w, H: h };
+  }
+  function niceStep(span, n = 4) { const raw = span / n, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; }
+  /* canvas text with one-character subscripts "_a" and a few superscripts "^2" */
+  function fillRich(ctx, s, x, y) {
+    const base = ctx.font, m = /(\d+(\.\d+)?)px/.exec(base), size = m ? parseFloat(m[1]) : 12;
+    const small = base.replace(/(\d+(\.\d+)?)px/, (size * 0.75).toFixed(1) + 'px');
+    let cx = x;
+    for (const p of s.split(/(_.|\^.)/)) {
+      if (!p) continue;
+      if (p.length === 2 && (p[0] === '_' || p[0] === '^')) { ctx.font = small; ctx.fillText(p[1], cx, y + (p[0] === '_' ? size * 0.28 : -size * 0.35)); cx += ctx.measureText(p[1]).width; ctx.font = base; }
+      else { ctx.fillText(p, cx, y); cx += ctx.measureText(p).width; }
+    }
+    return cx;
+  }
+
+  /* a spectrum panel: o = {xlo, xhi, yhi, xticks:[{v, lab, sub}], ytick:{v, lab}, title, copies:[{y}], sum, x, imps,
+     bands:[{x1, x2, kind, lab}], edges:[{v, lab, dash}], hilite:[x1, x2], xlabel, h} */
+  function drawSpec(id, o) {
+    const cv = $(id), { ctx, W, H } = prep(cv, w => Math.max(150, Math.min(o.h || 210, w * 0.3)));
+    const fg = css('--fg'), muted = css('--muted'), line = css('--line'), accent = css('--accent'), accent2 = css('--accent2'), hi = css('--hi'), panel = css('--panel');
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '12px system-ui, sans-serif';
+    const L = Math.max(40, 12 + ctx.measureText(o.ytick ? o.ytick.lab : '').width), R = 12, T = 24, B = o.xticks.some(t => t.sub) ? 36 : 24;
+    const X = v => L + (v - o.xlo) / (o.xhi - o.xlo) * (W - L - R);
+    // edge labels sit near the top, one row each; two that would collide stack (row 1, 2, …). Work the rows out first so that the
+    // headroom above the tallest curve has room for all of them (a flat top at 1/T would otherwise run through the text).
+    ctx.font = '11px system-ui, sans-serif';
+    const placed = (o.edges || []).map(e => {
+      const xx = X(e.v);
+      if (!e.lab || xx < L - 1 || xx > W - R + 1) return null;
+      return { x: xx, w: ctx.measureText(e.lab.replace(/[_^]/g, '')).width + 4, row: 0 };
+    });
+    placed.forEach((p, i) => { if (!p) return; for (const q of placed.slice(0, i)) if (q && Math.abs(q.x - p.x) < (q.w + p.w) / 2 + 4 && q.row === p.row) p.row++; });
+    ctx.font = '12px system-ui, sans-serif';
+    const head = 17 + 13 * Math.max(0, ...placed.map(p => (p ? p.row : 0)));         // pixels of headroom the labels need
+    const yTop = o.yhi * (1 + Math.max(0.12, 1.04 * head / (H - T - B - head))), yBot = -o.yhi * 0.04;
+    const Y = v => T + (yTop - v) / (yTop - yBot) * (H - T - B);
+    const y0 = Y(0);
+    // highlighted stretch (the principal period) and the guard / overlap bands
+    if (o.hilite) { ctx.fillStyle = panel; ctx.fillRect(X(o.hilite[0]), T, X(o.hilite[1]) - X(o.hilite[0]), H - T - B); }
+    ctx.save(); ctx.beginPath(); ctx.rect(L, T, W - L - R, H - T - B); ctx.clip();
+    for (const b of o.bands || []) {
+      const x1 = X(Math.min(b.x1, b.x2)), x2 = X(Math.max(b.x1, b.x2));
+      ctx.globalAlpha = b.kind === 'overlap' ? 0.18 : 0.22; ctx.fillStyle = b.kind === 'overlap' ? hi : accent;
+      ctx.fillRect(x1, T, Math.max(1, x2 - x1), y0 - T); ctx.globalAlpha = 1;
+      if (b.lab) {                                               // just above the axis, where the curves leave room
+        ctx.font = '11px system-ui, sans-serif'; ctx.fillStyle = b.kind === 'overlap' ? hi : accent; ctx.textAlign = 'center';
+        const cx = (x1 + x2) / 2, tw = ctx.measureText(b.lab).width;
+        if (x2 - x1 >= tw + 6 || b.force) ctx.fillText(b.lab, Math.max(L + tw / 2, Math.min(W - R - tw / 2, cx)), y0 - 6);
+        ctx.font = '12px system-ui, sans-serif';
+      }
+    }
+    ctx.restore();
+    // axes and grid
+    ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.fillStyle = muted; ctx.textAlign = 'center';
+    for (const t of o.xticks) { const xx = X(t.v); ctx.beginPath(); ctx.moveTo(xx, T); ctx.lineTo(xx, H - B); ctx.stroke(); }
+    ctx.strokeStyle = fg; ctx.globalAlpha = 0.7; ctx.beginPath(); ctx.moveTo(L, y0); ctx.lineTo(W - R, y0); ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.fillStyle = muted;
+    for (const t of o.xticks) {
+      const xx = X(t.v);
+      ctx.strokeStyle = fg; ctx.beginPath(); ctx.moveTo(xx, y0 - 3); ctx.lineTo(xx, y0 + 3); ctx.stroke();
+      ctx.textAlign = 'center'; ctx.fillText(t.lab, xx, H - B + 14);
+      if (t.sub) { ctx.font = '10.5px system-ui, sans-serif'; ctx.fillText(t.sub, xx, H - B + 26); ctx.font = '12px system-ui, sans-serif'; }
+    }
+    if (o.ytick) {
+      const yy = Y(o.ytick.v);
+      ctx.setLineDash([3, 3]); ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(L, yy); ctx.lineTo(W - R, yy); ctx.stroke(); ctx.setLineDash([]);
+      ctx.textAlign = 'right'; ctx.fillText(o.ytick.lab, L - 5, yy + 4);
+    }
+    ctx.textAlign = 'right'; ctx.fillText('0', L - 5, y0 + 4);
+    ctx.textAlign = 'left'; ctx.fillStyle = fg; ctx.font = '12.5px system-ui, sans-serif'; fillRich(ctx, o.title, L, 15); ctx.font = '12px system-ui, sans-serif';
+    ctx.textAlign = 'right'; ctx.fillStyle = muted; ctx.fillText(o.xlabel, W - R, 15);
+    // curves
+    ctx.save(); ctx.beginPath(); ctx.rect(L, T - 1, W - L - R, H - T - B + 2); ctx.clip();
+    const curve = (y, col, width, alpha, dash, support) => {   // support: leave out the runs where y = 0 (a copy is drawn only where it is nonzero)
+      ctx.strokeStyle = col; ctx.lineWidth = width; ctx.globalAlpha = alpha; ctx.setLineDash(dash || []);
+      ctx.beginPath();
+      let pen = false;
+      for (let i = 0; i < o.x.length; i++) {
+        if (support && y[i] === 0 && (i === 0 || y[i - 1] === 0) && (i === o.x.length - 1 || y[i + 1] === 0)) { pen = false; continue; }
+        const px = X(o.x[i]), py = Y(y[i]);
+        if (!pen) { ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
+      }
+      ctx.stroke(); ctx.globalAlpha = 1; ctx.setLineDash([]);
+    };
+    for (const c of o.copies) curve(c.y, accent2, 1.2, 0.55, c.dash ? [4, 3] : null, true);
+    if (o.sum) curve(o.sum, accent, 2.2, 1);
+    // impulses: arrows whose height is the area; the area is written at the tip when the neighbours leave room
+    const imps = (o.imps || []).map(im => ({ ...im, px: X(im.x) }));
+    imps.forEach((im, i) => {
+      const py = Y(im.A);
+      ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(im.px, y0); ctx.lineTo(im.px, py + 5); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(im.px, py); ctx.lineTo(im.px - 4.5, py + 9); ctx.lineTo(im.px + 4.5, py + 9); ctx.closePath(); ctx.fill();
+      const gap = Math.min(i > 0 ? im.px - imps[i - 1].px : 1e9, i < imps.length - 1 ? imps[i + 1].px - im.px : 1e9);
+      if (im.lab && gap >= 30) { ctx.font = '11px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(im.lab, im.px, py - 4); ctx.font = '12px system-ui, sans-serif'; }
+    });
+    ctx.restore();
+    // band edges: dashed verticals with their labels in the rows worked out above
+    (o.edges || []).forEach((e, i) => {
+      const xx = X(e.v);
+      if (xx < L - 1 || xx > W - R + 1) return;
+      ctx.setLineDash(e.dash || [5, 4]); ctx.strokeStyle = e.col || accent2; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(xx, T + 2); ctx.lineTo(xx, y0); ctx.stroke(); ctx.setLineDash([]);
+      const p = placed[i];
+      if (!p) return;
+      ctx.font = '11px system-ui, sans-serif'; ctx.fillStyle = e.col || accent2;
+      const tw = p.w;
+      const align = xx + tw / 2 > W - R ? 'right' : xx - tw / 2 < L ? 'left' : 'center';
+      ctx.textAlign = 'left';
+      const x0 = align === 'center' ? xx - tw / 2 + 2 : align === 'right' ? xx - tw : xx + 3;
+      fillRich(ctx, e.lab, x0, T + 12 + 13 * p.row + (e.dy || 0) + (imps.length ? 0.3 * (y0 - T) : 0));   // below the arrow tips of a line spectrum
+      ctx.font = '12px system-ui, sans-serif';
+    });
+  }
+
+  function drawTime(spec, T, narrow) {
+    const { ctx, W, H } = prep($('cT'), w => Math.max(150, Math.min(200, w * 0.28)));
+    const fg = css('--fg'), muted = css('--muted'), line = css('--line'), accent = css('--accent'), accent2 = css('--accent2');
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '12px system-ui, sans-serif';
+    const B = spec.B, tlo = -2 / B, thi = 2 / B;
+    const K = Math.floor(thi / T);
+    const ns = []; for (let n = -K; n <= K; n++) ns.push(n);
+    const samples = ns.map(n => spec.xt(n * T));
+    const NC = 801, tc = [], xc = [];
+    for (let i = 0; i < NC; i++) { const t = tlo + (thi - tlo) * i / (NC - 1); tc.push(t); xc.push(spec.xt(t)); }
+    const top = Math.max(1e-12, ...xc.map(Math.abs), ...samples.map(Math.abs));
+    const neg = Math.min(0, ...xc, ...samples) < -0.02 * top;
+    const yhi = top * 1.15, ylo = neg ? -top * 1.15 : -top * 0.08;
+    const L = Math.max(40, 12 + ctx.measureText(Fmt.dec(top, 3)).width), R = 12, Tm = 24, Bm = 24;
+    const X = t => L + (t - tlo) / (thi - tlo) * (W - L - R);
+    const Y = v => Tm + (yhi - v) / (yhi - ylo) * (H - Tm - Bm);
+    const y0 = Y(0);
+    // grid: time ticks at nice steps in seconds
+    const st = niceStep(thi - tlo, 6);
+    ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.fillStyle = muted; ctx.textAlign = 'center';
+    for (let k = Math.ceil(tlo / st - 1e-9); k * st <= thi + 1e-12; k++) { const t = k * st, xx = X(t); ctx.beginPath(); ctx.moveTo(xx, Tm); ctx.lineTo(xx, H - Bm); ctx.stroke(); ctx.fillText(k === 0 ? '0' : Fmt.dec(t, 3), xx, H - 8); }
+    ctx.strokeStyle = fg; ctx.globalAlpha = 0.7; ctx.beginPath(); ctx.moveTo(L, y0); ctx.lineTo(W - R, y0); ctx.stroke(); ctx.globalAlpha = 1;
+    const tk = top; ctx.setLineDash([3, 3]); ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(L, Y(tk)); ctx.lineTo(W - R, Y(tk)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.fillText(Fmt.dec(tk, 3), L - 5, Y(tk) + 4); ctx.fillText('0', L - 5, y0 + 4);
+    ctx.textAlign = 'right'; ctx.fillText('t (s)', W - R, 15);
+    ctx.textAlign = 'left'; ctx.fillStyle = fg; ctx.font = '12.5px system-ui, sans-serif';
+    fillRich(ctx, narrow ? `(d) x_a(t) and x[n] = x_a(nT), T = ${Fmt.sec(T)} s` : `(d) x_a(t) and its samples x[n] = x_a(nT), T = ${Fmt.sec(T)} s — ${ns.length} samples in this window`, L, 15);
+    ctx.font = '12px system-ui, sans-serif';
+    // the analog signal
+    ctx.save(); ctx.beginPath(); ctx.rect(L, Tm - 1, W - L - R, H - Tm - Bm + 2); ctx.clip();
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = muted; ctx.lineWidth = 1.2;
+    ctx.beginPath(); for (let i = 0; i < NC; i++) { if (i === 0) ctx.moveTo(X(tc[i]), Y(xc[i])); else ctx.lineTo(X(tc[i]), Y(xc[i])); } ctx.stroke(); ctx.setLineDash([]);
+    // samples
+    const dense = ns.length > 60;
+    ns.forEach((n, i) => {
+      const xx = X(n * T), yy = Y(samples[i]);
+      ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.lineWidth = dense ? 1.1 : 1.8;
+      ctx.beginPath(); ctx.moveTo(xx, y0); ctx.lineTo(xx, yy); ctx.stroke();
+      ctx.beginPath(); ctx.arc(xx, yy, dense ? 2.2 : 3.4, 0, 2 * PI); ctx.fill();
+    });
+    // the bracket for one period T
+    const x1 = X(0), x2 = X(T), yb = Tm + 8;
+    ctx.strokeStyle = accent2; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(x1, yb - 3); ctx.lineTo(x1, yb + 3); ctx.moveTo(x1, yb); ctx.lineTo(x2, yb); ctx.moveTo(x2, yb - 3); ctx.lineTo(x2, yb + 3); ctx.stroke();
+    ctx.fillStyle = accent2; ctx.textAlign = 'left'; ctx.font = '11px system-ui, sans-serif'; ctx.fillText('T', x2 + 4, yb + 4);
+    ctx.restore();
+  }
+
+  // ---- the numbers
+  function render() {
+    const spec = makeSpec(state.shape, state.B, state.f1), T = 1 / state.fs, B = state.B, W = spec.W;
+    const cl = classify(B, T), S = cl.S, bandEdgeW = W * T;
+    const narrow = ($('cXs').clientWidth || 600) < 520;
+    const sumOf = P => Math.max(...P.sum, ...P.imps.map(im => im.A), 0);
+    const piLab = v => Fmt.pi(v);
+    const isImp = spec.imps.length > 0;
+    // (a) X_a(Ω), on the same Ω-axis as (b) so that the scales agree
+    const Rx = cl.r > 1.2 ? 1.08 * (S + W) : Math.max(2.4 * W, 1.08 * (S + W));
+    const A = evalXa(spec, -Rx, Rx);
+    const xticksA = [-W, 0, W].map(v => ({ v, lab: piLab(v), sub: v === 0 ? '' : (v < 0 ? M_ : '') + '2πB' }));
+    const yA = isImp ? Math.max(...spec.imps.map(i => i.A)) : spec.peak;
+    drawSpec('cXa', { xlo: -Rx, xhi: Rx, yhi: yA, xticks: xticksA, ytick: { v: yA, lab: isImp ? 'area ' + Fmt.pi(yA) : Fmt.num(yA) },
+      title: narrow ? `(a) X_a(Ω), zero for |Ω| > 2πB = ${piLab(W)}` : `(a) X_a(Ω): bandlimited, X_a(Ω) = 0 for |Ω| > 2πB = ${piLab(W)} rad/s`,
+      x: A.x, copies: [], sum: isImp ? null : A.y, imps: spec.imps.map(im => ({ x: im.O, A: im.A, lab: Fmt.pi(im.A) })),
+      edges: [{ v: W, lab: '2πB' }, { v: -W, lab: M_ + '2πB' }], xlabel: narrow ? 'Ω, rad/s' : 'Ω (rad/s)', h: 170 });
+    // (b) X_s(Ω)
+    const PS = periodize(spec, T, -Rx, Rx);
+    const xticksS = [];
+    const nMax = Math.floor(Rx / S), tickPx = ($('cXs').clientWidth || 600) * S / (2 * Rx);
+    for (let n = -nMax; n <= nMax; n++) {
+      const sub = n === 0 ? '0' : (n === 1 ? '' : n === -1 ? M_ : Fmt.sgn(String(n)) + '·') + '2π/T';
+      xticksS.push({ v: n * S, lab: piLab(n * S), sub: tickPx < 64 && Math.abs(n) >= 2 ? '' : sub });
+    }
+    const bandsS = [], bandsD = [];
+    const bandLab = cl.kind === 'above' ? 'guard band' : 'aliasing (copies overlap)';
+    for (const sgn of [1, -1]) {
+      if (cl.kind === 'above') { bandsS.push({ x1: sgn * W, x2: sgn * cl.nextLeft, kind: 'guard', lab: sgn > 0 ? bandLab : '' }); bandsD.push({ x1: sgn * bandEdgeW, x2: sgn * (2 * PI - bandEdgeW), kind: 'guard', lab: sgn > 0 ? bandLab : '' }); }
+      else if (cl.kind === 'below') { bandsS.push({ x1: sgn * cl.nextLeft, x2: sgn * W, kind: 'overlap', lab: sgn > 0 ? bandLab : '', force: true }); bandsD.push({ x1: sgn * (2 * PI - bandEdgeW), x2: sgn * bandEdgeW, kind: 'overlap', lab: sgn > 0 ? bandLab : '', force: true }); }
+    }
+    const edgesS = [{ v: -W, lab: M_ + '2πB' }];
+    const edgesD = [{ v: -bandEdgeW, lab: M_ + '2πBT' }];
+    if (cl.kind === 'at') { edgesS.push({ v: W, lab: '2πB = 2π/T − 2πB: copies touch' }); edgesD.push({ v: PI, lab: '2πBT = π: copies touch' }); }   // one label, not two on top of each other
+    else {
+      edgesS.push({ v: W, lab: '2πB' }, { v: cl.nextLeft, lab: '2π/T − 2πB = ' + piLab(cl.nextLeft) });
+      edgesD.push({ v: bandEdgeW, lab: '2πBT = ' + piLab(bandEdgeW) }, { v: 2 * PI - bandEdgeW, lab: '2π − 2πBT = ' + piLab(2 * PI - bandEdgeW) });
+    }
+    const yS = Math.max(sumOf(PS), isImp ? 0 : 1 / T);
+    drawSpec('cXs', { xlo: -Rx, xhi: Rx, yhi: yS, xticks: xticksS, ytick: isImp ? { v: yS, lab: 'area ' + Fmt.pi(yS) } : { v: 1 / T, lab: '1/T = ' + Fmt.num(1 / T) },
+      title: narrow ? `(b) X_s(Ω): copies every ${piLab(S)}${isImp ? '' : ', height ' + Fmt.num(1 / T)}`
+        : `(b) X_s(Ω) = (1/T) Σ_n X_a(Ω − 2πn/T): copies every 2π/T = ${piLab(S)} rad/s, ${isImp ? 'impulse areas ÷ T' : 'height 1/T = ' + Fmt.num(1 / T)}`,
+      x: PS.x, copies: PS.copies, sum: isImp ? null : PS.sum, imps: PS.imps.map(im => ({ x: im.x, A: im.A, lab: Fmt.pi(im.A) })),
+      bands: bandsS, edges: edgesS, xlabel: narrow ? 'Ω, rad/s' : 'Ω (rad/s)', h: 220 });
+    // (c) X_d(ω) on [−3π, 3π]
+    const PD = dtft(spec, T, -3 * PI, 3 * PI);
+    const xticksD = [-3, -2, -1, 0, 1, 2, 3].map(k => ({ v: k * PI, lab: k === 0 ? '0' : (k === 1 ? '' : k === -1 ? M_ : Fmt.sgn(String(k))) + 'π' }));
+    const yD = Math.max(sumOf(PD), isImp ? 0 : 1 / T);
+    drawSpec('cXd', { xlo: -3 * PI, xhi: 3 * PI, yhi: yD, xticks: xticksD, ytick: isImp ? { v: yD, lab: 'area ' + Fmt.pi(yD) } : { v: 1 / T, lab: '1/T = ' + Fmt.num(1 / T) },
+      title: narrow ? `(c) X_d(ω): period 2π, edge ${piLab(bandEdgeW)}`
+        : `(c) X_d(ω) = X_s(ω/T) = (1/T) Σ_n X_a((ω − 2πn)/T): period 2π, band edge ω = 2πBT = ${piLab(bandEdgeW)}`,
+      x: PD.x, copies: PD.copies, sum: isImp ? null : PD.sum, imps: PD.imps.map(im => ({ x: im.x, A: im.A, lab: Fmt.pi(im.A) })),
+      bands: bandsD, edges: edgesD, hilite: [-PI, PI], xlabel: narrow ? 'ω, rad/sample' : 'ω (rad/sample)', h: 220 });
+    drawTime(spec, T, narrow);
+    renderText(spec, T, cl, PD);
+    fitFrame();
+  }
+
+  function renderText(spec, T, cl, PD) {
+    const B = spec.B, W = spec.W, S = cl.S, fs = state.fs, bandEdgeW = W * T;
+    const rad = v => Fmt.pi(v) + ' <span class="note">(≈ ' + Fmt.dec(v, 4) + ')</span>';
+    const kind = cl.kind;
+    // readouts
+    let x0html;
+    if (spec.imps.length) {
+      const at0 = PD.imps.find(im => Math.abs(im.x) < 1e-9);
+      x0html = at0 ? `impulse of area ${Fmt.pi(at0.A)} at ω = 0 — a tone aliases to a constant` : '0 (no impulse at ω = 0)';
+    } else {
+      const terms = dcTerms(spec, T), total = terms.reduce((s, t) => s + t.v, 0) / T;
+      x0html = terms.length === 1 ? `(1/T)·X<sub>a</sub>(0) = ${Fmt.num(1 / T)}·${Fmt.num(terms[0].v)} = <b>${Fmt.num(total)}</b>`
+        : `(1/T)·[${terms.map(t => `X<sub>a</sub>(${Fmt.pi(-t.n * cl.S)})`).join(' + ')}] = ${Fmt.num(1 / T)}·[${terms.map(t => Fmt.num(t.v)).join(' + ')}] = <b>${Fmt.num(total)}</b> <span class="note">(f<sub>s</sub> &lt; B: the copies overlap even at ω = 0)</span>`;
+    }
+    const peak = spec.imps.length ? '' : `<div><span class="k">height of each copy =</span>(1/T)·max X<sub>a</sub> = ${Fmt.num(1 / T)}·${Fmt.num(spec.peak)} = ${Fmt.num(spec.peak / T)}</div>`;
+    let tones = '';
+    if (spec.imps.length) {
+      const line = (f, name) => { const w = 2 * PI * f * T, wp = wrapPi(w), fa = Math.abs(wp) / (2 * PI * T);
+        return `<div><span class="k">${name} = ${Fmt.num(f)} Hz ↦ ω = 2π·${Fmt.num(f)}·T =</span>${Fmt.pi(w)}` + (Math.abs(wp - w) > 1e-9 ? ` ≡ ${Fmt.pi(wp)}: the same samples as a ${Fmt.num(fa)} Hz cosine <span class="no">(aliased)</span>` : Math.abs(Math.abs(w) - PI) < 1e-9 ? ' = π: the samples are (−1)<sup>n</sup>' : '') + '</div>'; };
+      tones = line(spec.f1, 'f₁') + line(B, 'f₂ = B');
+    }
+    $('read').innerHTML =
+      `<div><span class="k">B =</span>${Fmt.num(B)} Hz, <span class="k">2πB =</span>${rad(W)} rad/s</div>` +
+      `<div><span class="k">Nyquist rate 2B =</span>${Fmt.num(2 * B)} Hz, <span class="k">Nyquist period 1/2B =</span>${Fmt.sec(1 / (2 * B))} s</div>` +
+      `<div><span class="k">f<sub>s</sub> =</span>${Fmt.num(fs)} Hz = ${Fmt.dec(cl.r, 3)} × 2B, <span class="k">T =</span>${Fmt.sec(T)} s</div>` +
+      `<div><span class="k">copies every 2π/T =</span>${rad(S)} rad/s, <span class="k">in ω every</span>2π</div>` +
+      `<div><span class="k">band edge:</span>Ω = 2πB = ${Fmt.pi(W)} ↦ ω = 2πBT = ${Fmt.pi(bandEdgeW)} <span class="note">(≈ ${Fmt.dec(bandEdgeW, 4)} rad/sample)</span></div>` +
+      peak + `<div><span class="k">X<sub>d</sub>(0) =</span>${x0html}</div>` + tones;
+    // verdict
+    const v = $('verdict'); v.className = 'verdict ' + kind;
+    if (kind === 'above') v.innerHTML = `<b class="v">f<sub>s</sub> = ${Fmt.num(fs)} Hz &gt; 2B = ${Fmt.num(2 * B)} Hz: above the Nyquist rate.</b> The next copy starts at 2π/T − 2πB = ${Fmt.pi(cl.nextLeft)} rad/s, past the band edge 2πB = ${Fmt.pi(W)}: a guard band of width ${Fmt.pi(cl.guard)} rad/s (in ω: from ${Fmt.pi(bandEdgeW)} to ${Fmt.pi(2 * PI - bandEdgeW)}). No aliasing; x<sub>a</sub>(t) is recoverable from x[n] (how: next lectures).`;
+    else if (kind === 'at') v.innerHTML = `<b class="v">f<sub>s</sub> = 2B = ${Fmt.num(2 * B)} Hz: exactly the Nyquist rate.</b> 2π/T − 2πB = 2πB: the copies touch at Ω = ±π/T = ±${Fmt.pi(PI / T)} rad/s (ω = ±π) without overlapping — no guard band at all. The notes’ criterion is the strict f<sub>s</sub> &gt; 2B.`;
+    else v.innerHTML = `<b class="v">f<sub>s</sub> = ${Fmt.num(fs)} Hz &lt; 2B = ${Fmt.num(2 * B)} Hz: below the Nyquist rate.</b> The next copy starts at 2π/T − 2πB = ${Fmt.pi(cl.nextLeft)} rad/s, inside the band: copies overlap on ${Fmt.pi(cl.nextLeft)} ≤ |Ω| ≤ ${Fmt.pi(W)} (in ω: ${Fmt.pi(2 * PI - bandEdgeW)} ≤ |ω| ≤ ${Fmt.pi(bandEdgeW)}, which reaches past π). Aliasing: the sum has a new shape there, and x<sub>a</sub>(t) cannot be recovered from x[n].`;
+    // the formulas with numbers
+    const fr = (a, b) => `<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+    $('sys').innerHTML =
+      `<div><span class="lbl">sampling</span>x[n] = x<sub>a</sub>(nT), T = ${Fmt.sec(T)} s, f<sub>s</sub> = 1/T = ${Fmt.num(fs)} Hz</div>` +
+      `<div><span class="lbl">impulse-train sampling</span>x<sub>s</sub>(t) = x<sub>a</sub>(t) Σ<sub>n</sub> δ(t − nT) &nbsp;↔&nbsp; X<sub>s</sub>(Ω) = ${fr('1', 'T')} Σ<sub>n</sub> X<sub>a</sub>(Ω − ${fr('2π', 'T')}n) = ${Fmt.num(1 / T)} Σ<sub>n</sub> X<sub>a</sub>(Ω − ${Fmt.pi(S)}n)</div>` +
+      `<div><span class="lbl">digital frequency</span>ω = ΩT, so 2πB = ${Fmt.pi(W)} ↦ ${Fmt.pi(bandEdgeW)} and the copies move from 2π/T to 2π: X<sub>d</sub>(ω) = X<sub>s</sub>(ω/T) = ${fr('1', 'T')} Σ<sub>n</sub> X<sub>a</sub>(${fr('ω − 2πn', 'T')})</div>` +
+      `<div><span class="lbl">Nyquist</span>no overlap ⇔ 2πB &lt; ${fr('2π', 'T')} − 2πB ⇔ T &lt; ${fr('1', '2B')} = ${Fmt.sec(1 / (2 * B))} s ⇔ f<sub>s</sub> &gt; 2B = ${Fmt.num(2 * B)} Hz; here ${kind === 'above' ? `${Fmt.num(fs)} &gt; ${Fmt.num(2 * B)} <span class="yes">✓</span>` : kind === 'at' ? `${Fmt.num(fs)} = ${Fmt.num(2 * B)}: the boundary case, copies touch` : `${Fmt.num(fs)} &lt; ${Fmt.num(2 * B)} <span class="no">✗ aliasing</span>`}</div>` +
+      `<div><span class="lbl">time signal</span>${rich(SHAPES[state.shape].time)}${spec.imps.length ? '' : `, peak x<sub>a</sub>(0) = (1/2π)∫X<sub>a</sub>(Ω)dΩ = ${Fmt.num(spec.x0)}`}</div>`;
+    const notes = [];
+    if (state.preset) notes.push(rich(state.preset.note));
+    if (spec.imps.length) notes.push(rich('For a line spectrum the heights are impulse areas: πA/T in X_s(Ω) and πA in X_d(ω) — substituting Ω = ω/T rescales an impulse by T, so the DTFT of A cos(ω₀n) has area πA whatever T is. The Nyquist picture is unchanged: the highest tone sets B.'));
+    $('sysnote').innerHTML = notes.map(t => '<p class="t">' + t + '</p>').join('');
+  }
+
+  // ---- wiring
+  $('preset').addEventListener('change', e => { if (e.target.value !== 'custom') loadPreset(+e.target.value); });
+  $('shape').addEventListener('change', e => { state.shape = e.target.value; if (state.shape === 'tones' && !(state.f1 < state.B)) state.f1 = 0.4 * state.B; markCustom(); syncFields(); render(); });
+  $('fsr').addEventListener('input', () => { setFs(sliderR(+$('fsr').value) * 2 * state.B, true); markCustom(); render(); });
+  const commit = (id, fn) => { $(id).addEventListener('change', fn); $(id).addEventListener('keydown', e => { if (e.key === 'Enter') fn(); }); };
+  commit('fs', () => { const v = readField('fs', 1e-6, 1e12, 'f_s'); if (v == null) return; setFs(v); markCustom(); render(); });
+  commit('T', () => { const v = readField('T', 1e-12, 1e6, 'T'); if (v == null) return; setFs(1 / v); markCustom(); render(); });
+  commit('B', () => {
+    const v = readField('B', 1e-6, 1e9, 'B'); if (v == null) return;
+    const r = ratio(); state.B = v; state.fs = r * 2 * v;                       // keep the slider where it is
+    if (state.shape === 'tones' && !(state.f1 < state.B)) state.f1 = 0.4 * state.B;
+    markCustom(); syncFields(); render();
+  });
+  commit('f1', () => { const v = readField('f1', 1e-9, state.B * (1 - 1e-9), 'f₁ (must be below B)'); if (v == null) return; state.f1 = v; markCustom(); syncFields(); render(); });
+  document.querySelectorAll('.seg button[data-r]').forEach(b => b.addEventListener('click', () => { setFs(+b.dataset.r * 2 * state.B); markCustom(); render(); }));
+  new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  let rz = null;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { render(); fitFrame(); }, 80); });
+  if (window.ResizeObserver) new ResizeObserver(fitFrame).observe(document.body);
+  loadPreset(2);
+})();
+</script>
+</body>
+</html>

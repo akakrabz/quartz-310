@@ -24,7 +24,7 @@ lectures: [15, 16]
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024 #3]] (12) | $h[n]=\delta[n+2]+\delta[n]+\delta[n-2]$ | $H_d(0)$, $H_d(\frac{\pi}{2})$, $H_d(\pi)$; plot $\lvert H_d\rvert$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025 #3]] (12) | $y[n]=x[n]+2x[n-3]+x[n-6]$ | $H_d$; sketch magnitude and phase |
 | same factoring | [[exams/midterm-2/past-exams/spring-2021\|SP2021 #3]] ($Ae^{-jB\omega}\sin C\omega$ form), [[exams/midterm-2/past-exams/fall-2019\|FA2019 #7]] ($1+z^{-4}=2\cos2\omega\,e^{-j2\omega}$, then sinusoids) | |
-| %%hw6:W1tob21ld29yay9odzZcfEhXNl1d%%HW6%%/hw6%% #6 | $y[n]=x[n]+x[n-10]$ | magnitude and phase, then outputs for two inputs |
+| [[homework/hw6\|HW6]] #6 | $y[n]=x[n]+x[n-10]$ | magnitude and phase, then outputs for two inputs |
 | [[3-fourier-analysis/16-magnitude-and-phase-response\|Lecture 16]] | $\{1,0,1\}$, $\{1,0,-1\}$, $\{3,2,1\}$ | magnitude, phase, group delay (Example 3 is non-uniform) |
 
 > [!success]- Answers to the exam instances
@@ -136,7 +136,7 @@ All four are verified in `verify/FAM_practice.py`.
 
 - Lectures: [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] (principal angle, the pull-out trick, which phases jump by $\pi$, group delay), [[3-fourier-analysis/15-frequency-response|Lecture 15]] (getting $H_d$).
 - Concepts: [[concepts/magnitude-and-phase-response|magnitude and phase response]], [[concepts/group-delay|group delay and linear phase]], [[concepts/frequency-response|frequency response]], [[0-toolkit/01-complex-numbers|complex numbers]] (the principal angle).
-- Try it: [[demos/frequency-response-explorer|frequency-response explorer]] (principal vs unwrapped phase, the group delay curve), the [magnitude & phase drill](/static/demos/drills/#magph), [[demos/practice-drills|all drills]]; homework %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #6.
+- Try it: [[demos/frequency-response-explorer|frequency-response explorer]] (principal vs unwrapped phase, the group delay curve), the [magnitude & phase drill](/static/demos/drills/#magph), [[demos/practice-drills|all drills]]; homework [[homework/hw6|HW6]] #6.
 - Related families: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] (the same $H_d$, evaluated at the input frequencies), [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]. Exams: [[exams/midterm-2/index|Midterm 2 overview]], [[problems/index|all families]].
 
 ### Sources for this page

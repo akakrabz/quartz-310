@@ -2,7 +2,6 @@
 title: "HW6 · CTFT pairs, inverse DTFTs, and frequency response (site solutions)"
 description: "This site's own verified solutions to ECE 310 Homework 6 (Fall 2026; no official key yet): continuous-time Fourier transforms of a scaled and shifted Dirac impulse, a cosine with a phase and a rectangular pulse; the DTFTs of x*[n] and x*[−n]; three inverse DTFTs (integer delays, a delay of 3.5 samples, cos²ω); when the DTFT is the z-transform on the unit circle; the accumulator, whose frequency response needs an impulse; the comb filter y[n] = x[n] + x[n−10] with its magnitude, phase and sinusoidal outputs; and the complex-valued system ωe^{j sin ω}, where the real-system cosine formula fails."
 tags: [homework, midterm-2, dtft, frequency-response]
-draft: true
 ---
 
 *Homework 6 · due Fri Oct 9, 2026, 11:59 pm (Gradescope) · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] (the CTFT and the DTFT), [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (pairs and properties), [[3-fourier-analysis/15-frequency-response|Lecture 15]] (frequency response), [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] (magnitude and phase) · 7 problems · **no official solutions yet: these are this site's solutions** · prev: [[homework/hw5|HW5]] · [[homework/index|all homework]]*

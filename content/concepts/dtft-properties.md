@@ -48,7 +48,7 @@ aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table"]
 > | even, $x[-n]=x[n]$ (possibly complex) | even, $X_d(-\omega)=X_d(\omega)$ |
 > | conjugate-symmetric, $x[-n]=x^*[n]$ | real |
 >
-> Each line is "if and only if" (slide 11 stresses it for the first). All follow from the reversal and conjugation rows: $x^*[-n]\leftrightarrow X_d^*(\omega)$%%hw6:IChbW2hvbWV3b3JrL2h3NnxIVzZdXSAjMik=%%%%/hw6%%.
+> Each line is "if and only if" (slide 11 stresses it for the first). All follow from the reversal and conjugation rows: $x^*[-n]\leftrightarrow X_d^*(\omega)$ ([[homework/hw6|HW6]] #2).
 
 > [!recipe] Is $x[n]$ (or $h[n]$) real? Read it off $X_d(\omega)$
 > 1. Use the formula on the whole period $-\pi\le\omega\le\pi$.
@@ -56,7 +56,7 @@ aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table"]
 > 3. In polar form with a nonnegative magnitude: real ⇔ magnitude even and phase odd (mod $2\pi$). A sign is phase: $\omega=|\omega|e^{j\pi}$ for $\omega\lt0$.
 > 4. Quick checks: $X_d(0)$ and $X_d(\pi)$ real; the formula must agree with itself at $\omega=\pm\pi$.
 >
-> Lecture 14 slide 12 ($\omega^2e^{j\cos\omega}$: phase even ⇒ not real), [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #6 ($e^{-j\omega^2/3}$ ⇒ not real), [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #4(a) ($|\omega|e^{-j\pi\sin\omega}$ ⇒ real)%%hw6:LCBbW2hvbWV3b3JrL2h3NnxIVzZdXSAjNyAoJFxvbWVnYSBlXntqXHNpblxvbWVnYX0kIOKHkiBhbnRpLUhlcm1pdGlhbiwgcHVyZWx5IGltYWdpbmFyeSAkaCQp%%%%/hw6%%.
+> Lecture 14 slide 12 ($\omega^2e^{j\cos\omega}$: phase even ⇒ not real), [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #6 ($e^{-j\omega^2/3}$ ⇒ not real), [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #4(a) ($|\omega|e^{-j\pi\sin\omega}$ ⇒ real), [[homework/hw6|HW6]] #7 ($\omega e^{j\sin\omega}$ ⇒ anti-Hermitian, purely imaginary $h$).
 
 ## Four numbers without computing $X_d(\omega)$
 
@@ -80,7 +80,7 @@ aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table"]
 **Where it appears.**
 - Lectures: [[3-fourier-analysis/14-dtft-properties|L14]] (all of it), [[3-fourier-analysis/15-frequency-response|L15]] (convolution → $Y_d=X_dH_d$; Hermitian symmetry → the cosine formula), [[3-fourier-analysis/16-magnitude-and-phase-response|L16]] (time shift → linear phase).
 - Problem families: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]], [[problems/lti-response-to-sinusoids|LTI response to sinusoids]].
-- Homework: [[homework/hw5|HW5]] #1(d) (windowing / frequency shift), #2 (the four numbers); %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #2 (conjugation and reversal), #7 (symmetry test).
+- Homework: [[homework/hw5|HW5]] #1(d) (windowing / frequency shift), #2 (the four numbers); [[homework/hw6|HW6]] #2 (conjugation and reversal), #7 (symmetry test).
 - Past exams: [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] 1(b), 1(e), #3, #6; [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #2, #3; [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] 1(c), #2; [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] 1(b), #2, #4(a); [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #2, #4; [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] 1(e), #9.
 
 Related: [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/frequency-response|frequency response]] · [[concepts/convolution|convolution]] · [[0-toolkit/01-complex-numbers|complex numbers]]

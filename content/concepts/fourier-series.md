@@ -30,7 +30,7 @@ aliases: ["Fourier series", "CTFS", "DTFS", "continuous-time Fourier series", "d
 $$
 c_k=\frac{1}{N_0}X_d\!\left(\frac{2\pi k}{N_0}\right),\qquad X_d \text{ the DTFT of one period.}
 $$
-Going the other way, a periodic continuous-time signal has a Fourier transform made of impulses at its harmonics, $X_c(\Omega)=2\pi\sum_kc_k\,\delta(\Omega-k\Omega_0)$; $\cos(\Omega_0t+\phi_0)$, with $c_{\pm1}=\frac12e^{\pm j\phi_0}$, gives $\pi e^{j\phi_0}\delta(\Omega-\Omega_0)+\pi e^{-j\phi_0}\delta(\Omega+\Omega_0)$%%hw6:IChbW2hvbWV3b3JrL2h3NnxIVzZdXSAjMShiKSk=%%%%/hw6%%.
+Going the other way, a periodic continuous-time signal has a Fourier transform made of impulses at its harmonics, $X_c(\Omega)=2\pi\sum_kc_k\,\delta(\Omega-k\Omega_0)$; $\cos(\Omega_0t+\phi_0)$, with $c_{\pm1}=\frac12e^{\pm j\phi_0}$, gives $\pi e^{j\phi_0}\delta(\Omega-\Omega_0)+\pi e^{-j\phi_0}\delta(\Omega+\Omega_0)$ ([[homework/hw6|HW6]] #1(b)).
 
 > [!note] Not computed on exams in this course, but not gone either
 > The notes star the Fourier-series objectives: you will not be asked to compute series. The idea returns later in the course as the DFT, which computes $N_0\,c_k$ from one period (`np.fft.fft` of one period of the pulse equals $12\,c_k$), and Midterm 2 asks DFT questions that rest on "the DFT samples the DTFT at $\frac{2\pi k}{N}$": smallest $N$ that captures $X_d(\frac{2\pi}{5})$ and $X_d(\frac{\pi}{3})$ is $30$ ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #7); $X[11]=X_d(-\frac{3\pi}{7})$ for a length-14 DFT, by $2\pi$-periodicity ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(h), True).
@@ -43,7 +43,7 @@ Going the other way, a periodic continuous-time signal has a Fourier transform m
 
 **Where it appears.**
 - Lectures: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] §2–5 (orthogonality, CTFS, CTFT, DTFS, DTFS-samples-DTFT); [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]] §6 (coefficients as inner products).
-- Homework: %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #1 (Fourier transforms; #1(b) is a periodic signal whose only nonzero coefficients are $c_{\pm1}$).
+- Homework: [[homework/hw6|HW6]] #1 (Fourier transforms; #1(b) is a periodic signal whose only nonzero coefficients are $c_{\pm1}$).
 - Exams: not computed directly; the sampling relation returns with the DFT ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #7, [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(h)). Family: [[problems/dtft-and-inverse-dtft|computing DTFTs and inverse DTFTs]].
 
 Related: [[concepts/dtft|DTFT]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/template-matching|template matching]] · [[concepts/dtft-pairs|DTFT pairs]] · [[supplements/singer-munson-notes|Singer–Munson notes]] (Ch. 2: series and transforms in continuous and discrete time)

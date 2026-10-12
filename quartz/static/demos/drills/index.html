@@ -125,7 +125,7 @@
       <p>Every drill draws fresh random parameters (<b>New variant</b>). Answers are checked tolerantly: fractions such as <code>9/4</code> or <code>-5/4</code>, decimals within 10<sup>−6</sup>, spaces, and optional braces are all accepted; use <code>-</code> or <code>−</code> for minus.
       <b>Exam-style points</b> count only your <em>first</em> submission of each variant (on the exam you get one shot); resubmitting still gives feedback and, after a wrong attempt, a hint. Opening the worked solution before submitting scores that variant as a blank.
       True/False uses the exam rule: +2 correct, −1 wrong, 0 skipped. Scores live in memory only and reset when you reload the page.</p>
-      <p>Unit 3 drills also read <code>π</code> or <code>pi</code>, <code>√3</code> or <code>sqrt(3)</code>, products such as <code>3√2/2</code> and <code>2pi/3</code>, and degrees (<code>60°</code>). Angles are compared modulo 2π, so <code>−π</code> and <code>π</code> are the same answer; decimals are accepted to about three digits.</p>
+      <p>Unit 3 drills also read <code>π</code> or <code>pi</code>, <code>√3</code> or <code>sqrt(3)</code>, products such as <code>3√2/2</code> and <code>2pi/3</code>, and degrees (<code>60°</code>). Angles are compared modulo 2π, so <code>−π</code> and <code>π</code> are the same answer; decimals are accepted to about three digits. The sampling drill also reads units after a number (<code>1 ms</code>, <code>2 kHz</code>, <code>1/1000 s</code>) and accepts rates and periods to 0.5 %.</p>
     </details>
     <noscript><p>This page needs JavaScript.</p></noscript>
   </footer>
@@ -1656,9 +1656,291 @@ drills.magph = {
   },
 };
 
+
+/* =====================================================================================
+   11. Unit 4: sampling and the Nyquist rate (Lecture 17)
+   ===================================================================================== */
+const L17 = () => pageLink('4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion', 'Lecture 17');
+/* a value with an optional unit written after it: "1 ms", "0.5 kHz", "1/1000 s", "2.5e-4" → seconds or hertz */
+function parseUnit(src) {
+  let s = normalize(src).trim().toLowerCase();
+  let mult = 1;
+  const m = /(khz|hz|ms|µs|μs|us|sec|s)\s*$/.exec(s);
+  if (m) { const u = m[1]; mult = u === 'khz' ? 1e3 : u === 'ms' ? 1e-3 : (u === 'us' || u === 'µs' || u === 'μs') ? 1e-6 : 1; s = s.slice(0, m.index); }
+  return parseVal(s).v * mult;
+}
+const relClose = (u, v, tol = 5e-3) => Number.isFinite(u) && Math.abs(u - v) <= tol * Math.abs(v);
+/* seconds: "1/880 s (≈ 1.136 ms)"; hertz: "880 Hz" */
+function secStr(T) {
+  const q = ratOf(T, 1e6, 1e-9);
+  const ms = T * 1e3, msS = Math.abs(ms - Math.round(ms)) < 1e-9 ? String(Math.round(ms)) : String(+ms.toPrecision(4));
+  if (q && q.p === 1) return `1/${q.q} s` + (q.q >= 100 ? ` (${Math.abs(ms - Math.round(ms)) < 1e-9 ? '= ' : '≈ '}${msS} ms)` : '');
+  return `${+T.toPrecision(4)} s (≈ ${msS} ms)`;
+}
+const hzStr = f => `${num(f)} Hz`;
+/* Ω = kπ rad/s written "400π"; k may be a half-integer */
+const kpi = k => (k === 1 ? 'π' : k === -1 ? M + 'π' : `${num(k)}π`);
+/* one sinusoidal term A cos(2π·f t + φ) or A cos(kπ t + φ), as HTML */
+function termHTML(t, first) {
+  const amp = Math.abs(t.A) === 1 ? '' : String(Math.abs(t.A));
+  const arg = t.unit === 'hz' ? `2π·${num(t.f)}t` : `${kpi(2 * t.f)}t`;
+  const ph = t.ph.isZero() ? '' : (t.ph.sign() < 0 ? ` ${M} ` : ' + ') + wpi(t.ph.abs());
+  const body = t.fn === 'const' ? String(Math.abs(t.A)) : `${amp}${t.fn}(${arg}${ph})`;
+  return (first ? (t.A < 0 ? M : '') : (t.A < 0 ? ` ${M} ` : ' + ')) + body;
+}
+/* X_a at |Ω| = u·2πB for the two shapes of variant (ii) */
+const shapeAt = (shape, u) => (shape === 'tri' ? Math.max(0, 1 - u) : (u < 1 ? 1 : u === 1 ? 0.5 : 0));
+drills.nyq = {
+  gen(seed) {
+    const R = rng(seed);
+    const kind = R.pick(['rate', 'spectrum', 'sinusoid']);
+    if (kind === 'rate') return this.genRate(R, seed);
+    if (kind === 'spectrum') return this.genSpectrum(R, seed);
+    return this.genSinusoid(R, seed);
+  },
+  /* (i) Nyquist rate and period of a sum of sinusoids */
+  genRate(R, seed) {
+    const unit = R.pick(['hz', 'hz', 'rad', 'rad']);
+    const nT = R.pick([2, 2, 3, 3, 3]);
+    const poolHz = [20, 25, 40, 50, 60, 100, 120, 150, 200, 250, 300, 400, 440, 500, 600, 750, 800, 1000, 1200, 1500, 2000, 2500, 3000, 4000, 5000, 6000, 8000, 10000, 12000, 15000, 20000];
+    const poolK = [10, 20, 30, 40, 50, 60, 80, 100, 120, 150, 200, 240, 300, 400, 500, 600, 800, 1000, 1200, 1500, 1600, 2000, 2400, 3000, 4000, 5000, 6000, 8000, 10000];   // Ω = kπ
+    const fs = [];
+    while (fs.length < nT) { const f = unit === 'hz' ? R.pick(poolHz) : R.pick(poolK) / 2; if (!fs.includes(f)) fs.push(f); }
+    const terms = fs.map(f => ({ f, unit, A: R.pick([1, 1, 2, 3, 4, 5, -1, -2]), fn: R.pick(['cos', 'cos', 'cos', 'sin']), ph: F(...R.pick([[0], [0], [0], [1, 4], [-1, 4], [1, 3], [-1, 2], [1, 6]])) }));
+    if (R.chance(0.25)) terms.push({ f: 0, unit, A: R.pick([1, 2, 3, -2]), fn: 'const', ph: F(0) });
+    const shown = R.shuffle(terms);
+    const B = Math.max(...fs), fN = 2 * B, TN = 1 / fN;
+    const fmin = Math.min(...fs);
+    return { drill: 'nyq', kind: 'rate', seed, unit, terms: shown, B, fN, TN, fmin, maxPts: 8 };
+  },
+  /* (ii) a bandlimited spectrum sampled with T: X_d(0), the band edge in ω, guard band / touch / overlap */
+  genSpectrum(R, seed) {
+    for (let t = 0; t < 1000; t++) {
+      const shape = R.pick(['tri', 'tri', 'rect']);
+      const A = R.pick([1, 1, 1, 1, 2, 0.5, 3]);
+      const k = R.pick([20, 40, 50, 60, 80, 100, 120, 150, 200, 300, 400, 500, 600, 1000, 2000, 4000]);   // 2πB = kπ
+      const B = k / 2;
+      const rs = shape === 'tri' ? [4, 3, 2, 2, 1.5, 1.5, 1.25, 1.25, 1, 1, 1, 0.8, 0.75, 0.75, 0.6, 0.5, 0.5, 0.4, 1 / 3] : [4, 3, 2, 2, 1.5, 1.5, 1.25, 1, 1, 1, 0.8, 0.75, 0.75, 0.6, 0.4];
+      const r = R.pick(rs), fsv = 2 * B * r;
+      if (Math.abs(fsv - Math.round(fsv)) > 1e-9) continue;
+      const fsI = Math.round(fsv), T = 1 / fsI;
+      const given = R.pick(['T', 'T', 'fs', T * 1e3 === Math.round(T * 1e3) || [500, 1000, 2000, 4000].includes(fsI) ? 'ms' : 'T']);
+      // X_d(0) = (A/T) Σ_n X_a(−2πn/T) with |2πn/T| / 2πB = 2nr
+      const terms = [];
+      for (let n = -6; n <= 6; n++) { const v = shapeAt(shape, Math.abs(2 * n * r)); if (v !== 0) terms.push({ n, v }); }
+      if (shape === 'rect' && Math.abs(2 * r - 1) < 1e-12) continue;                   // a copy edge exactly at Ω = 0: ambiguous
+      const X0 = terms.reduce((s, q) => s + q.v, 0) * A / T;
+      const edge = PI / r;                                                             // 2πBT
+      const rel = r > 1 + 1e-12 ? 'guard' : Math.abs(r - 1) < 1e-12 ? 'touch' : 'overlap';
+      return { drill: 'nyq', kind: 'spectrum', seed, shape, A, k, B, r, fs: fsI, T, given, terms, X0, edge, rel, maxPts: 8 };
+    }
+    throw new Error('nyq/spectrum: no parameters found');
+  },
+  /* (iii) cos(Ω₀t) sampled with T: the principal digital frequency, and whether another Ω gives the same samples */
+  genSinusoid(R, seed) {
+    const pool = [[1, 6], [1, 4], [1, 3], [1, 2], [2, 3], [3, 4], [5, 6], [1, 1], [7, 6], [5, 4], [4, 3], [3, 2], [5, 3], [7, 4], [9, 4], [7, 3], [5, 2], [8, 3], [11, 4], [3, 1], [10, 3], [7, 2]];
+    const Ns = [12, 20, 24, 30, 40, 48, 60, 80, 100, 120, 150, 200, 240, 300, 400, 480, 500, 600, 800, 1000, 1200, 2000, 2400, 3000, 4000, 6000, 8000, 12000];
+    for (let t = 0; t < 2000; t++) {
+      const w0 = F(...R.pick(pool));                      // Ω₀T / π
+      const cand = Ns.filter(N => N % w0.d === 0);
+      if (!cand.length) continue;
+      const N = R.pick(cand), k0 = w0.mul(N);            // Ω₀ = k0·π rad/s
+      if (k0.d !== 1) continue;
+      const A = R.pick([1, 1, 1, 2, 3]);
+      const unit0 = k0.n % 2 === 0 && R.chance(0.4) ? 'hz' : 'rad';
+      // the second frequency: an alias half of the time
+      const alias = R.chance(0.5);
+      let w1;
+      if (alias) { const m = R.pick([1, -1, 2, 1]); w1 = R.chance(0.5) ? w0.add(F(2 * m)) : F(2 * Math.abs(m)).sub(w0); }
+      else { const d = F(...R.pick([[1, 2], [1, 1], [2, 3], [1, 3], [1, 4], [-1, 2], [3, 2]])); w1 = R.chance(0.3) ? w0.mul(2) : w0.add(d); }
+      if (w1.sign() <= 0) continue;
+      const k1 = w1.mul(N); if (k1.d !== 1) continue;
+      // the truth: the samples agree iff Ω₁T ≡ ±Ω₀T (mod 2π), i.e. (w1 ∓ w0) is an even integer
+      const even = x => x.d === 1 && Math.abs(x.n) % 2 === 0;
+      const same = even(w1.sub(w0)) || even(w1.add(w0));
+      if (alias !== same) continue;                      // (a decoy that happens to alias is skipped)
+      const unit1 = k1.n % 2 === 0 && R.chance(0.4) ? 'hz' : 'rad';
+      const T = 1 / N;
+      const given = R.pick(['T', 'fs', 'T', [500, 1000, 2000, 4000, 8000].includes(N) ? 'ms' : 'fs']);
+      const wp = wrapPi(PI * w0.v), wp1 = wrapPi(PI * w1.v);
+      return { drill: 'nyq', kind: 'sinusoid', seed, A, w0, k0: k0.n, unit0, N, T, given, w1, k1: k1.n, unit1, same, wp, wp1, maxPts: 8 };
+    }
+    throw new Error('nyq/sinusoid: no parameters found');
+  },
+  /* how the sampling period is announced */
+  TgivenHTML(p) {
+    if (p.given === 'fs') return `sampled at f${sub('s')} = ${num(p.fs || p.N)} Hz`;
+    if (p.given === 'ms') return `sampled with period T = ${num(p.T * 1e3)} ms`;
+    return `sampled with period T = 1/${num(p.fs || p.N)} s`;
+  },
+  freqHTML(k, unit) { return unit === 'hz' ? `2π·${num(k / 2)}t` : `${kpi(k)}t`; },
+  statement(p) {
+    if (p.kind === 'rate') {
+      const x = p.terms.map((t, i) => termHTML(t, i === 0)).join('');
+      return `<p><span class="src" style="margin-left:0">variant (i) · Nyquist rate</span></p>
+        <p>A continuous-time signal is a sum of sinusoids${p.unit === 'hz' ? ' (frequencies written in hertz)' : ' (frequencies in rad/s)'}:</p>
+        <p class="sys">x${sub('a')}(t) = ${x}</p>
+        <p>It is to be sampled, x[n] = x${sub('a')}(nT), without aliasing. Find <b>(a)</b> the Nyquist rate in Hz and <b>(b)</b> the Nyquist sampling period T${sub('N')} in seconds (the past exams write T${sub('N')} or T${sub('NYQ')}).</p>
+        <p class="muted" style="font-size:13px">Units are optional: 1/1000, 0.001, 1e-3 and 1 ms all mean the same; 2 kHz is 2000 Hz. Answers are accepted to 0.5 %.</p>`;
+    }
+    if (p.kind === 'spectrum') {
+      const sh = p.shape === 'tri' ? `${p.A === 1 ? '' : num(p.A) + '·'}(1 − |Ω|/${kpi(p.k)}) for |Ω| ≤ ${kpi(p.k)}, and 0 otherwise` : `${num(p.A)} for |Ω| &lt; ${kpi(p.k)}, and 0 otherwise`;
+      return `<p><span class="src" style="margin-left:0">variant (ii) · spectrum after sampling</span></p>
+        <p>A continuous-time signal x${sub('a')}(t) has the ${p.shape === 'tri' ? 'triangular' : 'rectangular (brick-wall)'} CTFT</p>
+        <p class="sys">X${sub('a')}(Ω) = ${sh}</p>
+        <p>so it is bandlimited to 2πB = ${kpi(p.k)} rad/s. It is ${this.TgivenHTML(p)} to give x[n] = x${sub('a')}(nT) with DTFT X${Hd}(ω) = (1/T) Σ${sub('n')} X${sub('a')}((ω − 2πn)/T).</p>
+        <p><b>(a)</b> X${Hd}(0), the value of the DTFT at ω = 0 (count every copy that reaches ω = 0) &nbsp; <b>(b)</b> the band edge in digital frequency, ω = 2πBT (as a multiple of π, e.g. 2π/3) &nbsp; <b>(c)</b> do the spectral copies in X${Hd}(ω) leave a guard band, touch, or overlap?</p>`;
+    }
+    return `<p><span class="src" style="margin-left:0">variant (iii) · sampling a cosine</span></p>
+      <p>The cosine x${sub('a')}(t) = ${p.A === 1 ? '' : p.A}cos(${this.freqHTML(p.k0, p.unit0)}) is ${this.TgivenHTML(p)}, giving x[n] = x${sub('a')}(nT).</p>
+      <p><b>(a)</b> Write x[n] = ${p.A === 1 ? '' : p.A}cos(ω₀n) with ω₀ the digital frequency Ω₀T reduced to (−π, π]. Enter ω₀ (3π/4, 0.75π, 2.356 and 135° are all fine; a cosine is even, so −ω₀ counts too).</p>
+      <p><b>(b)</b> With the same T, the cosine ${p.A === 1 ? '' : p.A}cos(${this.freqHTML(p.k1, p.unit1)}) is sampled. Is its sequence of samples <em>identical</em> to x[n]?</p>`;
+  },
+  answer(p) {
+    if (p.kind === 'rate') return { a: String(p.fN), b: String(p.TN) };
+    if (p.kind === 'spectrum') return { a: ansStr(p.X0, false), b: ansStr(p.edge), rel: p.rel };
+    return { w: ansStr(p.wp), same: p.same ? 'yes' : 'no' };
+  },
+  check(p, r) {
+    const blank = (s, v) => (!String(s || '').trim() ? 'enter a number.' : Number.isNaN(v) ? 'could not read it — numbers, fractions, π, √, ° and units such as ms or kHz are accepted.' : '');
+    if (p.kind === 'rate') return this.checkRate(p, r, blank);
+    if (p.kind === 'spectrum') return this.checkSpectrum(p, r, blank);
+    return this.checkSinusoid(p, r, blank);
+  },
+  checkRate(p, r, blank) {
+    const a = parseUnit(r.a), b = parseUnit(r.b);
+    const okA = relClose(a, p.fN), okB = relClose(b, p.TN);
+    const OmMax = 2 * PI * p.B;
+    let mA = blank(r.a, a);
+    if (!mA && !okA) {
+      if (relClose(a, p.B)) mA = `that is the highest frequency B = ${hzStr(p.B)} itself — the Nyquist rate is 2B.`;
+      else if (relClose(a, OmMax)) mA = `that is Ω${sub('max')} = ${kpi(2 * p.B)} rad/s: convert to hertz first, B = Ω${sub('max')}/2π = ${hzStr(p.B)}, then double.`;
+      else if (relClose(a, 2 * OmMax)) mA = `that is 2Ω${sub('max')} in rad/s — the rate is asked in Hz: 2B with B = Ω${sub('max')}/2π.`;
+      else if (relClose(a, 4 * p.B)) mA = `that is 4B — the Nyquist rate is 2B, twice the highest frequency, not twice the bandwidth 2B.`;
+      else if (p.terms.some(t => t.f > 0 && t.f < p.B && relClose(a, 2 * t.f))) mA = 'the highest frequency present sets B, whatever its amplitude or position in the sum.';
+      else if (relClose(a, p.fmin)) mA = 'the lowest frequency does not matter; the highest one does.';
+    }
+    let mB = blank(r.b, b);
+    if (!mB && !okB) {
+      if (relClose(b, 1 / p.B)) mB = `that is 1/B — the Nyquist period is 1/(2B) = ${secStr(p.TN)}.`;
+      else if (relClose(b, p.fN)) mB = 'that is the rate in Hz; the period is its reciprocal.';
+      else if (relClose(b, 2 * PI / OmMax)) mB = 'that is 2π/Ω<sub>max</sub> = 1/B — halve it: T<sub>N</sub> = 1/(2B).';
+      else if (relClose(b, 1 / OmMax) || relClose(b, 1 / (2 * OmMax))) mB = 'Ω is in rad/s: the period is 1/(2B) with B in Hz, i.e. π/Ω<sub>max</sub>.';
+      else if (relClose(b, p.TN * 1e3) || relClose(b, p.TN * 1e-3)) mB = 'off by a factor of 1000 — the answer is in seconds (write ms if you mean milliseconds).';
+    }
+    const parts = [
+      { label: '(a) Nyquist rate', ok: okA, pts: okA ? 4 : 0, max: 4, msg: okA ? `2B = ${hzStr(p.fN)}.` : mA },
+      { label: `(b) T${sub('N')}`, ok: okB, pts: okB ? 4 : 0, max: 4, msg: okB ? `1/(2B) = ${secStr(p.TN)}.` : mB },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [`<b>Bandlimit first.</b> X${sub('a')}(Ω) = 0 for |Ω| &gt; 2πB: B is the highest frequency present, in hertz${p.unit === 'rad' ? ' — a term cos(kπt) has Ω = kπ rad/s, i.e. f = k/2 Hz' : ''}. A constant term is at 0 Hz and a sine counts like a cosine.`,
+      `<b>Then</b> (${L17()}): Nyquist rate f${sub('Nyquist')} = 2B, Nyquist period T${sub('N')} = 1/(2B); sampling without aliasing needs f${sub('s')} &gt; 2B.`];
+    const h2 = [`Here the frequencies are ${p.terms.filter(t => t.fn !== 'const').map(t => hzStr(t.f)).join(', ')}${p.terms.some(t => t.fn === 'const') ? ' (and a constant at 0 Hz)' : ''}, so B = ${hzStr(p.B)}.`];
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')] };
+  },
+  checkSpectrum(p, r, blank) {
+    const a = valOf(r.a), b = valOf(r.b);
+    const okA = numClose(a, p.X0), okB = numClose(b, p.edge), okC = r.rel === p.rel;
+    const invT = 1 / p.T;
+    let mA = blank(r.a, a);
+    if (!mA && !okA) {
+      const n0 = p.terms.find(q => q.n === 0).v, nCopies = p.terms.length;
+      if (numClose(a, p.A * n0)) mA = `that is X${sub('a')}(0) — every copy is scaled by 1/T = ${num(invT)}.`;
+      else if (numClose(a, p.A * n0 * p.T)) mA = `multiply by 1/T = ${num(invT)}, not by T.`;
+      else if (nCopies > 1 && numClose(a, p.A * n0 * invT)) mA = `the copies centred at ±2π/T reach ω = 0 as well (f${sub('s')} = ${num(p.fs)} Hz &lt; B = ${num(p.B)} Hz): add X${sub('a')}(±2π/T) = ${num(p.A * p.terms.find(q => q.n === 1).v)} each.`;
+      else if (nCopies > 1 && numClose(a, p.A * nCopies * invT) && p.shape === 'tri') mA = `the neighbouring copies contribute X${sub('a')}(2π/T), the triangle’s value at Ω = 2π/T, not the full peak.`;
+      else if (nCopies === 1 && numClose(a, 3 * p.A * invT)) mA = `only the n = 0 copy reaches ω = 0 here: 2π/T = ${kpi(2 * p.fs)} lies outside the band |Ω| ≤ ${kpi(p.k)}.`;
+    }
+    let mB = blank(r.b, b);
+    if (!mB && !okB) {
+      if (numClose(b, p.B * p.T)) mB = 'ω = ΩT with Ω = 2πB in rad/s, not B in hertz.';
+      else if (numClose(b, 2 * PI * p.B / p.T)) mB = 'that is Ω/T — the map is ω = ΩT (multiply by T).';
+      else if (numClose(b, 2 * PI * p.B)) mB = 'that is 2πB in rad/s — multiply by T to get rad/sample.';
+      else if (Number.isFinite(b) && angClose(b, p.edge) && p.edge > PI) mB = `the band edge is 2πBT = ${valStr(p.edge)} itself, beyond π — that is the aliasing; do not reduce it modulo 2π here.`;
+      else if (numClose(b, PI * p.r)) mB = 'upside down: ω = 2πB·T = 2πB/f<sub>s</sub>.';
+    }
+    const relName = { guard: 'a guard band (f<sub>s</sub> &gt; 2B)', touch: 'they touch, no overlap (f<sub>s</sub> = 2B)', overlap: 'they overlap — aliasing (f<sub>s</sub> &lt; 2B)' };
+    const mC = r.rel == null ? 'choose one.' : `compare 2πB = ${kpi(p.k)} with the next copy’s edge 2π/T − 2πB = ${kpi(2 * p.fs - p.k)} rad/s (in ω: ${valStr(p.edge)} against 2π − ${valStr(p.edge)} = ${valStr(2 * PI - p.edge)}).`;
+    const parts = [
+      { label: `(a) X${Hd}(0)`, ok: okA, pts: okA ? 3 : 0, max: 3, msg: okA ? `${valStr(p.X0, false)}.` : mA },
+      { label: '(b) band edge ω = 2πBT', ok: okB, pts: okB ? 3 : 0, max: 3, msg: okB ? `${valStr(p.edge)}${p.edge > PI + 1e-9 ? ' — beyond π, so the copies overlap' : ''}.` : mB },
+      { label: '(c) the copies', ok: okC, pts: okC ? 2 : 0, max: 2, msg: okC ? relName[p.rel] + '.' : mC },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [];
+    if (!okA) h1.push(`<b>Heights.</b> X${Hd}(ω) = (1/T) Σ${sub('n')} X${sub('a')}((ω − 2πn)/T): at ω = 0 the n-th copy contributes X${sub('a')}(−2πn/T)/T. Copies other than n = 0 reach ω = 0 only when 2π/T &lt; 2πB, i.e. f${sub('s')} &lt; B.`);
+    if (!okB) h1.push(`<b>The map ω = ΩT</b> (${L17()}): the band edge Ω = 2πB lands at ω = 2πBT = 2πB/f${sub('s')}; the copies, 2π/T apart in Ω, are 2π apart in ω.`);
+    if (!okC) h1.push(`<b>Nyquist.</b> No overlap ⇔ 2πB &lt; 2π/T − 2πB ⇔ f${sub('s')} &gt; 2B; equality means the copies touch; less means overlap (aliasing). Equivalently: band edge 2πBT &lt; π, = π, or &gt; π.`);
+    const h2 = [`Here 1/T = ${num(invT)}, 2πB = ${kpi(p.k)} rad/s so B = ${num(p.B)} Hz and 2B = ${num(2 * p.B)} Hz; 2π/T = ${kpi(2 * p.fs)} rad/s; 2πBT = ${kpi(p.k)}/${num(p.fs)} = ${valStr(p.edge)}.`];
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')] };
+  },
+  checkSinusoid(p, r, blank) {
+    const w = valOf(r.w);
+    const okW = Number.isFinite(w) && (angClose(w, p.wp) || angClose(w, -p.wp));
+    const okS = r.same != null && (r.same === 'yes') === p.same;
+    const raw = PI * p.w0.v;
+    let mW = blank(r.w, w);
+    if (!mW && !okW) {
+      if (numClose(w, p.k0 * PI)) mW = `that is Ω₀ in rad/s — multiply by T = 1/${num(p.N)}: ω = ΩT.`;
+      else if (numClose(w, p.k0 * PI / p.T)) mW = 'that is Ω₀/T — the map is ω = ΩT.';
+      else if (numClose(w, p.k0 / 2 * p.T) || numClose(w, p.k0 / 2 * 2 * PI * p.T * (1 / (2 * PI)))) mW = `Ω₀ = 2πf₀ = ${kpi(p.k0)} rad/s: the 2π is part of the analog frequency.`;
+      else if (numClose(w, p.k0 * p.T)) mW = `Ω₀ is ${kpi(p.k0)} — the π went missing.`;
+      else if (Number.isFinite(w) && angClose(w, raw + PI)) mW = 'off by π: subtract multiples of 2π, not of π.';
+      else if (Number.isFinite(w) && numClose(Math.abs(w), 2 * PI - Math.abs(raw)) && Math.abs(raw) < PI) mW = `Ω₀T = ${valStr(raw)} already lies in (−π, π]: nothing to reduce.`;
+    } else if (okW && Number.isFinite(w) && Math.abs(Math.abs(w) - Math.abs(p.wp)) > 1e-3) mW = `the same angle modulo 2π; its principal value is ${valStr(p.wp)}${p.wp < 0 ? ` (or ${valStr(-p.wp)}: a cosine is even)` : ''}.`;
+    const w1raw = PI * p.w1.v;
+    const mS = r.same == null ? 'choose yes or no.' : `Ω₁T = ${kpi(p.k1)}/${num(p.N)} = ${valStr(w1raw)} ≡ ${valStr(p.wp1)} (mod 2π), and ω₀ = ${valStr(p.wp)}: ${p.same ? 'the same digital frequency (up to sign), so the samples are identical' : 'a different digital frequency, so the samples differ'}.`;
+    const parts = [
+      { label: '(a) ω₀', ok: okW, pts: okW ? 5 : 0, max: 5, msg: okW ? (mW || `${valStr(p.wp)}${p.wp < 0 ? ` — or ${valStr(-p.wp)}, since cos(−ω₀n) = cos(ω₀n)` : Math.abs(Math.abs(p.wp) - PI) < 1e-9 ? ' (π and −π are the same angle: x[n] = (−1)ⁿ times the amplitude)' : ''}.`) : mW },
+      { label: '(b) same samples?', ok: okS, pts: okS ? 3 : 0, max: 3, msg: okS ? (p.same ? 'yes — an alias.' : 'no.') : mS },
+    ];
+    const allOk = parts.every(q => q.ok);
+    const h1 = [];
+    if (!okW) h1.push(`<b>ω = ΩT</b> (${L17()}): cos(Ω₀t) sampled at t = nT is cos(Ω₀Tn), a cosine of digital frequency Ω₀T rad/sample. Add or subtract 2π until the frequency lies in (−π, π]: cos((ω + 2πm)n) = cos(ωn) for integer n.`);
+    if (!okS) h1.push(`<b>Two analog frequencies give the same samples</b> exactly when Ω₁T ≡ ±Ω₀T (mod 2π): the sampled cosines are then the same sequence (cos is even, and a 2π shift of ω is invisible).`);
+    const h2 = [`Here Ω₀T = ${kpi(p.k0)}·(1/${num(p.N)}) = ${valStr(raw)}${Math.abs(wrapPi(raw) - raw) > 1e-9 ? `, which reduces to ${valStr(p.wp)}` : ''}; and Ω₁T = ${kpi(p.k1)}/${num(p.N)} = ${valStr(w1raw)}.`];
+    return { parts, allOk, pts: parts.reduce((s, q) => s + q.pts, 0), max: 8, hints: allOk ? [] : [h1.join('<br>'), h2.join('<br>')] };
+  },
+  solution(p) {
+    const review = `Review: ${L17()} · ${pageLink('concepts/sampling', 'sampling')} · ${pageLink('concepts/nyquist-criterion', 'Nyquist criterion')} · ${pageLink('problems/sampling-and-the-nyquist-rate', 'sampling and the Nyquist rate (recipe)')} · ${pageLink('demos/sampling-explorer', 'sampling explorer')}`;
+    if (p.kind === 'rate') {
+      const rows = p.terms.map(t => t.fn === 'const' ? `<li>the constant ${num(Math.abs(t.A))}: frequency 0 Hz.</li>`
+        : `<li>${termHTML(t, true).replace(/^−/, M)}: ${t.unit === 'hz' ? `f = ${hzStr(t.f)}` : `Ω = ${kpi(2 * t.f)} rad/s, f = Ω/2π = ${hzStr(t.f)}`}${t.fn === 'sin' ? ' (a sine has the same frequency as a cosine)' : ''}.</li>`).join('');
+      return `<h3>Worked solution</h3>
+        <p><b>1 · The frequencies present</b> (amplitudes and phases are irrelevant):</p><ul>${rows}</ul>
+        <p><b>2 · The bandlimit.</b> X${sub('a')}(Ω) is a pair of impulses per term; the outermost pair sits at ±2πB with B = ${hzStr(p.B)} (2πB = ${kpi(2 * p.B)} rad/s).</p>
+        <p><b>(a)</b> Nyquist rate f${sub('Nyquist')} = 2B = <b>${hzStr(p.fN)}</b>. &nbsp; <b>(b)</b> T${sub('N')} = 1/(2B) = <b>${secStr(p.TN)}</b>. Any f${sub('s')} &gt; ${hzStr(p.fN)} (T &lt; T${sub('N')}) avoids aliasing; at exactly ${hzStr(p.fN)} the impulses of the highest tone land on ω = ±π and coincide with their copies.</p>
+        <p class="muted">Past exams: FA2019 MT2 #9(a) (Ω${sub('max')} = 1000π ⇒ T${sub('NYQ')} = 1 ms), FA2024 MT2 #5(a), SP2021 MT2 #8(a), SP2023 MT2 #7(a). ${review}</p>`;
+    }
+    if (p.kind === 'spectrum') {
+      const invT = 1 / p.T;
+      const termTxt = p.terms.map(q => `X${sub('a')}(${q.n === 0 ? '0' : kpi(-q.n * 2 * p.fs)})`).join(' + ');
+      const valTxt = p.terms.map(q => num(p.A * q.v)).join(' + ');
+      const relTxt = { guard: `2πB = ${kpi(p.k)} &lt; 2π/T − 2πB = ${kpi(2 * p.fs - p.k)}: a <b>guard band</b> of width ${kpi(2 * p.fs - 2 * p.k)} rad/s (in ω: from ${valStr(p.edge)} to ${valStr(2 * PI - p.edge)}). f${sub('s')} = ${num(p.fs)} &gt; 2B = ${num(2 * p.B)} Hz.`,
+        touch: `2πB = 2π/T − 2πB = ${kpi(p.k)}: the copies <b>touch</b> at Ω = ±π/T (ω = ±π) without overlapping. f${sub('s')} = 2B = ${num(2 * p.B)} Hz, exactly the Nyquist rate.`,
+        overlap: `2πB = ${kpi(p.k)} &gt; 2π/T − 2πB = ${kpi(2 * p.fs - p.k)}: the copies <b>overlap</b> on ${kpi(2 * p.fs - p.k)} ≤ |Ω| ≤ ${kpi(p.k)} (in ω: ${valStr(2 * PI - p.edge)} ≤ |ω| ≤ ${valStr(p.edge)}) — aliasing. f${sub('s')} = ${num(p.fs)} &lt; 2B = ${num(2 * p.B)} Hz.` }[p.rel];
+      return `<h3>Worked solution</h3>
+        <p><b>1 · The numbers.</b> 2πB = ${kpi(p.k)} rad/s ⇒ B = ${num(p.B)} Hz, Nyquist rate 2B = ${num(2 * p.B)} Hz. T = 1/${num(p.fs)} s ⇒ 1/T = ${num(invT)} and the copies sit every 2π/T = ${kpi(2 * p.fs)} rad/s.</p>
+        <p><b>2 · Build X${Hd}(ω) = (1/T) Σ${sub('n')} X${sub('a')}((ω − 2πn)/T)</b>: copies of X${sub('a')} scaled by 1/T, with ω = ΩT, so every copy is ${num(invT)}·${num(p.A)} = ${num(p.A * invT)} tall at its centre and 2π apart.</p>
+        <p><b>(a)</b> At ω = 0 the n-th copy contributes X${sub('a')}(−2πn/T)/T${p.terms.length === 1 ? `. Only n = 0 reaches ω = 0 (2π/T = ${kpi(2 * p.fs)} is outside the band), so X${Hd}(0) = ${num(invT)}·${num(p.A)}` : `: ${termTxt}, all divided by T. Since 2π/T = ${kpi(2 * p.fs)} lies inside the band (f${sub('s')} &lt; B), the neighbours count: X${Hd}(0) = ${num(invT)}·[${valTxt}]`} = <b>${valStr(p.X0, false)}</b>.</p>
+        <p><b>(b)</b> ω = ΩT sends the band edge to 2πBT = ${kpi(p.k)}/${num(p.fs)} = <b>${valStr(p.edge)}</b>${p.edge > PI + 1e-9 ? ' — past π: the copy centred at 2π starts at 2π − ' + valStr(p.edge) + ' = ' + valStr(2 * PI - p.edge) + ', before this one ends' : ''}.</p>
+        <p><b>(c)</b> ${relTxt}</p>
+        <p class="muted">The lecture’s Example 2 is exactly this with a triangle to 100π and T = 1/150, 1/100, 1/75 s. Past exams: FA2024 MT2 #5(b) (T${sub('N')} and 2T${sub('N')}), SP2023 MT2 #7, SP2021 MT2 #8. ${review}</p>`;
+    }
+    const raw = PI * p.w0.v, w1raw = PI * p.w1.v;
+    const red = Math.abs(wrapPi(raw) - raw) > 1e-9;
+    const m0 = Math.round((raw - p.wp) / (2 * PI));
+    return `<h3>Worked solution</h3>
+      <p><b>1 · Sample.</b> x[n] = ${p.A === 1 ? '' : p.A}cos(Ω₀nT) with Ω₀ = ${kpi(p.k0)} rad/s${p.unit0 === 'hz' ? ` (2π·${num(p.k0 / 2)})` : ''} and T = 1/${num(p.N)} s: Ω₀T = ${kpi(p.k0)}/${num(p.N)} = ${valStr(raw)} rad/sample.</p>
+      <p><b>(a)</b> ${red ? `${valStr(raw)} lies outside (−π, π]; subtracting ${m0 === 1 ? '2π' : m0 + '·2π'} gives ${valStr(raw)} − ${valStr(2 * PI * m0)} = <b>${valStr(p.wp)}</b>, and cos((ω − 2πm)n) = cos(ωn) for every integer n, so x[n] = ${p.A === 1 ? '' : p.A}cos(${valStr(p.wp)}n)` : `${valStr(raw)} already lies in (−π, π], so ω₀ = <b>${valStr(p.wp)}</b> and x[n] = ${p.A === 1 ? '' : p.A}cos(${valStr(p.wp)}n)`}${p.wp < 0 ? ` = ${p.A === 1 ? '' : p.A}cos(${valStr(-p.wp)}n), because a cosine is even` : ''}.${red ? ` The analog frequency ${kpi(p.k0)} rad/s is above f${sub('s')}/2: it aliases to |ω₀|/(2πT) = ${num(Math.abs(p.wp) / (2 * PI * p.T))} Hz.` : ''}</p>
+      <p><b>(b)</b> Ω₁T = ${kpi(p.k1)}/${num(p.N)} = ${valStr(w1raw)} ≡ ${valStr(p.wp1)} (mod 2π). ${p.same ? `That is ${Math.abs(p.wp1 - p.wp) < 1e-9 ? 'exactly ω₀' : '−ω₀'}: the samples are the same sequence, <b>yes</b> — the two analog cosines are aliases of each other at this T.` : `That is neither ω₀ = ${valStr(p.wp)} nor −ω₀: the samples differ, <b>no</b>.`}</p>
+      <p class="muted">The rule: cos(Ω₁t) and cos(Ω₀t) sampled with the same T give identical samples ⇔ Ω₁T ≡ ±Ω₀T (mod 2π) ⇔ Ω₁ = ±Ω₀ + 2πm/T. For a sine the sign matters (sin is odd). Past exams: FA2023 MT2 #3, SP2025 MT2 #6(a), SP2021 MT2 #1(a). ${review}</p>`;
+  },
+};
+
 globalThis.ECE310Drills = { Fr, F, rng, parseNum, parseList, near, num, paren, polyZ, factorZ, termsHTML, termsVal, sameSeq, seqHTML, drills, PROP_NAMES,
   cx, cadd, csub, cmul, cdiv, cabs, cpolar, cpowi, xVal, sameX, xHTML, ZR_SHAPES, ZR_ORDER,
-  parseVal, piMultiple, wrapPi, valStr, linPhase, Aval, SR_FORMULAS, srEval };
+  parseVal, piMultiple, wrapPi, valStr, linPhase, Aval, SR_FORMULAS, srEval, parseUnit, relClose, secStr };
 })();
 </script>
 
@@ -1807,6 +2089,24 @@ INPUTS.magph = function (p, root, submit) {
   enterSubmits(root, submit);
   return () => ({ M: $('.u3fM', root).value, A: $('.u3fA', root).value, mag: $('.u3fm', root).value, ph: $('.u3fp', root).value });
 };
+INPUTS.nyq = function (p, root, submit) {
+  const n = 'nyq' + (++uid);
+  if (p.kind === 'rate') {
+    root.innerHTML = textField('(a) Nyquist rate (Hz)', 'u4fa', 'e.g. 2000 or 2 kHz', false) + textField('(b) Nyquist period T<sub>N</sub> (s)', 'u4fb', 'e.g. 1/2000 or 0.5 ms', false);
+    enterSubmits(root, submit);
+    return () => ({ a: $('.u4fa', root).value, b: $('.u4fb', root).value });
+  }
+  if (p.kind === 'spectrum') {
+    root.innerHTML = textField('(a) X<sub>d</sub>(0)', 'u4fa', 'e.g. 150', false) + textField('(b) band edge ω = 2πBT', 'u4fb', 'e.g. 2π/3', false) +
+      `<div class="group"><div class="q">(c) The spectral copies</div>${radioGroup(n, ['leave a guard band (no overlap, room to spare)', 'touch exactly, without overlapping', 'overlap — aliasing'], false)}</div>`;
+    enterSubmits(root, submit);
+    return () => { const o = $(`input[name="${n}"]:checked`, root); return { a: $('.u4fa', root).value, b: $('.u4fb', root).value, rel: o ? ['guard', 'touch', 'overlap'][+o.value] : null, _names: [n] }; };
+  }
+  root.innerHTML = textField('(a) ω₀ (rad/sample)', 'u4fw', 'e.g. 3π/4 or −π/3', false) +
+    `<div class="group"><div class="q">(b) Identical samples?</div>${radioGroup(n, ['Yes', 'No'], true)}</div>`;
+  enterSubmits(root, submit);
+  return () => { const o = $(`input[name="${n}"]:checked`, root); return { w: $('.u4fw', root).value, same: o ? (o.value === '0' ? 'yes' : 'no') : null, _names: [n] }; };
+};
 /* after grading, colour the chosen multiple-choice options */
 const DECORATE = {
   pfe(p, root, r, res) {
@@ -1815,6 +2115,7 @@ const DECORATE = {
   },
   zroc(p, root, r, res) { markChoice(root, r._names[0], r.opt, res.parts[1].ok); },
   rocsc(p, root, r, res) { r._names.forEach((nm, i) => markChoice(root, nm, null, res.parts[i].ok)); },
+  nyq(p, root, r, res) { if (r._names) markChoice(root, r._names[0], null, res.parts[res.parts.length - 1].ok); },
 };
 
 /* ---- drill registry (order = tab order) */
@@ -1837,6 +2138,8 @@ const UIS = [
     blurb: 'Split the input by frequency: a constant is ω = 0, (−1)<sup>n</sup> is ω = π, and a cosine keeps its frequency while H<sub>d</sub> scales it by |H<sub>d</sub>| and shifts it by ∠H<sub>d</sub>. Systems come as taps h[n] or as a formula for H<sub>d</sub>(ω). Lecture 15.' },
   { id: 'magph', label: 'Magnitude & phase', title: 'Magnitude, phase and group delay of a linear-phase FIR',
     blurb: 'Factor e<sup>−jMω</sup> out of symmetric (or antisymmetric) taps. What is left is real, so the magnitude is its absolute value, the phase is linear with π jumps where it changes sign, and the group delay is M. Lecture 16.' },
+  { id: 'nyq', label: 'Sampling & Nyquist', title: 'Sampling and the Nyquist rate',
+    blurb: 'Three kinds of variant, in turn: (i) the Nyquist rate and period of a sum of sinusoids (frequencies in Hz or rad/s); (ii) a triangle or brick-wall spectrum sampled with a given T — X<sub>d</sub>(0) counting every copy that reaches ω = 0, the band edge ω = 2πBT, and whether the copies leave a guard band, touch or overlap; (iii) a cosine sampled with T — its digital frequency reduced to (−π, π], and whether a second analog frequency gives the very same samples. Lecture 17.' },
   { id: 'tf', label: 'True / False', title: 'True/False rapid fire',
     blurb: 'All 42 non-DTFT True/False statements from the seven past exams, with the official answers. Exam scoring: +2 right, −1 wrong, 0 skipped — skip when you would be guessing. Keyboard: T, F, S, then N for the next one.', custom: buildTF },
 ];

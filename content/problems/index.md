@@ -39,7 +39,13 @@ Three families come from the past Midterm 2 exams and cover [[3-fourier-analysis
 | [[problems/lti-response-to-sinusoids\|LTI response to sinusoids and periodic inputs]] | the output of a system given by $h[n]$, an LCCDE or $H_d(\omega)$ for sums of sinusoids and complex exponentials, one frequency at a time | 15 |
 | [[problems/magnitude-phase-and-group-delay\|Magnitude, phase and group delay]] | $H_d(\omega)$ as a real amplitude times a linear phase; sketches of $\lvert H_d\rvert$ and $\angle H_d$ with their jumps; the group delay | 16 |
 
-The past Midterm 2 exams also test topics that come after Lecture 16 (ideal filters, sampling and reconstruction, the DFT and FFT). Those problems are typed with solutions on the exam pages; families for them will follow the lectures.
+## Unit 4: sampling
+
+| family | what the exam asks | lectures |
+|---|---|---|
+| [[problems/sampling-and-the-nyquist-rate\|Sampling and the Nyquist rate]] | the Nyquist rate or period of a sketched spectrum or a sum of sinusoids; a sketch of $X_d(\omega)$ after sampling at a given $T$ (copies of height $1/T$ every $2\pi$: a guard band, touching, or overlapping and adding); which sampling periods are consistent with given sinusoids | 17 |
+
+The past Midterm 2 exams also test topics that come after Lecture 17 (ideal D/A reconstruction, ideal filters and the A/D → $H_d$ → D/A chain, the DFT and FFT). Those problems are typed with solutions on the exam pages; families for them will follow the lectures.
 
 ## A review order for the Midterm 1 families
 

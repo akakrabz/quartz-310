@@ -65,12 +65,12 @@ The impulse rows come from inverting a guess: $\frac{1}{2\pi}\int_{-\pi}^{\pi}c\
 > - **Two sincs.** NumPy's `np.sinc(x)` and the official [[supplements/transform-tables|transform tables]] mean $\frac{\sin\pi x}{\pi x}$; the course and its exam keys mean $\frac{\sin x}{x}$.
 > - **Even $L$.** The notes define $\mathrm{rect}(\frac{n-k}{L})=1$ for $k-\frac L2\lt n\le k+\frac L2$; for even $L$ that block is centred at $k+\frac12$ and its DTFT carries an extra $e^{-j\omega/2}$.
 > - **$\mathrm{sinc}^2$ needs $L\le\frac{\pi}{2}$**, or the triangles of neighbouring periods overlap and add.
-> - **Non-integer "delays" are sincs.** $e^{-j\omega/2}$ on $|\omega|\le\pi$ inverts to $\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$, not $\delta[n-\frac12]$ ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] 1(b), False; [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #5; %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #3b).
+> - **Non-integer "delays" are sincs.** $e^{-j\omega/2}$ on $|\omega|\le\pi$ inverts to $\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$, not $\delta[n-\frac12]$ ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] 1(b), False; [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #5; [[homework/hw6|HW6]] #3b).
 
 **Where it appears.**
 - Lectures: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]] (the pulse, Exercise 2), [[3-fourier-analysis/14-dtft-properties|L14]] (Table 1, impulse pairs), [[3-fourier-analysis/15-frequency-response|L15]] ($e^{j\omega_0 n}\leftrightarrow2\pi\delta(\omega-\omega_0)$ gives the eigenfunction response).
 - Problem family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
-- Homework: [[homework/hw5|HW5]] #1 (from the definition, with the impulse pair allowed in (c)–(d)); %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #3–#5.
+- Homework: [[homework/hw5|HW5]] #1 (from the definition, with the impulse pair allowed in (c)–(d)); [[homework/hw6|HW6]] #3–#5.
 - Past exams: [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #3, #7; [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] #8; [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] 1(a), #2; [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #2; [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #4; [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] 1(b); [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #2(c); [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] 1(c), #5.
 
 Related: [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[concepts/region-of-convergence|region of convergence]] · [[concepts/frequency-response|frequency response]] · [[supplements/transform-tables|transform tables]]

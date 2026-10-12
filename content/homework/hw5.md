@@ -4,7 +4,7 @@ description: "Worked solutions to ECE 310 Homework 5 (Fall 2026): DTFTs from the
 tags: [homework, midterm-2, dtft]
 ---
 
-*Homework 5 · due Sun Oct 4, 2026 (Gradescope; the PDF header prints "2025", a typo) · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] (the DTFT) and [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (DTFT pairs and properties) · 100 points (60 + 40) · official solutions v1.0 · prev: [[homework/hw4|HW4]] · next: %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% · [[homework/index|all homework]]*
+*Homework 5 · due Sun Oct 4, 2026 (Gradescope; the PDF header prints "2025", a typo) · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] (the DTFT) and [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (DTFT pairs and properties) · 100 points (60 + 40) · official solutions v1.0 · prev: [[homework/hw4|HW4]] · next: [[homework/hw6|HW6]] · [[homework/index|all homework]]*
 
 > [!abstract] What HW5 trains
 > Two skills every Midterm 2 uses. **Computing a DTFT from the definition** (#1): each sample $x[k]$ contributes $x[k]e^{-j\omega k}$; samples placed symmetrically about a centre combine into cosines or sines once you factor out the centre's linear phase; a sinusoid becomes impulses at $\pm\omega_0$ (and every $2\pi$ after that); multiplying by $e^{j\omega_0 n}$ slides the whole spectrum by $\omega_0$. **Reading a spectrum without computing it** (#2): $X_d(0)$, $X_d(\pi)$, $\int X_d\,d\omega$ and $\int\lvert X_d\rvert^2 d\omega$ are a sum, an alternating sum, $2\pi x[0]$ and $2\pi$ times the energy: four numbers in four lines.
@@ -246,7 +246,7 @@ int X / pi = 2.0   int |X|^2 / pi = 22.0
 
 ## Related
 
-[[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponentials]] · [[0-toolkit/01-complex-numbers|complex numbers]] · [[0-toolkit/02-geometric-series|geometric series]] · [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]] · [[supplements/transform-tables|transform tables]] (the DTFT tables) · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] · [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · prev: [[homework/hw4|HW4]] · next: %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%%
+[[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponentials]] · [[0-toolkit/01-complex-numbers|complex numbers]] · [[0-toolkit/02-geometric-series|geometric series]] · [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]] · [[supplements/transform-tables|transform tables]] (the DTFT tables) · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] · [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · prev: [[homework/hw4|HW4]] · next: [[homework/hw6|HW6]]
 
 ### Sources for this page
 

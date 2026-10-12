@@ -1,6 +1,6 @@
 ---
 title: "Interactive demos"
-description: "Small browser apps and Python snippets that go with the ECE 310 notes: convolution, difference equations, pole-zero plots with every ROC, frequency response with magnitude, phase and group delay, and autograded drills."
+description: "Small browser apps and Python snippets that go with the ECE 310 notes: convolution, difference equations, pole-zero plots with every ROC, frequency response with magnitude, phase and group delay, sampling and the Nyquist rate, and autograded drills."
 tags: [demo]
 ---
 
@@ -8,6 +8,7 @@ tags: [demo]
 - [[demos/difference-equation-simulator|Difference-equation simulator]]: runs a causal LCCDE sample by sample and draws its poles and zeros. It tells you whether the system is stable, marginally stable or unstable, and whether *this* input gives a bounded output.
 - [[demos/pole-zero-and-roc-explorer|Pole-zero plot and every possible ROC]]: type $H(z)$ in powers of $z^{-1}$ and click through all of its ROCs to see causality, stability, the partial fractions and $h[n]$ for each one. Presets cover the homework and past-exam problems.
 - [[demos/frequency-response-explorer|Frequency-response explorer]]: type FIR taps or a difference equation, or drag poles and zeros, and see $\lvert H_d(\omega)\rvert$ (linear or dB), the phase with its $\pm\pi$ jumps (principal or unwrapped) and the group delay. A cursor at $\omega_0$ shows what $\cos(\omega_0 n + \theta)$ turns into, with the convolution sum as a check. Presets cover the Lecture 16 examples, moving averages, first-order and pole-zero filters, and three Midterm 2 problems.
+- [[demos/sampling-explorer|Sampling explorer]]: pick an analog spectrum and a bandlimit, slide the sampling rate across the Nyquist rate, and watch the copies of $X_s(\Omega)$ and $X_d(\omega)$ separate, touch or overlap and add, with the samples $x[n]=x_a(nT)$ underneath. Presets for the Lecture 17 examples and the past-exam sampling sketches.
 - [[demos/python-demos|Python demos]]: the course notebooks cut down to eight runnable numpy/scipy snippets, from `np.convolve` with index bookkeeping to `lfilter`, `residuez`, `tf2zpk` and a bounded input with an unbounded output.
 - [[demos/practice-drills|Practice drills]]: ten randomized, autograded drills with hints and worked solutions. Units 1–2: convolution, system properties, partial fractions with ROCs, stability, unbounded outputs, True/False. Unit 3: DTFT values, the response to sinusoids, and magnitude, phase and group delay of linear-phase filters.
 

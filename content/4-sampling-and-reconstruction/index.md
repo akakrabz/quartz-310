@@ -1,0 +1,33 @@
+---
+title: "Unit 4 · Sampling and reconstruction"
+description: "Lecture 17 onward: ideal analog-to-digital conversion (the impulse-train model, spectral copies, ω = ΩT, bandlimited signals and the Nyquist criterion), with ideal digital-to-analog conversion, aliasing in detail and the digital processing of analog signals to come — the bridge between the continuous-time world and the sequences of Units 1–3."
+tags: [sampling, nyquist, ctft, dtft]
+---
+
+Units 1–3 worked with sequences $x[n]$ and asked nothing about where they came from. Unit 4 goes back to the beginning: a sequence is usually the **samples** of a continuous-time signal, $x[n]=x_a(nT)$, taken every $T$ seconds, and a digital system usually ends by turning a sequence back into a continuous-time signal. The questions are what sampling does to the frequency content of a signal, when the samples hold enough to recover the signal, and what an analog signal looks like after it has been sampled, filtered by an LTI system of Units 2–3 and converted back. Lecture 17 answers the first two: multiplying by an impulse train copies the analog spectrum every $2\pi/T$ rad/s, scaled by $1/T$; renaming the axis by $\omega=\Omega T$ gives the DTFT of the samples with its copies every $2\pi$; and for a signal bandlimited to $B$ hertz the copies stay apart exactly when $f_s=1/T\gt2B$, the **Nyquist criterion**. The lectures that follow — ideal digital-to-analog conversion and the aliasing effect, which the Lecture 17 notes announce for "the next couple lectures", and the A/D → $H_d$ → D/A chain that every past Midterm 2 builds on them — will be added as the course reaches them; nothing about them is written here yet.
+
+| # | page | one line |
+|---|---|---|
+| 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | $x[n]=x_a(nT)$, $f_s=1/T$; the impulse-train model $x_s(t)=\sum_nx_a(nT)\delta(t-nT)$; $X_s(\Omega)=\frac1T\sum_nX_a(\Omega-\frac{2\pi}{T}n)$ from the windowing property; $\omega=\Omega T$ and $X_d(\omega)=\frac1T\sum_nX_a(\frac{\omega-2\pi n}{T})$; a box sampled at $T=\frac{1}{20}$ and $\frac{1}{10}$ s; bandlimited signals, $f_s\gt2B$, the Nyquist rate $2B$, guard band, touching copies, aliasing; a triangle sampled at $150$, $100$ and $75$ Hz; a sampled sinusoid remembers $\Omega_0T$ only modulo $2\pi$ |
+| 18– | *to come* | announced in the Lecture 17 notes: ideal digital-to-analog conversion and the aliasing effect in detail; needed by the past exams on top of them: the A/D → $H_d$ → D/A chain. Pages will follow the lectures. |
+
+> [!key] The unit on one card (Lecture 17)
+> - **Ideal sampling** ([[concepts/sampling|sampling]]): $x[n]=x_a(nT)$, sampling period $T$ (s), sampling frequency $f_s=\frac1T$ (Hz). Model: $x_s(t)=x_a(t)\sum_n\delta(t-nT)=\sum_nx_a(nT)\,\delta(t-nT)$, still continuous-time.
+> - **The sampled spectrum:** $X_s(\Omega)=\dfrac1T\displaystyle\sum_{n=-\infty}^{\infty}X_a\!\left(\Omega-\frac{2\pi}{T}n\right)$ — copies of $X_a$ every $\frac{2\pi}{T}$ rad/s, each scaled by $\frac1T$, added where they overlap (from $x_a(t)f(t)\leftrightarrow\frac{1}{2\pi}X_a*F_a$ with $\sum_n\delta(t-nT)\leftrightarrow\frac{2\pi}{T}\sum_n\delta(\Omega-\frac{2\pi}{T}n)$).
+> - **Analog and digital frequency:** $\omega=\Omega T$ (rad/s × s/sample = rad/sample); a tone at $f$ Hz lands at $\omega=2\pi f/f_s$, and $f_s/2$ lands at $\pi$.
+> - **The DTFT of the samples:** $X_d(\omega)=X_s(\Omega)\big|_{\Omega=\omega/T}=\dfrac1T\displaystyle\sum_{n=-\infty}^{\infty}X_a\!\left(\frac{\omega-2\pi n}{T}\right)$: axis scaled by $T$, copies every $2\pi$, heights scaled by $\frac1T$. Without overlap, $X_d(\omega)=\frac1TX_a(\frac{\omega}{T})$ on $\lvert\omega\rvert\le\pi$.
+> - **Bandlimited and Nyquist** ([[concepts/nyquist-criterion|Nyquist criterion]]): $X_a(\Omega)=0$ for $\lvert\Omega\rvert\gt2\pi B$ ($B$ in Hz). No overlap $\iff2\pi B\lt\frac{2\pi}{T}-2\pi B\iff f_s\gt2B\iff T\lt\frac{1}{2B}$. Nyquist rate $2B$; Nyquist period $T_N=\frac{1}{2B}$. Above: a guard band; at exactly $2B$: the copies touch; below: they overlap and add — aliasing.
+> - **A sampled sinusoid:** $\cos(\Omega_0t)\to\cos(\omega_0n)$, $\omega_0=\Omega_0T$; any $\Omega_0'$ with $\Omega_0'T\equiv\pm\Omega_0T\pmod{2\pi}$ gives the same samples (for a sine the sign matters).
+
+> [!exam] How this unit is tested
+> Sampling is on all seven past Midterm 2 exams, on its own or as the first half of an A/D → $H_d$ → D/A problem. Lecture 17 alone answers the parts listed in its exam callout — a Nyquist rate or period from a given $X_c(\Omega)$, sketching $X_d(\omega)$ after sampling at a given $T$ (copies that touch or overlap included), which $T$ or which $\Omega_0$ are consistent with a sampled sinusoid, and the True/False items of §4 of the [[exams/midterm-2/true-false-bank|T/F bank]]. Their family page, with a recipe, traps, every past instance and fresh practice: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]. The other halves — what the ideal D/A returns, the largest $T$ when a digital filter may discard the aliased band, the design of $H_d$ between converters — belong to the lectures to come and are marked as later material on the exam pages. Orientation and the problem-by-problem maps: [[exams/midterm-2/index|Midterm 2]] and the [[exams/midterm-2/past-exams/index|past Midterm 2 exams]].
+
+**Demos:** [[demos/sampling-explorer|sampling explorer]] (drag the sampling period and watch the copies of $X_a$ spread, touch and overlap) · [[demos/practice-drills|practice drills]] · [[supplements/demo-notebooks|course notebooks]] (`demo_sampling`: a $30$ Hz cosine at $100$ Hz and its aliases)
+
+**Concepts:** new in this unit: [[concepts/sampling|sampling]] · [[concepts/nyquist-criterion|Nyquist criterion]]; carried over: [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] (windowing, frequency shift) · [[concepts/complex-exponential|complex exponential]] · [[concepts/discrete-time-signal|discrete-time signal]]
+
+**Before and after:** [[3-fourier-analysis/index|Unit 3 · Fourier analysis and frequency response]] (L12–L16) · the next lectures: to come · all exam material: [[exams/index|Exams]]
+
+### Sources for this page
+
+Snyder, ECE 310 Lecture 17 notes and slides (Fall 2026) with the annotated in-class deck; the notes' closing paragraph for what the next lectures cover (ideal digital-to-analog conversion and the aliasing effect); the seven past Midterm 2 exams with keys for the exam callout. Every formula on the card is checked numerically in `verify/L17_lecture.py` (the copies formula against the DTFT of actual samples, the Nyquist derivation, the sampled-sinusoid identity).

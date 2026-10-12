@@ -115,7 +115,7 @@ A signal that never repeats is a periodic signal whose period has grown without 
 > $$
 > a Riemann sum with spacing $\Omega_0$ turning into an integral.
 
-The CTFT exists under the Dirichlet conditions on every finite interval, together with absolute integrability (notes); slide 12 states the other common sufficient condition, finite energy $\int|x(t)|^2dt<\infty$. If it exists it is unique. It says how much of *every* frequency is in a signal, periodic or not, and it is your background from earlier courses: %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #1 practises it. The one pair worth having next to the DTFT is the pulse:
+The CTFT exists under the Dirichlet conditions on every finite interval, together with absolute integrability (notes); slide 12 states the other common sufficient condition, finite energy $\int|x(t)|^2dt<\infty$. If it exists it is unique. It says how much of *every* frequency is in a signal, periodic or not, and it is your background from earlier courses: [[homework/hw6|HW6]] #1 practises it. The one pair worth having next to the DTFT is the pulse:
 
 $$
 \begin{aligned}
@@ -327,7 +327,7 @@ The pair mirrors $\delta[n]\leftrightarrow1$: a spike in time is flat in frequen
 
 > [!trap] Two things that are not what they look like
 > - **A finite piece of a cosine is not a pair of impulses.** $x[n]=\cos(\frac{\pi}{32}n)$ for $n=0,\dots,15$ only is finite-length, so its DTFT is an ordinary bounded function (here a single broad bump of height $10.7$ centred at $\omega=0$: sixteen samples are too few to separate $\pm\frac{\pi}{32}$), not $\pi[\delta(\omega-\frac{\pi}{32})+\delta(\omega+\frac{\pi}{32})]$ ([[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(c), False). Impulses need the cosine for all $n$.
-> - **$e^{-j\omega/2}$ is not a half-sample delay.** It is a perfectly good DTFT on $[-\pi,\pi]$, but $\delta[n-\frac12]$ is not a sequence ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(b), False). Its inverse DTFT is $x[n]=\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$, for instance $\frac{2}{\pi}=0.637$ at both $n=0$ and $n=1$. %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #3(b) asks the same about $e^{-j3.5\omega}$.
+> - **$e^{-j\omega/2}$ is not a half-sample delay.** It is a perfectly good DTFT on $[-\pi,\pi]$, but $\delta[n-\frac12]$ is not a sequence ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(b), False). Its inverse DTFT is $x[n]=\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$, for instance $\frac{2}{\pi}=0.637$ at both $n=0$ and $n=1$. [[homework/hw6|HW6]] #3(b) asks the same about $e^{-j3.5\omega}$.
 
 ## 8. Inverse DTFT of a sketched spectrum: rectangles and sincs
 
@@ -376,13 +376,13 @@ This sinc decays only like $1/n$: $\sum_n|x[n]|$ grows without bound (like $\log
 > - **Inverse DTFT with impulses**: [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #4 (5 pts).
 > - **True/false on periodicity, existence, uniqueness**: [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #1(a) (False: no DTFT for $2^nu[n]$) and #1(b) (True: every DTFT is $2\pi$-periodic); [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(a), (b) (both False); [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #1(a) (True: $X_d=1+2e^{-j\omega}+3e^{-j2\omega}+4e^{-j3\omega}$ forces $x=\{\underset{\uparrow}{1},2,3,4\}$, by uniqueness); [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #3 (periodicity, above); [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(b) (False: a sequence "bandlimited to $\frac{\pi}{4}$" still has spectral copies near $\pm2\pi$), #1(c) (False: finite cosine) and #1(e) (False: every DTFT is periodic, not only those of infinite-length signals); [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #6 (which transform is periodic, which follows from the z-transform); zero-padding leaves the DTFT unchanged (five items, listed in §6.3).
 >
-> Homework: [[homework/hw5|HW5]] #1 (DTFTs from the definition: the three sequences above and $\alpha^ne^{j\omega_0n}u[n]$, which is $\frac{1}{1-\alpha e^{-j(\omega-\omega_0)}}$) and #2(a)–(c) (values without the closed form); %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #1 (CTFTs) and #3 (inverse DTFTs, including $\cos^2\omega$ and $e^{-j3.5\omega}$).
+> Homework: [[homework/hw5|HW5]] #1 (DTFTs from the definition: the three sequences above and $\alpha^ne^{j\omega_0n}u[n]$, which is $\frac{1}{1-\alpha e^{-j(\omega-\omega_0)}}$) and #2(a)–(c) (values without the closed form); [[homework/hw6|HW6]] #1 (CTFTs) and #3 (inverse DTFTs, including $\cos^2\omega$ and $e^{-j3.5\omega}$).
 
 ## Related
 
 - Concepts: [[concepts/dtft|DTFT]] · [[concepts/fourier-series|Fourier series]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]] · [[concepts/template-matching|template matching]]
 - Lectures: [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]] (inner products) · [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (DTFT from the z-transform, pairs and properties) · [[3-fourier-analysis/15-frequency-response|Lecture 15]] (frequency response) · unit: [[3-fourier-analysis/index|Unit 3]]
-- Practice: [[problems/dtft-and-inverse-dtft|computing DTFTs and inverse DTFTs]] · [[homework/hw5|HW5]] · %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% · [[supplements/transform-tables|transform tables]] (DTFT Tables 5–6) · [[supplements/demo-notebooks|demo notebooks]] (`demo_DTFT`) · toolkit: [[0-toolkit/02-geometric-series|geometric series]], [[0-toolkit/01-complex-numbers|complex numbers]]
+- Practice: [[problems/dtft-and-inverse-dtft|computing DTFTs and inverse DTFTs]] · [[homework/hw5|HW5]] · [[homework/hw6|HW6]] · [[supplements/transform-tables|transform tables]] (DTFT Tables 5–6) · [[supplements/demo-notebooks|demo notebooks]] (`demo_DTFT`) · toolkit: [[0-toolkit/02-geometric-series|geometric series]], [[0-toolkit/01-complex-numbers|complex numbers]]
 
 ### Sources for this page
 

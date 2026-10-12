@@ -24,7 +24,7 @@ lecture: 15
 > $$
 > with the **magnitude response** $|H_d(\omega)|\ge0$ and the **phase response** $\angle H_d(\omega)$, a principal angle in $[-\pi,\pi]$. Computing and plotting the two is [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] ([[concepts/magnitude-and-phase-response|magnitude and phase response]]).
 
-Stability decides what kind of object $H_d$ is. A stable system has an ordinary, continuous $H_d(\omega)$. A marginally stable one (a pole *on* the unit circle) has a frequency response only with an impulse at the pole's frequency, and an input at that frequency resonates ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]]): the accumulator $y[n]=y[n-1]+x[n]$ has $h=u[n]$ and $H_d(\omega)=\frac{1}{1-e^{-j\omega}}+\pi\delta(\omega)\neq H(e^{j\omega})$%%hw6:IChbW2hvbWV3b3JrL2h3NnxIVzZdXSAjNSk=%%%%/hw6%%. A causal system with a pole outside the unit circle has no frequency response at all.
+Stability decides what kind of object $H_d$ is. A stable system has an ordinary, continuous $H_d(\omega)$. A marginally stable one (a pole *on* the unit circle) has a frequency response only with an impulse at the pole's frequency, and an input at that frequency resonates ([[2-z-transform/11-bibo-stability-and-causality|Lecture 11]]): the accumulator $y[n]=y[n-1]+x[n]$ has $h=u[n]$ and $H_d(\omega)=\frac{1}{1-e^{-j\omega}}+\pi\delta(\omega)\neq H(e^{j\omega})$ ([[homework/hw6|HW6]] #5). A causal system with a pole outside the unit circle has no frequency response at all.
 
 > [!question] FA2024 MT2 #3(a) — a three-tap system
 > $h[n]=\delta[n+2]+\delta[n]+\delta[n-2]$. Find $H_d(\omega)$ and its values at $\omega=0,\ \frac{\pi}{2},\ \pi$.
@@ -239,7 +239,7 @@ Figure 1 of the notes, as a table:
 > - **Real or not, and what that implies:** [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #4(a), [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] 1(d) (F) and #6 (can $y$ be real?), [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] 1(a) (F: a cosine is not an eigenfunction).
 > - **$H_d$ versus $H(e^{j\omega})$:** [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #2(c) ($y[n]=y[n-2]+x[n]-x[n-1]$, so $h=(-1)^nu[n]$ and $H_d$ has an impulse at $\pi$).
 > - **Computing $H_d$ from $h$ or an LCCDE** (then plotting it, Lecture 16): [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3, [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #5, [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #3.
-> - **Homework:** %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #5 (the accumulator: is $H_d=H(e^{j\omega})$?), #6 ($y[n]=x[n]+x[n-10]$ and two sinusoidal inputs), #7 ($H_d=\omega e^{j\sin\omega}$: test the symmetry first%%hw6:IOKAlCAkSF9kKC1cb21lZ2EpPS1IX2ReKihcb21lZ2EpJCwgc28gJGgkIGlzIHB1cmVseSBpbWFnaW5hcnkgYW5kIGV2ZXJ5IHNpbnVzb2lkIG11c3QgYmUgc3BsaXQgaW50byBleHBvbmVudGlhbHM=%%%%/hw6%%).
+> - **Homework:** [[homework/hw6|HW6]] #5 (the accumulator: is $H_d=H(e^{j\omega})$?), #6 ($y[n]=x[n]+x[n-10]$ and two sinusoidal inputs), #7 ($H_d=\omega e^{j\sin\omega}$: test the symmetry first — $H_d(-\omega)=-H_d^*(\omega)$, so $h$ is purely imaginary and every sinusoid must be split into exponentials).
 >
 > Recipe, traps and fresh practice: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]].
 
@@ -247,7 +247,7 @@ Figure 1 of the notes, as a table:
 
 - Concepts: [[concepts/frequency-response|frequency response]] · [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]] · [[concepts/dtft-properties|DTFT properties]] (Hermitian symmetry, convolution) · [[concepts/magnitude-and-phase-response|magnitude and phase response]] · [[concepts/transfer-function|transfer function]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/complex-exponential|complex exponential]]
 - Lectures: [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] · [[2-z-transform/06-the-z-transform|Lecture 6]] (eigenfunctions) · [[3-fourier-analysis/index|Unit 3]]
-- Practice: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% · [[demos/frequency-response-explorer|frequency response explorer]]
+- Practice: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · [[homework/hw6|HW6]] · [[demos/frequency-response-explorer|frequency response explorer]]
 
 ### Sources for this page
 

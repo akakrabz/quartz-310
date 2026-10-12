@@ -48,7 +48,7 @@ The cosine row needs a real $h$ because a cosine is the two exponentials $e^{\pm
 | system | ROC of $H(z)$ | frequency response |
 |---|---|---|
 | BIBO stable | contains $\lvert z\rvert=1$ | ordinary, continuous: $H_d(\omega)=H(e^{j\omega})$ |
-| marginally stable (pole on $\lvert z\rvert=1$) | touches $\lvert z\rvert=1$ | only with impulses; $\neq H(e^{j\omega})$. Accumulator: $\frac{1}{1-e^{-j\omega}}+\pi\delta(\omega)$%%hw6:IChbW2hvbWV3b3JrL2h3Nlx8SFc2XV0gIzUp%%%%/hw6%%; $h=(-1)^nu[n]$: impulse at $\pi$ ([[exams/midterm-2/past-exams/fall-2021\|FA2021 MT2]] #2c) |
+| marginally stable (pole on $\lvert z\rvert=1$) | touches $\lvert z\rvert=1$ | only with impulses; $\neq H(e^{j\omega})$. Accumulator: $\frac{1}{1-e^{-j\omega}}+\pi\delta(\omega)$ ([[homework/hw6\|HW6]] #5); $h=(-1)^nu[n]$: impulse at $\pi$ ([[exams/midterm-2/past-exams/fall-2021\|FA2021 MT2]] #2c) |
 | unstable, causal | misses $\lvert z\rvert=1$ | none |
 
 (The ideal filters of later lectures sit outside this table: their sinc-shaped $h[n]$ has a DTFT but no z-transform, and is not stable.) The poles and zeros shape $|H_d|$. A zero on the unit circle at $e^{j\omega_0}$ is a notch, $H_d(\omega_0)=0$: $1-2\cos(\omega_0)z^{-1}+z^{-2}$ removes $\omega_0$ exactly, and $1+z^{-4}$ removes $\frac{\pi}{4}$ and $\frac{3\pi}{4}$ ([[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #7). A pole close to the unit circle makes a peak: $\frac{1}{1-0.9z^{-1}}$ has gain $10$ at $\omega=0$ and $\frac{1}{1.9}\approx0.53$ at $\omega=\pi$, a low-pass. ([[concepts/eigenfunctions-of-lti-systems|Eigenfunctions]]: "a zero blocks, a pole resonates", now read on the unit circle.)
@@ -63,7 +63,7 @@ Symmetric FIR filters from the exams and homework all factor as a real amplitude
 | $H(z)=1+z^{-4}$ | $2\cos(2\omega)\,e^{-j2\omega}$ | [[exams/midterm-2/past-exams/fall-2019\|FA2019 MT2]] #7 |
 | $h=\delta[n]+\delta[n-6]$ | $2\cos(3\omega)\,e^{-j3\omega}$ | [[exams/midterm-2/past-exams/spring-2023\|SP2023 MT2]] #5 |
 | $y[n]=x[n]+2x[n-3]+x[n-6]$ | $\left(2+2\cos3\omega\right)e^{-j3\omega}$ | [[exams/midterm-2/past-exams/spring-2025\|SP2025 MT2]] #3 |
-| $y[n]=x[n]+x[n-10]$ | $2\cos(5\omega)\,e^{-j5\omega}$ | %%hw6:W1tob21ld29yay9odzZcfEhXNl1dICM2%%—%%/hw6%% |
+| $y[n]=x[n]+x[n-10]$ | $2\cos(5\omega)\,e^{-j5\omega}$ | [[homework/hw6\|HW6]] #6 |
 
 Where the real amplitude goes negative, the magnitude response is its absolute value and the phase picks up a jump of $\pi$; the straight-line phase $-c\,\omega$ is a constant delay of $c$ samples. Plotting magnitude and phase, principal angles, $\pi$ jumps and the group delay $-\frac{d\angle H_d}{d\omega}$ are the subject of [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]]: see [[concepts/magnitude-and-phase-response|magnitude and phase response]] and [[concepts/group-delay|group delay]].
 
@@ -79,7 +79,7 @@ Where the real amplitude goes negative, the magnitude response is its absolute v
 **Where it appears.**
 - Lectures: [[3-fourier-analysis/15-frequency-response|L15]] (definition, eigenfunctions, sinusoids, $Y_d=X_dH_d$), [[3-fourier-analysis/14-dtft-properties|L14]] (the DTFT–z-transform link, Hermitian symmetry), [[3-fourier-analysis/16-magnitude-and-phase-response|L16]] (magnitude, phase, group delay), [[2-z-transform/06-the-z-transform|L6]] and [[2-z-transform/11-bibo-stability-and-causality|L11]] (eigenfunctions, stability).
 - Problem families: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]], [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]].
-- Homework: %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #5–#7.
+- Homework: [[homework/hw6|HW6]] #5–#7.
 - Past exams: [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3, #4; [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #3, #4; [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #5, #6; [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #4; [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] 1(a), #2; [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] 1(d), #6, #7.
 - Try it live: [[demos/frequency-response-explorer|frequency response explorer]].
 

@@ -45,19 +45,22 @@ Notes for **ECE 310 — Digital Signal Processing** (University of Illinois, Fal
 15. [[3-fourier-analysis/15-frequency-response|Frequency response]]
 16. [[3-fourier-analysis/16-magnitude-and-phase-response|Magnitude and phase response, group delay]]
 
-More lectures to come: ideal filters, sampling and reconstruction, the DFT and FFT.
+### [[4-sampling-and-reconstruction/index|Unit 4 · Sampling and reconstruction]] — Lecture 17 onward
+17. [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Ideal analog-to-digital conversion: spectral copies, ω = ΩT, the Nyquist criterion]]
+
+More lectures to come: ideal digital-to-analog conversion and aliasing, ideal filters, the DFT and FFT.
 
 ### Practice
 - [[problems/index|Problem families]] — every kind of problem the past exams and the homework keep setting, each with a recipe, traps, all past instances and fresh practice problems.
-- [[homework/index|Homework]] — walkthroughs of [[homework/hw1|HW1]] · [[homework/hw2|HW2]] · [[homework/hw3|HW3]] · [[homework/hw4|HW4]] · [[homework/hw5|HW5]] (HW6's appears after its Oct 9 due date).
+- [[homework/index|Homework]] — walkthroughs of [[homework/hw1|HW1]] · [[homework/hw2|HW2]] · [[homework/hw3|HW3]] · [[homework/hw4|HW4]] · [[homework/hw5|HW5]] · [[homework/hw6|HW6]].
 - [[demos/practice-drills|Practice drills]] — randomized, autograded drills with hints and worked solutions.
-- [[demos/index|Interactive demos]] — [[demos/convolution-explorer|convolution explorer]] · [[demos/difference-equation-simulator|difference-equation simulator]] · [[demos/pole-zero-and-roc-explorer|pole-zero and ROC explorer]] · [[demos/frequency-response-explorer|frequency-response explorer]] · [[demos/python-demos|Python demos]].
+- [[demos/index|Interactive demos]] — [[demos/convolution-explorer|convolution explorer]] · [[demos/difference-equation-simulator|difference-equation simulator]] · [[demos/pole-zero-and-roc-explorer|pole-zero and ROC explorer]] · [[demos/frequency-response-explorer|frequency-response explorer]] · [[demos/sampling-explorer|sampling explorer]] · [[demos/python-demos|Python demos]].
 
 ### Exams
 [[exams/index|Exams]] — how to use past exams to test yourself, and everything for each midterm:
 
 - **Midterm 1** (Lectures 1–11, held Sep 30): [[exams/midterm-1/index|review guide]] · [[exams/midterm-1/cheat-sheet|cheat sheet]] · [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|system-property bank]] · [[exams/midterm-1/past-exams/index|seven past exams]]
-- **Midterm 2** (Unit 3 and the lectures after it): [[exams/midterm-2/index|overview]] · [[exams/midterm-2/past-exams/index|seven past exams]]
+- **Midterm 2** (Units 3–4 and the lectures after them): [[exams/midterm-2/index|overview]] · [[exams/midterm-2/past-exams/index|seven past exams]]
 
 ### Reference
 [[concepts/index|Concept glossary]] (with the [[concepts/concept-map.canvas|concept map]] of Units 1–2) · [[0-toolkit/index|Toolkit]] · [[0-toolkit/05-errata|Errata in the course materials]] · [[supplements/index|Supplements]] (course summary, transform tables, Singer & Munson notes, notation, demo notebooks)
@@ -109,8 +112,8 @@ The notes use a few recurring boxes, so you can skim for what you need:
 > [!success]- Answer (click to expand)
 > Solutions are folded, so you can test yourself first. Every number in them was checked numerically.
 
-*Status (October 2026): Units 1–2 — Lectures 1–11, HW1–HW4 and the seven past Midterm 1 exams — are complete. Unit 3 covers Lectures 12–16 and HW5–HW6 (HW6's worked solutions go up after its Oct 9 due date), and the seven past Midterm 2 exams are typed with folded solutions. Lectures 17 onward are to come. Sources: C. Snyder, ECE 310 lecture notes and slides, Fall 2026 (with the annotated in-class slides and the Midterm 1 Review); homework HW1–HW6 with the official solutions to HW1–HW5; past Midterm 1 exams FA2019–FA2025 and past Midterm 2 exams FA2019–SP2025, with keys; the ECE 310 course summary and transform tables; A. C. Singer and D. C. Munson, ECE 310 course notes (2019).*
+*Status (October 2026): Units 1–2 — Lectures 1–11, HW1–HW4 and the seven past Midterm 1 exams — are complete. Unit 3 covers Lectures 12–16 and HW5–HW6, Unit 4 has Lecture 17 (ideal A/D conversion) with its problem family and sampling explorer, and the seven past Midterm 2 exams are typed with folded solutions. Lectures 18 onward are to come. Sources: C. Snyder, ECE 310 lecture notes and slides, Fall 2026 (with the annotated in-class slides and the Midterm 1 Review); homework HW1–HW6 with the official solutions to HW1–HW5; past Midterm 1 exams FA2019–FA2025 and past Midterm 2 exams FA2019–SP2025, with keys; the ECE 310 course summary and transform tables; A. C. Singer and D. C. Munson, ECE 310 course notes (2019).*
 
 ### Sources for this page
 
-The course calendar and titles on the Fall 2026 lecture slides (Lectures 1–16, Aug 24 – Oct 5), the exam instructions on the past midterms, the notation supplement of the course (class vs. textbook notation), and Lectures 13–16 for the DTFT and frequency-response notation.
+The course calendar and titles on the Fall 2026 lecture slides (Lectures 1–17, Aug 24 – Oct 9), the exam instructions on the past midterms, the notation supplement of the course (class vs. textbook notation), and Lectures 13–16 for the DTFT and frequency-response notation.

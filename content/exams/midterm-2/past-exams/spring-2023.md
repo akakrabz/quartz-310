@@ -13,20 +13,20 @@ tags: [exam, midterm-2]
 
 | # | pts | what it asks | topic · problem family | lectures |
 |---|---|---|---|---|
-| 1 | 10 | five True/False statements (+2/−1/0) | T/F: sampling, Nyquist rate of $x_c(3t)$, zero padding, IDFT periodicity, bandlimited | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], Lectures 17+ (not yet in these notes) |
+| 1 | 10 | five True/False statements (+2/−1/0) | T/F: sampling, Nyquist rate of $x_c(3t)$, zero padding, IDFT periodicity, bandlimited | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling, Nyquist rate, bandlimited), Lectures 18+ (not yet in these notes) (DFT) |
 | 2 | 3 | $X_d$ of a **real** sequence on $[-\pi, 0]$, given $X_d = j\omega$ on $[0, \pi]$ | DTFT symmetry · [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/14-dtft-properties\|L14]] |
 | 3 | 3 | same for an **arbitrary** sequence, on $[2\pi, 3\pi]$ | DTFT periodicity · [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]] |
 | 4 | 5 | inverse DTFT of $5e^{j\pi\omega}\delta(\omega - \omega_0)$ | [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]] |
 | 5 | 14 | $H_d$ of $\delta[n] + \delta[n-6]$; plot magnitude and phase | [[problems/magnitude-phase-and-group-delay\|magnitude, phase and group delay]] | [[3-fourier-analysis/15-frequency-response\|L15]], [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
 | 6 | 8 | response of $H_d(\omega) = \omega e^{j\pi\cos\omega}$ to $3 + e^{j\frac{\pi}{3}n} + \sin(\frac{\pi}{2}n + \frac{\pi}{4})$ | [[problems/lti-response-to-sinusoids\|LTI response to sinusoids]] | [[3-fourier-analysis/15-frequency-response\|L15]] |
-| 7 | 20 | ideal A/D → $H_d$ → ideal D/A: Nyquist rate; sketch $X_d$, $Y_d$ at two sampling rates | sampling · ideal filters · the A/D–$H_d$–D/A system | Lectures 17+ (not yet in these notes) |
-| 8 | 10 | sampling periods consistent with a given $x[n]$ and a given $y_c(t)$ | sampling and reconstruction (aliasing) | Lectures 17+ (not yet in these notes) |
-| 9 | 15 | $X_0$, $X_3$; $y[n]$ from a permuted DFT; zero-padding relations | the DFT and its properties | Lectures 17+ (not yet in these notes) |
-| 10 | 12 | number, amplitudes and frequencies of cosines from a 24-point DFT plot | spectral analysis with the DFT | Lectures 17+ (not yet in these notes) |
+| 7 | 20 | ideal A/D → $H_d$ → ideal D/A: Nyquist rate; sketch $X_d$, $Y_d$ at two sampling rates | sampling · ideal filters · the A/D–$H_d$–D/A system | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (Nyquist rate, the sketches of $X_d$), Lectures 18+ (not yet in these notes) |
+| 8 | 10 | sampling periods consistent with a given $x[n]$ and a given $y_c(t)$ | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] · reconstruction | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (which $T$ give $x[n]$), Lectures 18+ (not yet in these notes) (D/A) |
+| 9 | 15 | $X_0$, $X_3$; $y[n]$ from a permuted DFT; zero-padding relations | the DFT and its properties | Lectures 18+ (not yet in these notes) |
+| 10 | 12 | number, amplitudes and frequencies of cosines from a 24-point DFT plot | spectral analysis with the DFT | Lectures 18+ (not yet in these notes) |
 
 ## Problem 1 · True/False (10 pts)
 
-*Topic: zero padding and the DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]); sampling and the DFT — Lectures 17+ (not yet in these notes).*
+*Topic: zero padding and the DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]); sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]) and the DFT (Lectures 18+ (not yet in these notes)).*
 
 > [!question] Problem 1
 > Answer **True** or **False** to each of the following statements: *Grading:* Correct answer = 2 pt.; Incorrect answer = −1 pt. No answer = 0 pts.
@@ -171,7 +171,7 @@ tags: [exam, midterm-2]
 
 ## Problem 7 · An odd spectrum through A/D, $H_d$, D/A (20 pts)
 
-*Topic: sampling, ideal filters and the A/D–$H_d$–D/A system — Lectures 17+ (not yet in these notes).*
+*Topic: sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]: the Nyquist rate and the sketches of $X_d$; family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]]), then ideal filters and the A/D–$H_d$–D/A system — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 7
 > Consider the process of a bandlimited continuous-time signal $x_c(t)$ via the system shown below.
@@ -211,7 +211,7 @@ tags: [exam, midterm-2]
 
 ## Problem 8 · Sampling periods from aliased cosines (10 pts)
 
-*Topic: sampling and reconstruction (aliasing) — Lectures 17+ (not yet in these notes).*
+*Topic: sampling and aliasing — [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] (part (a)); the ideal D/A reconstruction in (b) — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 8
 > Consider the sampling and reconstruction system shown below. The input to the ideal A/D is $x_c(t) = 2\cos\left(100\pi t + \frac{\pi}{4}\right) + \cos(300\pi t)$.
@@ -241,7 +241,7 @@ tags: [exam, midterm-2]
 
 ## Problem 9 · DFT shift, modulation and zero padding (15 pts)
 
-*Topic: the DFT and its properties — Lectures 17+ (not yet in these notes).*
+*Topic: the DFT and its properties — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 9
 > For all parts of this question, let $\{x[n]\}_{n=0}^{5} = \{1, 2, -3, -4, 5, 6\}$ be a length-6 signal with DFT $\{X[k]\}_{k=0}^{5} = \{X_0, X_1, X_2, X_3, X_4, X_5\}$.
@@ -285,7 +285,7 @@ print([bool(np.isclose(a, b)) for a, b in pairs])
 
 ## Problem 10 · Cosines from a DFT plot (12 pts)
 
-*Topic: spectral analysis with the DFT — Lectures 17+ (not yet in these notes).*
+*Topic: spectral analysis with the DFT — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 10
 > An analog signal $x_a(t)$ is known to be composed of $M$ spectral components such that $x_a(t) = \sum_{m=1}^{M}A_m\cos(\Omega_m t)$. The analog signal is sampled with sampling period $T = \frac{1}{12{,}000}$ s to create digital signal $\{x[n]\}_{n=0}^{23} = \{x_a(nT)\}_{n=0}^{23}$ with DFT $X[k]$. The DFT magnitude spectrum $\lvert X[k]\rvert$ is given in the below image. You may assume that $x_a(t)$ is sampled above the Nyquist rate and thus no aliasing occurs.

@@ -5,7 +5,7 @@ tags: [lecture, midterm-2, frequency-response, magnitude-response, phase-respons
 lecture: 16
 ---
 
-*Lecture 16 · Mon Oct 5, 2026 (continued Wed Oct 7) · notes + slides "Magnitude and phase response" · prev: [[3-fourier-analysis/15-frequency-response|Lecture 15]] · next: Lecture 17 (coming)*
+*Lecture 16 · Mon Oct 5, 2026 (continued Wed Oct 7) · notes + slides "Magnitude and phase response" · prev: [[3-fourier-analysis/15-frequency-response|Lecture 15]] · next: [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]*
 
 > [!abstract] In one breath
 > Write the frequency response in polar form, $H_d(\omega)=|H_d(\omega)|\,e^{j\angle H_d(\omega)}$, and plot the two parts separately over $[-\pi,\pi]$. The **magnitude response** $|H_d(\omega)|\ge 0$ is the gain at each frequency (on a linear scale, or as $20\log_{10}|H_d|$ in dB); the **phase response** $\angle H_d(\omega)$, kept as a principal angle in $[-\pi,\pi]$, is the shift. For short FIR filters one trick does all the work: pull out $e^{-jM\omega}$, with $M$ the centre of $h$, so that what is left is a **real** function $A(\omega)$. Then $|H_d|=|A|$, and $\angle H_d$ is the line $-M\omega$ (plus a constant), plus $\pm\pi$ wherever $A(\omega)\lt 0$, because $-1=e^{\pm j\pi}$. So a phase plot has two kinds of breaks: **$\pm\pi$ jumps** where the real amplitude changes sign (a zero of $H$ on the unit circle), and **$2\pi$ wraps** that only keep the angle inside $[-\pi,\pi]$. A linear phase $-k\omega$ is a pure delay by $k$ samples. The **group delay** $\tau_{gd}(\omega)=-\frac{d\angle H_d(\omega)}{d\omega}$ (jumps ignored) generalizes that. If it is constant, every frequency is delayed equally and the waveform survives. If it is not, the frequencies drift apart and the signal smears, even when the magnitude response is perfect.
@@ -258,7 +258,7 @@ The first block reproduces Example 3: $6$, $2\sqrt2$ and $2$, the phase $-\frac{
 > - [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #2 (10 pts): sketch $e^{-j4\omega}\sin2\omega$, with $\pi$ jumps at $0,\pm\frac{\pi}{2}$. (The key lets two segments run down to $-2\pi$ instead of wrapping at $-\pi$; that is the same angle, but Lecture 16 keeps the plot in $[-\pi,\pi]$.) And #3 (9 pts): write the DTFT of $3\delta[n+1]-3\delta[n-7]$ as $Ae^{-jB\omega}\sin(C\omega)$. The trick with $M=3$ gives $A=6j$, $B=3$, $C=4$ (or $A=-6j$, $C=-4$).
 > - [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #4 (18 pts, with an output computation): plot the magnitude and phase of $H_d=(\frac12+\cos\omega)e^{j|\omega|}$. The real factor changes sign at $\pm\frac{2\pi}{3}$, and the phase is not odd, so $h$ is complex.
 >
-> The same factoring sits inside sinusoid-response problems, e.g. [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #7: $H(z)=1+z^{-4}$ gives $H_d=2e^{-j2\omega}\cos2\omega$, which removes the $\cos\frac{\pi}{4}n$ component. None of the seven past Midterm 2 exams asks for a group delay. Recipe, traps and practice: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]. Homework: %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #6, $y[n]=x[n]+x[n-10]$, is Example 1's trick with $M=5$.
+> The same factoring sits inside sinusoid-response problems, e.g. [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #7: $H(z)=1+z^{-4}$ gives $H_d=2e^{-j2\omega}\cos2\omega$, which removes the $\cos\frac{\pi}{4}n$ component. None of the seven past Midterm 2 exams asks for a group delay. Recipe, traps and practice: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]. Homework: [[homework/hw6|HW6]] #6, $y[n]=x[n]+x[n-10]$, is Example 1's trick with $M=5$.
 
 > [!question] Practice — three short filters
 > For each, find $|H_d(\omega)|$, $\angle H_d(\omega)$, the $\pm\pi$ jumps and the group delay: (a) $h=\{\underset{\uparrow}{1},2,1\}$ $\quad$ (b) $h=\{\underset{\uparrow}{2},0,0,2\}$ $\quad$ (c) $h=\{\underset{\uparrow}{1},-1\}$.
@@ -274,7 +274,7 @@ The first block reproduces Example 3: $6$, $2\sqrt2$ and $2$, the phase $-\frac{
 
 - Concepts: [[concepts/magnitude-and-phase-response|magnitude and phase response]] · [[concepts/group-delay|group delay and linear phase]] · [[concepts/frequency-response|frequency response]] · [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/fir-and-iir|FIR and IIR]] · [[concepts/complex-exponential|complex exponential]]
 - Toolkit: [[0-toolkit/01-complex-numbers|complex numbers]]
-- Practice: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% · [[demos/frequency-response-explorer|frequency response explorer]] · [[exams/midterm-2/index|Midterm 2]]
+- Practice: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · [[homework/hw6|HW6]] · [[demos/frequency-response-explorer|frequency response explorer]] · [[exams/midterm-2/index|Midterm 2]]
 - Unit: [[3-fourier-analysis/index|Unit 3]] · previous: [[3-fourier-analysis/15-frequency-response|Lecture 15]]
 
 ### Sources for this page

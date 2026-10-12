@@ -51,8 +51,8 @@ Mermaid diagram). The demos and drills are fully self-contained.
 
 ## 4. Writing conventions (so new pages match)
 
-- One page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/` and
-  `3-fourier-analysis/` (each with an `index.md` overview); frontmatter `title`, `description`, `tags`, `lecture`.
+- One page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/`,
+  `3-fourier-analysis/` and `4-sampling-and-reconstruction/` (each with an `index.md` overview); frontmatter `title`, `description`, `tags`, `lecture`.
   Concepts in `content/concepts/` (the concept map is `concepts/concept-map.canvas`), problem families in `content/problems/`
   (frontmatter also `family_frequency`, `typical_points`, `lectures` — the Bases table `problems/exam-problem-families.base`
   reads them), past exams in `content/exams/midterm-1/past-exams/` and `content/exams/midterm-2/past-exams/` (hub:
@@ -75,11 +75,11 @@ Mermaid diagram). The demos and drills are fully self-contained.
   `<div class="ece-demo">`.
 - Python snippets are real: each was run and its output pasted underneath.
 - Pages with `draft: true` in the frontmatter (e.g. a homework walkthrough before its due date) are left out of the build by the
-  `remove-draft` filter, so published pages must not link to them. For HW6 (due Fri Oct 9, 2026) every link to `homework/hw6`
-  and every HW6-labelled answer on a published page is wrapped in a comment marker `%%hw6:<base64 of the text>%%<shown now>%%/hw6%%`
-  (Obsidian `%%…%%` comments are stripped by the build). **After the due date run `python3 tools/hw6_release.py`** (add
-  `--dry-run` to preview): it restores the links and labels exactly, updates the "published after the due date" wording on the hub
-  pages and removes the draft flag; then build or commit as usual.
+  `remove-draft` filter, so published pages must not link to them. To hold a walkthrough back until its due date, wrap each
+  link to it and each labelled answer on a published page in a comment marker `%%hw6:<base64 of the text>%%<shown now>%%/hw6%%`
+  (Obsidian `%%…%%` comments are stripped by the build) and release with `python3 tools/hw6_release.py` (`--dry-run` to preview),
+  which restores the text, updates the hub wording and removes the draft flag. HW6 was released this way on Oct 9/10; the script
+  is the pattern for HW7 onward (rename the marker and the edit list).
 
 ## 5. Checking a page without building
 
@@ -87,15 +87,16 @@ Mermaid diagram). The demos and drills are fully self-contained.
 as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
 2,827 links, 12,321 equations).
 
-## 6. What's here (build 2, October 2026 — Lectures 1–16)
+## 6. What's here (build 3, October 2026 — Lectures 1–17)
 
 - **Home**: a learning hub — how to learn with the site (lecture → concept hubs → folded questions → problem families → homework →
   drills and demos → past exams as self-tests), the course map, the conventions table and the callout legend.
-- **Lectures 1–16** in three units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
-  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`), written from Prof. Snyder's notes and slides.
-  Lectures 17 onward (ideal filters, sampling and reconstruction, the DFT and FFT) are to come.
-- **36 concept pages** (the graph's hubs, 8 of them for Unit 3) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
-- **13 problem families** — 10 from the past Midterm 1 exams, 3 from the past Midterm 2 exams — each with a recipe, traps, every past
+- **Lectures 1–17** in four units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
+  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`) and sampling and reconstruction (L17 so far,
+  `4-sampling-and-reconstruction/`), written from Prof. Snyder's notes and slides. Lectures 18 onward (ideal D/A conversion and
+  aliasing, ideal filters, the DFT and FFT) are to come.
+- **38 concept pages** (the graph's hubs, 8 of them for Unit 3, 2 for Unit 4) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
+- **14 problem families** — 10 from the past Midterm 1 exams, 4 from the past Midterm 2 exams — each with a recipe, traps, every past
   instance and fresh practice problems with folded solutions, listed in a live table by the Bases plugin
   (`problems/exam-problem-families.base`).
 - **Exams** (`exams/index.md`, the self-test layer). Midterm 1: a review guide (scope, format, frequency of every problem type, a plan
@@ -103,10 +104,10 @@ as targets) and compiles every equation with KaTeX in strict mode. Run it before
   (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2: an overview (scope, format, what gets asked on each past exam, a
   preparation plan and a Unit 3 formula box), a true/false bank (all 43 statements of the seven exams) and 7 past exams
   (FA2019 … SP2025), typed with folded solutions; the problems on topics after Lecture 16 are marked as later material.
-- **Homework walkthroughs** HW1–HW6; HW6's is written but stays a draft until after its due date (Oct 9) — see §4 for `tools/hw6_release.py`.
+- **Homework walkthroughs** HW1–HW6 (HW6's was released with `tools/hw6_release.py` after its Oct 9 due date; the script is kept as the pattern for later sets).
 - A **toolkit** (complex numbers, geometric series, signal transformations, factoring and long division, errata in the course
   materials) and **supplements** (Singer–Munson notes reading guide, notation, course summary, transform tables, the demo notebooks).
-- **Interactive**: convolution explorer, pole-zero & ROC explorer, difference-equation simulator, frequency-response explorer, Python
+- **Interactive**: convolution explorer, pole-zero & ROC explorer, difference-equation simulator, frequency-response explorer, sampling explorer, Python
   demos, and autograded randomized **practice drills** (TheorieLearn-style: fresh variants, hints after a wrong answer, worked
   solutions, exam scoring).
 - Plugins added to the 329 setup: `@quartz-community/canvas-page` (renders the `.canvas` concept map) and

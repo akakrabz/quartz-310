@@ -31,7 +31,7 @@ tags: [exam, midterm-2]
 > 3. **The rest of the Unit 3 problems as a bank:** FA2023 #2, #4; SP2023 #2–#6; FA2021 #2; SP2021 #2, #3, #7; FA2019 #3, #5, #6, #7.
 > 4. **True/False:** the Unit 3 sections of the [[exams/midterm-2/true-false-bank|T/F bank]] (Q1–Q16), saying the reason out loud.
 >
-> **After Lectures 17+:** take SP2025, then FA2024, whole and timed (2 hours, your sheets, no calculator), and repair the same way. Use FA2023, SP2023 and the 2021 and 2019 exams by topic.
+> **After Lectures 18+:** take SP2025, then FA2024, whole and timed (2 hours, your sheets, no calculator), and repair the same way. Use FA2023, SP2023 and the 2021 and 2019 exams by topic.
 
 > [!trap] The Unit 3 traps that cost the most points
 > - **Is $h$ real?** Check $H_d(-\omega)=H_d^*(\omega)$ before using the cosine shortcut: FA2024 #4 passes, SP2023 #6 and FA2023 #4 fail.
@@ -42,7 +42,7 @@ tags: [exam, midterm-2]
 
 ## Problem by problem
 
-Every problem of the seven exams, with its topic and, for Unit 3, its [[problems/index|problem family]] (the same maps open each exam page, with the lectures). Topics after Lecture 16 (ideal filters, sampling and reconstruction, A/D–$H_d$–D/A systems, the DFT, spectral analysis, circular convolution, the FFT) are Lectures 17+, notes coming.
+Every problem of the seven exams, with its topic and, for Unit 3, its [[problems/index|problem family]] (the same maps open each exam page, with the lectures). The sampling parts of the A/D problems (the Nyquist rate, the sketch of $X_d(\omega)$, aliasing of sinusoids) are [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] and the family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]]; the topics after it (ideal D/A reconstruction, ideal filters, A/D–$H_d$–D/A systems, the DFT, spectral analysis, circular convolution, the FFT) are Lectures 18+, notes coming.
 
 ### [[exams/midterm-2/past-exams/spring-2025|Spring 2025]]
 

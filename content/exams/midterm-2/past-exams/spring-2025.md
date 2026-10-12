@@ -13,19 +13,19 @@ tags: [exam, midterm-2]
 
 | # | pts | what it asks | problem family | lectures |
 |---|---|---|---|---|
-| 1 | 12 | six True/False statements (graded +2/−1/0): inverse DTFT, inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, Hamming window | [[problems/dtft-and-inverse-dtft\|DTFTs]] · sampling, the DFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/14-dtft-properties\|L14]]; Lectures 17+ (not yet in these notes) |
+| 1 | 12 | six True/False statements (graded +2/−1/0): inverse DTFT, inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, Hamming window | [[problems/dtft-and-inverse-dtft\|DTFTs]] · sampling, the DFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/14-dtft-properties\|L14]]; Lectures 18+ (not yet in these notes) |
 | 2 | 10 | sketch the DTFTs of $x[n]\cos(\frac{2\pi}{5}n)$ and $x[n]\cos^2(\frac{2\pi}{5}n)$ for an ideal low-pass $X_d$ | [[problems/dtft-and-inverse-dtft\|DTFTs]] (modulation) | [[3-fourier-analysis/14-dtft-properties\|L14]] |
 | 3 | 12 | $H_d$, $\lvert H_d\rvert$ and $\angle H_d$ for $y[n] = x[n] + 2x[n-3] + x[n-6]$ | [[problems/magnitude-phase-and-group-delay\|magnitude, phase]] | [[3-fourier-analysis/15-frequency-response\|L15]], [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
 | 4 | 10 | $H_d = j\omega e^{j\pi\sin\omega}$: output for $5 + 2e^{j\frac{\pi}{4}n} + \sin(\frac{\pi}{2}n + \frac{\pi}{4}) + (-1)^n$ | [[problems/lti-response-to-sinusoids\|LTI response to sinusoids]] | [[3-fourier-analysis/14-dtft-properties\|L14]], [[3-fourier-analysis/15-frequency-response\|L15]] |
-| 5 | 16 | A/D → ideal LPF → D/A: sketch $X_d$, $Y_d$, $Y_a$; largest $T$ and $\omega_c$ to remove everything above 50 Hz | sampling and reconstruction · ideal filters | Lectures 17+ (not yet in these notes) |
-| 6 | 12 | which sampling periods are consistent with given sinusoids; $T$ from an aliased output | sampling and aliasing | Lectures 17+ (not yet in these notes) |
-| 7 | 12 | DFT of a length-8 signal: $X_0$; $y[n]$ from a permuted, sign-flipped DFT; zero-padding relations | DFT properties | Lectures 17+ (not yet in these notes) |
-| 8 | 6 | $y[n]$ from $Y[m] = X[m]e^{j\frac{3\pi}{4}m}$ | DFT properties (circular shift) | Lectures 17+ (not yet in these notes) |
-| 9 | 10 | DFT of 16 samples of $\cos(\frac{\pi}{2}n)$, with a sketch | spectral analysis with the DFT | Lectures 17+ (not yet in these notes) |
+| 5 | 16 | A/D → ideal LPF → D/A: sketch $X_d$, $Y_d$, $Y_a$; largest $T$ and $\omega_c$ to remove everything above 50 Hz | sampling and reconstruction · ideal filters | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (the sketch of $X_d$), Lectures 18+ (not yet in these notes) |
+| 6 | 12 | which sampling periods are consistent with given sinusoids; $T$ from an aliased output | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (a)–(b), Lectures 18+ (not yet in these notes) (c) |
+| 7 | 12 | DFT of a length-8 signal: $X_0$; $y[n]$ from a permuted, sign-flipped DFT; zero-padding relations | DFT properties | Lectures 18+ (not yet in these notes) |
+| 8 | 6 | $y[n]$ from $Y[m] = X[m]e^{j\frac{3\pi}{4}m}$ | DFT properties (circular shift) | Lectures 18+ (not yet in these notes) |
+| 9 | 10 | DFT of 16 samples of $\cos(\frac{\pi}{2}n)$, with a sketch | spectral analysis with the DFT | Lectures 18+ (not yet in these notes) |
 
 ## Problem 1 · True/False, +2/−1/0 (12 pts)
 
-*Topic: inverse DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]); inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, windows: Lectures 17+ (not yet in these notes).*
+*Topic: inverse DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]); inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, windows: Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 1
 > Mark **True** or **False** for the following statements. *Grading: correct answer +2, incorrect answer −1, no answer 0.*
@@ -154,7 +154,7 @@ tags: [exam, midterm-2]
 
 ## Problem 5 · An A/D–filter–D/A system (16 pts)
 
-*Topic: sampling and reconstruction with ideal A/D and D/A, ideal low-pass filtering — Lectures 17+ (not yet in these notes).*
+*Topic: sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]: the sketch of $X_d$ in (a)); ideal D/A reconstruction and low-pass filtering — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 5
 > Consider the digital system below, with a digital filter $H_d(\omega)$ between ideal A/D and D/A converters.
@@ -195,7 +195,7 @@ tags: [exam, midterm-2]
 
 ## Problem 6 · Which sampling periods are consistent? (12 pts)
 
-*Topic: sampling and aliasing of sinusoids, ideal D/A reconstruction — Lectures 17+ (not yet in these notes).*
+*Topic: sampling and aliasing of sinusoids — [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] (parts (a)–(b)); ideal D/A reconstruction (c) — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 6
 > Consider a sampling system with ideal A/D and D/A converters.
@@ -235,7 +235,7 @@ tags: [exam, midterm-2]
 
 ## Problem 7 · DFT index gymnastics (12 pts)
 
-*Topic: DFT properties (circular shift, modulation), zero-padding and the symmetry of a real signal's DFT — Lectures 17+ (not yet in these notes).*
+*Topic: DFT properties (circular shift, modulation), zero-padding and the symmetry of a real signal's DFT — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 7
 > For all parts of this question, let $\{x[n]\}_{n=0}^{7} = \{1,\ 2,\ -3,\ -4,\ 5,\ 6,\ -2,\ 2\}$ be a length-8 signal with DFT $\{X[m]\}_{m=0}^{7} = \{X_0, X_1, X_2, X_3, X_4, X_5, X_6, X_7\}$.
@@ -274,7 +274,7 @@ tags: [exam, midterm-2]
 
 ## Problem 8 · A phase ramp in the DFT (6 pts)
 
-*Topic: DFT circular-shift property — Lectures 17+ (not yet in these notes).*
+*Topic: DFT circular-shift property — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 8
 > You are given two sequences $x[n] = \{1, 2, 3, 4, 5, 6, 7, 8\}$ and $y[n] = \{y_0, y_1, y_2, y_3, y_4, y_5, y_6, y_7\}$, and their DFTs are related by $Y[m] = X[m]e^{j\frac{3\pi}{4}m}$. Determine $y[n]$ based on the values of $x[n]$.
@@ -291,7 +291,7 @@ tags: [exam, midterm-2]
 
 ## Problem 9 · DFT of a truncated cosine (10 pts)
 
-*Topic: spectral analysis with the DFT — Lectures 17+ (not yet in these notes).*
+*Topic: spectral analysis with the DFT — Lectures 18+ (not yet in these notes).*
 
 > [!question] Problem 9
 > Let $x[n] = \cos\left(\frac{\pi}{2}n\right)$. Determine and sketch the DFT of the truncated sequence $\{x[n]\}_{n=0}^{15}$ (label your plot carefully).

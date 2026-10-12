@@ -7,7 +7,7 @@ typical_points: "6–23"
 lectures: [13, 14]
 ---
 
-*Problem family · on all seven past Midterm 2 exams, one to three short problems per exam · 6–23 points of problems, plus 2–9 points of True/False · uses [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] and [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · concepts: [[concepts/dtft]], [[concepts/dtft-pairs]], [[concepts/dtft-properties]], [[concepts/fourier-series]] · drill: [DTFT values](/static/demos/drills/#dtftv) · homework: [[homework/hw5|HW5]], %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #2–#4*
+*Problem family · on all seven past Midterm 2 exams, one to three short problems per exam · 6–23 points of problems, plus 2–9 points of True/False · uses [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] and [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · concepts: [[concepts/dtft]], [[concepts/dtft-pairs]], [[concepts/dtft-properties]], [[concepts/fourier-series]] · drill: [DTFT values](/static/demos/drills/#dtftv) · homework: [[homework/hw5|HW5]], [[homework/hw6|HW6]] #2–#4*
 
 > [!abstract] In one breath
 > Every Midterm 2 opens Unit 3 with a few short DTFT problems, and they come in five shapes: **compute** $X_d(\omega)=\sum_n x[n]e^{-j\omega n}$ for a short sequence and put it in a requested form; **read numbers off the definition** without the closed form ($X_d(0)=\sum x$, $X_d(\pi)=\sum(-1)^nx$, $\int X_d=2\pi x[0]$, $\int\lvert X_d\rvert^2=2\pi\sum\lvert x\rvert^2$); **invert** a trigonometric polynomial, an impulse or a sketched rectangle, giving a real-valued answer; use **symmetry and periodicity** (real $x$ $\iff$ $X_d(-\omega)=X_d^*(\omega)$; every $X_d$ repeats every $2\pi$); and **modulate** (multiplying by $\cos\omega_0n$ makes half-height copies at $\pm\omega_0$, which may wrap around $\pm\pi$). Under all of it sits one existence check: $X_d(\omega)=X(e^{j\omega})$ only when the ROC contains the unit circle.
@@ -32,7 +32,7 @@ Short problems of 3–15 points, each testing one move. The two "big" ones are S
 | True/False parts | FA2019 #1(a, b, c, e) · SP2023 #1(c) · FA2023 #1(a, b, c, f) · FA2024 #1(a, b, d) · SP2025 #1(a, d) → [[exams/midterm-2/true-false-bank\|T/F bank]] Q1–Q9, Q12–Q16 |
 | old Midterm 1s | [[exams/midterm-1/past-exams/spring-2023\|SP2023 MT1]] #8 (which $x$ has $X_d=1+2\cos2\omega-2j\sin4\omega$), #9 ($X_d(0)$, $X_d(\frac{\pi}{2})$ of $\{1-j,\ \underset{\uparrow}{1},\ -1-j,\ 2j\}$); [[exams/midterm-1/past-exams/fall-2019\|FA2019 MT1]] #8 (DTFT of $\{1,\ \underset{\uparrow}{0},\ 0,\ 2\}$), #9 (the DTFT of $\frac{z}{z-3}$, $\lvert z\rvert\gt3$) |
 | [[homework/hw5\|HW5]] | #1: DTFTs from the definition of $\{1,0,\underset{\uparrow}{0},0,-1\}$, $u[n]-u[n-4]$, $\cos(\frac{\pi}{3}n+\frac{\pi}{4})$, $\alpha^ne^{j\omega_0n}u[n]$; #2: $X_d(0)$, $X_d(\pi)$, $\int X_d$, $\int\lvert X_d\rvert^2$ of a plotted signal |
-| %%hw6:W1tob21ld29yay9odzZcfEhXNl1d%%HW6%%/hw6%% | #2: DTFTs of $x^*[n]$, $x^*[-n]$; #3: inverse DTFTs of $e^{-j3\omega}+2e^{-j10\omega}$, $e^{-j3.5\omega}$, $\cos^2\omega$; #4: DTFT vs z-transform of $3^{-n}u[n]$ and $e^{j\frac{\pi}{4}n}u[n]$ |
+| [[homework/hw6\|HW6]] | #2: DTFTs of $x^*[n]$, $x^*[-n]$; #3: inverse DTFTs of $e^{-j3\omega}+2e^{-j10\omega}$, $e^{-j3.5\omega}$, $\cos^2\omega$; #4: DTFT vs z-transform of $3^{-n}u[n]$ and $e^{j\frac{\pi}{4}n}u[n]$ |
 
 > [!success]- Answers to the exam instances
 > | instance | answer |
@@ -190,7 +190,7 @@ All four are verified in `verify/FAM_practice.py`.
 
 - Lectures: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] (definition, inverse, periodicity, existence, impulses, rectangles and sincs), [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (the DTFT as $X(z)$ on the unit circle, pairs, symmetry, the properties table and its sign erratum).
 - Concepts: [[concepts/dtft|DTFT]], [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT properties]], [[concepts/fourier-series|Fourier series and the CTFT]], [[concepts/region-of-convergence|ROC]]; tables: [[supplements/transform-tables|transform tables]].
-- Practice: the [DTFT values drill](/static/demos/drills/#dtftv) (randomized versions of Practice 1), [[demos/practice-drills|all drills]], [[homework/hw5|HW5]], %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%%.
+- Practice: the [DTFT values drill](/static/demos/drills/#dtftv) (randomized versions of Practice 1), [[demos/practice-drills|all drills]], [[homework/hw5|HW5]], [[homework/hw6|HW6]].
 - Next families: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] (evaluate $H_d$ at the input frequencies) and [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]] (the same factoring, read as a plot). Exams: [[exams/midterm-2/index|Midterm 2 overview]], [[exams/midterm-2/true-false-bank|T/F bank]], [[problems/index|all families]].
 
 ### Sources for this page

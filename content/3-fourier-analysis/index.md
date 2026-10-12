@@ -33,13 +33,13 @@ Units 1 and 2 described an LTI system by its impulse response $h[n]$ and by its 
 >
 > True/False items test the same ideas, e.g. whether $X(z)$ on the unit circle is always the DTFT and whether a real signal's DTFT is Hermitian ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(a), (c)), or whether $\cos(\omega_0n)$ is an eigenfunction ([[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(a)). Two old Midterm 1 exams had DTFT items too, typed with solutions: [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] #1(d)–(e), #8, #9 and [[exams/midterm-1/past-exams/fall-2019|FA2019 MT1]] #8, #9 — good self-tests after Lecture 14. Midterm 2 also covers lectures not yet in these notes (ideal filters, sampling and reconstruction, the DFT and FFT): see [[exams/midterm-2/index|Midterm 2]] and its [[exams/midterm-2/past-exams/index|past exams]].
 
-**Homework for this unit:** [[homework/hw5|HW5]] (DTFTs from the definition; $X_d(0)$, $X_d(\pi)$, $\int X_d$ and Parseval read off a sketch — L13–L14) · HW6, due Fri Oct 9 (CTFT pairs, conjugation and time reversal, inverse DTFTs, DTFT versus z-transform, the accumulator's frequency response, magnitude and phase of $y[n]=x[n]+x[n-10]$, sinusoidal outputs — L13–L16; its worked solutions are written and kept as a draft until after the due date)
+**Homework for this unit:** [[homework/hw5|HW5]] (DTFTs from the definition; $X_d(0)$, $X_d(\pi)$, $\int X_d$ and Parseval read off a sketch — L13–L14) · [[homework/hw6|HW6]] (CTFT pairs, conjugation and time reversal, inverse DTFTs, DTFT versus z-transform, the accumulator's frequency response, magnitude and phase of $y[n]=x[n]+x[n-10]$, sinusoidal outputs — L13–L16)
 
 **Demos:** [[demos/frequency-response-explorer|frequency-response explorer]] · [[demos/convolution-explorer|convolution explorer]] (template matching is convolution with a reversed pattern) · [[demos/practice-drills|practice drills]] · [[supplements/demo-notebooks|course notebooks]] (`demo_DTFT`)
 
 **Concepts:** new in this unit: [[concepts/template-matching|template matching]] · [[concepts/fourier-series|Fourier series]] · [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/frequency-response|frequency response]] · [[concepts/magnitude-and-phase-response|magnitude and phase response]] · [[concepts/group-delay|group delay]]; carried over from Units 1–2: [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/convolution|convolution]] · [[concepts/region-of-convergence|ROC]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/poles-and-zeros|poles and zeros]]
 
-**Before and after:** [[2-z-transform/index|Unit 2 · The z-transform and LTI systems]] (L6–L11) · Lectures 17 onward: to come · all exam material: [[exams/index|Exams]]
+**Before and after:** [[2-z-transform/index|Unit 2 · The z-transform and LTI systems]] (L6–L11) · [[4-sampling-and-reconstruction/index|Unit 4 · Sampling and reconstruction]] (L17 onward) · all exam material: [[exams/index|Exams]]
 
 ### Sources for this page
 

@@ -25,7 +25,7 @@ lectures: [14, 15]
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025 #4]] (10) | $H_d=j\omega e^{j\pi\sin\omega}$ | $5+2e^{j\frac{\pi}{4}n}+\sin(\frac{\pi}{2}n+\frac{\pi}{4})+(-1)^n$ | $y[n]$ |
 | [[exams/midterm-2/past-exams/fall-2019\|FA2019 #1(d)]] | any LSI system | $\cos(\omega_0n+\phi)$ | T/F: the cosine rule for all $\omega_0,\phi$ allows complex $h$ |
 | [[exams/midterm-2/past-exams/fall-2021\|FA2021 #1(a)]] | a stable LTI system | $\cos(\omega_0n)$ | T/F: an eigenfunction? |
-| %%hw6:W1tob21ld29yay9odzZcfEhXNl1d%%HW6%%/hw6%% | #5 accumulator $y[n]-y[n-1]=x[n]$; #6 comb $y[n]=x[n]+x[n-10]$; #7 $H_d=\omega e^{j\sin\omega}$ | sums of constants, sinusoids and $j^n$ | is $H_d=H(e^{j\omega})$? outputs |
+| [[homework/hw6\|HW6]] | #5 accumulator $y[n]-y[n-1]=x[n]$; #6 comb $y[n]=x[n]+x[n-10]$; #7 $H_d=\omega e^{j\sin\omega}$ | sums of constants, sinusoids and $j^n$ | is $H_d=H(e^{j\omega})$? outputs |
 
 Close relatives on the [[problems/dtft-and-inverse-dtft|DTFT family]] page: FA2021 #2 (a causal LCCDE whose frequency response needs impulses, so $H_d\ne H(e^{j\omega})$) and FA2019 #6 (can the output be real?). The magnitude and phase plots that often come with these systems are the [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]] family.
 
@@ -140,7 +140,7 @@ Close relatives on the [[problems/dtft-and-inverse-dtft|DTFT family]] page: FA20
 
 - Lectures: [[3-fourier-analysis/15-frequency-response|Lecture 15]] (eigenfunctions, the cosine rule and why $h$ must be real, sums of sinusoids, $Y_d=X_dH_d$), [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (Hermitian symmetry), [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] (reading $\lvert H_d\rvert$ and $\angle H_d$).
 - Concepts: [[concepts/frequency-response|frequency response]], [[concepts/eigenfunctions-of-lti-systems|eigenfunctions of LTI systems]], [[concepts/dtft-properties|DTFT properties]], [[concepts/magnitude-and-phase-response|magnitude and phase response]], [[concepts/marginal-stability|marginal stability]] (why the accumulator has no steady state).
-- Try it: [[demos/frequency-response-explorer|frequency-response explorer]] (type the taps, move $\omega_0$, watch the output cosine), the [sinusoidal-response drill](/static/demos/drills/#sinr), [[demos/practice-drills|all drills]]; homework %%hw6:W1tob21ld29yay9odzZ8SFc2XV0=%%HW6%%/hw6%% #5–#7.
+- Try it: [[demos/frequency-response-explorer|frequency-response explorer]] (type the taps, move $\omega_0$, watch the output cosine), the [sinusoidal-response drill](/static/demos/drills/#sinr), [[demos/practice-drills|all drills]]; homework [[homework/hw6|HW6]] #5–#7.
 - Related families: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]], [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]; Units 1–2 background: [[problems/lccde-to-transfer-function-and-response|LCCDE ⇄ H(z) ⇄ response]]. Exams: [[exams/midterm-2/index|Midterm 2 overview]], [[problems/index|all families]].
 
 ### Sources for this page
