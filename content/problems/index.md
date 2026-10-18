@@ -1,10 +1,10 @@
 ---
 title: "Problem families"
-description: "Each problem family is one kind of problem distilled from the past ECE 310 exams and the homework — how to recognise it, a recipe, the traps, every past instance and fresh practice problems: ten families (plus the True/False and property banks) for Units 1–2 and Midterm 1, three for Unit 3 from the past Midterm 2 exams."
+description: "Each problem family is one kind of problem distilled from the past ECE 310 exams and the homework — how to recognise it, a recipe, the traps, every past instance and fresh practice problems: ten families (plus the True/False and property banks) for Units 1–2 and Midterm 1, three for Unit 3 and two for Unit 4 (sampling; the A/D → H_d → D/A chain) from the past Midterm 2 exams."
 tags: [problem, exam]
 ---
 
-*Problem families · each one kind of problem distilled from the past exams and the homework · ten from the seven past Midterm 1 exams (Units 1–2), three from the past Midterm 2 exams (Unit 3) · each page: every past instance, a recipe, the traps, and 2–3 new practice problems with folded, Python-verified solutions*
+*Problem families · each one kind of problem distilled from the past exams and the homework · ten from the seven past Midterm 1 exams (Units 1–2), three (Unit 3) and two (Unit 4) from the past Midterm 2 exams · each page: every past instance, a recipe, the traps, and 2–3 new practice problems with folded, Python-verified solutions*
 
 The same few kinds of problem come back in the homework and on every exam, with new numbers. A **problem family** is one of those kinds, distilled from all its past instances: what it looks like, the method a strong student uses (a `recipe` box ending with the checks), the specific mistakes that cost points (a `trap` box), every past instance with its answer folded, and fresh practice problems. Learn a family after the lectures it rests on, as the bridge from understanding an idea to using it under time pressure. The numbers in the practice problems are new, so they are practice, not answer keys; the real exam problems are linked from each family page and worked in full on the exam pages.
 
@@ -43,9 +43,10 @@ Three families come from the past Midterm 2 exams and cover [[3-fourier-analysis
 
 | family | what the exam asks | lectures |
 |---|---|---|
-| [[problems/sampling-and-the-nyquist-rate\|Sampling and the Nyquist rate]] | the Nyquist rate or period of a sketched spectrum or a sum of sinusoids; a sketch of $X_d(\omega)$ after sampling at a given $T$ (copies of height $1/T$ every $2\pi$: a guard band, touching, or overlapping and adding); which sampling periods are consistent with given sinusoids | 17 |
+| [[problems/sampling-and-the-nyquist-rate\|Sampling and the Nyquist rate]] | the Nyquist rate or period of a sketched spectrum or a sum of sinusoids; a sketch of $X_d(\omega)$ after sampling at a given $T$ (copies of height $1/T$ every $2\pi$: a guard band, touching, or overlapping and adding); which sampling periods are consistent with given sinusoids; what the ideal D/A returns (one sinc per sample, a sinusoid folded into $\lvert\omega\rvert\lt\pi$) | 17, 18, 19 |
+| [[problems/digital-filtering-of-analog-signals\|Digital filtering of analog signals: A/D → H_d → D/A]] | sketches of $X_d$, $Y_d=H_dX_d$ and $Y_a(\Omega)=T\,Y_d(\Omega T)$ at two sampling periods; the whole chain as $H_a(\Omega)=H_d(\Omega T)$; the largest $T$ and the cutoff $\omega_c$ for a wanted analog filter when some aliasing is allowed | 17, 18, 19 |
 
-The past Midterm 2 exams also test topics that come after Lecture 17 (ideal D/A reconstruction, ideal filters and the A/D → $H_d$ → D/A chain, the DFT and FFT). Those problems are typed with solutions on the exam pages; families for them will follow the lectures.
+With [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] (ideal D/A) and [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] (aliasing) these two families cover every sampling and reconstruction problem on the past Midterm 2 exams. The DFT and FFT problems come after Lecture 19; they are typed with solutions on the exam pages, and families for them will follow the lectures.
 
 ## A review order for the Midterm 1 families
 

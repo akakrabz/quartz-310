@@ -1,16 +1,16 @@
 ---
 title: "Midterm 2 True/False bank"
-description: "All 43 True/False statements from the seven past ECE 310 Midterm 2 exams (FA2019–SP2025), grouped by topic, with the official answer and a one-to-two-sentence reason folded away for self-testing; the 16 statements on Unit 3 (DTFT, frequency response, zero padding and the DTFT) come first, the 27 on later topics (sampling, ideal D/A, the DFT, the FFT) are marked as such."
+description: "All 43 True/False statements from the seven past ECE 310 Midterm 2 exams (FA2019–SP2025), grouped by topic, with the official answer and a one-to-two-sentence reason folded away for self-testing; the 16 statements on Unit 3 (DTFT, frequency response, zero padding and the DTFT) come first, then the 12 on sampling and the ideal D/A (Lectures 17–19); the 15 on later topics (the DFT, the FFT) are marked as such."
 tags: [midterm-2, exam, problem-family, dtft]
 family_frequency: "7 of 7 Midterm 2 exams"
 typical_points: "10–20"
 lectures: [13, 14, 15]
 ---
 
-*Problem family · on 7 of 7 past Midterm 2 exams, always problem 1 · 10–20 pts (FA2019: 20; SP2021, FA2021: 15; FA2023: 16; FA2024, SP2025: 12; SP2023: 10) · Unit 3: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]], [[3-fourier-analysis/15-frequency-response|Lecture 15]] · Unit 4: [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] (sampling) · later topics: Lectures 18+ (notes coming) · 43 statements, 24 of them False*
+*Problem family · on 7 of 7 past Midterm 2 exams, always problem 1 · 10–20 pts (FA2019: 20; SP2021, FA2021: 15; FA2023: 16; FA2024, SP2025: 12; SP2023: 10) · Unit 3: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]], [[3-fourier-analysis/15-frequency-response|Lecture 15]] · Unit 4: [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] (sampling), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] (ideal D/A), [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] (aliasing) · later topics (the DFT, the FFT): Lecture 20 onward (notes coming) · 43 statements, 24 of them False*
 
 > [!abstract] How to use this page
-> Every statement is typed as it appeared on the exam, with its source linked. Say **True** or **False** out loud, *then* open the folded **Answer**: it holds the official answer and a short reason, usually a counterexample or a one-line calculation. Sections 1–3 hold the 16 statements on [[3-fourier-analysis/index|Unit 3]] (Q1–Q16, plus Q17, a DFT statement tagged *(later)* that sits beside its zero-padding twins) and can be used now; sections 4–8 test **later topics** (sampling, ideal D/A conversion, the DFT, the FFT) that come after Lecture 16. Each of those carries a *(later)* tag: read them now as a preview, and come back after the lectures.
+> Every statement is typed as it appeared on the exam, with its source linked. Say **True** or **False** out loud, *then* open the folded **Answer**: it holds the official answer and a short reason, usually a counterexample or a one-line calculation. Sections 1–3 hold the 16 statements on [[3-fourier-analysis/index|Unit 3]] (Q1–Q16, plus Q17, a DFT statement tagged *(later)* that sits beside its zero-padding twins) and can be used now; sections 4–5 (Q18–Q29) are sampling and the ideal D/A, covered by Lectures 17–19 and usable now too; sections 6–8 test **later topics** (the DFT, the FFT) that come after Lecture 19. Each of those carries a *(later)* tag: read them now as a preview, and come back after the lectures.
 
 > [!exam] How the problem looks
 > Always problem 1, and on Midterm 2 it leans on the newest material: of the 43 statements only 16 are about the DTFT and frequency response. Formats: ten × 2 pts (FA2019), five × 3 pts (SP2021, FA2021), five × 2 pts (SP2023), eight × 2 pts (FA2023), four × 3 pts **with a reason of at most two sentences** (FA2024), six × 2 pts (SP2025). SP2023 and SP2025 print the rule **+2 correct, −1 wrong, 0 blank**; a guess that is right with probability $p$ is then worth $3p-1$ points, so a coin flip ($+0.5$) still beats a blank, and only a guess worse than one-in-three should be left empty.
@@ -26,7 +26,7 @@ Most Midterm 2 statements are decided by one of a handful of facts. Keep them on
 > - **Only $e^{j\omega_0n}$ is an eigenfunction**; a cosine is a sum of two, scaled by $H_d(\omega_0)$ and $H_d(-\omega_0)$.
 > - **Appending zeros never changes the DTFT**; it only gives the DFT a finer grid of samples of the same $X_d$.
 > - *(later)* **The inverse DFT is $N$-periodic in $n$; the inverse DTFT of a finite sum is finite.**
-> - *(later)* **An ideal D/A turns each sample into a sinc**, never into an impulse.
+> - **An ideal D/A turns each sample into a sinc** ([[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]]), never into an impulse.
 
 ## 1. The DTFT: existence, periodicity, uniqueness, symmetry
 
@@ -169,7 +169,9 @@ Appending zeros adds nothing to $\sum_n x[n]e^{-j\omega n}$. These six statement
 > [!success]- Answer
 > **True.** The impulse sits at $t=0$, outside $[3,\infty)$; sifting only fires inside the limits. (A continuous-time warm-up: no sampling needed.)
 
-## 5. Ideal D/A conversion and reconstruction *(later)*
+## 5. Ideal D/A conversion and reconstruction
+
+[[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]]: $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$ with $\mathrm{sinc}(t)=\frac{\sin t}{t}$, one sinc per sample, passing through every sample; in frequency, a low-pass of height $T$ and edge $\frac{\pi}{T}$. Recipes in [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] (recipe E) and [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]].
 
 **Q26** · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(e) · A discrete-time signal is given by $x[n] = 4\delta[n-2]$. We pass $x[n]$ to an ideal D/A converter with sampling period $T$ to recover $x_a(t)$. The recovered continuous-time signal is given by $x_a(t) = 4\delta(n - 2T)$.
 
@@ -184,7 +186,7 @@ Appending zeros adds nothing to $\sum_n x[n]e^{-j\omega n}$. These six statement
 **Q28** · [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #1(c) · Let $x[n] = \delta[n-2] + 2\delta[n-4]$. We recover $x_a(t)$ by performing ideal digital-to-analog conversion with sampling period $T = 1$ s. Then, $x_a(t) = 0$ at $t = 3$ s.
 
 > [!success]- Answer
-> **True.** $x_a(t)=\mathrm{sinc}(t-2)+2\,\mathrm{sinc}(t-4)$ with $\mathrm{sinc}\,u=\frac{\sin\pi u}{\pi u}$; both sincs vanish at $t=3$. Ideal interpolation passes through every sample, and $x[3]=0$.
+> **True.** $x_a(t)=\mathrm{sinc}(t-2)+2\,\mathrm{sinc}(t-4)$ with $\mathrm{sinc}\,u=\frac{\sin\pi u}{\pi u}$ (in Lecture 18's notation, $\mathrm{sinc}(\pi(t-2))+2\,\mathrm{sinc}(\pi(t-4))$ with $\mathrm{sinc}\,t=\frac{\sin t}{t}$); both sincs vanish at $t=3$. Ideal interpolation passes through every sample, and $x[3]=0$.
 
 **Q29** · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(c) · The ideal reconstruction filter is causal.
 
@@ -277,7 +279,7 @@ Appending zeros adds nothing to $\sum_n x[n]e^{-j\omega n}$. These six statement
 > 5. **Real signal $\iff$ Hermitian DTFT.** That is what licenses the real-sinusoid shortcut (Q9, Q10); a cosine is never an eigenfunction (Q11).
 > 6. **Zero padding never changes the DTFT** (Q12–Q16) and only refines the DFT grid (Q16, Q17). Six statements in seven years: the single most repeated idea.
 > 7. **Sampling maps $\Omega$ to $\omega=\Omega T$ modulo $2\pi$** (Lecture 17). Some $T$ always maps a cosine to a given digital frequency (Q18, Q19); time compression raises the Nyquist rate (Q20, Q21); only bandlimited signals have one (Q22, Q23); a larger $T$ stretches the DTFT (Q24).
-> 8. *(later)* **Ideal D/A gives sincs** (Q26–Q29), and **a DFT of a sampled cosine is clean only for a whole number of periods** (Q37–Q39).
+> 8. **Ideal D/A gives sincs** (Q26–Q29, Lecture 18), and *(later)* **a DFT of a sampled cosine is clean only for a whole number of periods** (Q37–Q39).
 
 > [!trap] Where points actually go
 > - Answering from the look of the formula: $X_d=\frac{1}{1-2e^{-j\omega}}$ (Q2) and $\pi[\delta(\omega-\frac{\pi}{32})+\delta(\omega+\frac{\pi}{32})]$ (Q6) are well-formed and wrong.
@@ -332,5 +334,5 @@ The padded signal has the same DTFT value at $\omega=1$, and every third bin of 
 ### Sources for this page
 
 - Official solutions of ECE 310 Midterm 2: FA2019 #1, SP2021 #1, FA2021 #1, SP2023 #1, FA2023 #1, FA2024 #1, SP2025 #1 (answers read off the keys; FA2019's is handwritten), and the typed statements on this site's exam pages.
-- Lectures 13–15 (DTFT definition, existence, periodicity, symmetry; frequency response and eigenfunctions). The sampling statements (§4) belong to [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]; the D/A and DFT statements belong to Lectures 18+, not yet in these notes, and their reasons follow the official keys.
+- Lectures 13–15 (DTFT definition, existence, periodicity, symmetry; frequency response and eigenfunctions). The sampling statements (§4) belong to [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], the D/A statements (§5) to [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]]; the DFT statements belong to Lecture 20 onward, not yet in these notes, and their reasons follow the official keys.
 - Every numerical claim (the DFT values and bin counts, $x[4]$ of the inverse DFT, $X[11]=X_d(-\frac{3\pi}{7})$, the zero-padding identities, the sinc values, the Hamming sidelobe level and main-lobe width) is checked in `verify/FAM_tfbank.py`, which also writes the deck file `mt2_tf_bank.json` and checks every answer against the exam maps.

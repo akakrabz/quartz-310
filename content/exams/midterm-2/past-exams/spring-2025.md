@@ -7,25 +7,25 @@ tags: [exam, midterm-2]
 *Wed Apr 9, 2025 · 7:00–9:00 pm · Profs. Liang and Snyder · 9 problems, 100 points · T/F graded +2 correct / −1 wrong / 0 blank · two handwritten two-sided 8.5″ × 11″ sheets, no books, no calculator · "calculate / determine / find" means a closed form (no $\Sigma$ or $\int$ signs)*
 
 > [!abstract] What this exam adds
-> The most recent past exam with Snyder: take it timed (2 h, only your sheets). Its in-unit problems (#1(a), #2, #3, #4: 34 points) are good templates for this term: **modulation sketches** where a shifted copy runs past $\pi$ and re-enters at $-\pi$ (#2b), an FIR whose magnitude and **linear phase** fall out of factoring $e^{-j3\omega}$ (#3), and a **sinusoid response** after a Hermitian check (#4). The rest is later material: an A/D–filter–D/A design with the recurring answer $\omega_c = \frac{2\pi}{3}$ (#5), "which $T$ is consistent" sampling puzzles (#6), DFT index gymnastics (#7, #8) and a leak-free DFT (#9). The key is handwritten and right everywhere except one term: in #4 the given $H_d$ disagrees with itself at the band edge ($j\pi$ at $\omega = \pi$, $-j\pi$ at $\omega = -\pi$), so the response to $(-1)^n$ is ambiguous, and the key's $j\pi(-1)^n$ cannot come from a real $h[n]$ (see the caveat there).
+> The most recent past exam with Snyder: take it timed (2 h, only your sheets). Its in-unit problems (#1(a), #2, #3, #4: 34 points) are good templates for this term: **modulation sketches** where a shifted copy runs past $\pi$ and re-enters at $-\pi$ (#2b), an FIR whose magnitude and **linear phase** fall out of factoring $e^{-j3\omega}$ (#3), and a **sinusoid response** after a Hermitian check (#4). Lectures 17–19 cover an A/D–filter–D/A design with the recurring answer $\omega_c = \frac{2\pi}{3}$ (#5) and "which $T$ is consistent" sampling puzzles (#6); the rest is later material: DFT index gymnastics (#7, #8) and a leak-free DFT (#9). The key is handwritten and right everywhere except one term: in #4 the given $H_d$ disagrees with itself at the band edge ($j\pi$ at $\omega = \pi$, $-j\pi$ at $\omega = -\pi$), so the response to $(-1)^n$ is ambiguous, and the key's $j\pi(-1)^n$ cannot come from a real $h[n]$ (see the caveat there).
 
 ## Map of the exam
 
 | # | pts | what it asks | problem family | lectures |
 |---|---|---|---|---|
-| 1 | 12 | six True/False statements (graded +2/−1/0): inverse DTFT, inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, Hamming window | [[problems/dtft-and-inverse-dtft\|DTFTs]] · sampling, the DFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/14-dtft-properties\|L14]]; Lectures 18+ (not yet in these notes) |
+| 1 | 12 | six True/False statements (graded +2/−1/0): inverse DTFT, inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, Hamming window | [[problems/dtft-and-inverse-dtft\|DTFTs]] · sampling, the DFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/14-dtft-properties\|L14]]; [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] (c); Lectures 20+ (not yet in these notes) (b), (d)–(f) |
 | 2 | 10 | sketch the DTFTs of $x[n]\cos(\frac{2\pi}{5}n)$ and $x[n]\cos^2(\frac{2\pi}{5}n)$ for an ideal low-pass $X_d$ | [[problems/dtft-and-inverse-dtft\|DTFTs]] (modulation) | [[3-fourier-analysis/14-dtft-properties\|L14]] |
 | 3 | 12 | $H_d$, $\lvert H_d\rvert$ and $\angle H_d$ for $y[n] = x[n] + 2x[n-3] + x[n-6]$ | [[problems/magnitude-phase-and-group-delay\|magnitude, phase]] | [[3-fourier-analysis/15-frequency-response\|L15]], [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
 | 4 | 10 | $H_d = j\omega e^{j\pi\sin\omega}$: output for $5 + 2e^{j\frac{\pi}{4}n} + \sin(\frac{\pi}{2}n + \frac{\pi}{4}) + (-1)^n$ | [[problems/lti-response-to-sinusoids\|LTI response to sinusoids]] | [[3-fourier-analysis/14-dtft-properties\|L14]], [[3-fourier-analysis/15-frequency-response\|L15]] |
-| 5 | 16 | A/D → ideal LPF → D/A: sketch $X_d$, $Y_d$, $Y_a$; largest $T$ and $\omega_c$ to remove everything above 50 Hz | sampling and reconstruction · ideal filters | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (the sketch of $X_d$), Lectures 18+ (not yet in these notes) |
-| 6 | 12 | which sampling periods are consistent with given sinusoids; $T$ from an aliased output | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (a)–(b), Lectures 18+ (not yet in these notes) (c) |
-| 7 | 12 | DFT of a length-8 signal: $X_0$; $y[n]$ from a permuted, sign-flipped DFT; zero-padding relations | DFT properties | Lectures 18+ (not yet in these notes) |
-| 8 | 6 | $y[n]$ from $Y[m] = X[m]e^{j\frac{3\pi}{4}m}$ | DFT properties (circular shift) | Lectures 18+ (not yet in these notes) |
-| 9 | 10 | DFT of 16 samples of $\cos(\frac{\pi}{2}n)$, with a sketch | spectral analysis with the DFT | Lectures 18+ (not yet in these notes) |
+| 5 | 16 | A/D → ideal LPF → D/A: sketch $X_d$, $Y_d$, $Y_a$; largest $T$ and $\omega_c$ to remove everything above 50 Hz | sampling and reconstruction · ideal filters · [[problems/digital-filtering-of-analog-signals\|digital filtering of analog signals]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (the sketch of $X_d$), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]], [[4-sampling-and-reconstruction/19-aliasing\|L19]] |
+| 6 | 12 | which sampling periods are consistent with given sinusoids; $T$ from an aliased output | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (a), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] and [[4-sampling-and-reconstruction/19-aliasing\|L19]] (b)–(c) |
+| 7 | 12 | DFT of a length-8 signal: $X_0$; $y[n]$ from a permuted, sign-flipped DFT; zero-padding relations | DFT properties | Lectures 20+ (not yet in these notes) |
+| 8 | 6 | $y[n]$ from $Y[m] = X[m]e^{j\frac{3\pi}{4}m}$ | DFT properties (circular shift) | Lectures 20+ (not yet in these notes) |
+| 9 | 10 | DFT of 16 samples of $\cos(\frac{\pi}{2}n)$, with a sketch | spectral analysis with the DFT | Lectures 20+ (not yet in these notes) |
 
 ## Problem 1 · True/False, +2/−1/0 (12 pts)
 
-*Topic: inverse DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]); inverse DFT, ideal D/A, zero-padding, DFT of a sampled cosine, windows: Lectures 18+ (not yet in these notes).*
+*Topic: inverse DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]); ideal D/A (c): [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]]; inverse DFT, zero-padding, DFT of a sampled cosine, windows: Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 1
 > Mark **True** or **False** for the following statements. *Grading: correct answer +2, incorrect answer −1, no answer 0.*
@@ -45,7 +45,7 @@ tags: [exam, midterm-2]
 > [!success]- Solution 1
 > - **(a) True.** The DTFT is unique, and this $X_d$ is the DTFT of $\{\underset{\uparrow}{1},\ 2,\ 3,\ 4\}$, read off term by term with $\delta[n-n_0] \leftrightarrow e^{-j\omega n_0}$.
 > - **(b) False.** The inverse-DFT formula $x[n] = \frac1N\sum_{k=0}^{N-1}X[k]e^{j\frac{2\pi k}{N}n}$ is $N$-periodic in $n$; evaluated outside $0 \le n \le 3$ it repeats ($x[4] = x[0] = \frac52$). A DFT pair describes one period of a periodic sequence.
-> - **(c) True.** $x_a(t) = \mathrm{sinc}(t-2) + 2\,\mathrm{sinc}(t-4)$ with $\mathrm{sinc}\,u = \frac{\sin\pi u}{\pi u}$. At $t = 3$ both sincs sit on a zero ($\sin(\pm\pi) = 0$): ideal interpolation passes through every sample, and $x[3] = 0$.
+> - **(c) True.** $x_a(t) = \mathrm{sinc}(t-2) + 2\,\mathrm{sinc}(t-4)$ with $\mathrm{sinc}\,u = \frac{\sin\pi u}{\pi u}$ (Lecture 18 writes the same pulses as $\mathrm{sinc}(\pi(t-n))$ with $\mathrm{sinc}\,t = \frac{\sin t}{t}$). At $t = 3$ both sincs sit on a zero ($\sin(\pm\pi) = 0$): ideal interpolation passes through every sample, and $x[3] = 0$.
 > - **(d) False.** Zero-padding leaves the DTFT unchanged: $Y_d(\omega) = X_d(\omega)$. (Inserting two zeros **between** samples, i.e. upsampling, would give $Y_d(\omega) = X_d(3\omega)$; appending zeros at the end does nothing to the DTFT.)
 > - **(e) True.** $x[n] = \cos(50\pi n/50) = \cos(\pi n) = (-1)^n = e^{j\frac{2\pi\cdot25}{50}n}$: a single exponential exactly on bin 25, so $X[25] = 50$ and the other 49 bins are 0. (The $\pm25$ Hz halves of the cosine alias onto the same bin.)
 > - **(f) False.** The Hamming window trades: much lower sidelobes (about $-42$ dB against $-13$ dB for the rectangular window) for a main lobe about **twice as wide** (checked: 64-point windows, zero-padded FFTs).
@@ -154,7 +154,7 @@ tags: [exam, midterm-2]
 
 ## Problem 5 · An A/D–filter–D/A system (16 pts)
 
-*Topic: sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]: the sketch of $X_d$ in (a)); ideal D/A reconstruction and low-pass filtering — Lectures 18+ (not yet in these notes).*
+*Topic: sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]]: the sketch of $X_d$ in (a)); ideal D/A reconstruction and low-pass filtering — [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] and [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]], family [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]].*
 
 > [!question] Problem 5
 > Consider the digital system below, with a digital filter $H_d(\omega)$ between ideal A/D and D/A converters.
@@ -195,7 +195,7 @@ tags: [exam, midterm-2]
 
 ## Problem 6 · Which sampling periods are consistent? (12 pts)
 
-*Topic: sampling and aliasing of sinusoids — [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] (parts (a)–(b)); ideal D/A reconstruction (c) — Lectures 18+ (not yet in these notes).*
+*Topic: sampling and aliasing of sinusoids — [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] (parts (a)–(b)); what the ideal D/A returns in (b)–(c) — [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] and [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] (folding a sinusoid into $\lvert\omega\rvert\lt\pi$).*
 
 > [!question] Problem 6
 > Consider a sampling system with ideal A/D and D/A converters.
@@ -235,7 +235,7 @@ tags: [exam, midterm-2]
 
 ## Problem 7 · DFT index gymnastics (12 pts)
 
-*Topic: DFT properties (circular shift, modulation), zero-padding and the symmetry of a real signal's DFT — Lectures 18+ (not yet in these notes).*
+*Topic: DFT properties (circular shift, modulation), zero-padding and the symmetry of a real signal's DFT — Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 7
 > For all parts of this question, let $\{x[n]\}_{n=0}^{7} = \{1,\ 2,\ -3,\ -4,\ 5,\ 6,\ -2,\ 2\}$ be a length-8 signal with DFT $\{X[m]\}_{m=0}^{7} = \{X_0, X_1, X_2, X_3, X_4, X_5, X_6, X_7\}$.
@@ -274,7 +274,7 @@ tags: [exam, midterm-2]
 
 ## Problem 8 · A phase ramp in the DFT (6 pts)
 
-*Topic: DFT circular-shift property — Lectures 18+ (not yet in these notes).*
+*Topic: DFT circular-shift property — Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 8
 > You are given two sequences $x[n] = \{1, 2, 3, 4, 5, 6, 7, 8\}$ and $y[n] = \{y_0, y_1, y_2, y_3, y_4, y_5, y_6, y_7\}$, and their DFTs are related by $Y[m] = X[m]e^{j\frac{3\pi}{4}m}$. Determine $y[n]$ based on the values of $x[n]$.
@@ -291,7 +291,7 @@ tags: [exam, midterm-2]
 
 ## Problem 9 · DFT of a truncated cosine (10 pts)
 
-*Topic: spectral analysis with the DFT — Lectures 18+ (not yet in these notes).*
+*Topic: spectral analysis with the DFT — Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 9
 > Let $x[n] = \cos\left(\frac{\pi}{2}n\right)$. Determine and sketch the DFT of the truncated sequence $\{x[n]\}_{n=0}^{15}$ (label your plot carefully).

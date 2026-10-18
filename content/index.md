@@ -47,8 +47,10 @@ Notes for **ECE 310 — Digital Signal Processing** (University of Illinois, Fal
 
 ### [[4-sampling-and-reconstruction/index|Unit 4 · Sampling and reconstruction]] — Lecture 17 onward
 17. [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Ideal analog-to-digital conversion: spectral copies, ω = ΩT, the Nyquist criterion]]
+18. [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Ideal digital-to-analog conversion: sinc interpolation, the reconstruction low-pass, A/D → H_d → D/A]]
+19. [[4-sampling-and-reconstruction/19-aliasing|The aliasing effect: principal alias, folding, sin(100πt) at four rates]]
 
-More lectures to come: ideal digital-to-analog conversion and aliasing, ideal filters, the DFT and FFT.
+More lectures to come: ideal filters, the DFT and FFT.
 
 ### Practice
 - [[problems/index|Problem families]] — every kind of problem the past exams and the homework keep setting, each with a recipe, traps, all past instances and fresh practice problems.
@@ -113,7 +115,7 @@ The notes use a few recurring boxes, so you can skim for what you need:
 > [!success]- Answer (click to expand)
 > Solutions are folded, so you can test yourself first. Every number in them was checked numerically.
 
-*Status (October 2026): Units 1–2 — Lectures 1–11, HW1–HW4 and the seven past Midterm 1 exams — are complete. Unit 3 covers Lectures 12–16 and HW5–HW6, Unit 4 has Lecture 17 (ideal A/D conversion) with its problem family and sampling explorer, and the seven past Midterm 2 exams are typed with folded solutions. Lectures 18 onward are to come. Sources: C. Snyder, ECE 310 lecture notes and slides, Fall 2026 (with the annotated in-class slides and the Midterm 1 Review); homework HW1–HW6 with the official solutions to HW1–HW5; past Midterm 1 exams FA2019–FA2025 and past Midterm 2 exams FA2019–SP2025, with keys; the ECE 310 course summary and transform tables; A. C. Singer and D. C. Munson, ECE 310 course notes (2019).*
+*Status (October 2026): Units 1–2 — Lectures 1–11, HW1–HW4 and the seven past Midterm 1 exams — are complete. Unit 3 covers Lectures 12–16 and HW5–HW6, Unit 4 has Lectures 17–19 (ideal A/D conversion, ideal D/A conversion, aliasing) with two problem families and the sampling explorer, the seven past Midterm 2 exams are typed with folded solutions, and a Quiz 2 review page covers HW5–HW7. Lectures 20 onward are to come. Sources: C. Snyder, ECE 310 lecture notes and slides, Fall 2026 (with the annotated in-class slides and the Midterm 1 Review); homework HW1–HW7 with the official solutions to HW1–HW7; past Midterm 1 exams FA2019–FA2025 and past Midterm 2 exams FA2019–SP2025, with keys; the ECE 310 course summary and transform tables; A. C. Singer and D. C. Munson, ECE 310 course notes (2019).*
 
 ### Sources for this page
 

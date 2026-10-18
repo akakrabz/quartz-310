@@ -7,25 +7,25 @@ tags: [exam, midterm-2]
 *Thu Apr 8, 2021 · 7:00–8:50 pm · Profs. Moon, Katselis, Shomorony · 9 problems, 100 points · online exam: one handwritten two-sided 8.5″ × 11″ sheet, no books or electronic devices; solutions written on paper, photographed and uploaded to Gradescope · typed key*
 
 > [!abstract] What this exam adds
-> The most DTFT-heavy exam of the set. For this unit: a **magnitude and phase sketch of a sinusoid times a linear phase** (#2, where the sequence is purely imaginary so the phase is *not* odd), a DTFT forced into the **form $Ae^{-jB\omega}\sin(C\omega)$** (#3), and **amplitudes read off a two-step lowpass spectrum** (#7). The later topics: DFT circular shift with an extra sign (#4), a reality test from DFT values (#5), CTFT vs DTFT vs DFT (#6), undersampling by exactly 2 that makes the spectrum **flat** (#8), and the **two inputs** behind one reconstructed cosine (#9). The typed key is correct; two cosmetic points (the #2 phase sketch is not wrapped, the #8 figure mixes $\Omega$ and $\omega$ in its labels) are noted below.
+> The most DTFT-heavy exam of the set. For this unit: a **magnitude and phase sketch of a sinusoid times a linear phase** (#2, where the sequence is purely imaginary so the phase is *not* odd), a DTFT forced into the **form $Ae^{-jB\omega}\sin(C\omega)$** (#3), and **amplitudes read off a two-step lowpass spectrum** (#7). Sampling and reconstruction (Lectures 17–19): undersampling by exactly 2 that makes the spectrum **flat** (#8) and the **two inputs** behind one reconstructed cosine (#9). The later topics: DFT circular shift with an extra sign (#4), a reality test from DFT values (#5), CTFT vs DTFT vs DFT (#6). The typed key is correct; two cosmetic points (the #2 phase sketch is not wrapped, the #8 figure mixes $\Omega$ and $\omega$ in its labels) are noted below.
 
 ## Map of the exam
 
 | # | pts | what it asks | topic · problem family | lectures |
 |---|---|---|---|---|
-| 1 | 15 | five True/False statements | T/F: sampling, Nyquist rate of $x_c(2t)$, DFT $X[0]$, an impulse integral | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling), Lectures 18+ (not yet in these notes) (DFT) |
+| 1 | 15 | five True/False statements | T/F: sampling, Nyquist rate of $x_c(2t)$, DFT $X[0]$, an impulse integral | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling), Lectures 20+ (not yet in these notes) (DFT) |
 | 2 | 10 | sketch magnitude and phase of $e^{-j4\omega}\sin 2\omega$ | [[problems/magnitude-phase-and-group-delay\|magnitude, phase and group delay]] | [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
 | 3 | 9 | DTFT of $3\delta[n+1] - 3\delta[n-7]$ as $Ae^{-jB\omega}\sin(C\omega)$ | [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
-| 4 | 8 | the sequence whose 8-point DFT is $e^{-j(\frac{6\pi}{8}k+\pi)}X[k]$ | the DFT and its properties (circular shift) | Lectures 18+ (not yet in these notes) |
-| 5 | 8 | is $x$ real, given its 7-point DFT? | the DFT and its properties (symmetry) | Lectures 18+ (not yet in these notes) |
-| 6 | 9 | CTFT, DTFT or DFT: match three descriptions | DTFT vs DFT vs CTFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], Lectures 18+ (not yet in these notes) |
+| 4 | 8 | the sequence whose 8-point DFT is $e^{-j(\frac{6\pi}{8}k+\pi)}X[k]$ | the DFT and its properties (circular shift) | Lectures 20+ (not yet in these notes) |
+| 5 | 8 | is $x$ real, given its 7-point DFT? | the DFT and its properties (symmetry) | Lectures 20+ (not yet in these notes) |
+| 6 | 9 | CTFT, DTFT or DFT: match three descriptions | DTFT vs DFT vs CTFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], Lectures 20+ (not yet in these notes) |
 | 7 | 14 | $A_1$, $A_2$, $\omega_0$ from the DTFT of two sinc sequences | [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] (ideal lowpass pair) | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/14-dtft-properties\|L14]] |
 | 8 | 15 | Nyquist rate; $X_d(\omega)$ after undersampling a V-shaped spectrum; is $x$ real? | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] |
-| 9 | 12 | ideal A/D–D/A: $x[n]$ and the two inputs that give $2\cos(300\pi t)$ | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] · reconstruction | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (aliasing of the inputs), Lectures 18+ (not yet in these notes) (D/A) |
+| 9 | 12 | ideal A/D–D/A: $x[n]$ and the two inputs that give $2\cos(300\pi t)$ | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] · reconstruction | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (aliasing of the inputs), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] (D/A), [[4-sampling-and-reconstruction/19-aliasing\|L19]] |
 
 ## Problem 1 · True/False (15 pts)
 
-*Topic: sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]]) and the DFT (Lectures 18+ (not yet in these notes)); (d) needs only the sifting property of the continuous-time impulse.*
+*Topic: sampling ([[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]]) and the DFT (Lectures 20+ (not yet in these notes)); (d) needs only the sifting property of the continuous-time impulse.*
 
 > [!question] Problem 1
 > Answer **True** or **False** to each of the following statements:
@@ -108,7 +108,7 @@ tags: [exam, midterm-2]
 
 ## Problem 4 · Circular shift with a sign (8 pts)
 
-*Topic: the DFT and its properties (circular shift) — Lectures 18+ (not yet in these notes).*
+*Topic: the DFT and its properties (circular shift) — Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 4
 > Let $\{X[k]\}_{k=0}^{7}$ be the 8-point DFT of $x[n] = \{1, -2, 3, -4, 5, -6, 7, -8\}$. Determine the sequence $\{y[n]\}_{n=0}^{7}$ whose DFT is $Y[k] = e^{-j\left(\frac{6\pi}{8}k + \pi\right)}X[k]$, $k = 0, 1, \dots, 7$.
@@ -140,7 +140,7 @@ print(np.round(y.real, 12))
 
 ## Problem 5 · Real or not, from the DFT (8 pts)
 
-*Topic: the DFT and its properties (conjugate symmetry) — Lectures 18+ (not yet in these notes).*
+*Topic: the DFT and its properties (conjugate symmetry) — Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 5
 > Let $\{X[k]\}_{k=0}^{6} = \{-2, -4j, 3, 5, 3, 4j, -2j\}$ be the 7-point DFT of a signal $\{x[n]\}_{n=0}^{6}$. Is $\{x[n]\}_{n=0}^{6}$ real? Justify your answer.
@@ -157,7 +157,7 @@ print(np.round(y.real, 12))
 
 ## Problem 6 · CTFT, DTFT or DFT? (9 pts)
 
-*Topic: which transform — DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]) vs DFT and CTFT — Lectures 18+ (not yet in these notes).*
+*Topic: which transform — DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]) vs DFT and CTFT — Lectures 20+ (not yet in these notes).*
 
 > [!question] Problem 6
 > For each statement below, decide whether it best describes the CTFT, the DTFT or the DFT. You need not show your work and no partial credit will be given.
@@ -240,7 +240,7 @@ print(np.round(y.real, 12))
 
 ## Problem 9 · Two inputs, one output (12 pts)
 
-*Topic: sampling and aliasing of the inputs — [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]]; the ideal D/A reconstruction — Lectures 18+ (not yet in these notes).*
+*Topic: sampling and aliasing of the inputs — [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], family [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]]; the ideal D/A reconstruction in (a) — [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] and [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]].*
 
 <figure class="ece-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 110" width="560" height="110" role="img" aria-label="block diagram ideal A/D followed by ideal D/A" style="font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:13px"><line x1="20.0" y1="40.0" x2="114.4" y2="40.0" stroke="currentColor" stroke-width="1.4"/><path d="M120.0,40.0 L113.0,36.9 L113.0,43.1 Z" fill="currentColor"/><text x="70.0" y="32.0" text-anchor="middle" fill="currentColor" style="font-size:13px">x<tspan baseline-shift="sub" style="font-size:75%">c</tspan>(t)</text><rect x="120.0" y="20.0" width="110" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/><text x="175.0" y="45.0" text-anchor="middle" fill="currentColor" style="font-size:13px">ideal A/D</text><line x1="175.0" y1="82.0" x2="175.0" y2="66.6" stroke="currentColor" stroke-width="1.4"/><path d="M175.0,61.0 L171.8,68.0 L178.2,68.0 Z" fill="currentColor"/><text x="175.0" y="96.0" text-anchor="middle" fill="currentColor" style="font-size:13px;font-style:italic">T</text><line x1="230.0" y1="40.0" x2="324.4" y2="40.0" stroke="currentColor" stroke-width="1.4"/><path d="M330.0,40.0 L323.0,36.9 L323.0,43.1 Z" fill="currentColor"/><text x="280.0" y="32.0" text-anchor="middle" fill="currentColor" style="font-size:13px">x[n]</text><rect x="330.0" y="20.0" width="110" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/><text x="385.0" y="45.0" text-anchor="middle" fill="currentColor" style="font-size:13px">ideal D/A</text><line x1="385.0" y1="82.0" x2="385.0" y2="66.6" stroke="currentColor" stroke-width="1.4"/><path d="M385.0,61.0 L381.9,68.0 L388.1,68.0 Z" fill="currentColor"/><text x="385.0" y="96.0" text-anchor="middle" fill="currentColor" style="font-size:13px;font-style:italic">T</text><line x1="440.0" y1="40.0" x2="534.4" y2="40.0" stroke="currentColor" stroke-width="1.4"/><path d="M540.0,40.0 L533.0,36.9 L533.0,43.1 Z" fill="currentColor"/><text x="490.0" y="32.0" text-anchor="middle" fill="currentColor" style="font-size:13px">y<tspan baseline-shift="sub" style="font-size:75%">c</tspan>(t)</text></svg><figcaption><strong>Sampling and reconstruction</strong>: an ideal A/D and an ideal D/A with the same interval T.</figcaption></figure>
 

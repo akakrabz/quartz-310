@@ -87,16 +87,16 @@ Mermaid diagram). The demos and drills are fully self-contained.
 as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
 2,827 links, 12,321 equations).
 
-## 6. What's here (build 3, October 2026 — Lectures 1–17)
+## 6. What's here (build 4, October 2026 — Lectures 1–19)
 
 - **Home**: a learning hub — how to learn with the site (lecture → concept hubs → folded questions → problem families → homework →
   drills and demos → past exams as self-tests), the course map, the conventions table and the callout legend.
 - **Lectures 1–17** in four units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
-  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`) and sampling and reconstruction (L17 so far,
-  `4-sampling-and-reconstruction/`), written from Prof. Snyder's notes and slides. Lectures 18 onward (ideal D/A conversion and
-  aliasing, ideal filters, the DFT and FFT) are to come.
-- **38 concept pages** (the graph's hubs, 8 of them for Unit 3, 2 for Unit 4) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
-- **14 problem families** — 10 from the past Midterm 1 exams, 4 from the past Midterm 2 exams — each with a recipe, traps, every past
+  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`) and sampling and reconstruction (L17–19 so far:
+  ideal A/D, ideal D/A, aliasing; `4-sampling-and-reconstruction/`), written from Prof. Snyder's notes and slides. Lectures 20 onward
+  (ideal filters, the DFT and FFT) are to come.
+- **40 concept pages** (the graph's hubs, 8 of them for Unit 3, 4 for Unit 4) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
+- **15 problem families** — 10 from the past Midterm 1 exams, 5 from the past Midterm 2 exams — each with a recipe, traps, every past
   instance and fresh practice problems with folded solutions, listed in a live table by the Bases plugin
   (`problems/exam-problem-families.base`).
 - **Exams** (`exams/index.md`, the self-test layer). Midterm 1: a review guide (scope, format, frequency of every problem type, a plan

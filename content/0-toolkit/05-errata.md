@@ -72,6 +72,8 @@ Course materials are written fast, and old exam keys are often handwritten under
 | L16 slide 4 | "Changes in sign for $\mathrm{Re}\{H_d(\omega)\}$ let to $\pm\pi$ jumps in phase" | "lead to"; and the sign that matters is that of the real amplitude left after the linear-phase factor is pulled out | $\mathrm{Re}\{e^{-j2\omega}\}=\cos2\omega$ changes sign four times on $[-\pi,\pi]$, yet $e^{-j2\omega}$ has no $\pi$ jump, only $2\pi$ wraps. A $\pm\pi$ jump needs $H_d(\omega_0)=0$ with a sign change |
 | L16 slide 3 | quadrant rule for $\angle z$ with the cases $a\gt0$; $a\lt0,\ b\gt0$; $a\lt0,\ b\lt0$ | also $a=0$: $\pm\frac{\pi}{2}$ (the sign of $b$); $a\lt0,\ b=0$: $\pi$ | as printed, $j$ and $-1$ get no angle; `np.angle` (atan2) covers every case — see [[0-toolkit/01-complex-numbers\|complex numbers]] |
 | L16 slides, title slide | "October 5th and 7th, 2025" | 2026 | typo |
+| L18 in-class ink, slide 9 | the second sample of $x[n]=3\delta[n-1]+\delta[n-4]$ is labelled "$x[3]$" | $x[4]$ | it is drawn at $t=4T=8$ s, which is right; only the label slipped |
+| L19 slide 7 | "$f_s=f_{\text{nyquist}}=2B=\frac{\Omega_0}{\pi}$ seconds" | hertz | a sampling frequency is in Hz |
 
 ## Homework solutions
 
@@ -104,7 +106,7 @@ Course materials are written fast, and old exam keys are often handwritten under
 - **Lecture 3 slides, Example 4.** The posted deck uses $y[n] = \max\{0, x[n]\}$; the annotated in-class deck uses $y[n] = x[n]\,x[0]$. Both are worked on [[1-signals-and-systems/03-system-properties|Lecture 3]].
 - **"LSI" = "LTI".** Older keys and the Singer & Munson notes say linear shift-invariant; the lectures say linear time-invariant. Same thing — see [[supplements/notation-translation|notation translation]].
 - **$X_d(\omega)$ vs $X(e^{j\omega})$, $(x*h)[n]$ vs $x[n]*h[n]$.** Course notation vs textbook notation for the DTFT and convolution; not a mistake.
-- **Two sincs.** Lecture 14 and the Midterm 2 keys that use one (FA2019 #5, FA2024 #1(c) and #2) write $\mathrm{sinc}(x)=\frac{\sin x}{x}$; `transform_tables.pdf` (and NumPy's `np.sinc`) mean $\frac{\sin\pi x}{\pi x}$. The same pair reads $\frac{\sin(Wn)}{\pi n}=\frac{W}{\pi}\mathrm{sinc}(Wn)$ in the first convention and $\frac{W}{\pi}\mathrm{sinc}\big(\frac{Wn}{\pi}\big)$ in the second. See [[concepts/dtft-pairs|DTFT pairs]] and [[supplements/transform-tables|transform tables]].
+- **Two sincs.** Lecture 14, Lecture 18 (eq. 13) and the Midterm 2 keys that use one (FA2019 #5, FA2024 #1(c) and #2) write $\mathrm{sinc}(x)=\frac{\sin x}{x}$; `transform_tables.pdf` (and NumPy's `np.sinc`) mean $\frac{\sin\pi x}{\pi x}$. The same pair reads $\frac{\sin(Wn)}{\pi n}=\frac{W}{\pi}\mathrm{sinc}(Wn)$ in the first convention and $\frac{W}{\pi}\mathrm{sinc}\big(\frac{Wn}{\pi}\big)$ in the second. See [[concepts/dtft-pairs|DTFT pairs]] and [[supplements/transform-tables|transform tables]].
 - **SP2021 MT2 #2 — an unwrapped phase.** The key draws the phase of $e^{-j4\omega}\sin2\omega$ as the line $-4\omega$ from $0$ down to $-2\pi$ on $(0,\frac{\pi}{2})$ and on $(-\pi,-\frac{\pi}{2})$, instead of wrapping into $[-\pi,\pi]$ at $\frac{\pi}{4}$ and $-\frac{3\pi}{4}$. Those angles agree with the principal phase mod $2\pi$, so the sketch is right; the course plots principal angles, so say which range you use. See [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]].
 
 ### Sources for this page

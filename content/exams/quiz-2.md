@@ -23,7 +23,7 @@ tags: [exam, quiz-2, midterm-2, dtft, frequency-response, sampling]
 | 15 | Oct 2 | $H_d(\omega)$; complex exponentials are eigenfunctions; real sinusoids when $h$ is real; constants and $(-1)^n$; $Y_d=H_dX_d$ | HW6 #5–7, HW7 #2 | [[3-fourier-analysis/15-frequency-response\|Lecture 15]] |
 | 16 | Oct 5, 7 | magnitude and principal phase, the linear-phase factor, jumps of $\pi$, group delay | HW6 #6, HW7 #1 | [[3-fourier-analysis/16-magnitude-and-phase-response\|Lecture 16]] |
 | 17 | Oct 9 | ideal A/D: impulse-train model, $X_d(\omega)=\frac1T\sum_kX_a\!\left(\frac{\omega-2\pi k}{T}\right)$, $\omega=\Omega T$, the Nyquist criterion | HW7 #3, #4 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Lecture 17]] |
-| 18 | Oct 12 | ideal D/A: sinc interpolation; in frequency, a low-pass that keeps one copy and multiplies by $T$; the A/D → $H_d$ → D/A example | HW7 #4 | §6 below (no lecture page yet) |
+| 18 | Oct 12 | ideal D/A: sinc interpolation; in frequency, a low-pass that keeps one copy and multiplies by $T$; the A/D → $H_d$ → D/A example | HW7 #4 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Lecture 18]] (summary in §6) |
 
 **In scope for sampling** (what HW7 demonstrates): the Nyquist rate of a sketched $X_a(\Omega)$; sketching $X_d(\omega)$ at a given $T$, including overlapping copies; and the A/D → ideal digital filter → ideal D/A chain, sketched as $X_d$, $Y_d$ and $Y_a$. **Outside the announced scope** (taught, but not in HW7; kept here as background): the time-domain sinc interpolation of Lecture 18 and the aliasing of sampled sinusoids (Lecture 17 §8; it returns in later lectures and HW8). **Not on this quiz:** [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]] (template matching, not tested), the DFT, anything from Lecture 19 on.
 
@@ -176,6 +176,8 @@ Demo: [[demos/sampling-explorer|sampling explorer]] (try the V shape: it is SP20
 > - Forgetting the factor $T$ in $Y_a$: if $X_d$ had height $\frac1T$, $Y_a$ has the height of $X_a$.
 > - Thinking undersampling always ruins the output. It ruins it only if the overlap reaches the filter's passband.
 
+More instances, the largest-$T$ recipe and practice: [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]] · the full lecture: [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]].
+
 ## 5. HW7, worked
 
 The official solutions (v1.0) agree with everything below. Do each problem on paper before you open its solution. (§4 quotes some HW7 results as examples; to redo HW7 cold, do this section first.)
@@ -240,7 +242,7 @@ The official solutions (v1.0) agree with everything below. Do each problem on pa
 
 ## 6. Lecture 18 in one section: ideal D/A conversion
 
-There is no lecture page for Lecture 18 yet, so here is what the quiz can use from it.
+The full treatment, with figures and practice, is on the [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18 page]]; here is what the quiz can use from it.
 
 > [!key] Ideal reconstruction
 > Put each sample back at $t=nT$ and fill in between with an interpolating pulse $g(t)$: $x_a(t)=\sum_nx[n]\,g(t-nT)$. That is the convolution of the impulse train $x_s(t)$ with $g(t)$, so $X_a(\Omega)=X_s(\Omega)\,G_a(\Omega)$. To get back exactly the central copy of $X_s(\Omega)=\frac1T\sum_kX_a(\Omega-\frac{2\pi k}{T})$, $G_a$ must be an ideal low-pass of height $T$:
@@ -249,7 +251,7 @@ There is no lecture page for Lecture 18 yet, so here is what the quiz can use fr
 > $$
 > with the course's $\mathrm{sinc}(t)=\frac{\sin t}{t}$ (not $\frac{\sin\pi t}{\pi t}$). The reconstruction formula is $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$. Each pulse equals $x[n]$ at $t=nT$ and is zero at every other multiple of $T$, so the curve passes through every sample. The recovery is exact whenever the copies do not overlap, which $f_s\gt2B$ guarantees (at exactly $2B$ they only touch).
 
-**The lecture's sketch** (slide 9; time-domain interpolation is not in HW7, so treat it as background): $x[n]=3\delta[n-1]+\delta[n-4]$ with $T=2$ s gives $x_a(t)=3\,\mathrm{sinc}\!\left(\frac{\pi(t-2)}{2}\right)+\mathrm{sinc}\!\left(\frac{\pi(t-8)}{2}\right)$: a main lobe of height $3$ at $t=2$, a smaller one of height $1$ at $t=8$, and $x_a(t)=0$ at every even $t$ except $2$ and $8$ (negative ones included)
+**The lecture's sketch** (slide 9; time-domain interpolation is not in HW7, so treat it as background): $x[n]=3\delta[n-1]+\delta[n-4]$ with $T=2$ s gives $x_a(t)=3\,\mathrm{sinc}\!\left(\frac{\pi(t-2)}{2}\right)+\mathrm{sinc}\!\left(\frac{\pi(t-8)}{2}\right)$: a main lobe of height $3$ at $t=2$, a second lobe through $1$ at $t=8$ (the sum peaks at about $1.15$ near $t=7.5$), and $x_a(t)=0$ at every even $t$ except $2$ and $8$ (negative ones included).
 
 **The lecture's system example** (slides 10–11): a semicircle $X_a$ out to $\pm60\pi$ rad/s through an ideal low-pass with $\omega_c=\frac{\pi}{2}$. At $T=\frac{1}{80}$ s the edge lands at $\frac{3\pi}{4}$ (no aliasing), $Y_d$ keeps $\lvert\omega\rvert\le\frac{\pi}{2}$ at height $80$, and $Y_a$ is the semicircle cut at $\pm40\pi$. At $T=\frac{1}{50}$ s the edge is at $\frac{6\pi}{5}$ and the copies overlap on $\frac{4\pi}{5}\le\lvert\omega\rvert\le\frac{6\pi}{5}$, but the cutoff $\frac{\pi}{2}$ is below $\frac{4\pi}{5}$: $Y_a$ is the semicircle cut at $\pm25\pi$, undistorted. HW7 #4 is the same problem with a triangle.
 

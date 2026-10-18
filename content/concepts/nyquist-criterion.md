@@ -2,7 +2,7 @@
 title: "Nyquist criterion"
 description: "Bandlimited signals (X_a(Ω) = 0 for |Ω| > 2πB), the Nyquist criterion f_s > 2B (T < 1/(2B)) derived from non-overlapping spectral copies, the Nyquist rate 2B and Nyquist period 1/(2B), what happens above, at and below the rate (guard band, touching copies, aliasing), a worked two-tone example, the traps, and every lecture, exam problem, family page and demo that uses it."
 tags: [concept, sampling, nyquist, aliasing, midterm-2]
-aliases: ["Nyquist criterion", "Nyquist rate", "Nyquist frequency", "Nyquist period", "Nyquist interval", "Nyquist sampling theorem", "bandlimited", "bandlimited signal", "guard band", "aliasing"]
+aliases: ["Nyquist criterion", "Nyquist rate", "Nyquist frequency", "Nyquist period", "Nyquist interval", "Nyquist sampling theorem", "bandlimited", "bandlimited signal", "guard band"]
 ---
 
 > [!key] Definition (Lecture 17)
@@ -34,7 +34,7 @@ The strict inequality matters at the boundary. Some books call $f_s/2$ the "Nyqu
 | $f_s=2B$ (exactly at) | **touch** at $\omega=\pm\pi$, no overlap, no guard band | $\frac1T\,X_a(\omega/T)$ fills the whole period; a box becomes a flat line, a triangle a zigzag |
 | $f_s\lt2B$ (below) | **overlap and add** | a new shape — **aliasing**; the original spectrum cannot be read off |
 
-[[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] draws all three (§6, the notes' Figure 3) and works them with numbers in Example 2 (§7: a $50$ Hz-bandlimited triangle at $150$, $100$ and $75$ Hz). Aliasing is only *named* here; what it does to individual frequencies, and what an ideal D/A converter then returns, is the subject of the next lectures. One consequence is already visible for a sinusoid: $\cos(\Omega_0t)$ sampled at $f_s$ gives the same sequence as $\cos\big((\pm\Omega_0+2\pi f_sk)t\big)$ for every integer $k$, so a tone above $f_s/2$ is indistinguishable from one below it (Lecture 17 §8).
+[[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] draws all three (§6, the notes' Figure 3) and works them with numbers in Example 2 (§7: a $50$ Hz-bandlimited triangle at $150$, $100$ and $75$ Hz). Aliasing has its own hub, [[concepts/aliasing|aliasing]]; what it does to individual frequencies, and what an ideal D/A converter then returns, is the subject of [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] and [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]]. One consequence is already visible for a sinusoid: $\cos(\Omega_0t)$ sampled at $f_s$ gives the same sequence as $\cos\big((\pm\Omega_0+2\pi f_sk)t\big)$ for every integer $k$, so a tone above $f_s/2$ is indistinguishable from one below it (Lecture 17 §8).
 
 > [!example] Two tones (checked)
 > $x_a(t)=\cos(2\pi\cdot60\,t)+\cos(2\pi\cdot440\,t)$ (a mains hum and the A above middle C). The highest frequency is $B=440$ Hz, so the Nyquist rate is $880$ Hz and $T_N=\frac{1}{880}$ s.
