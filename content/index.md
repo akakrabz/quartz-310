@@ -60,6 +60,7 @@ More lectures to come: ideal digital-to-analog conversion and aliasing, ideal fi
 [[exams/index|Exams]] — how to use past exams to test yourself, and everything for each midterm:
 
 - **Midterm 1** (Lectures 1–11, held Sep 30): [[exams/midterm-1/index|review guide]] · [[exams/midterm-1/cheat-sheet|cheat sheet]] · [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|system-property bank]] · [[exams/midterm-1/past-exams/index|seven past exams]]
+- **Quiz 2** (HW5–HW7, Lectures 13–18): [[exams/quiz-2|review page]] with a formula sheet, HW7 worked and a practice quiz
 - **Midterm 2** (Units 3–4 and the lectures after them): [[exams/midterm-2/index|overview]] · [[exams/midterm-2/past-exams/index|seven past exams]]
 
 ### Reference

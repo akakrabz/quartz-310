@@ -9,7 +9,8 @@ Units 1–3 worked with sequences $x[n]$ and asked nothing about where they came
 | # | page | one line |
 |---|---|---|
 | 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | $x[n]=x_a(nT)$, $f_s=1/T$; the impulse-train model $x_s(t)=\sum_nx_a(nT)\delta(t-nT)$; $X_s(\Omega)=\frac1T\sum_nX_a(\Omega-\frac{2\pi}{T}n)$ from the windowing property; $\omega=\Omega T$ and $X_d(\omega)=\frac1T\sum_nX_a(\frac{\omega-2\pi n}{T})$; a box sampled at $T=\frac{1}{20}$ and $\frac{1}{10}$ s; bandlimited signals, $f_s\gt2B$, the Nyquist rate $2B$, guard band, touching copies, aliasing; a triangle sampled at $150$, $100$ and $75$ Hz; a sampled sinusoid remembers $\Omega_0T$ only modulo $2\pi$ |
-| 18– | *to come* | announced in the Lecture 17 notes: ideal digital-to-analog conversion and the aliasing effect in detail; needed by the past exams on top of them: the A/D → $H_d$ → D/A chain. Pages will follow the lectures. |
+| 18 | *summary in §6 of the [[exams/quiz-2\|Quiz 2 review]]* | ideal digital-to-analog conversion: $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$, in frequency a low-pass of height $T$ on $\lvert\Omega\rvert\le\frac{\pi}{T}$; the A/D → $H_d$ → D/A example (HW7 #4). A full lecture page will follow. |
+| 19– | *to come* | aliasing in detail, ideal filters, the DFT and FFT. Pages will follow the lectures. |
 
 > [!key] The unit on one card (Lecture 17)
 > - **Ideal sampling** ([[concepts/sampling|sampling]]): $x[n]=x_a(nT)$, sampling period $T$ (s), sampling frequency $f_s=\frac1T$ (Hz). Model: $x_s(t)=x_a(t)\sum_n\delta(t-nT)=\sum_nx_a(nT)\,\delta(t-nT)$, still continuous-time.

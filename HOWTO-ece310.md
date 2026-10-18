@@ -104,6 +104,8 @@ as targets) and compiles every equation with KaTeX in strict mode. Run it before
   (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2: an overview (scope, format, what gets asked on each past exam, a
   preparation plan and a Unit 3 formula box), a true/false bank (all 43 statements of the seven exams) and 7 past exams
   (FA2019 … SP2025), typed with folded solutions; the problems on topics after Lecture 16 are marked as later material.
+  Quiz 2 (`exams/quiz-2.md`, Oct 2026): a review page for HW5–HW7 / Lectures 13–18 with a formula box, HW7 worked against the
+  official key, a one-section summary of Lecture 18 (ideal D/A) and a practice quiz; numbers in `verify/Q2_numbers.py`, figures in `verify/Q2_figs.py`.
 - **Homework walkthroughs** HW1–HW6 (HW6's was released with `tools/hw6_release.py` after its Oct 9 due date; the script is kept as the pattern for later sets).
 - A **toolkit** (complex numbers, geometric series, signal transformations, factoring and long division, errata in the course
   materials) and **supplements** (Singer–Munson notes reading guide, notation, course summary, transform tables, the demo notebooks).

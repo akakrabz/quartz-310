@@ -30,6 +30,10 @@ Held Wednesday, September 30, 2026: [[1-signals-and-systems/index|Unit 1]] and [
 - [[exams/midterm-1/past-exams/index|Past Midterm 1 exams]] — seven exams (FA2025 back to FA2019) with folded solutions and the problem-family × exam map.
 - [[demos/practice-drills|Practice drills]] — randomized, autograded drills with hints and worked solutions.
 
+## Quiz 2 — HW5–HW7, Lectures 13–18
+
+- [[exams/quiz-2|Quiz 2 review]] — scope (and which sampling is not on it yet), a one-box formula sheet, every HW5–HW7 problem mapped to its recipe, HW7 worked against the official key with figures, Lecture 18's ideal D/A conversion, and a ten-problem practice quiz with folded solutions.
+
 ## Midterm 2 — the DTFT, frequency response and what follows
 
 - [[exams/midterm-2/index|Midterm 2 overview]] — what it covers and how its problems are built.
