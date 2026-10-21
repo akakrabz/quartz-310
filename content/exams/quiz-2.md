@@ -1,6 +1,6 @@
 ---
 title: "Quiz 2 review · the DTFT, frequency response, magnitude and phase, ideal sampling"
-description: "ECE 310 Quiz 2 review (HW5–7, Lectures 13–18): scope, a one-box formula sheet, HW7 worked against the official key, ideal D/A in brief, and a practice quiz with True/False checks, all with folded solutions."
+description: "ECE 310 Quiz 2 review (HW5–7, Lectures 13–18): scope, what was actually asked, a one-box formula sheet, HW7 worked against the official key, ideal D/A in brief, and a practice quiz with True/False checks, all with folded solutions."
 tags: [exam, quiz-2, midterm-2, dtft, frequency-response, sampling]
 ---
 
@@ -32,6 +32,69 @@ tags: [exam, quiz-2, midterm-2, dtft, frequency-response, sampling]
 - **Not on this quiz:** [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]], the DFT.
 
 Methods and traps: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]] · [[problems/lti-response-to-sinusoids|response to sinusoids]] · [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]] · [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] · [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]. Drills: [DTFT values](/static/demos/drills/#dtftv) · [sinusoidal response](/static/demos/drills/#sinr) · [magnitude & phase](/static/demos/drills/#magph).
+
+## What was actually asked (Oct 2026)
+
+From a student who took it: mostly routine. The parts that took thought:
+- Parseval **without** $\lvert\cdot\rvert^2$: the general form $\sum_n x[n]y^*[n]=\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)Y_d^*(\omega)\,d\omega$, or plain $\int X_d$ (inverse DTFT at one $n$).
+- DTFT of a finite sequence by hand.
+- $X_d(\omega_0)$ at a given $\omega_0$ for a finite sequence.
+- Eigenfunction property: $e^{j\omega_0n}\to H_d(\omega_0)e^{j\omega_0n}$.
+- Hermitian symmetry as a test for a real $x[n]$.
+
+> [!key] Tools for these
+> $$
+> \sum_n x[n]y^*[n]=\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)Y_d^*(\omega)\,d\omega,\qquad \int_{-\pi}^{\pi}X_d(\omega)e^{j\omega n_0}\,d\omega=2\pi\,x[n_0]
+> $$
+> $$
+> X_d(\omega_0)=\sum_n x[n]e^{-j\omega_0n}:\quad \omega_0=0\to\sum_n x[n],\quad \omega_0=\pi\to\sum_n(-1)^nx[n],\quad \omega_0=\tfrac{\pi}{2}\to\sum_n(-j)^nx[n]
+> $$
+> $$
+> x[n]\ \text{real}\iff X_d(-\omega)=X_d^*(\omega)\iff \lvert X_d\rvert\ \text{even},\ \angle X_d\ \text{odd}\iff \operatorname{Re}X_d\ \text{even},\ \operatorname{Im}X_d\ \text{odd}
+> $$
+
+> [!question] A1 · Parseval without squares
+> $x[n]=\{\underset{\uparrow}{1},2,3\}$, $y[n]=\{\underset{\uparrow}{2},0,-1\}$. Find $\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)Y_d^*(\omega)\,d\omega$.
+
+> [!success]- Answer A1
+> $\sum_n x[n]y^*[n]=1\cdot2+2\cdot0+3\cdot(-1)=-1$.
+
+> [!question] A2 · Integrals of $X_d$
+> $x[n]=\{-1,\underset{\uparrow}{2},3,1\}$. Find (a) $\int_{-\pi}^{\pi}X_d(\omega)\,d\omega$, (b) $\int_{-\pi}^{\pi}X_d(\omega)e^{j2\omega}\,d\omega$.
+
+> [!success]- Answer A2
+> (a) $2\pi x[0]=4\pi$. (b) $2\pi x[2]=2\pi$.
+
+> [!question] A3 · DTFT by hand
+> $x[n]=\delta[n]+2\delta[n-1]+\delta[n-2]$. Find $X_d(\omega)$, $\lvert X_d(\omega)\rvert$, $\angle X_d(\omega)$.
+
+> [!success]- Answer A3
+> $X_d=1+2e^{-j\omega}+e^{-j2\omega}=e^{-j\omega}(e^{j\omega}+2+e^{-j\omega})=e^{-j\omega}(2+2\cos\omega)$. $2+2\cos\omega\ge0$: $\lvert X_d\rvert=2+2\cos\omega$, $\angle X_d=-\omega$ on $(-\pi,\pi)$.
+
+> [!question] A4 · DTFT at one frequency
+> $x[n]=\{\underset{\uparrow}{3},-1,2,4\}$. Find $X_d(0)$, $X_d(\pi)$, $X_d(\frac{\pi}{2})$.
+
+> [!success]- Answer A4
+> $X_d(0)=3-1+2+4=8$. $X_d(\pi)=3+1+2-4=2$. $X_d(\frac{\pi}{2})=3+(-1)(-j)+2(-1)+4(j)=1+5j$.
+
+> [!question] A5 · Eigenfunctions
+> $y[n]=x[n]+x[n-1]$, input $x[n]=3+2e^{j\frac{\pi}{2}n}+\cos(\pi n)$. Find $y[n]$.
+
+> [!success]- Answer A5
+> $H_d(\omega)=1+e^{-j\omega}=2\cos(\tfrac{\omega}{2})e^{-j\omega/2}$. $H_d(0)=2$, $H_d(\frac{\pi}{2})=\sqrt2\,e^{-j\pi/4}$, $H_d(\pi)=0$.
+> $$
+> y[n]=6+2\sqrt2\,e^{j\left(\frac{\pi}{2}n-\frac{\pi}{4}\right)}
+> $$
+
+> [!question] A6 · Real or not?
+> Which spectra belong to a real $x[n]$? (a) $\cos\omega+j\sin2\omega$ (b) $e^{j\omega}+j$ (c) $\lvert\omega\rvert e^{-j3\omega}$ on $[-\pi,\pi]$ (d) $\sin\omega$
+
+> [!success]- Answer A6
+> Test $X_d(-\omega)=X_d^*(\omega)$.
+> - (a) $\cos\omega-j\sin2\omega$ both sides: **real**.
+> - (b) $e^{-j\omega}+j$ vs $e^{-j\omega}-j$: **not real** ($x=\delta[n+1]+j\delta[n]$).
+> - (c) $\lvert\omega\rvert e^{j3\omega}$ both sides: **real**.
+> - (d) $-\sin\omega$ vs $\sin\omega$: **not real**. Real and odd $X_d$ ⇒ $x$ purely imaginary, odd: $x[\pm1]=\pm\frac{j}{2}$.
 
 ## The formula sheet
 
