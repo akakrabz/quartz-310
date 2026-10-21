@@ -41,4 +41,4 @@ aliases: ["complex exponential", "Euler's formula", "Euler's identities", "compl
 **Related.** [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[concepts/marginal-stability|marginal stability]] · [[concepts/discrete-time-signal|discrete-time signal]]
 
 ### Sources for this page
-Lecture 2 §1.1–1.4 (Eqs. 1–20) and §2 (Eqs. 23–24); Lecture 6 §1; HW1 #4; FA2025 #5c and #8b, SP2025 #6 and #1c, SP2021 #3 (annotated "1.13 e^{jπ/4}"). Checked in `verify/concepts/verify_glossary_time.py`, `verify_signals.py`, `verify_stability.py`. The *In Unit 3* paragraph: Lecture 13 §1.2 and Lecture 14 §2 (Eqs. 20–22); checked in `verify/CLEAN_unit3.py`.
+Lecture 2 §1.1–1.4 (Eqs. 1–20) and §2 (Eqs. 23–24); Lecture 6 §1; HW1 #4; FA2025 #5c and #8b, SP2025 #6 and #1c, SP2021 #3 (annotated "1.13 e^{jπ/4}").

@@ -1,6 +1,6 @@
 ---
 title: "Impulse response"
-description: "h[n] = T{δ[n]}: for an LTI system, the whole system in one sequence. Four ways to get it (read off a formula, run an LCCDE, combine an input–output pair, difference a step response) and what it tells you."
+description: "h[n] = T{δ[n]}: the whole LTI system in one sequence. Four ways to get it (formula, LCCDE, input–output pair, differenced step response) and what it tells you."
 tags: [concept, systems, convolution, midterm-1]
 aliases: ["impulse response", "unit pulse response", "unit-pulse response", "unit impulse response", "UPR", "h[n]"]
 ---
@@ -23,23 +23,7 @@ x[n]-\tfrac13x[n-1]=3^{-n}\big(u[n]-u[n-1]\big)=\delta[n],
 $$
 linearity and time-invariance give $h[n]=y[n]-\tfrac13y[n-1]=5^{-n}u[n-1]-\tfrac13\,5^{-(n-1)}u[n-2]=5^{-n}\big(u[n-1]-\tfrac53u[n-2]\big)$.
 
-**From an LCCDE by machine** (Lecture 5, Ex. 1: $y[n]=\frac14y[n-1]-x[n]+\frac12x[n-2]$, closed form $h[n]=-(\frac14)^nu[n]+\frac12(\frac14)^{n-2}u[n-2]$):
-
-```python
-import numpy as np
-from scipy.signal import lfilter
-# Lecture 5, Exercise 1: y[n] = 1/4 y[n-1] - x[n] + 1/2 x[n-2]
-b, a = [-1, 0, 0.5], [1, -0.25]     # move 1/4 y[n-1] to the left: a = [1, -1/4]
-d = np.zeros(6); d[0] = 1          # delta[n] on n = 0..5
-print(lfilter(b, a, d))            # h[n] by running the recursion
-n = np.arange(6)
-print(-0.25**n + 0.5 * 0.25**(n - 2.0) * (n >= 2))   # closed form from the notes
-```
-
-```text
-[-1.         -0.25        0.4375      0.109375    0.02734375  0.00683594]
-[-1.         -0.25        0.4375      0.109375    0.02734375  0.00683594]
-```
+**From an LCCDE** (Lecture 5, Ex. 1): $y[n]=\frac14y[n-1]-x[n]+\frac12x[n-2]$ has $h[n]=-(\frac14)^nu[n]+\frac12(\frac14)^{n-2}u[n-2]$. Running the recursion in code: [[demos/python-demos|Python demos]].
 
 > [!trap]
 > - **Only LTI systems are described by $h$** ([[exams/midterm-1/past-exams/fall-2024|FA2024 #1a]] F, [[exams/midterm-1/past-exams/fall-2019|FA2019 #1b]] F): the median filter and $y=n\,x[n]$ both have $h=0$.
@@ -53,4 +37,4 @@ print(-0.25**n + 0.5 * 0.25**(n - 2.0) * (n >= 2))   # closed form from the note
 **Related.** [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|convolution]] · [[concepts/step-response|step response]] · [[concepts/lccde|LCCDE]] · [[concepts/transfer-function|transfer function]] · [[concepts/inverse-z-transform|inverse z-transform]]
 
 ### Sources for this page
-Lecture 4 §1 (Eq. 1, difference and median examples); Lecture 5 §1.2 and Exercise 1; Lecture 9 §1.1; HW2 #4 (official solution), HW4 #4; FA2019 #3, FA2025 #4. Checked in `verify/concepts/verify_systems.py` and `verify_glossary_time.py`; the snippet was run as shown.
+Lecture 4 §1 (Eq. 1, difference and median examples); Lecture 5 §1.2 and Exercise 1; Lecture 9 §1.1; HW2 #4 (official solution), HW4 #4; FA2019 #3, FA2025 #4.

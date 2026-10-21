@@ -64,21 +64,7 @@ Each follows from the table plus one [[concepts/z-transform-properties|property]
 > - $na^nu[n]$ has an $az^{-1}$ in the numerator; $(n+1)a^nu[n]$ does not. Double poles come from these rows ([[concepts/partial-fraction-expansion|PFE]] with repeated poles).
 > - The rectangular pulse $u[n]-u[n-N]$ has **no pole at $z=1$** (it cancels): ROC $z\neq0$, not $|z|>1$.
 
-**Checking a pair yourself.** Every row above was verified by summing $\sum_n x[n]z^{-n}$ at test points inside the ROC (`verify/concepts/verify_pairs.py`, 45/45). The idea in five lines:
-
-```python
-import numpy as np
-# check (n+1) a^n u[n] <-> 1/(1 - a z^-1)^2 at a test point inside the ROC |z| > |a|
-a, z = 0.6, 0.9 * np.exp(0.7j)
-n = np.arange(2000)
-lhs = np.sum((n + 1) * a**n * z**(-n.astype(float)))   # truncated z-transform sum
-rhs = 1 / (1 - a / z)**2                                # closed form
-print(np.round(lhs, 10), np.round(rhs, 10), abs(lhs - rhs) < 1e-12)
-```
-
-```text
-(0.3091600284-2.3344710817j) (0.3091600284-2.3344710817j) True
-```
+**Checking a pair yourself.** Sum $\sum_n x[n]z^{-n}$ at a point inside the ROC and compare with the closed form.
 
 **Where it appears.**
 - Lectures: [[2-z-transform/06-the-z-transform|L6]] (the table), [[2-z-transform/07-z-transform-properties|L7]] (properties that generate new rows), [[2-z-transform/08-inverse-z-transform|L8]] (read backwards for the inverse).
@@ -89,4 +75,4 @@ print(np.round(lhs, 10), np.round(rhs, 10), abs(lhs - rhs) < 1e-12)
 Related: [[concepts/z-transform]] · [[concepts/z-transform-properties]] · [[concepts/region-of-convergence]] · [[concepts/inverse-z-transform]] · [[concepts/sided-sequences]] · [[supplements/transform-tables]]
 
 ### Sources for this page
-Lecture 6 notes (Table 1, Exercises 1–2) and slides; Lecture 8 notes §1.1 (finite-length form); `transform_tables.pdf` Table 10 (sign erratum in row 3 confirmed on the rendered PDF); HW3 and its solutions; exam keys FA2025, SP2025, FA2024, FA2023, SP2021, FA2019. Verification: `verify/concepts/verify_pairs.py` (45/45) and `verify_zdomain_extra.py` (the $-u[-n-1]$ check).
+Lecture 6 notes (Table 1, Exercises 1–2) and slides; Lecture 8 notes §1.1 (finite-length form); `transform_tables.pdf` Table 10 (sign erratum in row 3 confirmed on the rendered PDF); HW3 and its solutions; exam keys FA2025, SP2025, FA2024, FA2023, SP2021, FA2019.

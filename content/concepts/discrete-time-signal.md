@@ -42,4 +42,4 @@ aliases: ["discrete-time signal", "sequence", "digital signal", "x[n]", "signal"
 **Related.** [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/unit-step|unit step]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/sided-sequences|sided sequences]] · [[concepts/convolution|convolution]] · [[concepts/time-invariance|time-invariance]]
 
 ### Sources for this page
-Lecture 1 §2 (Eq. 1); Lecture 2 §2 (notation, elementary signals); HW1 #1–#3 and solutions; course summary (signal vs. sample); FA2025 #3b; SP2021 #1e. HW1 #2 and the FA2025 window checked in `verify/concepts/verify_signals.py` and `verify_glossary_time.py`.
+Lecture 1 §2 (Eq. 1); Lecture 2 §2 (notation, elementary signals); HW1 #1–#3 and solutions; course summary (signal vs. sample); FA2025 #3b; SP2021 #1e.

@@ -1,20 +1,19 @@
 ---
 title: "Toolkit"
-description: "The mathematics ECE 310 assumes — complex numbers, geometric series, index bookkeeping for sketching signals, factoring and long division — plus the list of errata in the course materials."
+description: "Mathematics ECE 310 assumes — complex numbers, geometric series, index bookkeeping, factoring and long division — plus errata in the course materials."
 tags: [toolkit]
 ---
 
-Reference pages, not lectures. Come here when a lecture says "recall…", when a PFE refuses to come out, or when you need to know whether the answer key or you made the sign error. Each page is short, has small worked examples checked in Python, and links to the lectures and exam problems that use it.
+*Toolkit · reference pages, not lectures · small worked examples, links to the lectures and exam problems that use them*
 
-- [[0-toolkit/01-complex-numbers|Complex numbers]] — rectangular ↔ polar, the quadrant rule, $e^{j\theta}$ on the unit circle, roots of $z^N = a$ (HW1 #4), turning conjugate PFE terms into $\cos$/$\sin$, and $\cos^2$ (FA2025 #5c).
-- [[0-toolkit/02-geometric-series|Geometric series]] — finite, infinite, shifted, left-sided and two-sided sums and $\sum k\,a^k$; how each convergence condition *is* a z-transform ROC.
-- [[0-toolkit/03-sketching-and-transforming-signals|Sketching and transforming signals]] — the $n=0$ arrow, shift / reversal / downsampling, "substitute, don't guess" for $x[-n+3]$ and $x[2n+1]$ (HW1 #2), even and odd parts, $\delta$- and $u$-forms (HW1 #3).
-- [[0-toolkit/04-factoring-and-long-division|Factoring and long division]] — $1+az^{-1}+bz^{-2} = (1-p_1z^{-1})(1-p_2z^{-1})$, poles and zeros at $0$ and $\infty$, the cover-up rule, and Lecture 10's long division for improper $H(z)$, with `residuez`.
-- [[0-toolkit/05-errata|Errata in the course materials]] — every slip found in the past exam keys, lecture notes, homework solutions and the official transform table, with the correction and why; check your cheat sheet against it.
+- [[0-toolkit/01-complex-numbers|Complex numbers]] — rectangular ↔ polar, quadrant rule, roots of $z^N = a$ (HW1 #4), conjugate PFE terms → $\cos$/$\sin$, $\cos^2$ (FA2025 #5c).
+- [[0-toolkit/02-geometric-series|Geometric series]] — finite, infinite, shifted, left- and two-sided sums, $\sum k\,a^k$; convergence condition = ROC.
+- [[0-toolkit/03-sketching-and-transforming-signals|Sketching and transforming signals]] — $n=0$ arrow; shift, reversal, downsampling; substitute for $x[-n+3]$, $x[2n+1]$ (HW1 #2); even/odd parts; $\delta$- and $u$-forms (HW1 #3).
+- [[0-toolkit/04-factoring-and-long-division|Factoring and long division]] — $1+az^{-1}+bz^{-2} = (1-p_1z^{-1})(1-p_2z^{-1})$; poles at $0$, $\infty$; cover-up; long division for improper $H(z)$; `residuez`.
+- [[0-toolkit/05-errata|Errata in the course materials]] — slips in exam keys, notes, homework solutions, transform table, with corrections.
 
 > [!tip] Where these show up
-> Complex numbers and geometric series are inside every [[problems/z-transform-with-roc|z-transform]] and [[problems/unbounded-outputs-and-pole-matching|pole-matching]] problem; index bookkeeping decides every [[problems/finite-length-convolution|convolution]] and [[problems/classifying-system-properties|system-property]] answer; factoring and long division are the first half of every [[problems/lccde-to-transfer-function-and-response|LCCDE]] and [[problems/all-possible-rocs|PFE/ROC]] problem. In [[3-fourier-analysis/index|Unit 3]] the same tools come back: the DTFT of a finite window or a decaying exponential is a geometric sum ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]), and magnitude and phase responses are polar form with the principal angle and $-1=e^{\pm j\pi}$ ([[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] opens with exactly this review). The reference sheets the course itself provides are collected under [[supplements/index|Supplements]].
+> Complex numbers and geometric series: every [[problems/z-transform-with-roc|z-transform]] and [[problems/unbounded-outputs-and-pole-matching|pole-matching]] problem; DTFTs of windows and exponentials ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]]); polar form for magnitude and phase ([[3-fourier-analysis/16-magnitude-and-phase-response|L16]]). Index bookkeeping: [[problems/finite-length-convolution|convolution]], [[problems/classifying-system-properties|system properties]]. Factoring: [[problems/lccde-to-transfer-function-and-response|LCCDE]], [[problems/all-possible-rocs|PFE/ROC]]. Course reference sheets: [[supplements/index|Supplements]].
 
 ### Sources for this page
-
-Summaries of the five toolkit pages; see each page's own sources.
+The five toolkit pages and their sources.

@@ -1,6 +1,6 @@
 ---
 title: "Notation translation"
-description: "The course's notation translation table (ece310_notation.pdf) — lectures vs Singer & Munson vs Manolakis & Ingle vs Oppenheim & Schafer vs Proakis & Manolakis vs the Kamalabadi videos — plus the Midterm 1 conventions that differ between lectures, old exams, the summary sheet and scipy."
+description: "The course's notation table (ece310_notation.pdf): lectures vs Singer–Munson, Manolakis–Ingle, Oppenheim–Schafer, Proakis–Manolakis and the Kamalabadi videos, plus conventions that differ across lectures, exams and scipy."
 tags: [supplement, signals, systems]
 ---
 

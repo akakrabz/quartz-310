@@ -1,6 +1,6 @@
 ---
 title: "Factoring and long division"
-description: "Factoring 1 + a z^-1 + b z^-2 into first-order terms, reading poles and zeros correctly from z^-1 form (including those at 0 and infinity), the cover-up rule for partial fractions, and polynomial long division in z^-1 for improper transfer functions (Lecture 10), with the scipy residuez / tf2zpk equivalents."
+description: "Factoring 1 + a z^-1 + b z^-2, reading poles and zeros from z^-1 form (including 0 and infinity), the cover-up rule, and long division in z^-1 for improper transfer functions."
 tags: [toolkit, z-transform, lccde]
 ---
 
@@ -8,7 +8,7 @@ tags: [toolkit, z-transform, lccde]
 
 Every LCCDE, PFE and stability problem on the exam passes through the same three moves: factor the denominator, split into first-order terms, and — if the numerator is too long — divide first.
 
-## Factoring $1 + a z^{-1} + b z^{-2}$
+## Factoring 1 + az⁻¹ + bz⁻²
 
 $$
 1 + a z^{-1} + b z^{-2} = (1 - p_1 z^{-1})(1 - p_2 z^{-1}),\qquad p_1 + p_2 = -a,\quad p_1 p_2 = b .
@@ -29,7 +29,7 @@ The $p_i$ are the roots of $z^2 + az + b = 0$ (multiply through by $z^2$). Guess
 > [!trap] $(1 - p\,z^{-1})$ has its pole at $z = +p$
 > $1 + 2z^{-1}$ is a pole at $z=-2$, not $+2$. Check each factor by setting it to zero: $1 + 2z^{-1} = 0 \iff z = -2$.
 
-## Reading poles and zeros from $z^{-1}$ form
+## Reading poles and zeros from z⁻¹ form
 
 Poles and zeros are values of $z$, so rewrite in positive powers first: multiply numerator **and** denominator by $z^{\max(M,N)}$, where $M$, $N$ are the highest powers of $z^{-1}$ in the numerator and denominator.
 
@@ -93,28 +93,7 @@ $$
 > - **PFE of $1/A(z)$, then shift:** $\dfrac{1}{1-2z^{-1}-3z^{-2}} = \dfrac{3/4}{1-3z^{-1}} + \dfrac{1/4}{1+z^{-1}}$, so $h[n] = g[n] - 3g[n-1] + g[n-2] + 4g[n-3]$ with $g[n] = \big(\tfrac34 3^n + \tfrac14(-1)^n\big)u[n]$. Same $h$, uglier form.
 > - **Divide in ascending powers** (constant term first) and you get the power series of the causal $h[n]$ directly: $1, -1, 2, 5, 16, 47, \dots$ — a quick numerical check of any closed form.
 
-## Python: `residuez` and `tf2zpk`
-
-`residuez(b, a)` returns exactly the course's PFE form: `R` = $A_k$, `P` = $p_k$, `K` = $C_k$ (in powers of $z^{-1}$). `tf2zpk` reads `b` and `a` as polynomials in **positive** powers of $z$, which matches $z^{-1}$ form only when both arrays have the same length — pad with zeros first.
-
-```python
-import numpy as np
-from scipy.signal import residuez, tf2zpk
-b = [1, -3, 1, 4]                 # 1 - 3z^-1 + z^-2 + 4z^-3
-a = [1, -2, -3]                   # 1 - 2z^-1 - 3z^-2
-R, P, K = residuez(b, a)          # A_k, p_k, C_k
-print("R =", np.round(R.real, 4), " P =", P.real, " K =", np.round(K.real, 4))
-print("poles, unpadded:", tf2zpk(b, a)[1].real)        # misses z = 0 !
-print("poles, padded:  ", tf2zpk(b, a + [0])[1].real)  # equal lengths first
-```
-
-```text
-R = [0.25   0.1944]  P = [-1.  3.]  K = [ 0.5556 -1.3333]
-poles, unpadded: [ 3. -1.]
-poles, padded:   [ 3. -1.  0.]
-```
-
-$0.1944 = \tfrac{7}{36}$, $0.5556 = \tfrac59$, $-1.3333 = -\tfrac43$. More in [[demos/python-demos|Python demos]].
+Checking with `residuez` and `tf2zpk` (pad `b` and `a` to equal length first): [[demos/python-demos|Python demos]].
 
 ## Related
 
@@ -122,4 +101,4 @@ $0.1944 = \tfrac{7}{36}$, $0.5556 = \tfrac59$, $-1.3333 = -\tfrac43$. More in [[
 
 ### Sources for this page
 
-Lecture 8 notes (PFE, cover-up); Lecture 9 notes (transfer functions, poles and zeros); Lecture 10 notes §1.1–1.2 (Exercise 1, long division, the $1/A(z)$ alternative; PDF p. 2 rendered to read the division); FA2025 #5(a), #6, #7; SP2025 #8; SP2023 #6; SP2021 #5; HW3 #4. Checked in `verify/hub/toolkit_factoring.py` (34 checks) with `scipy.signal.residuez`, `tf2zpk` and `lfilter`.
+Lecture 8 notes (PFE, cover-up); Lecture 9 notes (transfer functions, poles and zeros); Lecture 10 notes §1.1–1.2 (Exercise 1, long division, the $1/A(z)$ alternative; PDF p. 2 rendered to read the division); FA2025 #5(a), #6, #7; SP2025 #8; SP2023 #6; SP2021 #5; HW3 #4.

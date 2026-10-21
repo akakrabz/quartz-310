@@ -41,4 +41,4 @@ aliases: ["shift-invariance", "time-invariant", "shift-invariant", "time-varying
 **Related.** [[concepts/linearity|linearity]] · [[concepts/causality|causality]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|convolution]] · [[concepts/discrete-time-signal|discrete-time signal]] (index maps)
 
 ### Sources for this page
-Lecture 3 §2.2 (Eqs. 8–10, Exercises 3–5; note the notes' typo $x[\lvert n\rvert-n_0\rvert]$ for $x[\lvert n\rvert-n_0]$) and slides 7–9; HW1 #5–#6, HW2 #1–#2 with solutions; past-exam property tables (cross-checked in `verify/exams/property_bank.py`); the $x[2n]$ counterexample in `verify/concepts/verify_glossary_time.py`.
+Lecture 3 §2.2 (Eqs. 8–10, Exercises 3–5; note the notes' typo $x[\lvert n\rvert-n_0\rvert]$ for $x[\lvert n\rvert-n_0]$) and slides 7–9; HW1 #5–#6, HW2 #1–#2 with solutions; past-exam property tables.

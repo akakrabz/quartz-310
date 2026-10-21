@@ -1,14 +1,12 @@
 ---
 title: "Official transform tables"
-description: "The course's z-transform properties and pairs tables (transform_tables.pdf, Tables 9 and 10) typed out and checked numerically — including the missing minus sign in pair 3 — and its DTFT tables (Tables 5 and 6) for Unit 3, with the differentiation sign that Lecture 14 misprints and the two sinc conventions."
+description: "The course's z-transform tables (Tables 9–10, with pair 3's missing minus sign) and DTFT tables (Tables 5–6, with Lecture 14's differentiation sign misprint and the two sinc conventions)."
 tags: [supplement, z-transform, roc, dtft, midterm-1]
 ---
 
 *Supplement · `suppliment/transform_tables.pdf` (10 pages) · used by [[2-z-transform/06-the-z-transform|Lecture 6]], [[2-z-transform/07-z-transform-properties|Lecture 7]] and [[2-z-transform/08-inverse-z-transform|Lecture 8]] (z-transform), and [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] and [[3-fourier-analysis/14-dtft-properties|Lecture 14]] (DTFT)*
 
 The course's reference sheet is the standard set of ten tables from Oppenheim & Willsky, *Signals and Systems*: Fourier series (Tables 1–2), CT Fourier transform (3–4), **DTFT (5–6)**, Laplace (7–8) and **z-transform (9–10)**. Tables 9 and 10 serve Unit 2 (and Midterm 1), Tables 5 and 6 serve [[3-fourier-analysis/index|Unit 3]], and Tables 1–4 and 7–8 are continuous-time background from earlier courses.
-
-Every z-transform pair below was checked by summing the series directly at three test points inside the ROC, and every property on test signals (`verify/hub/supp_tables.py`, 45 checks).
 
 ## Table 10 — common z-transform pairs (PDF p. 10)
 
@@ -29,19 +27,6 @@ Every z-transform pair below was checked by summing the series directly at three
 
 > [!warning] ⚠ Pair 3 is misprinted in the PDF
 > The official table prints "$u[-n-1] \leftrightarrow \dfrac{1}{1-z^{-1}}$, $\lvert z\rvert<1$". The correct pair has a minus sign: $-u[-n-1] \leftrightarrow \dfrac{1}{1-z^{-1}}$ (it is pair 6 with $\alpha = 1$). Direct check at $z = \tfrac12$: $\sum_{n\le-1}(-1)\,z^{-n} = -\sum_{m\ge1}(\tfrac12)^m = -1 = \dfrac{1}{1-2}$. Lecture 6's table and the [[supplements/course-summary|course summary]] have it right. Listed with the other slips in [[0-toolkit/05-errata|errata]].
-
-```python
-import numpy as np
-z = 0.5                                    # inside the ROC |z| < 1
-n = np.arange(-200, 0)                     # u[-n-1] is 1 for n <= -1
-print(np.sum(-1.0 * z ** (-n.astype(float))))   # Z{-u[-n-1]} by direct summation
-print(1 / (1 - 1 / z))                     # table formula 1/(1 - z^-1)
-```
-
-```text
--1.0
--1.0
-```
 
 **Reading the table like the exam does:** pairs 5/6 and 7/8 have identical formulas — the ROC alone picks the signal. Pairs 9–12 are pairs 5–6 with complex-conjugate $\alpha = re^{\pm j\omega_0}$ combined over a common denominator ([[0-toolkit/01-complex-numbers|complex numbers]]); on the exam it is often faster to split $\cos$ into two exponentials than to match pair 9. The transforms are all written in powers of $z^{-1}$, which is the form the [[concepts/partial-fraction-expansion|PFE]] cover-up rule wants. See [[concepts/z-transform-pairs|z-transform pairs]].
 
@@ -118,12 +103,11 @@ The course writes the DTFT as $X_d(\omega)$; the tables write $X(e^{j\omega})$ �
 > | $\sum_{k}\delta[n-kN]$ | $\dfrac{2\pi}{N}\displaystyle\sum_{k}\delta\Big(\omega-\dfrac{2\pi k}{N}\Big)$ |
 > | periodic $\sum_{k=\langle N\rangle}a_k e^{jk(2\pi/N)n}$ | $2\pi\displaystyle\sum_{k}a_k\,\delta\Big(\omega-\dfrac{2\pi k}{N}\Big)$ |
 >
-> The PDF's third column (Fourier-series coefficients of the periodic signals, including the periodic square wave) is DTFS material and is not repeated here. The aperiodic pairs and all Table 5 properties were checked numerically in `verify/hub/supp_tables.py`.
+> The PDF's third column (Fourier-series coefficients of the periodic signals, including the periodic square wave) is DTFS material and is not repeated here.
 
 ## Related
 
 [[concepts/z-transform|z-transform]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/region-of-convergence|ROC]] · [[concepts/inverse-z-transform|inverse z-transform]] · [[problems/z-transform-with-roc|z-transform with ROC]] · [[0-toolkit/02-geometric-series|geometric series]] (where every pair comes from) · [[3-fourier-analysis/index|Unit 3]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]].
 
 ### Sources for this page
-
-`suppliment/transform_tables.pdf` Tables 5, 6, 9, 10 (pages 5, 6, 9, 10; page 10 rendered to confirm pair 3); Lecture 6 notes Table 1 and Lecture 7 notes Table 1; Lecture 14 notes Tables 1–2 and slide 15 (the differentiation sign, rendered); `suppliment/review.pdf` p. 3. Checked in `verify/hub/supp_tables.py`; the differentiation sign in `verify/INTEG_errata.py`.
+`suppliment/transform_tables.pdf` Tables 5, 6, 9, 10 (pages 5, 6, 9, 10; page 10 rendered to confirm pair 3); Lecture 6 notes Table 1 and Lecture 7 notes Table 1; Lecture 14 notes Tables 1–2 and slide 15 (the differentiation sign, rendered); `suppliment/review.pdf` p. 3.

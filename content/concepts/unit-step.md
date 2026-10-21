@@ -44,4 +44,4 @@ aliases: ["u[n]", "step", "unit step", "unit-step", "step function"]
 **Related.** [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/step-response|step response]] · [[concepts/discrete-time-signal|discrete-time signal]] · [[concepts/sided-sequences|sided sequences]] · [[concepts/z-transform-pairs|z-transform pairs]]
 
 ### Sources for this page
-Lecture 2 §2 (Eq. 22 and the $4u[3-n]$ example); Lecture 6 Exercise 1; Lecture 11 §1.2.1; HW1 #1, #3 and HW2 #3 solutions; FA2023 #4–#5, FA2024 #5, FA2025 #3b and #5b. Checked in `verify/concepts/verify_signals.py` and `verify_glossary_time.py`.
+Lecture 2 §2 (Eq. 22 and the $4u[3-n]$ example); Lecture 6 Exercise 1; Lecture 11 §1.2.1; HW1 #1, #3 and HW2 #3 solutions; FA2023 #4–#5, FA2024 #5, FA2025 #3b and #5b.

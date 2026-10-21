@@ -1,6 +1,6 @@
 ---
 title: "Course demo notebooks"
-description: "Catalog of the eleven Jupyter notebooks in the course's ece310-demos folder: what each one demonstrates, which lecture it belongs to, whether it is Midterm 1 material, and how to run it (numpy, scipy, matplotlib, scikit-image; the resources folder with the audio and image files is not in the uploaded copy)."
+description: "Catalog of the eleven Jupyter notebooks in ece310-demos: what each shows, its lecture, Midterm 1 relevance, and how to run it (the resources folder is not in the uploaded copy)."
 tags: [supplement, demo]
 ---
 
@@ -34,8 +34,6 @@ The course ships its Python demos as Jupyter notebooks. Five of them are Midterm
 - `demo_difference_equations`: $h[n] = (\tfrac12)^n u[n]$; the loop and `lfilter` agree to the last bit.
 - `demo_stability`: `butter(2, 0.5)` gives `a = [1, 0, 0.1716]`, poles $\pm j0.414$; with `a[2] = 1.01` the poles are $\pm j\sqrt{1.01}$, just outside the unit circle — a causal system with a pole outside the unit circle is unstable ([[concepts/bibo-stability|BIBO stability]]).
 
-(`verify/hub/supp_demos.py` executes every code cell of every notebook headless and checks these values.)
-
 ## How to run them
 
 1. Python 3 with the packages in `requirements.txt`: **numpy, matplotlib, scipy, scikit-image**, plus Jupyter: `pip install -r requirements.txt jupyterlab`.
@@ -45,4 +43,4 @@ The course ships its Python demos as Jupyter notebooks. Five of them are Midterm
 
 ### Sources for this page
 
-`ece310-demos-main/*.ipynb` (markdown and code cells read with Python's `json` module) and `requirements.txt`; every code cell executed in this container by `verify/hub/supp_demos.py`.
+`ece310-demos-main/*.ipynb` (markdown and code cells read with Python's `json` module) and `requirements.txt`.

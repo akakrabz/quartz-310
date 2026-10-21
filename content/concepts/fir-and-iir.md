@@ -17,20 +17,6 @@ H(z)=\frac{1-z^{-L}}{L\,(1-z^{-1})}=\frac1L\sum_{k=0}^{L-1}z^{-k}
 $$
 the zero of $1-z^{-L}$ at $z=1$ cancels the pole.
 
-```python
-import numpy as np
-from scipy.signal import lfilter
-L = 4                                 # y[n] = y[n-1] + (x[n] - x[n-L]) / L
-b = np.r_[1/L, np.zeros(L - 1), -1/L]
-a = [1, -1]
-d = np.zeros(10); d[0] = 1
-print(lfilter(b, a, d))               # a feedback term, yet a FINITE impulse response
-```
-
-```text
-[0.25 0.25 0.25 0.25 0.   0.   0.   0.   0.   0.  ]
-```
-
 **On the exam ([[exams/midterm-1/past-exams/fall-2025|FA2025 #4]]).** The modified moving average $y[n]=\frac1L\sum_{k=0}^{L-1}x[n-Sk]$ with $L=3$, $S=4$ has $h[n]=\frac13\big(\delta[n]+\delta[n-4]+\delta[n-8]\big)$, and for every $L$, $S$ it is FIR, hence BIBO stable ($\sum\lvert h\rvert=1$): part (c) is True.
 
 > [!trap]
@@ -46,4 +32,4 @@ print(lfilter(b, a, d))               # a feedback term, yet a FINITE impulse re
 **Related.** [[concepts/lccde|LCCDE]] · [[concepts/impulse-response|impulse response]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[concepts/block-diagram|block diagram]] · [[concepts/transfer-function|transfer function]]
 
 ### Sources for this page
-Lecture 5 §1.1–1.2 (Eqs. 2–7); Lecture 9 §1.2 and Fig. 1; HW3 #3a, HW4 #6; FA2025 #4, FA2019 #1e and #3. Checked in `verify/concepts/verify_glossary_time.py` and `verify_systems.py`; the snippet was run as shown.
+Lecture 5 §1.1–1.2 (Eqs. 2–7); Lecture 9 §1.2 and Fig. 1; HW3 #3a, HW4 #6; FA2025 #4, FA2019 #1e and #3.

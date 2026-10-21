@@ -1,6 +1,6 @@
 ---
 title: "Eigenfunctions of LTI systems"
-description: "Feed zⁿ (for all n) into an LTI system and zⁿ comes out, scaled by H(z): the reason the z-transform exists, why convolution becomes multiplication, why a zero blocks an exponential and a pole resonates with it."
+description: "Feed zⁿ (all n) into an LTI system and zⁿ comes out scaled by H(z): why the z-transform exists, convolution becomes multiplication, a zero blocks and a pole resonates."
 tags: [concept, systems, z-transform, midterm-1]
 aliases: ["eigenfunction", "eigenfunctions", "eigenvalue", "eigensequence", "eigensignal"]
 ---
@@ -37,4 +37,4 @@ aliases: ["eigenfunction", "eigenfunctions", "eigenvalue", "eigensequence", "eig
 **Related.** [[concepts/complex-exponential|complex exponential]] · [[concepts/transfer-function|transfer function]] · [[concepts/z-transform|z-transform]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|convolution]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/marginal-stability|marginal stability]]
 
 ### Sources for this page
-Lecture 6 §1 (Eqs. 1–9 and the eigenfunction paragraph); Lecture 9 §1; Lecture 11 §1.2.1 (Eqs. 24–28); SP2025 #1c and #6, FA2025 #8b. The example values are checked in `verify/concepts/verify_glossary_time.py` and `verify_stability.py`. The *In Unit 3* paragraph: Lecture 15 §1 (frequency response as the eigenvalue, sinusoidal response); FA2021 MT2 #1(a); checked in `verify/CLEAN_unit3.py`.
+Lecture 6 §1 (Eqs. 1–9 and the eigenfunction paragraph); Lecture 9 §1; Lecture 11 §1.2.1 (Eqs. 24–28); SP2025 #1c and #6, FA2025 #8b. The *In Unit 3* paragraph: Lecture 15 §1 (frequency response as the eigenvalue, sinusoidal response); FA2021 MT2 #1(a).

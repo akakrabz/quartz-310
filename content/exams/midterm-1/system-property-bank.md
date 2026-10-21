@@ -1,45 +1,42 @@
 ---
 title: "System-property bank"
-description: "Every system from the seven past Midterm 1 property tables (Linear / Time-invariant / Causal / Stable), plus HW1 #5–6, HW2 #1 and the Lecture 3 practice list, with the official answers, a one-line reason per row, and the fast rules that decide each box."
+description: "Every system from the seven past Midterm 1 property tables, plus HW1 #5–6, HW2 #1 and the Lecture 3 practice list, with official answers, a one-line reason per row, and the fast rules."
 tags: [midterm-1, exam, problem-family]
 family_frequency: "7 of 7 exams"
 typical_points: "12"
 lectures: [3, 4]
 ---
 
-*Problem family · on 7 of 7 past exams (FA2025 #2, SP2025 #2, FA2024 #2, FA2023 #2, SP2023 #2, SP2021 #3, FA2019 #2) · 12 pts (SP2021: 24) · [[1-signals-and-systems/03-system-properties|Lecture 3]], [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] · recipe and proofs: [[problems/classifying-system-properties|Classifying system properties]]*
-
-> [!abstract] How to use this page
-> Every exam has a table of three systems with four Yes/No boxes each: **Linear, Time-invariant (= shift-invariant), Causal, (BIBO) Stable**. §1 lists the rules that decide nearly every box in seconds. §2–§4 give 46 rows: all 20 systems from the exam tables, the 5 homework systems, and the 21 from Lecture 3 (one of which repeats an exam system). Cover the four answer columns, fill them in, then check the reason column. Every row was also cross-checked numerically (superposition with random inputs, a shift test, a perturb-the-future test, and a battery of bounded inputs).
+*Problem family · 7 of 7 past exams (FA2025 #2, SP2025 #2, FA2024 #2, FA2023 #2, SP2023 #2, SP2021 #3, FA2019 #2) · 12 pts (SP2021: 24) · [[1-signals-and-systems/03-system-properties|Lecture 3]], [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] · recipe: [[problems/classifying-system-properties|Classifying system properties]]*
 
 > [!exam] How the problem is graded
-> No proofs are asked. FA2023: "you will only be graded on your answers in the boxes". SP2025: "points will not be deducted for incorrect answers". FA2019 #2 (L/SI/C only, no stability) graded **+2 / −1 / 0** per box. SP2021 gave 24 points for 12 boxes. Fill in every box.
+> Three systems × four boxes (Linear, Time-invariant, Causal, Stable); no proofs. FA2023 grades boxes only; SP2025 deducts nothing for wrong boxes; FA2019 #2 (L/SI/C) graded +2 / −1 / 0. Fill every box.
 
 ## 1. The fast rules
 
 > [!recipe] Decide each box with these rules
-> **Linear?** The test is superposition. Zero in must give zero out, and scaling by $a = -1$ or $a = 2$ breaks most impostors.
-> 1. **An additive constant ⇒ not linear:** $x[n]+3$, $2x[\lvert n\rvert]+10$ (zero in gives 3 or 10 out).
-> 2. **Any nonlinear operation on the *values* ⇒ not linear:** $\lvert\cdot\rvert$, powers, $e^{(\cdot)}$, $\log$, $\sin$, $\max$, median, clipping, products of samples ($x[n]x[n+1]$, $x[3]x[n]$), ratios ($x[n]/x[2]$).
-> 3. **Linear operations:** multiplying by a function of $n$ ($\lvert n\rvert x[n]$, $\cos^2(\tfrac\pi2 n)x[n]$), re-indexing ($x[2n]$, $x[\lvert n\rvert]$), adding shifted copies, and convolution with a fixed $h$.
+> **Linear?** Zero in ⇒ zero out; try $a = -1$, $a = 2$.
+> 1. **Additive constant ⇒ not linear:** $x[n]+3$, $2x[\lvert n\rvert]+10$.
+> 2. **Nonlinear operation on values ⇒ not linear:** $\lvert\cdot\rvert$, powers, $e^{(\cdot)}$, $\log$, $\sin$, $\max$, median, clipping, $x[n]x[n+1]$, $x[3]x[n]$, $x[n]/x[2]$.
+> 3. **Linear:** gains in $n$ ($\lvert n\rvert x[n]$, $\cos^2(\tfrac\pi2 n)x[n]$), re-indexing ($x[2n]$, $x[\lvert n\rvert]$), sums of shifts, convolution.
 >
-> **Time-invariant?** Shift the input by $n_0$ and compare with the output shifted by $n_0$.
-> 4. **$n$ outside the brackets ⇒ time-varying:** $\lvert n\rvert x[n]$, $\log(\lvert n\rvert+1)x[n]$, $(0.8+0.8j)^n x[n]$, $\cos(\tfrac\pi3(n-2))\,x[n]$. (The one exception is a factor that is constant on the integers, e.g. $\cos^2(\pi n) = 1$.)
+> **Time-invariant?** Shift the input by $n_0$, compare with the shifted output.
+> 4. **$n$ outside the brackets ⇒ time-varying:** $\lvert n\rvert x[n]$, $\log(\lvert n\rvert+1)x[n]$, $(0.8+0.8j)^n x[n]$, $\cos(\tfrac\pi3(n-2))\,x[n]$ (unless constant on integers, e.g. $\cos^2(\pi n) = 1$).
 > 5. **Index other than $n-k$ ⇒ time-varying:** $x[2n]$, $x[\lvert n\rvert]$, $x[\lvert n\rvert+n]$, $x[3n]$.
-> 6. **A stored sample $x[0]$, $x[2]$ or $x[3]$ ⇒ time-varying *and* non-causal.** $y[n]$ for $n$ below that index needs a future sample.
+> 6. **Stored sample $x[0]$, $x[2]$, $x[3]$ ⇒ time-varying *and* non-causal.**
 >
-> **Causal?** Look for any input index larger than $n$.
-> 7. **$x[f(n)]$: test a negative *and* a positive $n$.** $x[\lvert n\rvert]$ fails at $n = -3$ ($x[3]$). $x[2n]$ fails at $n = 1$ ($x[2]$). $x[\lvert n\rvert+n]$ fails at $n = 1$ ($x[2]$).
-> 8. **Convolution with a fixed $h$ ⇒ LTI; causal iff $h[n] = 0$ for $n<0$:** $u[n+1]$ and $2^n u[-n]$ fail.
+> **Causal?** Any input index larger than $n$?
+> 7. **$x[f(n)]$: test negative and positive $n$.** $x[\lvert n\rvert]$ at $n = -3$; $x[2n]$, $x[\lvert n\rvert+n]$ at $n = 1$.
+> 8. **Convolution: causal iff $h[n] = 0$ for $n<0$:** $u[n+1]$, $2^n u[-n]$ fail.
 >
-> **Stable?** Every bounded input must give a bounded output.
-> 9. **Convolution: stable iff $\sum_n\lvert h[n]\rvert < \infty$.** $2^n u[-n]$ sums to 2 ✓. $j^n u[n]$, $(-1)^n u[n]$ and $u[n+1]$ have $\lvert h\rvert = 1$ forever ✗ (bounded $h$ is not enough).
-> 10. **Memoryless $g(x[n])$: stable iff $g$ maps bounded values to bounded values.** $e^{x}$, $\sin$, $\sin^2$, $\lvert\cdot\rvert$, $x^p$, clip and max are fine. $\ln\lvert x\rvert$ fails at $x = 0$, and so does division by $x[2]$ when $x[2] = 0$.
-> 11. **Gain that depends on $n$: stable iff the gain is bounded.** $\lvert n\rvert$, $\log(\lvert n\rvert+1)$, $n$, $(n+1)$ and $\lvert 0.8+0.8j\rvert^n = 1.13^n$ are unbounded ✗. $\tfrac{1}{\lvert n\rvert+1}$, $(\tfrac12)^{\lvert n\rvert}$ and $\cos(\cdot)$ are bounded ✓. A difference does not rescue an unbounded gain: $n(x[n]-x[n-1])$ with $x = (-1)^n$ gives $2n(-1)^n$.
+> **Stable?**
+> 9. **Convolution: iff $\sum_n\lvert h[n]\rvert < \infty$.** $2^n u[-n]$ sums to 2 ✓; $j^n u[n]$, $(-1)^n u[n]$, $u[n+1]$ ✗.
+> 10. **Memoryless $g(x[n])$: iff $g$ maps bounded to bounded.** $e^{x}$, $\sin$, $\sin^2$, $\lvert\cdot\rvert$, $x^p$, clip, max ✓; $\ln\lvert x\rvert$, division by $x[2]$ ✗ (at 0).
+> 11. **Gain in $n$: iff bounded.** $\lvert n\rvert$, $\log(\lvert n\rvert+1)$, $n$, $(n+1)$, $1.13^n$ ✗; $\tfrac{1}{\lvert n\rvert+1}$, $(\tfrac12)^{\lvert n\rvert}$, $\cos(\cdot)$ ✓. $n(x[n]-x[n-1])$ with $x = (-1)^n$ gives $2n(-1)^n$.
 
 ## 2. The exam tables (all 20 systems)
 
-All answers match the official keys. FA2019 used "shift-varying" (SV) for time-varying and "LSI" for LTI.
+All match the official keys; FA2019 writes SV for time-varying, LSI for LTI.
 
 | system | L | TI | C | S | why | exam |
 |---|---|---|---|---|---|---|
@@ -67,16 +64,13 @@ All answers match the official keys. FA2019 used "shift-varying" (SV) for time-v
 *(Italic)* entries: FA2019 #2 did not ask about stability; these are our answers.
 
 > [!trap] Where the points go
-> - **Bounded $h$ is not a stable system.** $j^n u[n]$, $(-1)^n u[n]$ and $u[n+1]$ are all bounded by 1 and all unstable. Only $\sum\lvert h\rvert$ counts.
-> - **"$x$ is bounded, so $\lvert n\rvert x[n]$ is bounded."** No: the gain is unbounded. Same for $\log(\lvert n\rvert+1)$, even though it grows slowly.
-> - **Affine is not linear.** $x[n]+3$ fails the zero-in-zero-out test.
-> - **$x[\lvert n\rvert]$ and $x[2n]$ "look causal" for $n \ge 0$.** Check negative $n$ for $x[\lvert n\rvert]$ and positive $n$ for $x[2n]$.
-> - **$\cos(\tfrac\pi3(n-2))$ is not a delay.** It multiplies $x[n]$ by a gain that depends on $n$, which makes the system time-varying.
-> - **$e^{x[n]}$ is stable, $\ln\lvert x[n]\rvert$ is not.** A bounded exponent gives a bounded result; $\ln 0 = -\infty$.
+> - Bounded $h$ ($j^n u[n]$, $(-1)^n u[n]$, $u[n+1]$) is not stable; only $\sum\lvert h\rvert$ counts.
+> - Unbounded gains ($\lvert n\rvert$, $\log(\lvert n\rvert+1)$) break stability even for bounded $x$.
+> - $\cos(\tfrac\pi3(n-2))$ is a gain, not a delay; $\ln\lvert x\rvert$ is unstable, $e^{x}$ is not.
 
 ## 3. Homework systems (HW1 #5–6, HW2 #1)
 
-The homework asked only **linear** and **time-invariant**. The *italic* causal/stable entries are our answers.
+Homework asked L and TI only; *italic* C/S entries are ours.
 
 | system | L | TI | C | S | why | source |
 |---|---|---|---|---|---|---|
@@ -88,7 +82,7 @@ The homework asked only **linear** and **time-invariant**. The *italic* causal/s
 
 ## 4. Lecture 3 practice list
 
-From the Lecture 3 slides ("practice" and "extra practice" slides), the annotated in-class slides, and the exercises in the lecture notes.
+From the Lecture 3 slides (practice, extra practice, annotated) and notes exercises.
 
 | system | L | TI | C | S | why |
 |---|---|---|---|---|---|
@@ -117,47 +111,16 @@ From the Lecture 3 slides ("practice" and "extra practice" slides), the annotate
 ## 5. Notes on the keys
 
 > [!note] No disagreement with the official keys
-> All 20 exam rows match the keys. Things worth knowing if you must justify an answer:
-> - **SP2023, $x[n]/x[2]$, Stable = No** rests on the bounded input with $x[2] = 0$ (division by zero). For any input with $x[2] \ne 0$ the output is bounded by $B/\lvert x[2]\rvert$, so cite $x[2] = 0$. **Linear = No** because homogeneity fails: $\dfrac{a\,x[n]}{a\,x[2]} = \dfrac{x[n]}{x[2]} \ne a\,y[n]$.
-> - **SP2021, $(0.8+0.8j)^n x[n]$:** the key's margin note writes the base as $\sqrt{1.28}\,e^{j\pi/4}$, which "goes to $\infty$ as $n \to \infty$". The growth is only toward $+\infty$; toward $-\infty$ it decays, but one direction is enough.
-> - **FA2019 #2** asked L/SI/C only. **HW1–HW2** asked L/TI only.
+> - **SP2023 $x[n]/x[2]$:** Stable = No needs the input with $x[2] = 0$; Linear = No since $\dfrac{a\,x[n]}{a\,x[2]} = \dfrac{x[n]}{x[2]} \ne a\,y[n]$.
+> - **SP2021 $(0.8+0.8j)^n x[n]$:** key writes $\sqrt{1.28}\,e^{j\pi/4}$, "goes to $\infty$ as $n \to \infty$"; one direction suffices.
 
 > [!warning] Answer-key erratum (HW1 solution #5(b))
-> The linearity counterexample ($x_1 = 1$, $x_2 = n^2$, $a = 0$, $b = 4$) prints $T(x_1)+T(x_2) = \{\dots,5,4,2,\underset{\uparrow}{1},2,4,5,\dots\}$. At $n = \pm2$ the value is $T(1) + T(4) = 1 + 4 = 5$, so the line should read $\{\dots,5,5,2,\underset{\uparrow}{1},2,5,5,\dots\}$. The comparison line $T(x_1+x_2) = \{\dots,4,4,2,\underset{\uparrow}{1},2,4,4,\dots\}$ is right, and so is the conclusion (not linear). See also [[0-toolkit/05-errata|Errata]].
-
-## 6. Python: causality and stability of the convolution rows
-
-For $y = x*h$ the whole question is two numbers: is $h$ zero for $n<0$, and does $\sum\lvert h\rvert$ stop growing?
-
-```python
-import numpy as np
-k = np.arange(-300, 301)
-u = lambda k: (k >= 0).astype(float)
-rows = {"x * 2^n u[-n]   (FA25)": 2.0**np.minimum(k, 0) * u(-k),
-        "x * j^n u[n]    (SP25)": 1j**k * u(k),
-        "x * u[n+1]      (FA23)": u(k + 1),
-        "x * (-1)^n u[n] (SP23)": (-1.0)**k * u(k)}
-for name, h in rows.items():
-    past = np.abs(h[k < 0]).max()                  # causal  <=>  h[n] = 0 for n < 0
-    s1, s2 = (np.abs(h[np.abs(k) <= N]).sum() for N in (100, 300))
-    print(f"{name}: max|h[n<0]| = {past:.1f}   sum|h| to |n|=100, 300: {s1:5.1f} {s2:5.1f}")
-```
-
-```text
-x * 2^n u[-n]   (FA25): max|h[n<0]| = 0.5   sum|h| to |n|=100, 300:   2.0   2.0
-x * j^n u[n]    (SP25): max|h[n<0]| = 0.0   sum|h| to |n|=100, 300: 101.0 301.0
-x * u[n+1]      (FA23): max|h[n<0]| = 1.0   sum|h| to |n|=100, 300: 102.0 302.0
-x * (-1)^n u[n] (SP23): max|h[n<0]| = 0.0   sum|h| to |n|=100, 300: 101.0 301.0
-```
-
-Nonzero past ⇒ non-causal (FA25, FA23). A partial sum that keeps growing with the window ⇒ unstable (SP25, FA23, SP23). Only $2^n u[-n]$ settles, at 2.
+> For the key's counterexample ($x_1 = 1$, $x_2 = n^2$, clip to $[a, b] = [0, 4]$) it prints $T(x_1)+T(x_2) = \{\dots,5,4,2,\underset{\uparrow}{1},2,4,5,\dots\}$; at $n = \pm2$ it is $T(1) + T(4) = 1 + 4 = 5$, so $\{\dots,5,5,2,\underset{\uparrow}{1},2,5,5,\dots\}$. The conclusion (not linear) stands; see [[0-toolkit/05-errata|Errata]].
 
 ## Related
 
-[[problems/classifying-system-properties|Classifying system properties (recipe)]] · [[exams/midterm-1/true-false-bank|True/False bank]] · [[concepts/linearity|Linearity]] · [[concepts/time-invariance|Time-invariance]] · [[concepts/causality|Causality]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|Convolution]] · [[1-signals-and-systems/03-system-properties|Lecture 3]]
+[[problems/classifying-system-properties|Classifying system properties (recipe)]] · [[exams/midterm-1/true-false-bank|True/False bank]] · [[concepts/linearity|Linearity]] · [[concepts/time-invariance|Time-invariance]] · [[concepts/causality|Causality]] · [[concepts/bibo-stability|BIBO stability]]
 
 ### Sources for this page
 
-- Official keys: FA2025 #2, SP2025 #2, FA2024 #2, FA2023 #2, SP2023 #2 (tables), SP2021 #3 (handwritten), FA2019 #2 (handwritten, L/SI/C only).
-- HW1 #5–#6 and HW2 #1 with official solutions (L/TI only); Lecture 3 slides (practice and extra-practice slides, annotated in-class version) and Lecture 3 notes, Exercises 1–7.
-- Numerical cross-check of every row and of every specific claim on this page: `verify/exams/property_bank.py` (57 checks, all passing).
+Official keys FA2019–FA2025 (#2; SP2021 #3); HW1 #5–6, HW2 #1 solutions; Lecture 3 slides and notes, Exercises 1–7.

@@ -1,6 +1,6 @@
 ---
 title: "Complex numbers"
-description: "Rectangular and polar form, Euler's formula, conjugates, magnitude and angle, roots of z^N = a, and turning sums of complex exponentials into cosines — the complex arithmetic that every ECE 310 z-transform, PFE and stability problem runs on."
+description: "Rectangular and polar form, Euler's formula, conjugates, magnitude and angle, roots of z^N = a, and sums of complex exponentials as cosines: the arithmetic behind z-transform, PFE and stability problems."
 tags: [toolkit, complex-numbers]
 ---
 
@@ -36,7 +36,7 @@ Quadrant rule (Lecture 2, Eq. 12): $\angle x = \tan^{-1}(b/a)$ if $a \ge 0$; add
 > [!exam] SP2021 #3, third row: $y[n] = (0.8+0.8j)^n x[n]$
 > $\lvert 0.8+0.8j\rvert = 0.8\sqrt2 \approx 1.13 > 1$, so the multiplier grows like $1.13^n$ and a bounded input can produce an unbounded output: **not stable** (it is linear, not shift-invariant, causal). See [[exams/midterm-1/past-exams/spring-2021|SP2021]] and [[problems/classifying-system-properties|classifying system properties]].
 
-## $e^{j\theta}$ lives on the unit circle
+## Unit-magnitude exponentials: the unit circle
 
 $\lvert e^{j\theta}\rvert = 1$ for every real $\theta$. Values to know cold:
 
@@ -49,7 +49,7 @@ So $j^n = e^{j\pi n/2}$ cycles $1, j, -1, -j$ (period 4) and $(-1)^n = e^{j\pi n
 > [!trap] $e^{j2/3}$ is not $e^{j2\pi/3}$
 > [[exams/midterm-1/past-exams/fall-2025|FA2025 #8(b)]] puts a pole at $e^{j2/3}$: angle $2/3$ rad $\approx 38^\circ$. The input $\cos(\tfrac{2\pi}{3}n)u[n]$ has poles at $e^{\pm j2\pi/3}$ (angle $\approx 120^\circ$), which do **not** coincide with it, so that output stays bounded (key: False). Read exponents literally — see [[problems/unbounded-outputs-and-pole-matching|pole matching]].
 
-## Solving $z^N = a$
+## Solving zᴺ = a
 
 > [!recipe] N-th roots
 > 1. Write $a$ in polar form **with the $2\pi k$**: $a = Re^{j(\theta_p + 2\pi k)}$, $k\in\mathbb Z$.
@@ -108,29 +108,9 @@ $$
 > $$
 > Three poles on the unit circle ($1, j, -j$). See [[exams/midterm-1/past-exams/fall-2025|FA2025]] and [[problems/z-transform-with-roc|z-transform with ROC]].
 
-## Python check
-
-```python
-import numpy as np
-z = -1 - 1j
-print(abs(z), np.angle(z) / np.pi)       # magnitude, angle in units of pi
-r = np.roots([1, 0, 0, 0, 1])            # z^4 + 1 = 0
-print(np.round(r, 4))
-print(np.angle(r) / np.pi)               # angles in units of pi
-print(abs(0.8 + 0.8j))                   # SP2021: |0.8+0.8j| > 1
-```
-
-```text
-1.4142135623730951 -0.75
-[-0.7071+0.7071j -0.7071-0.7071j  0.7071+0.7071j  0.7071-0.7071j]
-[ 0.75 -0.75  0.25 -0.25]
-1.131370849898476
-```
-
 ## Related
 
 [[1-signals-and-systems/02-complex-numbers-and-elementary-signals|Lecture 2]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/partial-fraction-expansion|partial fraction expansion]] · [[concepts/marginal-stability|marginal stability]] · [[homework/hw1|HW1]] · [[0-toolkit/02-geometric-series|geometric series]] · Singer & Munson, Appendix A (PDF pp. 304–313) in the [[supplements/singer-munson-notes|reading guide]].
 
 ### Sources for this page
-
-Lecture 2 notes §1.1–1.4 (forms, quadrant rule, Euler's identities, principal angle, the $(1+j2)/(3-j)$ example); HW1 #4 and its solution; SP2021 #3, #5, #6; FA2025 #5(a), #5(c), #8(b). Every number is checked in `verify/hub/toolkit_complex.py`.
+Lecture 2 notes §1.1–1.4 (forms, quadrant rule, Euler's identities, principal angle, the $(1+j2)/(3-j)$ example); HW1 #4 and its solution; SP2021 #3, #5, #6; FA2025 #5(a), #5(c), #8(b).

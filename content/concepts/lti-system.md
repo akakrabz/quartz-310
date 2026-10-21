@@ -38,4 +38,4 @@ One LTI system, five equivalent descriptions (here the first-order system of Lec
 **Related.** [[concepts/linearity|linearity]] · [[concepts/time-invariance|time-invariance]] · [[concepts/convolution|convolution]] · [[concepts/impulse-response|impulse response]] · [[concepts/transfer-function|transfer function]] · [[concepts/system-algebra|system algebra]] · [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]]
 
 ### Sources for this page
-Lecture 4 §1.2 and Fig. 1 (median-filter and difference-system examples); Lecture 5 Eq. 6; Lecture 9 Eqs. 2 and 8–12; Lecture 10 Table 1; HW2 #2 solution; T/F items FA2024 #1a, FA2023 #1d–e, SP2023 #1a, FA2019 #1b. Median-filter and non-commuting cascade checks in `verify/concepts/verify_glossary_time.py`.
+Lecture 4 §1.2 and Fig. 1 (median-filter and difference-system examples); Lecture 5 Eq. 6; Lecture 9 Eqs. 2 and 8–12; Lecture 10 Table 1; HW2 #2 solution; T/F items FA2024 #1a, FA2023 #1d–e, SP2023 #1a, FA2019 #1b.

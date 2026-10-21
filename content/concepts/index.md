@@ -1,68 +1,72 @@
 ---
 title: "Concepts"
-description: "The glossary of ECE 310: one short page per idea (definition, how to test or compute it, the traps exams punish, and links to every lecture, homework and past-exam problem that uses it) — 28 ideas from Units 1–2 and 8 from Unit 3, the DTFT and frequency response."
+description: "ECE 310 glossary: one short page per idea (definition, how to compute or test it, traps, links to lectures, homework and exam problems), Units 1–5."
 tags: [concept]
 ---
 
-Lectures tell the story in order; **concept pages** are the glossary you consult out of order. Each one is short and self-contained: the definition, how to test or compute it, the mistakes that cost points, and links back to the lectures that develop it and the exam problems that test it. Open the graph view (top right of any page) to see how they connect, or the [[concepts/concept-map.canvas|concept map]], which lays out the Units 1–2 ideas on one canvas with labelled arrows for what depends on what. 28 pages cover Units 1–2 (Lectures 1–11) and 8 more cover Unit 3 (Lectures 12–16).
+*Concepts · one idea per page: definition, method, traps, where it is used · [[concepts/concept-map.canvas|concept map]] (Units 1–2) · graph view, top right*
 
 ### Signals
-- [[concepts/discrete-time-signal|Discrete-time signal]]: a sequence $x[n]$, $n\in\mathbb{Z}$; always mark $n=0$; shifting, flipping and decimating the index.
-- [[concepts/kronecker-delta|Kronecker delta]] $\delta[n]$: the unit impulse; sifting, and every signal as a sum of shifted deltas.
-- [[concepts/unit-step|Unit step]] $u[n]$: steps, windows $u[n]-u[n-N]$, and $\delta[n]=u[n]-u[n-1]$.
-- [[concepts/complex-exponential|Complex exponential]]: $a^n=r^ne^{j\omega n}$; Euler's identities, principal angle, growth vs. decay.
-- [[concepts/sided-sequences|Sided sequences]]: right-, left- and two-sided; causal vs. anti-causal; the ROC shape each one forces.
+- [[concepts/discrete-time-signal|Discrete-time signal]]: $x[n]$, $n\in\mathbb{Z}$; mark $n=0$; shift, flip, decimate.
+- [[concepts/kronecker-delta|Kronecker delta]] $\delta[n]$: sifting; any signal as shifted deltas.
+- [[concepts/unit-step|Unit step]] $u[n]$: windows $u[n]-u[n-N]$; $\delta[n]=u[n]-u[n-1]$.
+- [[concepts/complex-exponential|Complex exponential]]: $a^n=r^ne^{j\omega n}$; Euler; principal angle.
+- [[concepts/sided-sequences|Sided sequences]]: right-, left-, two-sided; the ROC each forces.
 
 ### System properties
-- [[concepts/linearity|Linearity]]: superposition; the zero-in/zero-out test; what makes a system nonlinear.
-- [[concepts/time-invariance|Time-invariance]]: shift in, same shift out; how to test index maps like $x[2n]$ and $x[\lvert n\rvert]$.
-- [[concepts/causality|Causality]]: the output never uses a future input; for LTI, $h[n]=0$ for $n<0$.
-- [[concepts/lti-system|LTI system]]: linear + time-invariant $\Rightarrow$ $y=x*h$; one sequence describes the whole system.
+- [[concepts/linearity|Linearity]]: superposition; zero in, zero out.
+- [[concepts/time-invariance|Time-invariance]]: shift in, same shift out; $x[2n]$, $x[\lvert n\rvert]$.
+- [[concepts/causality|Causality]]: no future inputs; LTI: $h[n]=0$ for $n<0$.
+- [[concepts/lti-system|LTI system]]: $y=x*h$.
 
 ### LTI toolkit
-- [[concepts/impulse-response|Impulse response]]: $h[n]=T\{\delta[n]\}$; how to get it from a formula, an LCCDE, or an input–output pair.
-- [[concepts/step-response|Step response]]: $g[n]=h[n]*u[n]$, the running sum of $h$; $h[n]=g[n]-g[n-1]$.
-- [[concepts/convolution|Convolution]]: the sum, its properties, start/end/length rules, three hand methods, `np.convolve`.
-- [[concepts/lccde|Difference equation (LCCDE)]]: the two sign conventions, recursion at initial rest, `lfilter`.
-- [[concepts/fir-and-iir|FIR and IIR]]: finite vs. infinite impulse response; FIR is always stable; feedback does not always mean IIR.
-- [[concepts/block-diagram|Block diagram]]: delays, gains, adders; direct form I; reading an LCCDE off a diagram.
-- [[concepts/eigenfunctions-of-lti-systems|Eigenfunctions of LTI systems]]: $z^n$ in, $H(z)z^n$ out; the reason the z-transform exists.
+- [[concepts/impulse-response|Impulse response]]: $h[n]=T\{\delta[n]\}$ from a formula, LCCDE or data.
+- [[concepts/step-response|Step response]]: $g[n]=h[n]*u[n]$; $h[n]=g[n]-g[n-1]$.
+- [[concepts/convolution|Convolution]]: properties, start/end/length, hand methods.
+- [[concepts/lccde|Difference equation (LCCDE)]]: two sign conventions; initial rest; `lfilter`.
+- [[concepts/fir-and-iir|FIR and IIR]]: FIR always stable.
+- [[concepts/block-diagram|Block diagram]]: delays, gains, adders; direct form I.
+- [[concepts/eigenfunctions-of-lti-systems|Eigenfunctions of LTI systems]]: $z^n\mapsto H(z)z^n$.
 
 ### z-domain
-- [[concepts/z-transform|z-transform]]: $X(z)=\sum_n x[n]z^{-n}$, never without its ROC.
-- [[concepts/region-of-convergence|Region of convergence]]: rings bounded by poles; what the ROC says about sidedness, causality and stability.
-- [[concepts/poles-and-zeros|Poles and zeros]]: roots of the denominator and numerator; the pole-zero plot.
-- [[concepts/z-transform-pairs|z-transform pairs]]: the pairs to know by heart ($\delta[n]$, $a^nu[n]$, $-a^nu[-n-1]$, $na^nu[n]$, cosine and sine).
-- [[concepts/z-transform-properties|z-transform properties]]: linearity, shift, multiplication by $a^n$ or $n$, time reversal, convolution.
-- [[concepts/inverse-z-transform|Inverse z-transform]]: inspection and partial fractions; the ROC decides which sequence you get.
-- [[concepts/partial-fraction-expansion|Partial fraction expansion]]: $A_k/(1-p_kz^{-1})$ terms by cover-up; long division first if $H(z)$ is improper.
-- [[concepts/transfer-function|Transfer function]]: $H(z)=Y(z)/X(z)=\mathcal{Z}\{h[n]\}$, read off an LCCDE by inspection.
-- [[concepts/system-algebra|System algebra]]: series multiplies ($H_1H_2$, $h_1*h_2$), parallel adds ($H_1+H_2$, $h_1+h_2$).
+- [[concepts/z-transform|z-transform]]: $X(z)=\sum_n x[n]z^{-n}$, always with ROC.
+- [[concepts/region-of-convergence|Region of convergence]]: rings bounded by poles; sidedness, causality, stability.
+- [[concepts/poles-and-zeros|Poles and zeros]]: pole-zero plot.
+- [[concepts/z-transform-pairs|z-transform pairs]]: $\delta[n]$, $a^nu[n]$, $-a^nu[-n-1]$, $na^nu[n]$, cosine, sine.
+- [[concepts/z-transform-properties|z-transform properties]]: linearity, shift, $a^n$, $n$, reversal, convolution.
+- [[concepts/inverse-z-transform|Inverse z-transform]]: inspection, partial fractions; ROC decides.
+- [[concepts/partial-fraction-expansion|Partial fraction expansion]]: cover-up; long division if improper.
+- [[concepts/transfer-function|Transfer function]]: $H(z)=Y(z)/X(z)$; from an LCCDE.
+- [[concepts/system-algebra|System algebra]]: series multiplies, parallel adds.
 
 ### Stability
-- [[concepts/bibo-stability|BIBO stability]]: three equivalent tests (definition, $\sum\lvert h[n]\rvert<\infty$, ROC contains the unit circle) and the classic T/F traps.
-- [[concepts/pole-zero-cancellation|Pole-zero cancellation]]: a zero on top of a pole removes it; inputs that tame unstable systems, cascades that become stable.
-- [[concepts/marginal-stability|Marginal stability]]: poles on the unit circle; unstable, but only inputs that resonate with a pole blow up.
+- [[concepts/bibo-stability|BIBO stability]]: definition, $\sum\lvert h[n]\rvert<\infty$, ROC contains unit circle.
+- [[concepts/pole-zero-cancellation|Pole-zero cancellation]]: inputs that tame unstable systems; stable cascades.
+- [[concepts/marginal-stability|Marginal stability]]: unit-circle poles; only resonant inputs blow up.
 
 ### Frequency domain (Unit 3)
-- [[concepts/template-matching|Template matching]]: convolution with a time-reversed pattern (a matched filter) peaks where the input looks like the pattern; the same idea in 2-D for images.
-- [[concepts/fourier-series|Fourier series]]: a periodic signal as a sum of harmonics, with coefficients found by orthogonality; the road from Fourier series to the Fourier transforms.
-- [[concepts/dtft|DTFT]]: $X_d(\omega)=\sum_n x[n]e^{-j\omega n}$ and its inverse; $2\pi$-periodic; exists for absolutely summable $x$; equals $X(e^{j\omega})$ when the ROC contains the unit circle.
-- [[concepts/dtft-pairs|DTFT pairs]]: $\delta[n]$, $a^nu[n]$, the rectangular pulse, $e^{j\omega_0n}$, cosine and sine (with Dirac impulses), $u[n]$ and the ideal lowpass.
-- [[concepts/dtft-properties|DTFT properties]]: shift, modulation, convolution, windowing, Parseval, Hermitian symmetry for real signals.
-- [[concepts/frequency-response|Frequency response]]: $H_d(\omega)$, the DTFT of $h[n]$ and the eigenvalue of $e^{j\omega n}$; how a real system scales and shifts a sinusoid.
-- [[concepts/magnitude-and-phase-response|Magnitude and phase response]]: $\lvert H_d(\omega)\rvert$ on a linear or dB scale, and the phase as a principal angle with its jumps.
-- [[concepts/group-delay|Group delay and linear phase]]: $\tau_{gd}(\omega)=-\frac{d\angle H_d(\omega)}{d\omega}$; linear phase delays every frequency by the same number of samples.
+- [[concepts/template-matching|Template matching]]: matched filter peaks where the input looks like the pattern.
+- [[concepts/fourier-series|Fourier series]]: harmonics by orthogonality; road to the transforms.
+- [[concepts/dtft|DTFT]]: $X_d(\omega)=\sum_n x[n]e^{-j\omega n}$; $2\pi$-periodic; $=X(e^{j\omega})$ when ROC contains unit circle.
+- [[concepts/dtft-pairs|DTFT pairs]]: $\delta$, $a^nu[n]$, pulse, $e^{j\omega_0n}$, cosine, sine, $u[n]$, ideal low-pass.
+- [[concepts/dtft-properties|DTFT properties]]: shift, modulation, convolution, windowing, Parseval, Hermitian symmetry.
+- [[concepts/frequency-response|Frequency response]]: $H_d(\omega)$; eigenvalue of $e^{j\omega n}$.
+- [[concepts/magnitude-and-phase-response|Magnitude and phase response]]: linear or dB; principal phase with jumps.
+- [[concepts/group-delay|Group delay and linear phase]]: $\tau_{gd}(\omega)=-\frac{d\angle H_d(\omega)}{d\omega}$.
 
 ### Sampling (Unit 4)
-- [[concepts/sampling|Sampling]]: $x[n]=x_a(nT)$ as multiplication by an impulse train; the sampled spectrum is copies of $X_a(\Omega)$ every $2\pi/T$, scaled by $1/T$; $\omega=\Omega T$ turns it into the $2\pi$-periodic DTFT.
-- [[concepts/nyquist-criterion|Nyquist criterion]]: a signal bandlimited to $B$ hertz needs $f_s \gt 2B$ (that is $T \lt 1/2B$) for its spectral copies not to overlap; the Nyquist rate $2B$, guard bands, touching copies and aliasing.
-- [[concepts/ideal-reconstruction|Ideal reconstruction]]: the ideal D/A converter, $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$; in frequency a low-pass of height $T$ on $\lvert\Omega\rvert\le\pi/T$, $Y_a(\Omega)=T\,Y_d(\Omega T)$; exact when $f_s\gt2B$.
-- [[concepts/aliasing|Aliasing]]: below the Nyquist rate the copies overlap; a tone at $f_0$ comes back at the $f_0-kf_s$ closest to 0 (principal alias $\hat\omega\in(-\pi,\pi]$, $\hat\Omega=\hat\omega/T$), with the sign of a sine; it cannot be undone.
+- [[concepts/sampling|Sampling]]: impulse-train model; copies every $2\pi/T$, scaled $1/T$; $\omega=\Omega T$.
+- [[concepts/nyquist-criterion|Nyquist criterion]]: $f_s \gt 2B$; Nyquist rate $2B$; guard band.
+- [[concepts/ideal-reconstruction|Ideal reconstruction]]: sinc interpolation; low-pass of height $T$; $Y_a(\Omega)=T\,Y_d(\Omega T)$.
+- [[concepts/aliasing|Aliasing]]: overlapping copies; tone returns at the $f_0-kf_s$ closest to 0.
 
-Eight older pages carry a short *In Unit 3* paragraph on how the frequency domain extends them: [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]] (the frequency response is the eigenvalue on the unit circle), [[concepts/complex-exponential|complex exponential]] (its DTFT is an impulse), [[concepts/convolution|convolution]] (template matching; convolution ↔ product of DTFTs), [[concepts/z-transform|z-transform]] and [[concepts/region-of-convergence|ROC]] (the DTFT is $X(z)$ on the unit circle when the ROC contains it), [[concepts/bibo-stability|BIBO stability]] (stable ⇔ the DTFT sum of $h$ converges absolutely), [[concepts/transfer-function|transfer function]] ($H_d(\omega)=H(e^{j\omega})$) and [[concepts/poles-and-zeros|poles and zeros]] (they shape $\lvert H_d(\omega)\rvert$).
+### DFT (Unit 5)
+- [[concepts/dft|DFT]]: $X[k]=X_d(2\pi k/N)$, $N$-periodic; zero padding.
+- [[concepts/circular-convolution|Circular convolution]]: $\sum_m x[m]h[\langle n-m\rangle_N]\leftrightarrow X[k]H[k]$; equals linear convolution when padded to $N\ge N_1+N_2-1$.
 
-**Most tested on Midterm 1** (all seven past exams): [[concepts/bibo-stability|stability]] and [[concepts/causality|causality]] T/F statements, the [[concepts/linearity|linear]]/[[concepts/time-invariance|shift-invariant]]/causal/stable table, [[concepts/convolution|finite convolution]], and [[concepts/transfer-function|transfer functions]] with [[concepts/region-of-convergence|ROCs]] — see the [[exams/midterm-1/index|Midterm 1 review guide]]. On the past Midterm 2 exams the Unit 3 pages carry three problem families — DTFTs and inverse DTFTs, responses to sinusoids, and magnitude, phase and group delay — listed on [[problems/index|problem families]].
+Older pages with an *In Unit 3* paragraph: [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/convolution|convolution]] · [[concepts/z-transform|z-transform]] · [[concepts/region-of-convergence|ROC]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/transfer-function|transfer function]] · [[concepts/poles-and-zeros|poles and zeros]].
+
+Most tested: [[exams/midterm-1/index|Midterm 1 review guide]] · [[problems/index|problem families]].
 
 ### Sources for this page
-Lecture notes 1–16 (Snyder), the course summary ([[supplements/course-summary]]), the problem map of the seven past Midterm 1 exams ([[exams/midterm-1/past-exams/index]]) and the past Midterm 2 exams ([[exams/midterm-2/past-exams/index]]).
+Snyder, Lectures 1–21 notes (Fall 2026); [[supplements/course-summary|course summary]]; [[exams/midterm-1/past-exams/index|past Midterm 1]] and [[exams/midterm-2/past-exams/index|Midterm 2]] exams.

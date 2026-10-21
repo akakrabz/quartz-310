@@ -1,6 +1,6 @@
 ---
 title: "Geometric series"
-description: "Finite and infinite geometric sums, sums that start at k0, left-sided and two-sided sums, and the sum of k a^k — and how each one's convergence condition becomes a z-transform ROC. Every exam z-transform is one of these sums."
+description: "Finite and infinite geometric sums, sums from k0, left-sided and two-sided sums, the sum of k a^k, and how each convergence condition becomes a z-transform ROC."
 tags: [toolkit, z-transform, roc]
 ---
 
@@ -88,7 +88,7 @@ $$
 
 By contrast $x[n] = 1$ for all $n$ needs $\lvert z\rvert>1$ (right half) and $\lvert z\rvert<1$ (left half): no z-transform at all. The same emptiness kills one of the four ROC combinations in [[exams/midterm-1/past-exams/fall-2019|FA2019 #7]] — see [[problems/all-possible-rocs|all possible ROCs]].
 
-## Weighted by $k$: repeated poles
+## Weighted by k: repeated poles
 
 $\sum k\,a^k$ gives $n\alpha^n u[n] \leftrightarrow \dfrac{\alpha z^{-1}}{(1-\alpha z^{-1})^2}$, $\lvert z\rvert>\lvert\alpha\rvert$. [[exams/midterm-1/past-exams/spring-2021|SP2021 #4]]: $(n+1)x[n]$ with $x[n] = (\tfrac12)^n u[n]$ is
 
@@ -108,32 +108,9 @@ $$
 
 The same test decides **stability**: a causal $h[n] = \alpha^n u[n]$ has $\sum_n\lvert h[n]\rvert = \sum_n\lvert\alpha\rvert^n<\infty$ iff $\lvert\alpha\rvert<1$, i.e. iff the ROC $\lvert z\rvert>\lvert\alpha\rvert$ contains the unit circle. See [[concepts/bibo-stability|BIBO stability]] and [[concepts/region-of-convergence|ROC]].
 
-## Python check: a z-transform as a truncated sum
-
-Pick a test point inside the ROC and compare the partial sum with the closed form — how every transform on this site was verified.
-
-```python
-import numpy as np
-z0 = 1.5 * np.exp(0.4j)                      # test point with |z0| > 3/4
-n = np.arange(0, 200)
-x = 0.75 ** (n + 3) * (n >= 2)               # (3/4)^(n+3) u[n-2]  (HW3 #1b)
-partial = np.sum(x * z0 ** (-n))             # truncated z-transform sum
-closed = 0.75**5 * z0**-2 / (1 - 0.75 / z0)  # (3/4)^5 z^-2 / (1 - (3/4) z^-1)
-print(np.round(partial, 12), np.round(closed, 12))
-print(abs(partial - closed))
-```
-
-```text
-(0.07572592317-0.167577928771j) (0.07572592317-0.167577928771j)
-5.721958498152797e-17
-```
-
-Pick $z_0$ *outside* the ROC and the partial sums blow up instead of settling — the ROC made visible.
-
 ## Related
 
 [[concepts/z-transform|z-transform]] · [[concepts/region-of-convergence|region of convergence]] · [[concepts/sided-sequences|sided sequences]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[supplements/transform-tables|official transform tables]] · [[0-toolkit/01-complex-numbers|complex numbers]] · [[0-toolkit/04-factoring-and-long-division|factoring and long division]].
 
 ### Sources for this page
-
-Lecture 6 notes (definition, ROC from convergence) and Lecture 7 notes (multiplication by $n$); HW3 #1(b), #1(d) and solutions; FA2025 #5(b); FA2019 #5(a), #7; SP2025 #5(b); SP2021 #4. Every sum and transform checked in `verify/hub/toolkit_geometric.py` (46 checks).
+Lecture 6 notes (definition, ROC from convergence) and Lecture 7 notes (multiplication by $n$); HW3 #1(b), #1(d) and solutions; FA2025 #5(b); FA2019 #5(a), #7; SP2025 #5(b); SP2021 #4.

@@ -1,13 +1,10 @@
 ---
 title: "Midterm 1 cheat sheet"
-description: "What earns a place on your one handwritten two-sided sheet for ECE 310 Midterm 1: signal basics, system-property tests, convolution rules, LTI facts, LCCDE ⇄ H(z), z-transform pairs and properties with ROCs, ROC ⇔ causality/stability, PFE and inverse-z decisions, and the unbounded-output rule — every entry checked numerically."
+description: "Draft for your one handwritten two-sided Midterm 1 sheet: signal basics, property tests, convolution, LTI facts, LCCDE ⇄ H(z), z-transform pairs and properties, ROC ⇔ causality/stability, PFE, unbounded outputs."
 tags: [midterm-1, exam]
 ---
 
-*Midterm 1 · reference page · the exam allows one handwritten two-sided 8.5″×11″ sheet — this is a draft of what to put on it, and a last-hour review page · every pair, identity and worked number below was checked numerically in Python*
-
-> [!abstract] How to use this page
-> Read it top to bottom once, then **write your own sheet by hand** from it (see the tip at the end). The order follows the exam: property table → convolution → z-transforms with ROC → LCCDE/transfer function → inverse z and PFE → stability and unbounded outputs. Where a rule has a trap, the trap sits next to it. Deeper explanations live in the lectures ([[1-signals-and-systems/index|Unit 1]], [[2-z-transform/index|Unit 2]]) and the [[problems/index|problem families]].
+*Midterm 1 · reference page · one handwritten two-sided 8.5″×11″ sheet allowed; copy what you need by hand. Order follows the exam: properties → convolution → z-transforms → LCCDE → PFE → stability.*
 
 ## 1. Signal basics
 
@@ -20,13 +17,13 @@ tags: [midterm-1, exam]
 | windows | $u[n]-u[n-N]$ = ones on $0,\dots,N-1$; $\;u[n-a]\,u[b-n]$ = ones on $a,\dots,b$ (FA24 #5b: $u[n-1]u[3-n] = \delta[n-1]+\delta[n-2]+\delta[n-3]$) |
 | sifting trap | $\sum_n x[n]\,\delta[2^n u[n]-8] = x[3]$: the impulse fires where its **argument** is $0$ (FA19 #1g) |
 
-**Shifts and reversal.** $x[n-n_0]$ with $n_0>0$ is a delay (plot moves right). $x[-n]$ flips about $n = 0$. $x[-n+n_0] = x[-(n-n_0)]$: flip, *then* shift right by $n_0$ — or shift left by $n_0$, then flip. Check with one sample: $x[0]$ lands where the argument is zero, at $n = n_0$.
+**Shifts and reversal.** $x[n-n_0]$, $n_0>0$: delay (right). $x[-n+n_0] = x[-(n-n_0)]$: flip, then shift right by $n_0$; $x[0]$ lands at $n = n_0$.
 
-**Complex numbers.** $e^{j\theta} = \cos\theta + j\sin\theta$, $\;\cos\theta = \dfrac{e^{j\theta}+e^{-j\theta}}{2}$, $\;\sin\theta = \dfrac{e^{j\theta}-e^{-j\theta}}{2j}$, $\;\lvert e^{j\theta}\rvert = 1$. Polar ⇄ rectangular: $a + jb = re^{j\theta}$ with $r = \sqrt{a^2+b^2}$, $\theta$ = angle in the right quadrant; $e^{j\theta} = e^{j(\theta+2\pi k)}$, so reduce to the principal angle ($e^{j7\pi/3} = e^{j\pi/3}$). Handy: $e^{j\pi} = -1$, $e^{\pm j\pi/2} = \pm j$, $j^n = e^{j\pi n/2}$, $(-1)^n = e^{j\pi n} = \cos(\pi n)$, $\cos^2\theta = \tfrac12 + \tfrac14 e^{j2\theta} + \tfrac14 e^{-j2\theta}$.
+**Complex numbers.** $e^{j\theta} = \cos\theta + j\sin\theta$, $\;\cos\theta = \dfrac{e^{j\theta}+e^{-j\theta}}{2}$, $\;\sin\theta = \dfrac{e^{j\theta}-e^{-j\theta}}{2j}$, $\;\lvert e^{j\theta}\rvert = 1$; $a + jb = re^{j\theta}$, $r = \sqrt{a^2+b^2}$; $e^{j7\pi/3} = e^{j\pi/3}$. $e^{j\pi} = -1$, $e^{\pm j\pi/2} = \pm j$, $j^n = e^{j\pi n/2}$, $(-1)^n = e^{j\pi n} = \cos(\pi n)$, $\cos^2\theta = \tfrac12 + \tfrac14 e^{j2\theta} + \tfrac14 e^{-j2\theta}$.
 
 **Roots.** $z^N = 1 \iff z = e^{j2\pi k/N}$, $k = 0,\dots,N-1$ (equally spaced on the unit circle); $z^N = c \iff z = \lvert c\rvert^{1/N}e^{j(\angle c+2\pi k)/N}$. Example: $1 + z^{-2} = 0 \iff z = \pm j$. Also $\sum_{k=0}^{N-1} e^{j2\pi km/N} = N$ if $N$ divides $m$, else $0$.
 
-**Geometric sums** — the engine of every z-transform and every stability check:
+**Geometric sums:**
 
 $$
 \begin{gathered}
@@ -48,7 +45,7 @@ $$
 | [[concepts/bibo-stability\|BIBO stable]] | every bounded input gives a bounded output | growing coefficients ($n\,x[n]$, $\log(\lvert n\rvert+1)\,x[n]$, $(0.8+0.8j)^n x[n]$ since $\lvert 0.8+0.8j\rvert\approx1.13$); division by $x$, $\log x$ (bounded $x$ can approach $0$); running sums; LTI with $\sum\lvert h\rvert = \infty$ ($x*j^nu[n]$, $x*(-1)^nu[n]$) | bounded coefficients ($\cos^2(\cdot)$, $(\tfrac12)^{\lvert n\rvert}$, $\tfrac{1}{\lvert n\rvert+1}$); bounded nonlinear maps ($e^{x}$, $\lvert\cdot\rvert$, $\sin x$); FIR |
 
 > [!trap] Property-table point losers
-> Answer each column **independently** — a nonlinear system can still be time-invariant, causal and stable ($x[n]+3$: N Y Y Y). For causality of $x[f(n)]$, test negative **and** positive $n$, not just $n = 0$ ($x[2n]$ fails only at $n>0$: $y[1]=x[2]$). "$x[3]\,x[n]$" and "$x[n]/x[2]$" reference fixed samples: time-varying *and* non-causal. Every system from the seven past tables is worked in the [[exams/midterm-1/system-property-bank|property bank]].
+> Columns are independent ($x[n]+3$: N Y Y Y). Test $x[f(n)]$ at negative **and** positive $n$ ($x[2n]$: $y[1]=x[2]$). Fixed samples ($x[3]\,x[n]$, $x[n]/x[2]$) ⇒ time-varying and non-causal. All past rows: [[exams/midterm-1/system-property-bank|property bank]].
 
 ## 3. Convolution
 
@@ -66,16 +63,16 @@ $$
 | 10-second checks | $\sum_n y = \big(\sum_n x\big)\big(\sum_n h\big)$ and $\sum_n(-1)^n y = \big(\sum_n(-1)^n x\big)\big(\sum_n(-1)^n h\big)$ (these are $Y(\pm1) = X(\pm1)H(\pm1)$) |
 
 > [!recipe] Which method?
-> Short $x$ or $h$: write $y$ as a sum of shifted, scaled copies of the other one (the review lecture's "matrix" method is the same bookkeeping: [[problems/finite-length-convolution|finite-length convolution]]). Infinite signals: split into the cases $n <$ start and $n \ge$ start and use a geometric sum, or multiply z-transforms and invert ([[problems/infinite-length-convolution|infinite-length convolution]]). Always state where $n = 0$ is.
+> Short $x$ or $h$: sum of shifted, scaled copies ([[problems/finite-length-convolution|finite-length convolution]]). Infinite: split $n$ into cases and use a geometric sum, or multiply z-transforms ([[problems/infinite-length-convolution|infinite-length convolution]]). State where $n = 0$ is.
 
 ## 4. LTI facts
 
-- $h[n] = T\{\delta[n]\}$ determines an **LTI** system completely ($y = x*h$). For an arbitrary system it does not (FA19 #1b: False).
-- **Causal ⇔ $h[n] = 0$ for $n<0$.** **Stable ⇔ $\sum_n\lvert h[n]\rvert<\infty$** ⇔ ROC of $H(z)$ contains $\lvert z\rvert = 1$.
-- FIR ⇒ always stable. **Bounded $h$ does not imply stable**: $h = u[n]$ is bounded, $\sum\lvert h\rvert = \infty$ (FA25 #1a, FA19 #1c).
-- Series: $h_1*h_2$, $H_1H_2$ (order irrelevant, cancellations possible — an unstable piece can be tamed: FA19 #1d); parallel: $h_1+h_2$, $H_1+H_2$.
+- $h[n] = T\{\delta[n]\}$ determines an **LTI** system ($y = x*h$), not an arbitrary one (FA19 #1b).
+- **Causal ⇔ $h[n] = 0$ for $n<0$.** **Stable ⇔ $\sum_n\lvert h[n]\rvert<\infty$** ⇔ ROC contains $\lvert z\rvert = 1$.
+- FIR ⇒ stable. Bounded $h$ ≠ stable: $h = u[n]$ (FA25 #1a, FA19 #1c).
+- Series: $h_1*h_2$, $H_1H_2$ (cancellations possible: FA19 #1d); parallel: $h_1+h_2$, $H_1+H_2$.
 - Step response $s[n] = h*u = \sum_{k\le n}h[k]$, $S(z) = \dfrac{H(z)}{1-z^{-1}}$, $h[n] = s[n]-s[n-1]$.
-- Eigenfunctions (Lecture 6): $x[n] = z_0^n$ ⇒ $y[n] = H(z_0)\,z_0^n$ for $z_0$ in the ROC — see [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]].
+- Eigenfunctions (Lecture 6): $x[n] = z_0^n$ ⇒ $y[n] = H(z_0)\,z_0^n$, $z_0$ in the ROC ([[concepts/eigenfunctions-of-lti-systems|eigenfunctions]]).
 
 ## 5. LCCDE ⇄ H(z)
 
@@ -90,16 +87,15 @@ $$
 > \end{gathered}
 > $$
 
-- **LCCDE → H:** transform each term with $x[n-k] \leftrightarrow z^{-k}X(z)$ (zero initial conditions), collect, divide.
-- **H → LCCDE:** cross-multiply $Y(z)\,A(z) = X(z)\,B(z)$ and read off coefficients; to run it, move the feedback terms right **with flipped signs**: $y[n] = -\sum a_k y[n-k] + \sum b_k x[n-k]$ (SP23 #6c: $y[n] = \tfrac34 y[n-1] - \tfrac18 y[n-2] + x[n] - 2x[n-1]$).
-- **Sign convention trap:** Lecture 5 writes $y[n] = \sum_i b_i\,y[n-i] + \sum_j c_j\,x[n-j]$ — feedback already on the right, so $A(z) = 1 - \sum_i b_i z^{-i}$. Example (L10 Ex. 1): $y[n] = 2y[n-1]+3y[n-2]+\dots$ has $A(z) = 1-2z^{-1}-3z^{-2}$.
-- One LCCDE, several systems: each ROC is a different $h$. "Causal" ⇒ ROC outside the outermost pole, run the recursion forward; an anti-causal piece runs backward (FA25 #7b, [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]]).
-- Poles/zeros: multiply numerator and denominator by the highest power of $z$ and factor. No feedback ($A = 1$) ⇒ FIR, $h[n] = b_n$.
-- From data: $H = Y/X$ (SP23 #6a), then cancel common factors and choose the ROC the problem's words dictate.
+- **LCCDE → H:** $x[n-k] \leftrightarrow z^{-k}X(z)$, collect, divide.
+- **H → LCCDE:** $Y(z)\,A(z) = X(z)\,B(z)$; run as $y[n] = -\sum a_k y[n-k] + \sum b_k x[n-k]$ (**flipped signs**; SP23 #6c: $y[n] = \tfrac34 y[n-1] - \tfrac18 y[n-2] + x[n] - 2x[n-1]$).
+- **Sign trap:** Lecture 5's $y[n] = \sum_i b_i\,y[n-i] + \sum_j c_j\,x[n-j]$ gives $A(z) = 1 - \sum_i b_i z^{-i}$ (L10 Ex. 1: $y[n] = 2y[n-1]+3y[n-2]+\dots$, $A(z) = 1-2z^{-1}-3z^{-2}$).
+- One LCCDE, several ROCs. Causal: outside the outermost pole, run forward; anti-causal pieces run backward (FA25 #7b, [[problems/two-sided-systems-as-recursions|two-sided systems as recursions]]).
+- No feedback ($A = 1$) ⇒ FIR, $h[n] = b_n$. From data: $H = Y/X$ (SP23 #6a), cancel, choose the ROC.
 
 ## 6. z-transform pairs (with ROC)
 
-$X(z) = \sum_n x[n]\,z^{-n}$; the ROC is where the sum converges absolutely. **An answer without its ROC is half an answer** (HW3 rubric: 3/6 for a correct transform with a missing or wrong ROC).
+$X(z) = \sum_n x[n]\,z^{-n}$. **No ROC = half an answer** (HW3 rubric: 3/6).
 
 | # | $x[n]$ | $X(z)$ | ROC | note |
 |---|---|---|---|---|
@@ -123,7 +119,7 @@ $X(z) = \sum_n x[n]\,z^{-n}$; the ROC is where the sum converges absolutely. **A
 | 18 | $r^n\cos(\omega_0 n)\,u[n]$ | $\dfrac{1-r\cos\omega_0\,z^{-1}}{1-2r\cos\omega_0\,z^{-1}+r^2z^{-2}}$ | $\lvert z\rvert>r$ | poles $re^{\pm j\omega_0}$ |
 | 19 | $r^n\sin(\omega_0 n)\,u[n]$ | $\dfrac{r\sin\omega_0\,z^{-1}}{1-2r\cos\omega_0\,z^{-1}+r^2z^{-2}}$ | $\lvert z\rvert>r$ | |
 
-No z-transform at all: $a^n$ for **all** $n$ (e.g. $e^{j\pi n/4}$) — the right half needs $\lvert z\rvert>\lvert a\rvert$, the left half $\lvert z\rvert<\lvert a\rvert$, so the ROC is empty (SP25 #1c: True). Cosines are easiest as sums of complex exponentials: FA25 #5c, $\cos^2(\tfrac{\pi}{4}n)u[n] = \big(\tfrac12+\tfrac14e^{j\pi n/2}+\tfrac14e^{-j\pi n/2}\big)u[n]$, ROC $\lvert z\rvert>1$. Full table and proofs: [[concepts/z-transform-pairs|z-transform pairs]].
+No z-transform: $a^n$ for all $n$ (e.g. $e^{j\pi n/4}$), ROC empty (SP25 #1c). Cosines as exponentials: FA25 #5c, $\cos^2(\tfrac{\pi}{4}n)u[n] = \big(\tfrac12+\tfrac14e^{j\pi n/2}+\tfrac14e^{-j\pi n/2}\big)u[n]$, $\lvert z\rvert>1$. Full table: [[concepts/z-transform-pairs|z-transform pairs]].
 
 ## 7. z-transform properties (with ROC)
 
@@ -141,17 +137,15 @@ No z-transform at all: $a^n$ for **all** $n$ (e.g. $e^{j\pi n/4}$) — the right
 | accumulation | $\sum_{k=-\infty}^{n}x[k]$ | $\dfrac{X(z)}{1-z^{-1}}$ | at least $R\cap\{\lvert z\rvert>1\}$ |
 | initial value | $x[n] = 0$ for $n<0$ | $x[0] = \lim_{z\to\infty}X(z)$ | |
 
-> [!example] Two review-lecture moves (FA24 #5a)
-> $(n+1)u[n-1] = (n-1)u[n-1] + 2u[n-1]$: the first piece is $g[n-1]$ with $g[n] = n\,u[n] \leftrightarrow \dfrac{z^{-1}}{(1-z^{-1})^2}$, so $X(z) = \dfrac{z^{-2}}{(1-z^{-1})^2} + \dfrac{2z^{-1}}{1-z^{-1}}$, ROC $\lvert z\rvert>1$. **Rewrite the signal until every piece is a table entry, shifted.**
+> [!example] Rewrite into table entries (FA24 #5a)
+> $(n+1)u[n-1] = (n-1)u[n-1] + 2u[n-1]$, $g[n] = n\,u[n] \leftrightarrow \dfrac{z^{-1}}{(1-z^{-1})^2}$: $X(z) = \dfrac{z^{-2}}{(1-z^{-1})^2} + \dfrac{2z^{-1}}{1-z^{-1}}$, $\lvert z\rvert>1$.
 
 ## 8. ROC rules and what the ROC tells you
 
-- The ROC depends only on $\lvert z\rvert$: it is a **ring** centred at the origin, contains **no poles**, and is bounded by poles (or by $0$, $\infty$).
-- **Finite length:** all $z$ except possibly $z = 0$ (if some $x[n]\neq0$ with $n>0$) and/or $z = \infty$ (if some $x[n]\neq0$ with $n<0$).
-- **Right-sided:** outside the outermost pole, $\lvert z\rvert>\lvert p_{\max}\rvert$; includes $\infty$ iff $x[n] = 0$ for $n<0$.
-- **Left-sided:** inside the innermost pole, $\lvert z\rvert<\lvert p_{\min}\rvert$; includes $0$ iff $x[n] = 0$ for $n>0$.
-- **Two-sided:** a ring between two consecutive pole radii — or **empty**.
-- A rational $X(z)$ whose poles sit on $K$ distinct radii has $K+1$ possible ROCs (FA19 #7: radii $\tfrac12$ and $1$ ⇒ three ROCs). See [[problems/all-possible-rocs|all possible ROCs]].
+- A **ring** centred at 0, **no poles**, bounded by poles (or $0$, $\infty$).
+- **Finite length:** all $z$ except possibly $0$ (some $x[n]\neq0$, $n>0$) and/or $\infty$ (some $x[n]\neq0$, $n<0$).
+- **Right-sided:** $\lvert z\rvert>\lvert p_{\max}\rvert$; includes $\infty$ iff $x[n] = 0$ for $n<0$. **Left-sided:** $\lvert z\rvert<\lvert p_{\min}\rvert$; includes $0$ iff $x[n] = 0$ for $n>0$. **Two-sided:** a ring, or empty.
+- $K$ distinct pole radii ⇒ $K+1$ ROCs (FA19 #7). See [[problems/all-possible-rocs|all possible ROCs]].
 
 | ROC of $H(z)$ | $h[n]$ | causal? | stable iff |
 |---|---|---|---|
@@ -190,32 +184,11 @@ No z-transform at all: $a^n$ for **all** $n$ (e.g. $e^{j\pi n/4}$) — the right
 > - $\tfrac12<\lvert z\rvert<2$: $\;x[n] = -\tfrac13(\tfrac12)^nu[n] - \tfrac43\,2^nu[-n-1]$ (two-sided, stable)
 > - $\lvert z\rvert<\tfrac12$: $\;x[n] = \tfrac13(\tfrac12)^nu[-n-1] - \tfrac43\,2^nu[-n-1]$ (anti-causal, unstable)
 
-The Python side (for studying, not the exam): `residuez` returns exactly the $A_k$, $p_k$ and long-division terms $C_k$ — here for the improper Lecture 10 Exercise 1, $H(z) = \dfrac{1-3z^{-1}+z^{-2}+4z^{-3}}{1-2z^{-1}-3z^{-2}} = \tfrac59 - \tfrac43z^{-1} + \dfrac{7/36}{1-3z^{-1}} + \dfrac{1/4}{1+z^{-1}}$:
-
-```python
-import numpy as np
-from scipy.signal import residuez, lfilter
-
-# L10 Ex. 1:  y[n] = 2y[n-1] + 3y[n-2] + x[n] - 3x[n-1] + x[n-2] + 4x[n-3]
-b = [1, -3, 1, 4]          # numerator in powers of z^-1
-a = [1, -2, -3]            # 1 + a1 z^-1 + a2 z^-2  (L9 sign convention)
-r, p, k = residuez(b, a)   # r = A_k, p = poles, k = long-division terms C_k
-print("A_k:", np.round(r.real, 4), " poles:", np.round(p.real, 4), " C_k:", np.round(k.real, 4))
-
-h = lfilter(b, a, np.r_[1, np.zeros(5)])   # impulse response, causal system
-print("h[0:6] =", np.round(h, 4))
-```
-
-```text
-A_k: [0.25   0.1944]  poles: [-1.  3.]  C_k: [ 0.5556 -1.3333]
-h[0:6] = [ 1. -1.  2.  5. 16. 47.]
-```
-
-($0.1944 = 7/36$ at the pole $3$, $0.25 = 1/4$ at $-1$, $C_0 = 5/9$, $C_1 = -4/3$; so $h[n] = \tfrac59\delta[n]-\tfrac43\delta[n-1]+\tfrac{7}{36}3^nu[n]+\tfrac14(-1)^nu[n]$, and $h[0] = \tfrac59+\tfrac{7}{36}+\tfrac14 = 1$ ✓.)
+Improper example (L10 Ex. 1): $H(z) = \dfrac{1-3z^{-1}+z^{-2}+4z^{-3}}{1-2z^{-1}-3z^{-2}} = \tfrac59 - \tfrac43z^{-1} + \dfrac{7/36}{1-3z^{-1}} + \dfrac{1/4}{1+z^{-1}}$, so causal $h[n] = \tfrac59\delta[n]-\tfrac43\delta[n-1]+\tfrac{7}{36}3^nu[n]+\tfrac14(-1)^nu[n]$ and $h[0] = \tfrac59+\tfrac{7}{36}+\tfrac14 = 1$ ✓.
 
 ## 10. Stability and unbounded outputs
 
-$Y(z) = X(z)H(z)$ with ROC at least $\mathrm{ROC}_X\cap\mathrm{ROC}_H$ — larger if a zero of one cancels a pole of the other.
+$Y(z) = X(z)H(z)$, ROC at least $\mathrm{ROC}_X\cap\mathrm{ROC}_H$ (larger after cancellation).
 
 | system | input | output |
 |---|---|---|
@@ -228,15 +201,15 @@ $Y(z) = X(z)H(z)$ with ROC at least $\mathrm{ROC}_X\cap\mathrm{ROC}_H$ — large
 > [!trap] $e^{j2/3}$ is not $e^{j2\pi/3}$
 > FA25 #8b has a pole at $e^{j2/3}$ — angle $\tfrac23$ rad ≈ 38°, not $\tfrac{2\pi}{3}$ = 120°. So $\cos(\tfrac{2\pi}{3}n)\,u[n]$ does **not** match it and the output is bounded (key: False). Match the *angle*, exactly, including a real pole at $1$ ($\omega = 0$: $u[n]$) or $-1$ ($\omega = \pi$: $(-1)^nu[n]$). Worked in [[problems/unbounded-outputs-and-pole-matching|unbounded outputs and pole matching]].
 
-For parameters: "stable iff" → put every pole inside the unit circle for a causal system (or make a zero cancel the offending pole, SP25 #7: $\alpha = \pm2$) — [[problems/parameters-for-stability|parameters for stability]].
+Parameters: causal ⇒ every pole inside, or a zero cancels the bad pole (SP25 #7: $\alpha = \pm2$) — [[problems/parameters-for-stability|parameters for stability]].
 
 > [!tip] Make the sheet yourself
-> Copy this page **by hand** onto your two sides — in your own words, your own examples, your own abbreviations. The act of choosing what goes on the sheet is the review; a sheet you wrote is one you can find things on in ten seconds under exam pressure. Put the pairs table (§6), the ROC ⇔ causality/stability table (§8) and the PFE recipe (§9) on the front; the property fast rules (§2), convolution rules (§3) and the unbounded-output table (§10) on the back.
+> Front: pairs (§6), ROC table (§8), PFE (§9). Back: property rules (§2), convolution (§3), unbounded outputs (§10).
 
 ## Related
 
-[[exams/midterm-1/index|Midterm 1 review guide]] · [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|property bank]] · [[demos/practice-drills|practice drills]] · [[exams/index|all exams]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/region-of-convergence|ROC]] · [[concepts/partial-fraction-expansion|PFE]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[supplements/transform-tables|transform tables]]
+[[exams/midterm-1/index|Midterm 1 review guide]] · [[exams/midterm-1/true-false-bank|T/F bank]] · [[exams/midterm-1/system-property-bank|property bank]] · [[demos/practice-drills|practice drills]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/partial-fraction-expansion|PFE]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
 
-Prof. Snyder's lecture notes, Lectures 2–11 (definitions, L3 property tests, L4 convolution, L9 LCCDE form, L10 Ex. 1, L11 Table 1 and §1.2 on unbounded outputs); the course transform tables (Tables 9 and 10) and course summary; the Midterm 1 Review slides (FA24 #5, SP23 #6–#7); HW3 solutions (grading rubric); past Midterm 1 keys FA2019–FA2025 as cited. Every pair, identity and number was checked numerically (`verify/hub/verify_hub.py`, 107 checks).
+Snyder's notes, Lectures 2–11; course transform tables (Tables 9–10); Midterm 1 Review slides; HW3 rubric; Midterm 1 keys FA2019–FA2025.

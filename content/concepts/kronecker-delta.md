@@ -34,4 +34,4 @@ aliases: ["unit impulse", "unit pulse", "Kronecker delta", "impulse", "delta"]
 **Related.** [[concepts/unit-step|unit step]] · [[concepts/discrete-time-signal|discrete-time signal]] · [[concepts/impulse-response|impulse response]] · [[concepts/convolution|convolution]] · [[concepts/z-transform-pairs|z-transform pairs]]
 
 ### Sources for this page
-Lecture 2 §2 (Eq. 21); Lecture 4 §1.1 (Eq. 6) and §2.1 (identity); HW1 #1, #3; HW2 #3–#4; FA2019 #1g, SP2021 #1e (page render checked), FA2025 #3b. Checked in `verify/concepts/verify_signals.py` and `verify_glossary_time.py`.
+Lecture 2 §2 (Eq. 21); Lecture 4 §1.1 (Eq. 6) and §2.1 (identity); HW1 #1, #3; HW2 #3–#4; FA2019 #1g, SP2021 #1e, FA2025 #3b.

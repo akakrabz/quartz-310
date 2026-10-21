@@ -52,7 +52,7 @@ Mermaid diagram). The demos and drills are fully self-contained.
 ## 4. Writing conventions (so new pages match)
 
 - One page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/`,
-  `3-fourier-analysis/` and `4-sampling-and-reconstruction/` (each with an `index.md` overview); frontmatter `title`, `description`, `tags`, `lecture`.
+  `3-fourier-analysis/`, `4-sampling-and-reconstruction/` and `5-dft-and-fft/` (each with an `index.md` overview); frontmatter `title`, `description`, `tags`, `lecture`.
   Concepts in `content/concepts/` (the concept map is `concepts/concept-map.canvas`), problem families in `content/problems/`
   (frontmatter also `family_frequency`, `typical_points`, `lectures` — the Bases table `problems/exam-problem-families.base`
   reads them), past exams in `content/exams/midterm-1/past-exams/` and `content/exams/midterm-2/past-exams/` (hub:
@@ -87,15 +87,16 @@ Mermaid diagram). The demos and drills are fully self-contained.
 as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
 2,827 links, 12,321 equations).
 
-## 6. What's here (build 4, October 2026 — Lectures 1–19)
+## 6. What's here (build 5, October 2026 — Lectures 1–21)
 
 - **Home**: a learning hub — how to learn with the site (lecture → concept hubs → folded questions → problem families → homework →
   drills and demos → past exams as self-tests), the course map, the conventions table and the callout legend.
-- **Lectures 1–17** in four units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
-  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`) and sampling and reconstruction (L17–19 so far:
-  ideal A/D, ideal D/A, aliasing; `4-sampling-and-reconstruction/`), written from Prof. Snyder's notes and slides. Lectures 20 onward
-  (ideal filters, the DFT and FFT) are to come.
-- **40 concept pages** (the graph's hubs, 8 of them for Unit 3, 4 for Unit 4) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
+- **Lectures 1–21** in five units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
+  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`), sampling and reconstruction (L17–19: ideal A/D,
+  ideal D/A, aliasing; `4-sampling-and-reconstruction/`) and the DFT (L20–21 so far: the DFT, DFT properties; `5-dft-and-fft/`),
+  written from Prof. Snyder's notes and slides. Build 5 rewrote every page in a concise style: lecture pages follow the notes'
+  sections, at most ~1.2× the notes' length, examples as folded questions, exam problems as links only.
+- **42 concept pages** (the graph's hubs, 8 of them for Unit 3, 4 for Unit 4, 2 for Unit 5) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
 - **15 problem families** — 10 from the past Midterm 1 exams, 5 from the past Midterm 2 exams — each with a recipe, traps, every past
   instance and fresh practice problems with folded solutions, listed in a live table by the Bases plugin
   (`problems/exam-problem-families.base`).
@@ -103,7 +104,7 @@ as targets) and compiles every equation with KaTeX in strict mode. Run it before
   for the last day, top traps, the review-lecture problems), a cheat sheet, a true/false bank (43 statements), a system-property bank
   (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2: an overview (scope, format, what gets asked on each past exam, a
   preparation plan and a Unit 3 formula box), a true/false bank (all 43 statements of the seven exams) and 7 past exams
-  (FA2019 … SP2025), typed with folded solutions; the problems on topics after Lecture 16 are marked as later material.
+  (FA2019 … SP2025), typed with folded solutions; problems on topics after Lecture 21 are marked as later material.
   Quiz 2 (`exams/quiz-2.md`, Oct 2026): a review page for HW5–HW7 / Lectures 13–18 with a formula box, HW7 worked against the
   official key, a one-section summary of Lecture 18 (ideal D/A) and a practice quiz; numbers in `verify/Q2_numbers.py`, figures in `verify/Q2_figs.py`.
 - **Homework walkthroughs** HW1–HW6 (HW6's was released with `tools/hw6_release.py` after its Oct 9 due date; the script is kept as the pattern for later sets).

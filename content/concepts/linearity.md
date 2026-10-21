@@ -1,6 +1,6 @@
 ---
 title: "Linearity"
-description: "A system is linear iff it obeys superposition, T{a x1 + b x2} = a T{x1} + b T{x2}. The formal test, the zero-in/zero-out shortcut, and a library of linear and nonlinear systems from the past-exam tables."
+description: "Linear iff superposition holds, T{a x1 + b x2} = a T{x1} + b T{x2}: the formal test, the zero-in/zero-out shortcut, linear and nonlinear systems from past exams."
 tags: [concept, systems, midterm-1]
 aliases: ["linear", "linear system", "superposition", "homogeneity", "additivity", "nonlinear", "non-linear"]
 ---
@@ -43,4 +43,4 @@ aliases: ["linear", "linear system", "superposition", "homogeneity", "additivity
 **Related.** [[concepts/time-invariance|time-invariance]] · [[concepts/causality|causality]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lti-system|LTI system]] · [[concepts/impulse-response|impulse response]]
 
 ### Sources for this page
-Lecture 3 §2.1 (Exercises 1–2) and slides 4–6; HW1 #5–#6 and HW2 #1–#2 with solutions; the property tables of the seven past exams (answers cross-checked numerically in `verify/exams/property_bank.py`, 45/45).
+Lecture 3 §2.1 (Exercises 1–2) and slides 4–6; HW1 #5–#6 and HW2 #1–#2 with solutions; the property tables of the seven past exams.

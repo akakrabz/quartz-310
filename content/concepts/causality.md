@@ -1,6 +1,6 @@
 ---
 title: "Causality"
-description: "A causal system never uses a future input: y[n0] depends only on x[n] for n ≤ n0. For LTI systems this is h[n] = 0 for n < 0, i.e. an ROC outside the largest pole. Tests, fast rules and the T/F traps."
+description: "A causal system never uses a future input: y[n0] depends only on x[n] for n ≤ n0. LTI: h[n] = 0 for n < 0, ROC outside the largest pole. Tests and T/F traps."
 tags: [concept, systems, roc, midterm-1]
 aliases: ["causal", "causal system", "non-causal", "noncausal", "anti-causal", "causal signal"]
 ---
@@ -41,4 +41,4 @@ aliases: ["causal", "causal system", "non-causal", "noncausal", "anti-causal", "
 **Related.** [[concepts/sided-sequences|sided sequences]] · [[concepts/region-of-convergence|ROC]] · [[concepts/impulse-response|impulse response]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/lccde|LCCDE]] · [[concepts/time-invariance|time-invariance]] · [[concepts/linearity|linearity]]
 
 ### Sources for this page
-Lecture 3 §2.3 (Ex. 6) and slides 10–11; Lecture 4 §2.1; Lecture 11 §1.1 and Table 1; past-exam property tables and T/F items (answers in `verify/exams/property_bank.py`, `tf_bank.py`); FA2019 #3 checked in `verify/concepts/verify_systems.py`.
+Lecture 3 §2.3 (Ex. 6) and slides 10–11; Lecture 4 §2.1; Lecture 11 §1.1 and Table 1; past-exam property tables and T/F items; FA2019 #3.

@@ -1,6 +1,6 @@
 ---
 title: "Sketching and transforming signals"
-description: "Sequence notation with the n = 0 arrow, time shift, reversal, downsampling, the substitute-don't-guess rule for x[-n+3] and x[2n+1], even and odd parts, and writing a finite sequence with deltas and steps — the index bookkeeping behind HW1, every convolution and every shift-invariance proof."
+description: "Sequence notation with the n = 0 arrow, shift, reversal, downsampling, substitute-don't-guess for x[-n+3] and x[2n+1], even and odd parts, sequences as deltas and steps."
 tags: [toolkit, signals]
 ---
 
@@ -64,7 +64,7 @@ $$
 
 Example: $x = \{\underset{\uparrow}{1},2,3\}$ gives $x_e = \{\tfrac32,1,\underset{\uparrow}{1},1,\tfrac32\}$ and $x_o = \{-\tfrac32,-1,\underset{\uparrow}{0},1,\tfrac32\}$; add them back to check.
 
-## Writing a sequence with $\delta$'s and $u$'s
+## Writing a sequence with δ's and u's
 
 - **Deltas:** one term per nonzero sample, $x[n] = \sum_k x[k]\,\delta[n-k]$ (Lecture 4's sifting identity).
 - **Steps:** walk left to right and add $c\,u[n-n_1]$ at every index $n_1$ where the level **jumps by $c$**. A pulse of height $A$ on $n_1\le n\le n_2$ is $A\big(u[n-n_1]-u[n-n_2-1]\big)$ — note the $-1$: $u[n]-u[n-8]$ has **8** samples.
@@ -82,27 +82,11 @@ Example: $x = \{\underset{\uparrow}{1},2,3\}$ gives $x_e = \{\tfrac32,1,\underse
 
 **Products of steps are windows.** $u[n+1]\,u[-n+1] = 1$ exactly for $-1\le n\le1$, so [[exams/midterm-1/past-exams/fall-2025|FA2025 #3(b)]]'s input $x[n] = n\,u[n+1]u[-n+1] = \{-1,\underset{\uparrow}{0},1\}$. And $u[n]\,u[n-4] = u[n-4]$ (the later step wins), so HW1 #1(c)'s $n\,u[n]u[n-4]$ is $n\,u[n-4]$ — **not** $n\big(u[n]-u[n-4]\big)$. $4u[3-n]$ is 4 for all $n\le3$ (Lecture 2).
 
-## Python: index bookkeeping with a dictionary
-
-```python
-x = dict(zip(range(-2, 6), [2, 4, 1, 0, -2, 5, 7, 3]))   # x[n], arrow under the 1 -> starts at n = -2
-y = {n: x.get(-n + 3, 0) for n in range(-10, 11)}        # y[n] = x[-n+3]: substitute, don't guess
-z = {n: x.get(2 * n + 1, 0) for n in range(-10, 11)}     # z[n] = x[2n+1]
-print({n: v for n, v in y.items() if v != 0 or -2 <= n <= 5})
-print({n: v for n, v in z.items() if v != 0 or -1 <= n <= 2})
-```
-
-```text
-{-2: 3, -1: 7, 0: 5, 1: -2, 2: 0, 3: 1, 4: 4, 5: 2}
-{-1: 4, 0: 0, 1: 5, 2: 3}
-```
-
-A dictionary keyed by $n$ keeps the index with the value — the same bookkeeping you need for `np.convolve`, whose output starts at (start of $x$) + (start of $h$); see [[problems/finite-length-convolution|finite-length convolution]].
+Index bookkeeping in code (`np.convolve` returns values only; the start index is the sum of the start indices): [[demos/python-demos|Python demos]], [[problems/finite-length-convolution|finite-length convolution]].
 
 ## Related
 
 [[1-signals-and-systems/01-digital-signals|Lecture 1]] · [[1-signals-and-systems/02-complex-numbers-and-elementary-signals|Lecture 2]] · [[concepts/discrete-time-signal|discrete-time signal]] · [[concepts/kronecker-delta|Kronecker delta]] · [[concepts/unit-step|unit step]] · [[concepts/time-invariance|time invariance]] · [[homework/hw1|HW1]] · [[demos/convolution-explorer|convolution explorer]].
 
 ### Sources for this page
-
-Lecture 2 notes §2 (sequence notation, $\delta[n]$, $u[n]$, $4u[3-n]$); Lecture 3 notes (shift-invariance by substitution); Lecture 4 notes §1.1 (sifting); HW1 #1–#3 and official solutions; FA2025 #3(b). All sequences checked in `verify/hub/toolkit_sketching.py` (26 checks).
+Lecture 2 notes §2 (sequence notation, $\delta[n]$, $u[n]$, $4u[3-n]$); Lecture 3 notes (shift-invariance by substitution); Lecture 4 notes §1.1 (sifting); HW1 #1–#3 and official solutions; FA2025 #3(b).
