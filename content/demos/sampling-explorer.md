@@ -16,7 +16,7 @@ tags: [demo, sampling, nyquist, ctft, dtft]
 
 ## What to try
 
-1. **Lecture 17, Example 1:** $\operatorname{rect}(\Omega/20\pi)$ at $T = \frac1{20}$ s: copies every $40\pi$, height $20$. At $T = \frac1{10}$ s: copies touch, sum flat at $10$.
+1. **Lecture 17, Example 1** ([[concepts/sampling|Sampling]] §2)**:** $\operatorname{rect}(\Omega/20\pi)$ at $T = \frac1{20}$ s: copies every $40\pi$, height $20$. At $T = \frac1{10}$ s: copies touch, sum flat at $10$.
 2. **Example 2, triangle $B = 50$ Hz at 150, 100, 75 Hz:** edge at $\frac{2\pi}{3}$ (guard band), $\pi$ (touch), $\frac{4\pi}{3}$ (overlap, sum flat at $37.5$ on the overlap).
 3. **Slide $f_s$ down:** copies in (b) move in and shrink; in (c) the edge moves out; the guard band closes at $f_s = 2B$.
 4. **FA2024 #5:** $T = 1$ ms gives a triangle of height $1000$ touching at $\pm\pi$; $T = 2$ ms gives $X_d$ flat at $500$.

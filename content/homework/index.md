@@ -38,7 +38,7 @@ Solve on paper, then open the folded solution. Each problem's **On the exam** li
 | [[problems/dtft-and-inverse-dtft\|DTFTs and inverse DTFTs]] | MT2 | HW5 #1, #2; HW6 #2–#5 |
 | [[problems/lti-response-to-sinusoids\|Response to sinusoids]] | MT2 | HW6 #6(b), #7; HW7 #2 |
 | [[problems/magnitude-phase-and-group-delay\|Magnitude, phase, group delay]] | MT2 | HW6 #6(a); HW7 #1 |
-| [[problems/sampling-and-the-nyquist-rate\|Sampling]] · [[problems/digital-filtering-of-analog-signals\|A/D → H_d → D/A]] | MT2 | HW7 #3, #4 |
+| [[problems/sampling-and-the-nyquist-rate\|Sampling]] · [[problems/digital-filtering-of-analog-signals\|A/D → filter → D/A]] | MT2 | HW7 #3, #4 |
 
 ### Sources for this page
 ECE 310 Fall 2026 HW1–HW7 with official solutions (HW6 key posted Oct 16); slide-deck lecture dates.

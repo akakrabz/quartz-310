@@ -1,6 +1,6 @@
 ---
 title: "Lecture 12 — Convolution as template matching"
-description: "Convolution as a sliding inner product; matched filter h[n] = t[−n] peaks where the input looks like the template; peak positions; 2-D convolution of images, shape templates, line-feature kernels for handwritten digits. Not tested."
+description: "Convolution as a sliding inner product; matched filter h[n] = t[−n]; 2-D convolution of images, shape and line-feature kernels. Not tested."
 tags: [lecture, convolution, template-matching, unit-3]
 lecture: 12
 ---
@@ -8,99 +8,29 @@ lecture: 12
 *Lecture 12 · Mon Sep 21, 2026 · notes + slides "Convolution as template matching" · prev: [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] · next: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]*
 
 > [!abstract] In one breath
-> - Each convolution output is an inner product of the input with the flipped, shifted kernel: a similarity score.
-> - Matched filter $h[n] = t[-n]$: the flips cancel, the template itself slides, the output peaks at copies of $t$.
-> - In 2-D the same flip–slide–multiply–add runs a kernel over an image: shape templates, line features.
+> - Each convolution output is an inner product with the flipped, shifted kernel: a similarity score.
+> - Matched filter $h[n]=t[-n]$: the output peaks at copies of the template.
+> - 2-D: the same flip–slide–multiply–add over an image. Not tested (slide 2).
 
-## 1. Identifying patterns in signals
+## What was covered
 
-$y[n]=\sum_k x[k]\,h[n-k]$ with $n$ frozen is an inner product in $k$:
+1. **§1 Identifying patterns in signals** (inner product, slide 5) → [[concepts/template-matching|Template matching]] §1, [[concepts/convolution|Convolution]]
+2. **§1.1 Matched filters** (eqs. 1–2, Figures 1–2, slides 3–5) → [[concepts/template-matching|Template matching]] §2
+3. **§2 Two-dimensional convolution** (eq. 3, Figure 3, slide 6) → [[concepts/template-matching|Template matching]] §3
+4. **§2.1 Two-dimensional pattern matching example** (Figures 4–6, slides 7–10) → [[concepts/template-matching|Template matching]] §4
+5. **§2.2 Highlighting features in handwritten digits** (eqs. 4–5, Figures 7–9, slides 11–14) → [[concepts/template-matching|Template matching]] §5
 
-$$
-\langle a,b\rangle=\sum_k a[k]\,b[k],\qquad\quad y[n]=\big\langle\, x[k],\ h[n-k]\,\big\rangle_k .
-$$
+## Exercises from this lecture
 
-Large when both sequences are big in the same places with the same signs, zero when orthogonal, negative when opposite. Filtering and pattern finding are the same computation read two ways. Known pattern → use it as a template, drag it along the signal, find where it lines up best; reverse it first, because convolution flips.
+- Slide 5, what convolution computes at each shift → [[concepts/template-matching|Template matching]] §1
+- Slides 3–5 / Figures 1–2, sawtooth template, five copies → §2 · slide 6 / Figure 3, three pixels of a 2-D convolution → §3
 
-> [!question] Slide 5: at each shift location, what operation does convolution perform?
-
-> [!success]- Answer
-> An inner (dot) product: multiply input and flipped, shifted kernel sample by sample, add. Its size measures the **correlation** (alignment) at that shift (notes §1.1).
-
-### 1.1 Matched filters
-
-> [!key] The matched filter
-> $$
-> \begin{gathered}
-> h[n]=t[-n]\qquad\text{(the matched filter for the template } t\text{)}\\[4pt]
-> y[n]=x[n]*h[n]=\sum_{k=-\infty}^{\infty}x[k]\,h[n-k]=\sum_{k=-\infty}^{\infty}x[k]\,t[k-n].
-> \end{gathered}
-> $$
-> $t[k-n]$ is the template with sample $0$ moved to $k=n$; the output is largest where the input looks most like the template (notes eqs. 1–2, slide 4). The notes call the pattern $h[n]$ and the filter $\tilde h[n]$.
-
-- The last sum is the **cross-correlation** of $x$ with $t$: $r_{xt}[n]=\sum_k x[k]\,t[k-n]=x[n]*t[-n]$.
-- An exact copy $x[n_0+m]=t[m]$ scores $E_t=\sum_m t[m]^2$; by Cauchy–Schwarz no window of the same energy scores more.
-- Raw scores also grow with loudness: a bright stretch can beat a faint exact copy (why the notes' triangles look "fairly bright" to the diamond template, §2.1). Dividing by the window energy (normalized cross-correlation) fixes it.
-
-> [!example] The lecture's sawtooth (slides 3–5, notes Figs. 1–2)
-> Template: ramp $t[n]=n/8$, $0\le n\le 8$ (width $W=8$), $E_t=\sum_{n=0}^{8}(n/8)^2=\tfrac{204}{64}=3.1875$. Input: 80 samples, five copies starting at $n=10,22,38,54,70$. Output: five equal peaks of height $3.19$; between the first two copies (12 samples apart) it dips only to $0.72$, because the responses overlap.
-
-> [!trap] Flips and peak positions
-> - $x*t$ (no flip) compares the input with the **reversed** template; use $x*t[-n]$.
-> - Symmetric templates ($t[-n]=t[n]$): convolution and correlation coincide.
-> - With $h[n]=t[-n]$ exactly, peaks sit on the **first** sample of each copy ($n=10,22,\dots$).
-> - The slide plot shows $18,30,46,62,78$, the **last** samples: a stored array is the causal $h[n-W]$, so the output is delayed by $W=8$ ("accounting for the width of the template").
-
-## 2. Two-dimensional convolution
-
-> [!key] 2-D convolution (notes eq. 3)
-> $$
-> y[i,j]=x[i,j]*h[i,j]=\sum_{k=-\infty}^{\infty}\sum_{m=-\infty}^{\infty}x[k,m]\,h[i-k,\,j-m].
-> $$
-> Image $x$: $H\times W$, row $i$, column $j$. Flip the kernel in both directions (180°), centre it on $(i,j)$, multiply, add.
-
-- Centre sample (underlined) is $h[0,0]$: the kernel is non-causal, harmless for images ("future" samples are the next row or column).
-- Pixels outside the image count as $0$ (**zero-extension**).
-
-> [!question] Slide 6 (notes Fig. 3): compute three output pixels
-> $$
-> h=\begin{bmatrix}0&-1&0\\-1&\underline{2}&-1\\0&-1&0\end{bmatrix},\qquad
-> x=\begin{bmatrix}1&6&3&9&6&2&4\\9&\mathbf{6}&4&4&3&7&6\\2&3&4&1&2&3&\mathbf{8}\\7&4&0&2&2&4&3\\5&6&5&\mathbf{8}&0&0&3\\2&1&4&1&5&8&7\\7&3&8&0&3&1&9\end{bmatrix}
-> $$
-> $y=x*h$ at the bold pixels: row 1, column 1 (orange); row 4, column 3 (yellow); row 2, column 6 (green, border). Rows and columns from 0.
-
-> [!success]- Answer
-> The kernel is unchanged by a 180° rotation: output = twice the centre minus its four neighbours.
-> - orange: $2(6)-(6+9+4+3)=12-22=-10$
-> - yellow: $2(8)-(2+5+0+1)=16-8=8$
-> - green: $2(8)-(6+3+3+0)=16-12=4$ (the $0$ is the missing right neighbour, zero-extension).
-
-### 2.1 Two-dimensional pattern matching example
-
-Slides 7–10, notes Figs. 4–6: an image of triangles, diamonds and boxes; one template per shape. Each response image is brightest at the centres of the matching shapes; diamond and box responses have exactly one brightest pixel per shape. Triangles are also "fairly bright" in the diamond response, but the maxima sit on the true diamonds.
-
-### 2.2 Highlighting features in handwritten digits
-
-Whole-digit templates fail on handwriting variation (crossed sevens, looped twos, open fours, size, slant). Match simple **features** instead (slides 11–14, notes eqs. 4–5):
-
-$$
-h_v=\begin{bmatrix}-2&1&1&1&-2\\-2&1&1&1&-2\\-2&1&\underline{1}&1&-2\\-2&1&1&1&-2\\-2&1&1&1&-2\end{bmatrix},\qquad
-h_h=\begin{bmatrix}-2&-2&-2&-2&-2\\1&1&1&1&1\\1&1&\underline{1}&1&1\\1&1&1&1&1\\-2&-2&-2&-2&-2\end{bmatrix}.
-$$
-
-- Positive entries want bright pixels, negative want dark, zeros "don't care". $h_v$: a vertical bar with dark sides; $h_h$: a horizontal one.
-- MNIST (notes Figs. 7–9): the "1" responds almost only to $h_v$; the "7" to both (tall stroke, top bar); the "4" strongly to $h_v$ and to $h_h$ along its crossbar.
-- Hand-designing many kernels is hard; convolutional neural networks **learn** them.
-
-Next: the DTFT ([[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]]) scores a signal against the templates $e^{j\omega n}$: $X_d(\omega)=\sum_n x[n]\,e^{-j\omega n}$.
-
-> [!exam] Not tested
-> Notes and slide 2: "this lecture will not be tested on homeworks or exams".
+**Practice:** none (not on homework or exams) · [[demos/convolution-explorer|convolution explorer]] · [[demos/python-demos|Python demos]]
 
 ## Related
 
-[[concepts/template-matching|template matching]] · [[concepts/convolution|convolution]] · [[concepts/impulse-response|impulse response]] · [[concepts/lti-system|LTI system]] · [[concepts/dtft|DTFT]] · [[concepts/frequency-response|frequency response]] · [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] · [[demos/convolution-explorer|convolution explorer]] · [[demos/python-demos|Python demos]] · unit: [[3-fourier-analysis/index|Unit 3]]
+[[3-fourier-analysis/index|Unit 3]] · prev: [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] · next: [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] · [[concepts/index|Concepts]]
 
 ### Sources for this page
 
-Snyder, Lecture 12 notes (§1–1.1 eqs. 1–2, Figs. 1–2; §2 eq. 3, Fig. 3; §2.1 Figs. 4–6; §2.2 eqs. 4–5, Figs. 7–9); slides 1–14 (unannotated; slide 5 answer ours).
+Snyder, Lecture 12 notes (§1–2.2, eqs. 1–5, Figs. 1–9); slides 1–14.

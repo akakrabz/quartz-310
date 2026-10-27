@@ -1,52 +1,95 @@
 ---
 title: "DTFT pairs"
-description: "The course's DTFT pairs: finite sequences, exponentials, pulses, sinc and sinc², impulse pairs for periodic signals and the step, each with its validity condition."
+description: "The course's DTFT pairs: finite sequences, exponentials, pulses, sinc and sinc², impulse pairs for periodic signals and the step (Dirac delta, 2π-periodic copies), each with its validity condition."
 tags: [concept, dtft, midterm-2]
-aliases: ["DTFT pairs", "DTFT table", "common DTFT pairs"]
+aliases: ["DTFT pairs", "DTFT table", "common DTFT pairs", "Dirac delta", "impulse pairs", "DTFT of periodic signals"]
 ---
 
-> [!key] Ordinary pairs (absolutely summable)
-> | $x[n]$ | $X_d(\omega)$, $-\pi\le\omega\le\pi$ | holds when |
-> |---|---|---|
-> | $\delta[n-k]$ | $e^{-j\omega k}$ | $k$ integer |
-> | $a^n u[n]$ | $\dfrac{1}{1-ae^{-j\omega}}$ | $\lvert a\rvert\lt1$ |
-> | $-a^n u[-n-1]$ | $\dfrac{1}{1-ae^{-j\omega}}$ | $\lvert a\rvert>1$ |
-> | $n\,a^n u[n]$ | $\dfrac{ae^{-j\omega}}{(1-ae^{-j\omega})^2}$ | $\lvert a\rvert\lt1$ |
-> | $(n+1)\,a^n u[n]$ | $\dfrac{1}{(1-ae^{-j\omega})^2}$ | $\lvert a\rvert\lt1$ |
-> | $a^{\lvert n\rvert}$ | $\dfrac{1-a^2}{1-2a\cos\omega+a^2}$ | $\lvert a\rvert\lt1$ |
-> | $1$ for $0\le n\le L-1$ | $e^{-j\omega(L-1)/2}\,\dfrac{\sin(L\omega/2)}{\sin(\omega/2)}$ | — |
-> | $\mathrm{rect}\!\left(\frac{n-k}{L}\right)$ | $\dfrac{\sin(L\omega/2)}{\sin(\omega/2)}\,e^{-j\omega k}$ | $L$ odd |
-> | $\mathrm{sinc}^2(Ln)$ | $\dfrac{\pi}{L}\left(1-\dfrac{\lvert\omega\rvert}{2L}\right)$ for $\lvert\omega\rvert\le2L$, else $0$ | $0\lt L\le\frac{\pi}{2}$ |
+*Lecture 14 (Fri Sep 25) §2 · [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5 · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
 
-> [!key] Energy-only pair (ideal low-pass; not absolutely summable)
+> [!abstract] In one breath
+> - Absolutely summable signals: $X(z)$ at $z=e^{j\omega}$, or the geometric series.
+> - Periodic signals and $u[n]$ are not summable; their DTFTs are Dirac impulses, $e^{j\omega_0n}\leftrightarrow2\pi\delta(\omega-\omega_0)$, repeated every $2\pi$.
+> - Rectangle in one domain, sinc in the other.
+
+## 1. Impulse pairs for periodic signals
+
+- Periodic signals are not absolutely summable. Exception made: impulses (Lecture 14 §2).
+- $e^{j\omega_0n}$ holds one frequency, so $X_d(\omega)\neq0$ only at $\omega=\omega_0+2\pi k$ (eq. 13).
+- **Dirac delta** $\delta(\omega)$ (eqs. 14–15): zero except at $0$, unit area, sifting $\int f(\omega)\,\delta(\omega-a)\,d\omega=f(a)$. Parentheses, continuous argument: not the Kronecker $\delta[n]$.
+
+> [!key] Impulse pairs (Lecture 14, eqs. 16–22; every one repeats at $\omega+2\pi k$)
+> Guess $X_d(\omega)=c\,\delta(\omega-\omega_0)$ and invert:
+> $$
+> \frac{1}{2\pi}\int_{-\pi}^{\pi}c\,\delta(\omega-\omega_0)\,e^{j\omega n}\,d\omega=\frac{c}{2\pi}\,e^{j\omega_0 n}\stackrel{!}{=}e^{j\omega_0 n}\quad\Longrightarrow\quad c=2\pi .
+> $$
+> $$
+> \begin{aligned}
+> e^{j\omega_0 n}&\ \longleftrightarrow\ 2\pi\,\delta(\omega-\omega_0)\\
+> \cos(\omega_0 n)&\ \longleftrightarrow\ \pi\left[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\right]\\
+> \sin(\omega_0 n)&\ \longleftrightarrow\ -j\pi\left[\delta(\omega-\omega_0)-\delta(\omega+\omega_0)\right]
+> \end{aligned}
+> $$
+> Cosine and sine: Euler on the first pair.
+
+<figure class="ece-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 215" width="640" height="215" role="img" aria-label="Impulses of area pi at plus and minus pi/3 and at their 2 pi periodic copies" style="font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:13px"><text x="322.0" y="24.0" text-anchor="middle" fill="currentColor" style="font-size:13px;font-weight:600">X<tspan baseline-shift="sub" style="font-size:75%">d</tspan>(ω) for x[n] = cos(πn/3)</text><rect x="222.7" y="30.0" width="198.7" height="140.0" fill="var(--accent)" fill-opacity="0.1" stroke="none"/><line x1="24.0" y1="170.0" x2="620.0" y2="170.0" stroke="currentColor" stroke-width="1" opacity="0.75"/><line x1="322.0" y1="30.0" x2="322.0" y2="170.0" stroke="currentColor" stroke-width="1" opacity="0.75"/><line x1="24.0" y1="167.0" x2="24.0" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="24.0" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−3π</text><line x1="123.3" y1="167.0" x2="123.3" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="123.3" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−2π</text><line x1="222.7" y1="167.0" x2="222.7" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="222.7" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−π</text><line x1="288.9" y1="167.0" x2="288.9" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="288.9" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−π/3</text><line x1="355.1" y1="167.0" x2="355.1" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="355.1" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">π/3</text><line x1="421.3" y1="167.0" x2="421.3" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="421.3" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">π</text><line x1="520.7" y1="167.0" x2="520.7" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="520.7" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">2π</text><line x1="620.0" y1="167.0" x2="620.0" y2="173.0" stroke="currentColor" stroke-width="1"/><text x="620.0" y="184.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">3π</text><text x="620.0" y="164.0" text-anchor="end" fill="var(--muted)" style="font-size:12px">ω</text><line x1="90.2" y1="170.0" x2="90.2" y2="73.7" stroke="var(--muted)" stroke-width="2"/><path d="M85.2,75.7 L90.2,67.7 L95.2,75.7 Z" fill="var(--muted)"/><text x="96.2" y="71.7" text-anchor="start" fill="var(--muted)" style="font-size:11px">π</text><line x1="156.4" y1="170.0" x2="156.4" y2="73.7" stroke="var(--muted)" stroke-width="2"/><path d="M151.4,75.7 L156.4,67.7 L161.4,75.7 Z" fill="var(--muted)"/><text x="162.4" y="71.7" text-anchor="start" fill="var(--muted)" style="font-size:11px">π</text><line x1="288.9" y1="170.0" x2="288.9" y2="73.7" stroke="var(--accent)" stroke-width="2"/><path d="M283.9,75.7 L288.9,67.7 L293.9,75.7 Z" fill="var(--accent)"/><text x="294.9" y="71.7" text-anchor="start" fill="var(--accent)" style="font-size:11px">π</text><line x1="355.1" y1="170.0" x2="355.1" y2="73.7" stroke="var(--accent)" stroke-width="2"/><path d="M350.1,75.7 L355.1,67.7 L360.1,75.7 Z" fill="var(--accent)"/><text x="361.1" y="71.7" text-anchor="start" fill="var(--accent)" style="font-size:11px">π</text><line x1="487.6" y1="170.0" x2="487.6" y2="73.7" stroke="var(--muted)" stroke-width="2"/><path d="M482.6,75.7 L487.6,67.7 L492.6,75.7 Z" fill="var(--muted)"/><text x="493.6" y="71.7" text-anchor="start" fill="var(--muted)" style="font-size:11px">π</text><line x1="553.8" y1="170.0" x2="553.8" y2="73.7" stroke="var(--muted)" stroke-width="2"/><path d="M548.8,75.7 L553.8,67.7 L558.8,75.7 Z" fill="var(--muted)"/><text x="559.8" y="71.7" text-anchor="start" fill="var(--muted)" style="font-size:11px">π</text><text x="226.5" y="41.4" text-anchor="start" fill="var(--accent)" style="font-size:11px">one period</text><text x="226.5" y="52.8" text-anchor="start" fill="var(--accent)" style="font-size:11px">−π ≤ ω ≤ π</text><text x="123.3" y="41.4" text-anchor="middle" fill="var(--muted)" style="font-size:11px">copy (k = −1)</text><text x="520.7" y="41.4" text-anchor="middle" fill="var(--muted)" style="font-size:11px">copy (k = 1)</text></svg><figcaption><strong>cos(πn/3) ⟷ impulses of area π at ±π/3 on the shaded period, repeated every 2π (grey).</strong> An arrow's height marks the impulse's area, not a function value.</figcaption></figure>
+
+| $x[n]$ | $X_d(\omega)$ on $-\pi\le\omega\le\pi$ |
+|---|---|
+| $1$ (all $n$) | $2\pi\,\delta(\omega)$ |
+| $e^{j\omega_0 n}$ | $2\pi\,\delta(\omega-\omega_0)$ |
+| $\cos(\omega_0 n)$ | $\pi\left[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\right]$ |
+| $\sin(\omega_0 n)$ | $-j\pi\left[\delta(\omega-\omega_0)-\delta(\omega+\omega_0)\right]$ |
+| $\cos(\omega_0 n+\theta)$ | $\pi\left[e^{j\theta}\delta(\omega-\omega_0)+e^{-j\theta}\delta(\omega+\omega_0)\right]$ |
+| $u[n]$ | $\dfrac{1}{1-e^{-j\omega}}+\pi\,\delta(\omega)$ |
+| $(-1)^n u[n]$ | $\dfrac{1}{1+e^{-j\omega}}+\pi\,\delta(\omega-\pi)$ |
+
+## 2. Ordinary pairs (Lecture 14, Table 1, with conditions)
+
+| $x[n]$ | $X_d(\omega)$, $-\pi\le\omega\le\pi$ | holds when |
+|---|---|---|
+| $\delta[n-k]$ | $e^{-j\omega k}$ | $k$ integer |
+| $a^n u[n]$ | $\dfrac{1}{1-ae^{-j\omega}}$ | $\lvert a\rvert\lt1$; none for $\lvert a\rvert\gt1$ |
+| $-a^n u[-n-1]$ | $\dfrac{1}{1-ae^{-j\omega}}$ | $\lvert a\rvert\gt1$ |
+| $n\,a^n u[n]$ | $\dfrac{ae^{-j\omega}}{(1-ae^{-j\omega})^2}$ | $\lvert a\rvert\lt1$ |
+| $(n+1)\,a^n u[n]$ | $\dfrac{1}{(1-ae^{-j\omega})^2}$ | $\lvert a\rvert\lt1$ |
+| $a^{\lvert n\rvert}$ | $\dfrac{1-a^2}{1-2a\cos\omega+a^2}$ | $\lvert a\rvert\lt1$ |
+| $1$ for $0\le n\le L-1$ | $e^{-j\omega(L-1)/2}\,\dfrac{\sin(L\omega/2)}{\sin(\omega/2)}$ | — |
+| $\mathrm{rect}\!\left(\frac{n-k}{L}\right)$ ($L$ ones centred at $k$) | $\dfrac{\sin(L\omega/2)}{\sin(\omega/2)}\,e^{-j\omega k}$ | $L$ odd |
+| $\mathrm{sinc}^2(Ln)$ | $\dfrac{\pi}{L}\,\Delta\!\left(\frac{\omega}{2L}\right)=\dfrac{\pi}{L}\left(1-\dfrac{\lvert\omega\rvert}{2L}\right)$ for $\lvert\omega\rvert\le2L$, else $0$ | $0\lt L\le\frac{\pi}{2}$ |
+
+Notes' definitions (eqs. 23–25): $\mathrm{sinc}(Ln)=\frac{\sin(Ln)}{Ln}$; $\mathrm{rect}\!\left(\frac{n-k}{L}\right)=1$ for $k-\frac L2\lt n\le k+\frac L2$; $\Delta\!\left(\frac nL\right)=1-\left|\frac nL\right|$ for $|n|\le L$. Every entry repeats every $2\pi$. $\mathrm{sinc}^2$ is absolutely summable.
+
+> [!key] Energy-only pair: ideal low-pass (not absolutely summable)
 > | $x[n]$ | $X_d(\omega)$ on $-\pi\le\omega\le\pi$ | holds when |
 > |---|---|---|
 > | $\dfrac{\sin(Wn)}{\pi n}=\dfrac{W}{\pi}\,\mathrm{sinc}(Wn)$ | $1$ for $\lvert\omega\rvert\le W$, else $0$ | $0\lt W\lt\pi$ |
-> | $\mathrm{sinc}(Ln)$ | $\dfrac{\pi}{L}$ for $\lvert\omega\rvert\lt L$, else $0$ | $0\lt L\lt\pi$ |
+> | $\mathrm{sinc}(Ln)$ | $\dfrac{\pi}{L}\,\mathrm{rect}\!\left(\frac{\omega}{2L}\right)$: $\dfrac{\pi}{L}$ for $\lvert\omega\rvert\lt L$, else $0$ | $0\lt L\lt\pi$ |
+>
+> The sinc decays like $1/n$: not absolutely summable, converges in energy.
 
-> [!key] Impulse pairs (one period shown)
-> | $x[n]$ | $X_d(\omega)$ on $-\pi\le\omega\le\pi$ |
-> |---|---|
-> | $1$ (all $n$) | $2\pi\,\delta(\omega)$ |
-> | $e^{j\omega_0 n}$ | $2\pi\,\delta(\omega-\omega_0)$ |
-> | $\cos(\omega_0 n)$ | $\pi\left[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\right]$ |
-> | $\sin(\omega_0 n)$ | $-j\pi\left[\delta(\omega-\omega_0)-\delta(\omega+\omega_0)\right]$ |
-> | $\cos(\omega_0 n+\theta)$ | $\pi\left[e^{j\theta}\delta(\omega-\omega_0)+e^{-j\theta}\delta(\omega+\omega_0)\right]$ |
-> | $u[n]$ | $\dfrac{1}{1-e^{-j\omega}}+\pi\,\delta(\omega)$ |
-> | $(-1)^n u[n]$ | $\dfrac{1}{1+e^{-j\omega}}+\pi\,\delta(\omega-\pi)$ |
+- Even $L$: the rect's ones run from $k-\frac L2+1$ to $k+\frac L2$, centred at $k+\frac12$, so the DTFT gains $e^{-j\omega/2}$.
+- $\mathrm{sinc}^2$ with $2L>\pi$: the triangle's $2\pi$-periodic copies overlap; the DTFT is their sum.
+- Sketched piecewise-constant spectrum: a centred rectangle of height $A$ and half-width $W$ gives $A\,\dfrac{\sin(Wn)}{\pi n}$; a band $\omega_a\le|\omega|\le\omega_b$ is the rectangle of half-width $\omega_b$ minus the one of half-width $\omega_a$.
+
+<figure class="ece-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" width="680" height="250" role="img" aria-label="rectangular spectrum and its sinc sequence" style="font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:13px"><text x="175.0" y="28.0" text-anchor="middle" fill="currentColor" style="font-size:13px;font-weight:600">X<tspan baseline-shift="sub" style="font-size:75%">d</tspan>(ω) = 1 for |ω| ≤ π/4 (one period)</text><line x1="40.0" y1="69.2" x2="310.0" y2="69.2" stroke="var(--muted)" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.6"/><line x1="40.0" y1="186.4" x2="310.0" y2="186.4" stroke="currentColor" stroke-width="1" opacity="0.75"/><line x1="175.0" y1="34.0" x2="175.0" y2="204.0" stroke="currentColor" stroke-width="1" opacity="0.75"/><line x1="40.0" y1="183.4" x2="40.0" y2="189.4" stroke="currentColor" stroke-width="1"/><text x="40.0" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−π</text><line x1="141.2" y1="183.4" x2="141.2" y2="189.4" stroke="currentColor" stroke-width="1"/><text x="141.2" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−π/4</text><line x1="208.8" y1="183.4" x2="208.8" y2="189.4" stroke="currentColor" stroke-width="1"/><text x="208.8" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">π/4</text><line x1="310.0" y1="183.4" x2="310.0" y2="189.4" stroke="currentColor" stroke-width="1"/><text x="310.0" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">π</text><line x1="172.0" y1="186.4" x2="178.0" y2="186.4" stroke="currentColor" stroke-width="1"/><text x="36.0" y="190.4" text-anchor="end" fill="var(--muted)" style="font-size:11px">0</text><line x1="172.0" y1="69.2" x2="178.0" y2="69.2" stroke="currentColor" stroke-width="1"/><text x="36.0" y="73.2" text-anchor="end" fill="var(--muted)" style="font-size:11px">1</text><text x="310.0" y="180.4" text-anchor="end" fill="var(--muted)" style="font-size:12px">ω</text><polyline points="40.0,186.4 141.2,186.4 141.2,69.2 208.8,69.2 208.8,186.4 310.0,186.4" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" opacity="1.0"/><text x="515.0" y="28.0" text-anchor="middle" fill="currentColor" style="font-size:13px;font-weight:600">x[n] = sin(πn/4)/(πn)</text><line x1="370.0" y1="55.8" x2="660.0" y2="55.8" stroke="var(--muted)" stroke-width="0.6" stroke-dasharray="3 3" opacity="0.6"/><line x1="370.0" y1="164.8" x2="660.0" y2="164.8" stroke="currentColor" stroke-width="1" opacity="0.75"/><line x1="515.0" y1="34.0" x2="515.0" y2="204.0" stroke="currentColor" stroke-width="1" opacity="0.75"/><line x1="376.9" y1="161.8" x2="376.9" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="376.9" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−16</text><line x1="446.0" y1="161.8" x2="446.0" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="446.0" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−8</text><line x1="480.5" y1="161.8" x2="480.5" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="480.5" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">−4</text><line x1="515.0" y1="161.8" x2="515.0" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="515.0" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">0</text><line x1="549.5" y1="161.8" x2="549.5" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="549.5" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">4</text><line x1="584.0" y1="161.8" x2="584.0" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="584.0" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">8</text><line x1="653.1" y1="161.8" x2="653.1" y2="167.8" stroke="currentColor" stroke-width="1"/><text x="653.1" y="218.0" text-anchor="middle" fill="var(--muted)" style="font-size:11px">16</text><line x1="512.0" y1="164.8" x2="518.0" y2="164.8" stroke="currentColor" stroke-width="1"/><text x="366.0" y="168.8" text-anchor="end" fill="var(--muted)" style="font-size:11px">0</text><line x1="512.0" y1="55.8" x2="518.0" y2="55.8" stroke="currentColor" stroke-width="1"/><text x="366.0" y="59.8" text-anchor="end" fill="var(--muted)" style="font-size:11px">¼</text><text x="660.0" y="158.8" text-anchor="end" fill="var(--muted)" style="font-size:12px">n</text><line x1="376.9" y1="164.8" x2="376.9" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="376.9" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="385.5" y1="164.8" x2="385.5" y2="171.3" stroke="var(--accent)" stroke-width="1.6"/><circle cx="385.5" cy="171.3" r="2.4" fill="var(--accent)"/><line x1="394.2" y1="164.8" x2="394.2" y2="174.7" stroke="var(--accent)" stroke-width="1.6"/><circle cx="394.2" cy="174.7" r="2.4" fill="var(--accent)"/><line x1="402.8" y1="164.8" x2="402.8" y2="172.3" stroke="var(--accent)" stroke-width="1.6"/><circle cx="402.8" cy="172.3" r="2.4" fill="var(--accent)"/><line x1="411.4" y1="164.8" x2="411.4" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="411.4" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="420.1" y1="164.8" x2="420.1" y2="155.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="420.1" cy="155.9" r="2.4" fill="var(--accent)"/><line x1="428.7" y1="164.8" x2="428.7" y2="150.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="428.7" cy="150.9" r="2.4" fill="var(--accent)"/><line x1="437.3" y1="164.8" x2="437.3" y2="153.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="437.3" cy="153.9" r="2.4" fill="var(--accent)"/><line x1="446.0" y1="164.8" x2="446.0" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="446.0" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="454.6" y1="164.8" x2="454.6" y2="178.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="454.6" cy="178.8" r="2.4" fill="var(--accent)"/><line x1="463.2" y1="164.8" x2="463.2" y2="187.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="463.2" cy="187.9" r="2.4" fill="var(--accent)"/><line x1="471.8" y1="164.8" x2="471.8" y2="184.4" stroke="var(--accent)" stroke-width="1.6"/><circle cx="471.8" cy="184.4" r="2.4" fill="var(--accent)"/><line x1="480.5" y1="164.8" x2="480.5" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="480.5" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="489.1" y1="164.8" x2="489.1" y2="132.1" stroke="var(--accent)" stroke-width="1.6"/><circle cx="489.1" cy="132.1" r="2.4" fill="var(--accent)"/><line x1="497.7" y1="164.8" x2="497.7" y2="95.4" stroke="var(--accent)" stroke-width="1.6"/><circle cx="497.7" cy="95.4" r="2.4" fill="var(--accent)"/><line x1="506.4" y1="164.8" x2="506.4" y2="66.7" stroke="var(--accent)" stroke-width="1.6"/><circle cx="506.4" cy="66.7" r="2.4" fill="var(--accent)"/><line x1="515.0" y1="164.8" x2="515.0" y2="55.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="515.0" cy="55.8" r="2.4" fill="var(--accent)"/><line x1="523.6" y1="164.8" x2="523.6" y2="66.7" stroke="var(--accent)" stroke-width="1.6"/><circle cx="523.6" cy="66.7" r="2.4" fill="var(--accent)"/><line x1="532.3" y1="164.8" x2="532.3" y2="95.4" stroke="var(--accent)" stroke-width="1.6"/><circle cx="532.3" cy="95.4" r="2.4" fill="var(--accent)"/><line x1="540.9" y1="164.8" x2="540.9" y2="132.1" stroke="var(--accent)" stroke-width="1.6"/><circle cx="540.9" cy="132.1" r="2.4" fill="var(--accent)"/><line x1="549.5" y1="164.8" x2="549.5" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="549.5" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="558.2" y1="164.8" x2="558.2" y2="184.4" stroke="var(--accent)" stroke-width="1.6"/><circle cx="558.2" cy="184.4" r="2.4" fill="var(--accent)"/><line x1="566.8" y1="164.8" x2="566.8" y2="187.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="566.8" cy="187.9" r="2.4" fill="var(--accent)"/><line x1="575.4" y1="164.8" x2="575.4" y2="178.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="575.4" cy="178.8" r="2.4" fill="var(--accent)"/><line x1="584.0" y1="164.8" x2="584.0" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="584.0" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="592.7" y1="164.8" x2="592.7" y2="153.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="592.7" cy="153.9" r="2.4" fill="var(--accent)"/><line x1="601.3" y1="164.8" x2="601.3" y2="150.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="601.3" cy="150.9" r="2.4" fill="var(--accent)"/><line x1="609.9" y1="164.8" x2="609.9" y2="155.9" stroke="var(--accent)" stroke-width="1.6"/><circle cx="609.9" cy="155.9" r="2.4" fill="var(--accent)"/><line x1="618.6" y1="164.8" x2="618.6" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="618.6" cy="164.8" r="2.4" fill="var(--accent)"/><line x1="627.2" y1="164.8" x2="627.2" y2="172.3" stroke="var(--accent)" stroke-width="1.6"/><circle cx="627.2" cy="172.3" r="2.4" fill="var(--accent)"/><line x1="635.8" y1="164.8" x2="635.8" y2="174.7" stroke="var(--accent)" stroke-width="1.6"/><circle cx="635.8" cy="174.7" r="2.4" fill="var(--accent)"/><line x1="644.5" y1="164.8" x2="644.5" y2="171.3" stroke="var(--accent)" stroke-width="1.6"/><circle cx="644.5" cy="171.3" r="2.4" fill="var(--accent)"/><line x1="653.1" y1="164.8" x2="653.1" y2="164.8" stroke="var(--accent)" stroke-width="1.6"/><circle cx="653.1" cy="164.8" r="2.4" fill="var(--accent)"/></svg><figcaption><strong>Rectangle in frequency ⟷ sinc in time.</strong> The inverse DTFT of 1 on |ω| ≤ π/4 is sin(πn/4)/(πn): height ω<sub>c</sub>/π = ¼ at n = 0, zeros at n = ±4, ±8, …, and a 1/n tail, so not absolutely summable, though its energy is finite (¼).</figcaption></figure>
 
 Course $\mathrm{sinc}(x)=\frac{\sin x}{x}$. Routes: geometric series; $X(z)$ at $z=e^{j\omega}$ when the ROC contains $|z|=1$; [[concepts/dtft-properties|properties]] applied to a known pair. No DTFT: $2^nu[n]$, anything whose ROC misses the unit circle without touching it (a pole on $|z|=1$ gives impulses).
 
 > [!trap]
 > - $\frac{1}{1-2e^{-j\omega}}$ is not the DTFT of $2^nu[n]$ ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] 1(a)).
 > - Finite length means no impulses: $\cos(\frac{\pi}{32}n)$, $0\le n\le15$ ([[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] 1(c)).
-> - `np.sinc` and the [[supplements/transform-tables|transform tables]] mean $\frac{\sin\pi x}{\pi x}$. Even $L$ rect carries an extra $e^{-j\omega/2}$.
+> - Two sincs: course $\frac{\sin x}{x}$; `np.sinc` and the [[supplements/transform-tables|transform tables]] mean $\frac{\sin\pi x}{\pi x}$. Even $L$ rect carries an extra $e^{-j\omega/2}$.
 > - $e^{-j\omega/2}$ inverts to $\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$, not $\delta[n-\frac12]$ ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] 1(b)).
 
-**Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]], [[3-fourier-analysis/14-dtft-properties|L14]] Table 1; [[problems/dtft-and-inverse-dtft|DTFT family]]; [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5; [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #7.
+> [!exam] Exam
+> Sinc and impulse pairs, sketching a spectrum, inverse DTFT of a piecewise-constant $X_d$. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
+> - [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(c), #2 · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #2–#4 · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #7 · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(b), #3, #5 · [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] #9 · [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5
+
+**Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]] Exercise 2, [[3-fourier-analysis/14-dtft-properties|L14]] §2 (slides 7–9); [[problems/dtft-and-inverse-dtft|DTFT family]]; [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5.
 
 ## Related
 [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
-Lecture 14 notes §2, Table 1, slides 7–9; Lecture 13 Exercise 2; transform tables Table 6; HW5 #1 solutions; Midterm 2 keys cited.
+Lecture 14 notes §2 (eqs. 13–25), Table 1, slides 7–9; Lecture 13 Exercise 2; transform tables Table 6; HW5 #1 solutions; Midterm 2 keys cited.

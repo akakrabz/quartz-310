@@ -1,58 +1,84 @@
 ---
 title: "System algebra"
-description: "Series connections multiply transfer functions (h₁ * h₂), parallel connections add them (h₁ + h₂); the result is one LTI system with ROC at least the intersection."
+description: "Series connections multiply transfer functions (h₁ * h₂), parallel connections add them (h₁ + h₂); the result is one LTI system with ROC at least the intersection, and cancellation can make it stable."
 tags: [concept, systems, z-transform, stability]
-aliases: ["series connection", "parallel connection", "cascade", "feedback"]
+aliases: ["series connection", "parallel connection", "cascade", "feedback", "system algebra"]
 ---
 
-> [!key] Series and parallel (Lecture 10, Table 1)
-> | connection | $h[n]$ | $H(z)$ |
+*Lecture 10 (Wed Sep 16) §2 · [[homework/hw4|HW4]] #5 · family: [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]]*
+
+> [!abstract] In one breath
+> - Parallel: same input, outputs added, $H = H_1 + H_2$ (distributivity). Series: output feeds input, $H = H_1H_2$ (associativity).
+> - Any network of LTI blocks collapses to one $H(z)$; cascade order does not matter.
+> - ROC at least $R_1\cap R_2$: a zero of one block can cancel a pole of another, so unstable parts can make a stable whole.
+
+## 1. Series and parallel (Lecture 10 §2)
+
+**Parallel**: same input, outputs added (eqs. 15–17).
+$$
+\begin{aligned}
+y[n] &= x[n]*h_1[n] + x[n]*h_2[n] = x[n]*\bigl(h_1[n] + h_2[n]\bigr) \quad(\text{distributivity}) \\
+\;\Longrightarrow\; H(z) &= H_1(z) + H_2(z).
+\end{aligned}
+$$
+**Series** (cascade): output of one is input of the next (eqs. 18–20).
+$$
+\begin{aligned}
+y[n] &= \bigl(x[n]*h_1[n]\bigr)*h_2[n] = x[n]*\bigl(h_1[n]*h_2[n]\bigr) \quad(\text{associativity}) \\
+\;\Longrightarrow\; H(z) &= H_1(z)\,H_2(z).
+\end{aligned}
+$$
+
+<figure class="ece-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" role="img" style="font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:14px;max-width:100%;height:auto"><defs><marker id="l10ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs><text x="170.0" y="24.0" text-anchor="middle" fill="currentColor" style="font-size:14px;font-weight:600;">series (cascade)</text><text x="22.0" y="65.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M55.0,60.0 L88.0,60.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="88.0" y="42.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="125.0" y="65.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z)</text><path d="M162.0,60.0 L196.0,60.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="196.0" y="42.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="233.0" y="65.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₂(z)</text><path d="M270.0,60.0 L300.0,60.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="305.0" y="65.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="170.0" y="104.0" text-anchor="middle" fill="currentColor" style="font-size:20px;">≡</text><text x="22.0" y="147.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M55.0,142.0 L110.0,142.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="112.0" y="124.0" width="134" height="36" rx="4" fill="var(--accent2)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="179.0" y="147.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z) H₂(z)</text><path d="M246.0,142.0 L300.0,142.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="305.0" y="147.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="170.0" y="190.0" text-anchor="middle" fill="currentColor" style="font-size:13.5px;">h[n] = h₁[n] ∗ h₂[n]</text><text x="170.0" y="210.0" text-anchor="middle" fill="var(--muted)" style="font-size:12.5px;">ROC ⊇ ROC₁ ∩ ROC₂</text><text x="170.0" y="228.0" text-anchor="middle" fill="var(--muted)" style="font-size:12.5px;">order does not matter (commutative)</text><text x="510.0" y="24.0" text-anchor="middle" fill="currentColor" style="font-size:14px;font-weight:600;">parallel</text><text x="368.0" y="85.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M400.0,80.0 L420.0,80.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="420" cy="80" r="3" fill="currentColor"/><path d="M420.0,48.0 L420.0,112.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M420.0,48.0 L466.0,48.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="466.0" y="30.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="503.0" y="53.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z)</text><path d="M540.0,48.0 L590.0,48.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M590.0,48.0 L590.0,68.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><path d="M420.0,112.0 L466.0,112.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="466.0" y="94.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="503.0" y="117.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₂(z)</text><path d="M540.0,112.0 L590.0,112.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M590.0,112.0 L590.0,92.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><circle cx="590" cy="80" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M584.0,80.0 L596.0,80.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M590.0,74.0 L590.0,86.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M601.0,80.0 L632.0,80.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="636.0" y="85.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="510.0" y="158.0" text-anchor="middle" fill="currentColor" style="font-size:20px;">≡</text><text x="368.0" y="195.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M400.0,190.0 L448.0,190.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><rect x="448.0" y="172.0" width="140" height="36" rx="4" fill="var(--accent2)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="518.0" y="195.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z) + H₂(z)</text><path d="M588.0,190.0 L632.0,190.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10ah)" stroke-linejoin="round"/><text x="636.0" y="195.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="510.0" y="238.0" text-anchor="middle" fill="currentColor" style="font-size:13.5px;">h[n] = h₁[n] + h₂[n]</text><text x="510.0" y="258.0" text-anchor="middle" fill="var(--muted)" style="font-size:12.5px;">ROC ⊇ ROC₁ ∩ ROC₂</text><path d="M340.0,20.0 L340.0,280.0" fill="none" stroke="var(--muted)" stroke-width="1" stroke-linejoin="round"/></svg><figcaption><strong>System algebra (notes Fig. 1).</strong> Series: h = h₁ ∗ h₂, H = H₁H₂; parallel: h = h₁ + h₂, H = H₁ + H₂; the ROC contains ROC₁ ∩ ROC₂.</figcaption></figure>
+
+> [!key] Lecture 10, Table 1
+> | connection | impulse response $h[n]$ | transfer function $H(z)$ |
 > |---|---|---|
 > | parallel | $h_1[n] + h_2[n]$ | $H_1(z) + H_2(z)$ |
 > | series | $h_1[n] * h_2[n]$ | $H_1(z)\,H_2(z)$ |
 >
-> ROC at least $R_1\cap R_2$. Cascade order does not matter.
+> Series/parallel networks "collapse" into **one** LTI system; cascade order does not matter ([[concepts/convolution|convolution]] commutes). ROC at least $R_1\cap R_2$.
+
+Combined ROC: at least $\text{ROC}_1 \cap \text{ROC}_2$. A zero of one system can cancel a pole of the other ([[concepts/pole-zero-cancellation|pole-zero cancellation]]), so a combination with unstable parts can be stable: $u[n] * (\delta[n] - \delta[n-1]) = \delta[n]$ (series, one unstable); $u[n] + (\delta[n] - u[n]) = \delta[n]$ (parallel, both unstable). Stable + stable and stable × stable are stable.
+
+## 2. Collapsing a block diagram
 
 > [!recipe] Collapsing a block diagram
-> 1. Name every block and adder output. 2. One z-domain equation per block and adder.
+> 1. Name every block and adder output. 2. One z-domain equation per block and adder (track the z-transform on every wire).
 > 3. Eliminate internal signals; $H=Y/X$. 4. Attach ROC; cancel before judging stability.
 
-```mermaid
-flowchart LR
-  x["x[n]"] --> H1["H1(z)"]
-  H1 --> H5["H5(z)"]
-  H1 --> H2["H2(z)"]
-  H2 --> H3["H3(z)"]
-  H2 --> H4["H4(z)"]
-  H5 --> S(("+"))
-  H3 --> S
-  H4 --> S
-  S --> y["y[n]"]
-```
+> [!question] Lecture 10, slide 11 — overall $H(z)$ in terms of $H_1,\dots,H_5$ ($H_1$, then $H_5$ in parallel with $H_2$ followed by $H_3 \parallel H_4$)
 
-> [!example] Lecture 10 slides: the five-block system above
+> [!success]- Answer
+> Track the z-transform on every wire: $XH_1$ after $H_1$, $XH_1H_2$ after $H_2$; the adder inputs are $XH_1H_5$, $XH_1H_2H_3$, $XH_1H_2H_4$:
 > $$
-> H(z) = H_1(z)\Big(H_5(z) + H_2(z)\big(H_3(z)+H_4(z)\big)\Big).
+> \begin{aligned}
+> Y &= X\,H_1\bigl(H_5 + H_2(H_3 + H_4)\bigr) \\
+> \quad\Longrightarrow\quad H(z) &= H_1(z)\Bigl[H_5(z) + H_2(z)\bigl(H_3(z) + H_4(z)\bigr)\Bigr].
+> \end{aligned}
 > $$
 
-> [!example] SP2025 #3: missing parallel branch
+<figure class="ece-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" width="680" height="250" role="img" style="font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:14px;max-width:100%;height:auto"><defs><marker id="l10bh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs><text x="20.0" y="125.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">x[n]</text><path d="M52.0,120.0 L92.0,120.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><rect x="93.0" y="102.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="130.0" y="125.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₁(z)</text><path d="M167.0,120.0 L200.0,120.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="200" cy="120" r="3" fill="currentColor"/><path d="M200.0,40.0 L200.0,181.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M200.0,40.0 L395.0,40.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><rect x="395.0" y="22.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="432.0" y="45.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₅(z)</text><path d="M200.0,181.0 L246.0,181.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><rect x="246.0" y="163.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="283.0" y="186.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₂(z)</text><path d="M320.0,181.0 L345.0,181.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="345" cy="181" r="3" fill="currentColor"/><path d="M345.0,150.0 L345.0,212.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M345.0,150.0 L395.0,150.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><rect x="395.0" y="132.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="432.0" y="155.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₃(z)</text><path d="M345.0,212.0 L395.0,212.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><rect x="395.0" y="194.0" width="74" height="36" rx="4" fill="var(--accent)" fill-opacity="0.16" stroke="currentColor" stroke-width="1.5"/><text x="432.0" y="217.0" text-anchor="middle" fill="currentColor" style="font-size:14px;">H₄(z)</text><path d="M469.0,40.0 L540.0,40.0 L540.0,107.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><path d="M469.0,150.0 L534.0,150.0 L534.0,131.5" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><path d="M469.0,212.0 L546.0,212.0 L546.0,131.5" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><circle cx="540" cy="120" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M534.0,120.0 L546.0,120.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M540.0,114.0 L540.0,126.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M553.0,120.0 L590.0,120.0" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#l10bh)" stroke-linejoin="round"/><text x="596.0" y="125.0" text-anchor="start" fill="currentColor" style="font-size:13px;font-family:'STIX Two Math','Latin Modern Math','Cambria Math','Times New Roman',serif;font-style:italic;">y[n]</text><text x="300.0" y="30.0" text-anchor="middle" fill="var(--accent)" style="font-size:12px;">X H₁</text><text x="345.0" y="138.0" text-anchor="end" fill="var(--accent)" style="font-size:12px;">X H₁H₂</text><text x="500.0" y="32.0" text-anchor="start" fill="var(--accent)" style="font-size:12px;">X H₁H₅</text><text x="472.0" y="167.0" text-anchor="start" fill="var(--accent)" style="font-size:11px;">X H₁H₂H₃</text><text x="472.0" y="204.0" text-anchor="start" fill="var(--accent)" style="font-size:11px;">X H₁H₂H₄</text></svg><figcaption><strong>Slide 11 with every wire labelled.</strong> The three adder inputs are XH₁H₅, XH₁H₂H₃ and XH₁H₂H₄.</figcaption></figure>
+
+> [!question] SP2025 #3: missing parallel branch
 > $h_1[n] = \delta[n-1]$ in parallel with $h_2$; $x = \{\underset{\uparrow}{1}, 2, 1\}$ gives $y = \{1, \underset{\uparrow}{2}, 2, 2, 1\}$. Find $h_2$.
 
 > [!success]- Answer
 > $Y - z^{-1}X = zX$, so $h_2[n] = \delta[n+1]$, $h[n] = \{1, \underset{\uparrow}{0}, 1\}$: not causal.
 
-- Stable + stable and stable × stable are stable.
-- Unstable parts can combine into a stable whole by [[concepts/pole-zero-cancellation|cancellation]] ([[homework/hw4|HW4]] #5; $u[n] + (\delta[n]-u[n]) = \delta[n]$).
-
 > [!trap]
 > - Series means **convolve** in time, not multiply $h_1[n]h_2[n]$.
 > - Recompute the ROC from surviving poles.
-> - "Two unstable systems never combine into a stable one" is False ([[exams/midterm-1/past-exams/fall-2025|FA2025]] T/F (f), [[exams/midterm-1/past-exams/spring-2021|SP2021]] (c)).
+> - "Two unstable systems never combine into a stable one" is False ([[exams/midterm-1/past-exams/fall-2025|FA2025]] T/F (f), [[exams/midterm-1/past-exams/spring-2021|SP2021]] (c)); [[homework/hw4|HW4]] #5 is a stable cascade with an unstable stage.
 
-**Where it appears:** [[2-z-transform/10-improper-transfer-functions-and-system-algebra|L10]], [[1-signals-and-systems/04-impulse-response-and-convolution|L4]]; [[problems/finding-h-from-input-output-pairs]] (SP2025 #3, FA2024 #3); [[exams/midterm-1/true-false-bank|T/F bank]].
+> [!exam] On the exams
+> Series/parallel with sequences; $H(z)$ of a block network; True/False on stability of combined systems (cancellation).
+> [[exams/midterm-1/past-exams/fall-2025|FA2025 #1(f)]] · [[exams/midterm-1/past-exams/spring-2025|SP2025 #1(d), #3]] · [[exams/midterm-1/past-exams/fall-2024|FA2024 #1(c), #3]] · [[exams/midterm-1/past-exams/fall-2023|FA2023 #1(c), #1(e)]] · [[exams/midterm-1/past-exams/spring-2021|SP2021 #1(c)]] · [[exams/midterm-1/past-exams/fall-2019|FA2019 #1(d), #10(d)]] · families: [[problems/finding-h-from-input-output-pairs|finding h from input–output pairs]], [[problems/lccde-to-transfer-function-and-response|LCCDE ↔ H(z) ↔ response]] · [[exams/midterm-1/true-false-bank|T/F bank]]
+
+**Where it appears:** [[2-z-transform/10-improper-transfer-functions-and-system-algebra|L10]] §2 (eqs. 15–20, Table 1, Fig. 1, slide 11), [[1-signals-and-systems/04-impulse-response-and-convolution|L4]]; [[problems/finding-h-from-input-output-pairs|Finding h (or H) from input–output pairs]] (SP2025 #3, FA2024 #3); [[homework/hw4|HW4]] #5; [[exams/midterm-1/true-false-bank|T/F bank]].
 
 ## Related
-[[concepts/transfer-function]] · [[concepts/convolution]] · [[concepts/pole-zero-cancellation]] · [[concepts/block-diagram]] · [[concepts/lti-system]]
+[[concepts/transfer-function]] · [[concepts/convolution]] · [[concepts/pole-zero-cancellation]] · [[concepts/block-diagram]] · [[concepts/lti-system]] · [[concepts/bibo-stability]]
 
 ### Sources for this page
-Lecture 10 notes §2 (Eqs. 15–20, Table 1), slides 10–11; HW4 #5; SP2025 #3, FA2024 #3 keys and T/F items cited.
+Lecture 10 notes §2 (eqs. 15–20, Table 1, Fig. 1), slides 10–11; HW4 #5; SP2025 #3, FA2024 #3 keys and T/F items cited.

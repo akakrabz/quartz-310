@@ -79,6 +79,9 @@ Slips that change a number, sign, label or definition; the site's pages use the 
 | L21 notes §1 | "For proofs … please refer to lecture 21" | Lecture 20 | The proofs are in [[5-dft-and-fft/20-discrete-fourier-transform\|Lecture 20]]. |
 | L21 notes, text under Eq. 25 | "linear in $k$ with slope $-2\pi m/M$" | $-2\pi m/N$ | Eq. 25 itself has $e^{-j\frac{2\pi km}{N}}$. |
 | L21 slide 13 (Example 2) | second sequence named $y[n]$ | $h[n]$ | It is the second operand of the circular convolution. |
+| L22 notes eq. 14 | "$0\le n\lt\le21$" | $0\le n\le21$ | Typo. |
+| L22 notes §1.2 | $\lvert X_2[k]\rvert$ largest "close to $\frac{\pi}{3}$ and $\frac{5\pi}{6}$" | $\frac{5\pi}{3}$ ($k=18$ of $22$, $\omega_k\approx1.64\pi$) | The mirror lobe sits at $2\pi-\frac{\pi}{3}$. |
+| L23 notes §1 | "Recall from lecture 23", "identified in lecture 24" | Lecture 22 | Numbering slip; the previous lecture is 22. |
 
 ## Homework solutions
 

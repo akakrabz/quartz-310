@@ -13,12 +13,12 @@ tags: [exam, midterm-2]
 
 | # | pts | what it asks | topic · problem family | lectures |
 |---|---|---|---|---|
-| 1 | 15 | five True/False statements | T/F: sampling, Nyquist rate of $x_c(2t)$, DFT $X[0]$, an impulse integral | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling), [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] (c), (e) (DFT) |
+| 1 | 15 | five True/False statements | T/F: sampling, Nyquist rate of $x_c(2t)$, DFT $X[0]$, an impulse integral · [[problems/dft-values-and-zero-padding\|DFT values]] (c), (e) | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling), [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] (c), (e) |
 | 2 | 10 | sketch magnitude and phase of $e^{-j4\omega}\sin 2\omega$ | [[problems/magnitude-phase-and-group-delay\|magnitude, phase and group delay]] | [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
 | 3 | 9 | DTFT of $3\delta[n+1] - 3\delta[n-7]$ as $Ae^{-jB\omega}\sin(C\omega)$ | [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] |
-| 4 | 8 | the sequence whose 8-point DFT is $e^{-j(\frac{6\pi}{8}k+\pi)}X[k]$ | the DFT and its properties (circular shift) | [[5-dft-and-fft/21-dft-properties\|L21]] |
-| 5 | 8 | is $x$ real, given its 7-point DFT? | the DFT and its properties (symmetry) | [[5-dft-and-fft/21-dft-properties\|L21]] |
-| 6 | 9 | CTFT, DTFT or DFT: match three descriptions | DTFT vs DFT vs CTFT | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] |
+| 4 | 8 | the sequence whose 8-point DFT is $e^{-j(\frac{6\pi}{8}k+\pi)}X[k]$ | [[problems/circular-convolution-and-dft-properties\|DFT properties]] (circular shift) | [[5-dft-and-fft/21-dft-properties\|L21]] |
+| 5 | 8 | is $x$ real, given its 7-point DFT? | [[problems/dft-values-and-zero-padding\|DFT values]] (inverse DFT) · [[problems/circular-convolution-and-dft-properties\|DFT properties]] (symmetry) | [[5-dft-and-fft/21-dft-properties\|L21]] |
+| 6 | 9 | CTFT, DTFT or DFT: match three descriptions | DTFT vs DFT vs CTFT · [[problems/dft-values-and-zero-padding\|DFT values]] | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] |
 | 7 | 14 | $A_1$, $A_2$, $\omega_0$ from the DTFT of two sinc sequences | [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] (ideal lowpass pair) | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[3-fourier-analysis/14-dtft-properties\|L14]] |
 | 8 | 15 | Nyquist rate; $X_d(\omega)$ after undersampling a V-shaped spectrum; is $x$ real? | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] |
 | 9 | 12 | ideal A/D–D/A: $x[n]$ and the two inputs that give $2\cos(300\pi t)$ | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] · reconstruction | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (aliasing of the inputs), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] (D/A), [[4-sampling-and-reconstruction/19-aliasing\|L19]] |

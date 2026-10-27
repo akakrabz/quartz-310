@@ -13,7 +13,7 @@ tags: [exam, midterm-2]
 
 | # | pts | what it asks | topic · problem family | lectures |
 |---|---|---|---|---|
-| 1 | 10 | five True/False statements (+2/−1/0) | T/F: sampling, Nyquist rate of $x_c(3t)$, zero padding, IDFT periodicity, bandlimited | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling, Nyquist rate, bandlimited), [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] (d) (DFT) |
+| 1 | 10 | five True/False statements (+2/−1/0) | T/F: sampling, Nyquist rate of $x_c(3t)$, zero padding, IDFT periodicity, bandlimited · [[problems/dft-values-and-zero-padding\|DFT values]] (c), (d) | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (sampling, Nyquist rate, bandlimited), [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] (d) |
 | 2 | 3 | $X_d$ of a **real** sequence on $[-\pi, 0]$, given $X_d = j\omega$ on $[0, \pi]$ | DTFT symmetry · [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/14-dtft-properties\|L14]] |
 | 3 | 3 | same for an **arbitrary** sequence, on $[2\pi, 3\pi]$ | DTFT periodicity · [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]] |
 | 4 | 5 | inverse DTFT of $5e^{j\pi\omega}\delta(\omega - \omega_0)$ | [[problems/dtft-and-inverse-dtft\|DTFT and inverse DTFT]] | [[3-fourier-analysis/14-dtft-properties\|L14]] |
@@ -21,8 +21,8 @@ tags: [exam, midterm-2]
 | 6 | 8 | response of $H_d(\omega) = \omega e^{j\pi\cos\omega}$ to $3 + e^{j\frac{\pi}{3}n} + \sin(\frac{\pi}{2}n + \frac{\pi}{4})$ | [[problems/lti-response-to-sinusoids\|LTI response to sinusoids]] | [[3-fourier-analysis/15-frequency-response\|L15]] |
 | 7 | 20 | ideal A/D → $H_d$ → ideal D/A: Nyquist rate; sketch $X_d$, $Y_d$ at two sampling rates | sampling · ideal filters · [[problems/digital-filtering-of-analog-signals\|digital filtering of analog signals]] | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (Nyquist rate, the sketches of $X_d$), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]], [[4-sampling-and-reconstruction/19-aliasing\|L19]] |
 | 8 | 10 | sampling periods consistent with a given $x[n]$ and a given $y_c(t)$ | [[problems/sampling-and-the-nyquist-rate\|sampling and the Nyquist rate]] · reconstruction | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]] (which $T$ give $x[n]$), [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] (D/A), [[4-sampling-and-reconstruction/19-aliasing\|L19]] (the aliased output) |
-| 9 | 15 | $X_0$, $X_3$; $y[n]$ from a permuted DFT; zero-padding relations | the DFT and its properties | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]], [[5-dft-and-fft/21-dft-properties\|L21]] |
-| 10 | 12 | number, amplitudes and frequencies of cosines from a 24-point DFT plot | spectral analysis with the DFT | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] (bin frequencies); DFT of a cosine later |
+| 9 | 15 | $X_0$, $X_3$; $y[n]$ from a permuted DFT; zero-padding relations | [[problems/dft-values-and-zero-padding\|DFT values]] (a), (c) · [[problems/circular-convolution-and-dft-properties\|DFT properties]] (b) | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]], [[5-dft-and-fft/21-dft-properties\|L21]] |
+| 10 | 12 | number, amplitudes and frequencies of cosines from a 24-point DFT plot | [[problems/dft-spectral-analysis\|spectral analysis]] | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]] (bin frequencies), [[5-dft-and-fft/22-spectral-analysis\|L22]] ([[concepts/spectral-leakage\|DFT of a cosine]] · [[concepts/spectral-analysis\|spectral analysis]]) |
 
 ## Problem 1 · True/False (10 pts)
 

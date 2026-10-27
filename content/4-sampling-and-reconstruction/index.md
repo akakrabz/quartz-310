@@ -1,20 +1,32 @@
 ---
 title: "Unit 4 · Sampling and reconstruction"
-description: "Lectures 17–19: ideal A/D conversion (spectral copies, ω = ΩT, Nyquist criterion), ideal D/A conversion (sinc interpolation, A/D → H_d → D/A) and aliasing."
+description: "Five topics (sampling, Nyquist criterion, ideal reconstruction, A/D → H_d → D/A, aliasing) built from Lectures 17–19: spectral copies, ω = ΩT, sinc interpolation, the digital filter as an analog filter, aliased sinusoids."
 tags: [sampling, nyquist, ctft, dtft]
 ---
 
 *Unit 4 · Lectures 17–19 · Midterm 2 · prev: [[3-fourier-analysis/index|Unit 3]] · next: [[5-dft-and-fft/index|Unit 5]]*
 
-- Sampling $x[n]=x_a(nT)$ copies the analog spectrum every $2\pi/T$; $\omega=\Omega T$ gives the DTFT. Copies stay apart iff $f_s\gt2B$ (L17).
-- Ideal D/A: a sinc per sample = low-pass of height $T$; digital filter between converters acts like $H_d(\Omega T)$ if no aliasing reaches its passband (L18).
-- Below Nyquist the copies overlap; a sinusoid returns as its alias (L19).
+- Sampling $x[n]=x_a(nT)$ copies the analog spectrum every $2\pi/T$; $\omega=\Omega T$ gives the DTFT. Copies stay apart iff $f_s\gt2B$.
+- Ideal D/A: a sinc per sample = low-pass of height $T$; a digital filter between the converters acts like $H_d(\Omega T)$ if no aliasing reaches its passband.
+- Below Nyquist the copies overlap; a sinusoid returns as its alias.
+
+## Topics
+
+| topic | one line |
+|---|---|
+| [[concepts/sampling\|Sampling (ideal A/D)]] | impulse-train model; $X_s(\Omega)=\frac1T\sum_nX_a(\Omega-\frac{2\pi}{T}n)$; $\omega=\Omega T$; $X_d(\omega)$; the box example; sketching recipe |
+| [[concepts/nyquist-criterion\|Nyquist criterion]] | bandlimited to $B$ Hz; $f_s\gt2B$ derived twice; Nyquist rate and period; above/at/below with the triangle at $150/100/75$ Hz; sampling exactly at $2B$ |
+| [[concepts/ideal-reconstruction\|Ideal reconstruction (ideal D/A)]] | $x_a(t)=\sum_nx[n]g(t-nT)$ as a convolution; $G_a=T$ on $\lvert\Omega\rvert\le\frac{\pi}{T}$; sinc interpolation; the slide-9 sketch |
+| [[concepts/digital-processing-of-analog-signals\|Digital processing of analog signals]] | A/D → $H_d$ → D/A; $Y_a(\Omega)=T\,Y_d(\Omega T)$; analog cutoff $\omega_c/T$; the semicircle at $T=\frac{1}{80},\frac{1}{50}$ s; allowed aliasing $\omega_c\le2\pi-\Omega_{\max}T$ |
+| [[concepts/aliasing\|Aliasing]] | overlap of copies; principal alias; $\sin(100\pi t)$ at $160,120,80,40$ Hz; folding $f_0-kf_s$; which $\Omega_0$ fit given samples |
+
+## Lectures
 
 | # | page | one line |
 |---|---|---|
-| 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | impulse-train model; $X_s(\Omega)$ copies; $\omega=\Omega T$; box and triangle examples; Nyquist rate, guard band, aliasing |
-| 18 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Ideal digital-to-analog conversion]] | $x_a(t)=\sum_nx[n]g(t-nT)$; sinc interpolation; $Y_a(\Omega)=T\,Y_d(\Omega T)$; A/D → $H_d$ → D/A (HW7 #4) |
-| 19 | [[4-sampling-and-reconstruction/19-aliasing\|The aliasing effect]] | sampling at exactly $2B$; principal alias; $\sin(100\pi t)$ at $160,120,80,40$ Hz; folding $f_0-kf_s$ |
+| 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | Fri Oct 9 · sampling §1–1.1, Nyquist criterion §2; Examples 1 (box) and 2 (triangle) |
+| 18 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Ideal digital-to-analog conversion]] | Mon Oct 12 · ideal reconstruction §1; slide 9 sketch; slides 10–11 A/D → $H_d$ → D/A (HW7 #4) |
+| 19 | [[4-sampling-and-reconstruction/19-aliasing\|The aliasing effect]] | Wed Oct 14 · Nyquist via $\omega=\Omega T$ §1; aliasing §2; sinusoids §2.1; slide 19 |
 
 > [!key] The unit on one card
 > - **Ideal sampling** ([[concepts/sampling|sampling]]): $x[n]=x_a(nT)$, $f_s=\frac1T$. Model $x_s(t)=\sum_nx_a(nT)\,\delta(t-nT)$.
@@ -24,15 +36,15 @@ tags: [sampling, nyquist, ctft, dtft]
 > - **Nyquist** ([[concepts/nyquist-criterion|Nyquist criterion]]): $X_a(\Omega)=0$ for $\lvert\Omega\rvert\gt2\pi B$. No overlap $\iff f_s\gt2B\iff T\lt\frac{1}{2B}$. At $2B$ copies touch; below, aliasing.
 > - **Sampled sinusoid:** $\cos(\Omega_0t)\to\cos(\omega_0n)$, $\omega_0=\Omega_0T$; any $\Omega_0'$ with $\Omega_0'T\equiv\pm\Omega_0T\pmod{2\pi}$ gives the same samples (sine: sign matters).
 > - **Ideal D/A** ([[concepts/ideal-reconstruction|ideal reconstruction]]): $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$, $\mathrm{sinc}(t)=\frac{\sin t}{t}$; $Y_a(\Omega)=T\,Y_d(\Omega T)$ on $\lvert\Omega\rvert\le\frac{\pi}{T}$, $0$ outside. Exact if $f_s\gt2B$.
-> - **A/D → $H_d$ → D/A:** digital cutoff $\omega_c$ ↔ analog $\omega_c/T$; no aliasing in the passband ⇒ $H_a(\Omega)=H_d(\Omega T)$ on $\lvert\Omega\rvert\lt\frac{\pi}{T}$.
+> - **A/D → $H_d$ → D/A** ([[concepts/digital-processing-of-analog-signals|digital processing of analog signals]]): digital cutoff $\omega_c$ ↔ analog $\omega_c/T$; no aliasing in the passband ⇒ $H_a(\Omega)=H_d(\Omega T)$ on $\lvert\Omega\rvert\lt\frac{\pi}{T}$.
 > - **Aliasing** ([[concepts/aliasing|aliasing]]): $\Omega_0T$ reduced mod $2\pi$ into $(-\pi,\pi]$; D/A returns $\hat\Omega=\hat\omega/T$ (Hz: the $f_0-kf_s$ closest to $0$). $\sin(100\pi t)$ at $80$ Hz returns $-\sin(60\pi t)$. $\sin(\Omega_0t)$ at $f_s=\Omega_0/\pi$ samples to zeros.
 
 > [!exam] Exam
 > Sampling on 7/7 past Midterm 2 exams, alone or inside A/D → $H_d$ → D/A. Families: [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] · [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]. T/F: [[exams/midterm-2/true-false-bank|T/F bank]] §4. Maps: [[exams/midterm-2/index|Midterm 2]] · [[exams/midterm-2/past-exams/index|past exams]].
 
-**Demos:** [[demos/sampling-explorer|sampling explorer]] · [[demos/practice-drills|drills]] · [[supplements/demo-notebooks|notebooks]] (`demo_sampling`)
+**Homework:** HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]) (worked on the Quiz 2 page) · **Demos:** [[demos/sampling-explorer|sampling explorer]] · [[demos/practice-drills|drills]] · [[supplements/demo-notebooks|notebooks]] (`demo_sampling`)
 
-**Concepts:** [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/discrete-time-signal|discrete-time signal]]
+**Background concepts:** [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/discrete-time-signal|discrete-time signal]] · [[concepts/index|all concepts]]
 
 ### Sources for this page
 Snyder, ECE 310 Lectures 17–19 notes and slides with inked decks (Fall 2026); past Midterm 2 exams with keys.

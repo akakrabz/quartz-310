@@ -1,10 +1,10 @@
 ---
 title: "Problem families"
-description: "Exam problem types distilled from past ECE 310 exams and homework, each with recipe, traps, past instances and practice: ten for Midterm 1 (plus T/F and property banks), three for Unit 3, two for Unit 4."
+description: "Exam problem types distilled from past ECE 310 exams and homework, each with recipe, traps, past instances and practice: ten for Midterm 1 (plus T/F and property banks), eight for Midterm 2 (Units 3, 4 and 5)."
 tags: [problem, exam]
 ---
 
-*Problem families · 10 from past Midterm 1 exams (Units 1–2), 3 (Unit 3) and 2 (Unit 4) from past Midterm 2 exams*
+*Problem families · 18 in all: 10 from past Midterm 1 exams (Units 1–2); 8 from past Midterm 2 exams: 3 (Unit 3), 2 (Unit 4), 3 (Unit 5)*
 
 Each page: **what it looks like on the exam** (every past instance, folded answers) → `recipe` (method, ending with checks) → `trap` → **practice problems** (new numbers, folded solutions) → related pages. Learn a family after its lectures.
 
@@ -40,9 +40,17 @@ Per exam: [[exams/midterm-1/index|review guide]] · [[exams/midterm-1/past-exams
 | family | what the exam asks | lectures |
 |---|---|---|
 | [[problems/sampling-and-the-nyquist-rate\|Sampling and the Nyquist rate]] | Nyquist rate or period; sketch $X_d(\omega)$ at a given $T$; consistent sampling periods; ideal D/A output | 17, 18, 19 |
-| [[problems/digital-filtering-of-analog-signals\|Digital filtering of analog signals: A/D → H_d → D/A]] | $X_d$, $Y_d=H_dX_d$, $Y_a(\Omega)=T\,Y_d(\Omega T)$ at two $T$; $H_a(\Omega)=H_d(\Omega T)$; largest $T$, cutoff $\omega_c$ | 17, 18, 19 |
+| [[problems/digital-filtering-of-analog-signals\|Digital filtering of analog signals: A/D → filter → D/A]] | $X_d$, $Y_d=H_dX_d$, $Y_a(\Omega)=T\,Y_d(\Omega T)$ at two $T$; $H_a(\Omega)=H_d(\Omega T)$; largest $T$, cutoff $\omega_c$ | 17, 18, 19 |
 
-Unit 5 ([[5-dft-and-fft/index|DFT]]): no family yet; DFT problems are on the [[exams/midterm-2/past-exams/index|past Midterm 2 exams]].
+## Unit 5: the DFT
+
+| family | what the exam asks | lectures |
+|---|---|---|
+| [[problems/dft-values-and-zero-padding\|DFT values and zero padding]] | $X[0]$, $X[N/2]$, one bin; $X[k]=X_d(\frac{2\pi k}{N})$; which padded bin equals $X[k]$; smallest $N$; inverse DFT; bins in hertz | 20 |
+| [[problems/circular-convolution-and-dft-properties\|Circular convolution and DFT properties]] | $y[n]$ from a phase ramp or a rearranged $X[k]$; $Y[k]$ of a reversed, shifted $x$; linear vs circular convolution, $N\ge N_1+N_2-1$; conjugation, symmetry, Parseval | 21 |
+| [[problems/dft-spectral-analysis\|DFT spectral analysis]] | DFT of a finite cosine (clean or leaky); amplitudes and frequencies from a plot; zero padding; lobe separation $N\gt\frac{4\pi}{\Delta\omega}$; rectangular vs Hamming | 22, 23 |
+
+Per exam: [[exams/midterm-2/index|overview]] · [[exams/midterm-2/past-exams/index|past-exams map]] · [[exams/midterm-2/true-false-bank|T/F bank]].
 
 ## Review order (Midterm 1 families)
 
@@ -69,4 +77,4 @@ Live table from each page's `family_frequency`, `typical_points`, `lectures` (*B
 Key errors: [[0-toolkit/05-errata|errata]].
 
 ### Sources for this page
-Seven past Midterm 1 exams (FA2019–FA2025) and seven past Midterm 2 exams (FA2019–SP2025) with keys; Lectures 1–19 notes; Midterm 1 review lecture (Sep 28, 2026).
+Seven past Midterm 1 exams (FA2019–FA2025) and seven past Midterm 2 exams (FA2019–SP2025) with keys; Lectures 1–23 notes; Midterm 1 review lecture (Sep 28, 2026).

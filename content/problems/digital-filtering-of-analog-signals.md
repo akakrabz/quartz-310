@@ -101,7 +101,7 @@ Opening parts ($T_N$, $X_d$) belong to the [[problems/sampling-and-the-nyquist-r
 
 ## Related
 
-[[concepts/sampling|Sampling]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/aliasing|aliasing]] · [[concepts/frequency-response|frequency response]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · [[demos/sampling-explorer|sampling explorer]] · [[exams/midterm-2/index|Midterm 2]]
+[[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · [[concepts/sampling|Sampling]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/aliasing|aliasing]] · [[concepts/frequency-response|frequency response]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · [[demos/sampling-explorer|sampling explorer]] · [[exams/midterm-2/index|Midterm 2]]
 
 ### Sources for this page
 

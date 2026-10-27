@@ -7,7 +7,7 @@ typical_points: "10–20"
 lectures: [13, 14, 15]
 ---
 
-*Problem family · 7 of 7 past Midterm 2 exams, always problem 1 · 10–20 pts · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]]–[[3-fourier-analysis/15-frequency-response|L15]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]]–[[4-sampling-and-reconstruction/19-aliasing|L19]], [[5-dft-and-fft/20-discrete-fourier-transform|L20]]–[[5-dft-and-fft/21-dft-properties|L21]] · 43 statements, 24 False*
+*Problem family · 7 of 7 past Midterm 2 exams, always problem 1 · 10–20 pts · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]]–[[3-fourier-analysis/15-frequency-response|L15]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]]–[[4-sampling-and-reconstruction/19-aliasing|L19]], [[5-dft-and-fft/20-discrete-fourier-transform|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] · 43 statements, 24 False*
 
 > [!exam] How the problem looks
 > Formats: 10 × 2 (FA2019), 5 × 3 (SP2021, FA2021), 5 × 2 (SP2023), 8 × 2 (FA2023), 4 × 3 with a ≤ 2-sentence reason (FA2024), 6 × 2 (SP2025). SP2023/SP2025 grade +2 / −1 / 0: a guess right with probability $p$ is worth $3p-1$.
@@ -87,6 +87,8 @@ lectures: [13, 14, 15]
 > **False.** A one-sample delay (stable) returns $\cos(\omega_0n-\omega_0)$.
 
 ## 3. Zero padding: the DTFT does not change
+
+[[concepts/zero-padding|zero padding]] · [[problems/dft-values-and-zero-padding|DFT values and zero padding]]
 
 **Q12** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(a) · Zero padding a finite-length signal can change its DTFT.
 
@@ -188,6 +190,8 @@ lectures: [13, 14, 15]
 
 ## 6. The DFT and its properties ([[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]], [[5-dft-and-fft/21-dft-properties|Lecture 21]])
 
+[[concepts/dft|DFT]] · [[problems/dft-values-and-zero-padding|DFT values and zero padding]]
+
 **Q30** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(i) · Let $\{x[n]\}_{n=0}^{5} = \{1, -1, -2, 3, 4, -3\}$. Consider the corresponding 6-point DFT $\{X[k]\}_{k=0}^{5}$. Then, $X[0] = 0$.
 
 > [!success]- Answer
@@ -223,7 +227,9 @@ lectures: [13, 14, 15]
 > [!success]- Answer
 > **True.** $X[11]=X_d\big(\frac{11\pi}{7}\big)=X_d\big(\frac{11\pi}{7}-2\pi\big)=X_d\big(-\frac{3\pi}{7}\big)$.
 
-## 7. Spectral analysis with the DFT (DFT basics: [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]]; DFT of a cosine and windows: later lectures)
+## 7. Spectral analysis with the DFT ([[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]], [[5-dft-and-fft/22-spectral-analysis|Lecture 22]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|Lecture 23]])
+
+[[concepts/spectral-analysis|spectral analysis]] · [[problems/dft-spectral-analysis|DFT spectral analysis]]
 
 **Q37** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(f) · The 64-point DFT of the finite-length signal $x[n] = \cos\left(\frac{\pi}{16}n\right)$, $0 \le n \le 63$ has only two nonzero elements.
 
@@ -246,6 +252,8 @@ lectures: [13, 14, 15]
 > **False.** Lower sidelobes (about $-42$ dB vs $-13$ dB) but a main lobe about **twice as wide**.
 
 ## 8. Circular convolution ([[5-dft-and-fft/21-dft-properties|Lecture 21]]) and the FFT (later)
+
+[[concepts/circular-convolution|circular convolution]] · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]
 
 **Q41** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(g) · Linear convolution can be computed as a circular convolution via zero-padding.
 

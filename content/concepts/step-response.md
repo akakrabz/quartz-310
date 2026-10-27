@@ -5,7 +5,16 @@ tags: [concept, systems, convolution, midterm-1]
 aliases: ["step response", "unit step response", "g[n]", "s[n]"]
 ---
 
-> [!key] Definition and the three identities
+*Lecture 4 (Mon Aug 31) §2.2.3 (as an example) · [[homework/hw2|HW2]] #3 · family: [[problems/finding-h-from-input-output-pairs|Finding h from input–output pairs]]*
+
+> [!abstract] In one breath
+> - $g[n] = h[n] * u[n] = \sum_{k \le n} h[k]$: the running sum of $h$.
+> - $h[n] = g[n] - g[n-1]$, so the step response determines an LTI system completely.
+> - A bounded $g$ does not prove stability; an unbounded $g$ does prove instability.
+
+## 1. Definition and the three identities
+
+> [!key] Step response
 > The step response of an LTI system is its output for $x[n]=u[n]$:
 > $$
 > g[n]=h[n]*u[n]=\sum_{k=-\infty}^{n}h[k]\qquad(\text{the running sum of } h),
@@ -17,9 +26,15 @@ aliases: ["step response", "unit step response", "g[n]", "s[n]"]
 > $$
 > All three follow from $\delta[n]=u[n]-u[n-1]$ ([[concepts/unit-step|unit step]]); the middle one is [[homework/hw2|HW2]] #3.
 
-**Worked examples.** [[exams/midterm-1/past-exams/fall-2019|FA2019 #3b]]: $h=\frac12\delta[n+1]+\delta[n]+\frac12\delta[n-1]$, so $g[n]=\frac12u[n+1]+u[n]+\frac12u[n-1]$ (sum the shifted steps). [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]] runs it backwards: the step response is $\delta[n]+\delta[n-1]$, so $h[n]=g[n]-g[n-1]=\delta[n]-\delta[n-2]$, i.e. $h=\{\underset{\uparrow}{1},\,0,\,-1\}$.
+## 2. Worked examples
 
-**Causal and stable: $g[n]\to H(1)$.** The running sum converges to $\sum_n h[n]=H(1)$, the DC gain. For $h=(\frac12)^nu[n]$: $g[n]=\big(2-(\frac12)^n\big)u[n]\to H(1)=\frac{1}{1-1/2}=2$.
+[[exams/midterm-1/past-exams/fall-2019|FA2019 #3b]]: $h=\frac12\delta[n+1]+\delta[n]+\frac12\delta[n-1]$, so $g[n]=\frac12u[n+1]+u[n]+\frac12u[n-1]$ (sum the shifted steps). [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]] runs it backwards: the step response is $\delta[n]+\delta[n-1]$, so $h[n]=g[n]-g[n-1]=\delta[n]-\delta[n-2]$, i.e. $h=\{\underset{\uparrow}{1},\,0,\,-1\}$.
+
+Lecture 4 §2.2.3 is a step response: $u[n] * (-\tfrac34)^n u[n] = \big(\tfrac47 - \tfrac47(-\tfrac34)^{n+1}\big)u[n]$ (worked in [[concepts/convolution|convolution]] §4).
+
+## 3. Causal and stable: the running sum converges to H(1)
+
+The running sum converges to $\sum_n h[n]=H(1)$, the DC gain. For $h=(\frac12)^nu[n]$: $g[n]=\big(2-(\frac12)^n\big)u[n]\to H(1)=\frac{1}{1-1/2}=2$.
 
 > [!trap]
 > - **A bounded step response does not prove stability.** $h=(-1)^nu[n]$ (pole at $z=-1$, not summable) has $g=\{1,0,1,0,\dots\}$. Stability needs *every* bounded input to give a bounded output ([[concepts/bibo-stability|BIBO stability]]).
@@ -27,9 +42,13 @@ aliases: ["step response", "unit step response", "g[n]", "s[n]"]
 > - **Dividing by $1-z^{-1}$ adds only a pole at $z=1$** (or cancels a zero of $H$ there), so a pole of $G$ at $\frac12$ must already be a pole of $H$ ([[exams/midterm-1/past-exams/fall-2019|FA2019 #1h]] T).
 > - $g$ is a **running sum**, not the sum of the whole $h$; keep the unit steps that say where each piece starts.
 
-**Where it appears.** [[homework/hw2|HW2]] #3 (express $y$ through $g$), [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] §2.2.3 ($u[n]*(-\frac34)^nu[n]$ is a step response), [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] §1.2.1 ($u[n]*u[n]=(n+1)u[n]$); [[exams/midterm-1/past-exams/fall-2019|FA2019 #3b, #1h]], [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]], [[exams/midterm-1/past-exams/spring-2021|SP2021 #1d]]. Problem family: [[problems/finding-h-from-input-output-pairs]].
+> [!exam] Step responses on past exams
+> [[exams/midterm-1/past-exams/fall-2019|FA2019 #3b, #1h]] · [[exams/midterm-1/past-exams/fall-2023|FA2023 #4]] · [[exams/midterm-1/past-exams/spring-2021|SP2021 #1d]] · [[homework/hw2|HW2]] #3 · [[homework/hw4|HW4]] #3c
 
-**Related.** [[concepts/unit-step|unit step]] · [[concepts/impulse-response|impulse response]] · [[concepts/convolution|convolution]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/marginal-stability|marginal stability]] · [[concepts/transfer-function|transfer function]]
+**Where it appears:** [[homework/hw2|HW2]] #3 (express $y$ through $g$), [[1-signals-and-systems/04-impulse-response-and-convolution|Lecture 4]] §2.2.3, [[2-z-transform/11-bibo-stability-and-causality|Lecture 11]] §1.2.1 ($u[n]*u[n]=(n+1)u[n]$); [[problems/finding-h-from-input-output-pairs|finding h]].
+
+## Related
+[[concepts/unit-step|unit step]] · [[concepts/impulse-response|impulse response]] · [[concepts/convolution|convolution]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/marginal-stability|marginal stability]] · [[concepts/transfer-function|transfer function]]
 
 ### Sources for this page
 HW2 #3 (official solution); Lecture 4 §2.2.3; Lecture 11 §1.2.1; FA2019 #3 and #1h, FA2023 #4, SP2021 #1d, HW4 #3c.

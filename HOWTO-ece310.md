@@ -51,13 +51,23 @@ Mermaid diagram). The demos and drills are fully self-contained.
 
 ## 4. Writing conventions (so new pages match)
 
-- One page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/`,
-  `3-fourier-analysis/`, `4-sampling-and-reconstruction/` and `5-dft-and-fft/` (each with an `index.md` overview); frontmatter `title`, `description`, `tags`, `lecture`.
-  Concepts in `content/concepts/` (the concept map is `concepts/concept-map.canvas`), problem families in `content/problems/`
-  (frontmatter also `family_frequency`, `typical_points`, `lectures` — the Bases table `problems/exam-problem-families.base`
-  reads them), past exams in `content/exams/midterm-1/past-exams/` and `content/exams/midterm-2/past-exams/` (hub:
-  `exams/index.md`), homework walkthroughs in `content/homework/`, demo pages in `content/demos/` (the drills page is
-  `demos/practice-drills.md`).
+- The site is organised by **topic**. The primary pages are the concept pages in `content/concepts/` (one per idea, hub
+  `concepts/index.md`, concept map `concepts/concept-map.canvas`): frontmatter `title`, `description`, `tags` (`concept` first),
+  `aliases`; then an italic header line (lectures with dates, homework, family), an `abstract` callout ("In one breath"),
+  numbered `## 1. …` sections with `key` callouts for the notes' definitions and equations (lecture and equation numbers in
+  the callout title), the worked examples as `question` + folded `success` callouts, the verified figures (≤ 3), folded
+  `derivation` callouts, a `recipe` where there is one, at most one `trap` and one `exam` callout, a **Where it appears**
+  line, `## Related` and `### Sources for this page`.
+- One thin pointer page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/`,
+  `3-fourier-analysis/`, `4-sampling-and-reconstruction/` and `5-dft-and-fft/` (each with an `index.md` listing the unit's
+  topics first, then its lectures); frontmatter `title`, `description`, `tags`, `lecture`. A lecture page (≤ ~220 words) has the
+  header line, an `abstract`, **What was covered** (the notes' sections, each pointing to its concept page), **Exercises from
+  this lecture** (each example and where it is worked), a **Practice** line and `## Related`; no key callouts, figures,
+  worked answers or exam callouts — those live on the concept pages.
+- Problem families in `content/problems/` (frontmatter also `family_frequency`, `typical_points`, `lectures` — the Bases table
+  `problems/exam-problem-families.base` reads them), past exams in `content/exams/midterm-1/past-exams/` and
+  `content/exams/midterm-2/past-exams/` (hub: `exams/index.md`), homework walkthroughs in `content/homework/`, demo pages in
+  `content/demos/` (the drills page is `demos/practice-drills.md`).
 - Link with full paths: `[[concepts/region-of-convergence|ROC]]`. Inside tables escape the pipe: `[[page\|text]]`.
 - Math: `$…$` inline, `$$…$$` on its own lines (every line prefixed with `> ` inside a callout). Use `\lvert z\rvert` instead of `|z|`
   inside tables. No custom macros. Sequences mark $n = 0$ with `\underset{\uparrow}{…}`; transforms are written in powers of $z^{-1}$
@@ -67,8 +77,8 @@ Mermaid diagram). The demos and drills are fully self-contained.
   $X_c(\Omega)$ or $X_a(\Omega)$, as the exams write them.
 - Callouts: the Obsidian types plus this site's `key`, `recipe`, `trap`, `exam`, `intuition`, `derivation` (styled in
   `quartz/styles/custom.scss`). Worked answers go in folded `> [!success]-` callouts so pages work for self-testing.
-  Exam material is one layer: on a lecture page, one `exam` callout near the end; citations name term, exam and problem
-  (`FA2024 MT2 #4`) and link the exam page.
+  Exam material is one layer: on a concept page, one `exam` callout near the end (≤ 40 words plus a list of linked exam
+  problems, no solutions); citations name term, exam and problem (`FA2024 MT2 #4`) and link the exam page.
 - Figures: inline `<figure class="ece-fig">…SVG…</figure>` with **no blank lines inside** and **a blank line after**; strokes use
   `currentColor` and the CSS variables `--accent`, `--accent2`, `--hi`, `--muted` so they follow dark mode.
 - Demos: standalone HTML in `quartz/static/demos/<name>/index.html`, embedded with `<iframe src="/static/demos/<name>/">` inside
@@ -87,24 +97,30 @@ Mermaid diagram). The demos and drills are fully self-contained.
 as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
 2,827 links, 12,321 equations).
 
-## 6. What's here (build 5, October 2026 — Lectures 1–21)
+## 6. What's here (build 6, October 2026 — Lectures 1–23, organised by topic)
 
-- **Home**: a learning hub — how to learn with the site (lecture → concept hubs → folded questions → problem families → homework →
-  drills and demos → past exams as self-tests), the course map, the conventions table and the callout legend.
-- **Lectures 1–21** in five units, each with an overview page: signals and systems (L1–5), the z-transform and LTI systems (L6–11),
-  Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`), sampling and reconstruction (L17–19: ideal A/D,
-  ideal D/A, aliasing; `4-sampling-and-reconstruction/`) and the DFT (L20–21 so far: the DFT, DFT properties; `5-dft-and-fft/`),
-  written from Prof. Snyder's notes and slides. Build 5 rewrote every page in a concise style: lecture pages follow the notes'
-  sections, at most ~1.2× the notes' length, examples as folded questions, exam problems as links only.
-- **42 concept pages** (the graph's hubs, 8 of them for Unit 3, 4 for Unit 4, 2 for Unit 5) and the **concept map** of Units 1–2 (`concepts/concept-map.canvas`).
-- **15 problem families** — 10 from the past Midterm 1 exams, 5 from the past Midterm 2 exams — each with a recipe, traps, every past
-  instance and fresh practice problems with folded solutions, listed in a live table by the Bases plugin
-  (`problems/exam-problem-families.base`).
+- **Home**: a learning hub — how to learn with the site (topic page → lecture pages as pointers → folded questions → problem
+  families → homework → drills and demos → past exams as self-tests), the course map by topic (each unit's concept pages,
+  with its lectures as a secondary line), the conventions table and the callout legend.
+- **52 concept pages** (`concepts/`, hub `concepts/index.md`) are the primary content: each absorbed from its lectures the notes'
+  definitions and key equations, the worked examples (folded answers), the verified SVG figures, derivations and recipes, and
+  carries the exam layer (one `trap`, one `exam` callout). Build 6 added ten: periodic signals, digital processing of analog
+  signals, zero padding, circular shift and reversal, DFT properties, periodic sinc, spectral leakage, spectral analysis,
+  frequency resolution, window functions. The **concept map** of Units 1–2 is `concepts/concept-map.canvas`.
+- **Lectures 1–23** as thin pointer pages in five units, each with an overview page listing topics first: signals and systems
+  (L1–5), the z-transform and LTI systems (L6–11), Fourier analysis and frequency response (L12–16, `3-fourier-analysis/`),
+  sampling and reconstruction (L17–19, `4-sampling-and-reconstruction/`) and the DFT and spectral analysis (L20–23: the DFT,
+  DFT properties, spectral analysis, window functions; `5-dft-and-fft/`). Each lecture page lists what was covered, section by
+  section, pointing to the concept pages, and where each of its examples is worked. Lecture 23 is the last Midterm 2 content.
+- **18 problem families** — 10 from the past Midterm 1 exams, 8 from the past Midterm 2 exams (build 6 added DFT values and zero
+  padding, circular convolution and DFT properties, DFT spectral analysis) — each with a recipe, traps, every past instance and
+  fresh practice problems with folded solutions, listed in a live table by the Bases plugin (`problems/exam-problem-families.base`).
 - **Exams** (`exams/index.md`, the self-test layer). Midterm 1: a review guide (scope, format, frequency of every problem type, a plan
   for the last day, top traps, the review-lecture problems), a cheat sheet, a true/false bank (43 statements), a system-property bank
-  (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2: an overview (scope, format, what gets asked on each past exam, a
-  preparation plan and a Unit 3 formula box), a true/false bank (all 43 statements of the seven exams) and 7 past exams
-  (FA2019 … SP2025), typed with folded solutions; problems on topics after Lecture 21 are marked as later material.
+  (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2 (Units 3–5, Lectures 13–23; date not yet announced): an overview
+  (scope with the topic pages per lecture, format, what gets asked on each past exam by family, a preparation plan and formula
+  boxes for Units 3, 4 and 5), a true/false bank (all 43 statements of the seven exams) and 7 past exams (FA2019 … SP2025),
+  typed with folded solutions.
   Quiz 2 (`exams/quiz-2.md`, Oct 2026): a review page for HW5–HW7 / Lectures 13–18 with a formula box, HW7 worked against the
   official key, a one-section summary of Lecture 18 (ideal D/A) and a practice quiz; numbers in `verify/Q2_numbers.py`, figures in `verify/Q2_figs.py`.
 - **Homework walkthroughs** HW1–HW6 (HW6's was released with `tools/hw6_release.py` after its Oct 9 due date; the script is kept as the pattern for later sets).
