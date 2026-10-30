@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["zero padding", "zero-padding", "zero-padded DFT", "padding", "padded DFT"]
 ---
 
-*Lectures 20 (Fri Oct 16) §2.3 and 22 (Wed Oct 21) §2.1 · HW9 #3 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
+*Lectures 20 (Fri Oct 16) §2.3 and 22 (Wed Oct 21) §2.1 · [[homework/hw9|HW9]] #3 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
 
 > [!abstract] In one breath
 > - Append $L$ zeros: same nonzero samples, same DTFT; the $(N+L)$-point DFT samples $X_d(\omega)$ every $\frac{2\pi}{N+L}$.

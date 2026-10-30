@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["DFT", "discrete Fourier transform", "X[k]", "DFT matrix", "twiddle factor", "inverse DFT", "IDFT"]
 ---
 
-*Lecture 20 (Fri Oct 16) §1–2.2, 2.4 · HW9 #3, #5 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
+*Lecture 20 (Fri Oct 16) §1–2.2, 2.4 · [[homework/hw9|HW9]] #3, #5 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
 
 > [!abstract] In one breath
 > - A computer cannot evaluate the DTFT: the sum is infinite and $\omega$ is continuous.

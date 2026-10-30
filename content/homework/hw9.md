@@ -2,7 +2,6 @@
 title: "HW9 · DFT properties, zero padding and spectral analysis"
 description: "ECE 310 Homework 9 (due Oct 30) with folded solutions: a circular shift read from stem plots, a DFT shifted by N/2, zero-padding relations, three cosines from a 16-point DFT, three piano notes."
 tags: [homework, midterm-2, dft, spectral-analysis]
-draft: true
 ---
 
 *Homework 9 · due Fri Oct 30, 2026, 11:59 pm (Gradescope) · [[5-dft-and-fft/20-discrete-fourier-transform|Lectures 20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|23]] · topics: [[concepts/circular-shift-and-reversal|circular shift]], [[concepts/dft-properties|DFT properties]], [[concepts/zero-padding|zero padding]], [[concepts/spectral-analysis|spectral analysis]] · 5 problems · prev: [[homework/hw8|HW8]] · [[homework/index|all homework]]*

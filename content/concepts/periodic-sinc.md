@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["periodic sinc", "Dirichlet function", "Dirichlet kernel", "C(ω)", "digital sinc", "DTFT of a finite cosine"]
 ---
 
-*Lectures 22 (Wed Oct 21) §1.1 and 23 (Fri Oct 23) §1 · HW9 #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lectures 22 (Wed Oct 21) §1.1 and 23 (Fri Oct 23) §1 · [[homework/hw9|HW9]] #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - A length-$N$ cosine $A\cos(\omega_0n)$ has DTFT $\frac A2C(\omega-\omega_0)+\frac A2C(\omega+\omega_0)$.

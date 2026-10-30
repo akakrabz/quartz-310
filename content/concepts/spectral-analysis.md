@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["spectral analysis", "sinusoids in noise", "frequency estimation", "spectral components", "spectral analysis problem"]
 ---
 
-*Lectures 22 (Wed Oct 21) §2 and 23 (Fri Oct 23) §1 · HW9 #4–5 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lectures 22 (Wed Oct 21) §2 and 23 (Fri Oct 23) §1 · [[homework/hw9|HW9]] #4–5 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - Problem: $x[n]=\sum_{m=1}^{M}A_m\cos(\omega_mn)$, $0\le n\le N-1$; find $M$, the $\omega_m$ and the $A_m$ from the DFT.

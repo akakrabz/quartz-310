@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["DFT property table", "circular time shift", "circular frequency shift", "circular modulation", "DFT conjugation", "DFT duality", "DFT Parseval"]
 ---
 
-*Lecture 21 (Mon Oct 19) §3 · HW9 #1–2 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
+*Lecture 21 (Mon Oct 19) §3 · [[homework/hw9|HW9]] #1–2 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
 > [!abstract] In one breath
 > - The [[concepts/dtft-properties|DTFT properties]] return with every shift and reversal circular: both $x[n]$ and $X[k]$ are $N$-periodic.

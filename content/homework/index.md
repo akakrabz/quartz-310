@@ -1,6 +1,6 @@
 ---
 title: "Homework"
-description: "ECE 310 homework sets HW1–HW9: due dates, lectures, topics, exam skills and walkthroughs (HW7 on the Quiz 2 page; HW9 after its Oct 30 due date)."
+description: "ECE 310 homework sets HW1–HW9: due dates, lectures, topics, exam skills and walkthroughs (HW7 on the Quiz 2 page)."
 tags: [homework]
 ---
 
@@ -20,7 +20,7 @@ Solve on paper, then open the folded solution. Each problem's **On the exam** li
 | HW6 | Fri Oct 9 | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]]–[[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] | CTFT pairs; $x^*[n]$, $x^*[-n]$; inverse DTFTs; DTFT vs z-transform; accumulator; $x[n]+x[n-10]$; $\omega e^{j\sin\omega}$ | [[homework/hw6\|HW6]] |
 | HW7 | Fri Oct 16 | [[3-fourier-analysis/15-frequency-response\|L15]]–[[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] | magnitude and phase; sinusoid response; sampled spectrum; A/D → $H_d$ → D/A | [[exams/quiz-2\|Quiz 2 page]] |
 | HW8 | Fri Oct 23 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]]–[[4-sampling-and-reconstruction/19-aliasing\|L19]] | aliased sinusoids; choosing $T$; sampled spectra, $T_{\max}$; zero-order hold and ideal D/A; largest $T$ or bandwidth for A/D → $H_d$ → D/A | [[homework/hw8\|HW8]] |
-| HW9 | Fri Oct 30 | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions\|L23]] | circular shift from stem plots; DFT shifted by $N/2$; zero padding 18 → 30; cosines from $\lvert X[k]\rvert$; piano notes from a 256-point DFT | HW9 · DFT properties, zero padding, spectral analysis (walkthrough after its Oct 30 due date) |
+| HW9 | Fri Oct 30 | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions\|L23]] | circular shift from stem plots; DFT shifted by $N/2$; zero padding 18 → 30; cosines from $\lvert X[k]\rvert$; piano notes from a 256-point DFT | [[homework/hw9\|HW9]] |
 
 ## Homework × exam families
 

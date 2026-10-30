@@ -4,7 +4,7 @@ description: "ECE 310 Homework 8 (due Oct 23) with folded solutions matching the
 tags: [homework, midterm-2, sampling, aliasing]
 ---
 
-*Homework 8 · due Fri Oct 23, 2026, 11:59 pm (Gradescope) · [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lectures 17]]–[[4-sampling-and-reconstruction/19-aliasing|19]] · topics: [[concepts/aliasing|aliasing]], [[concepts/sampling|sampling]], [[concepts/nyquist-criterion|Nyquist criterion]], [[concepts/ideal-reconstruction|ideal reconstruction]], [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · 6 problems, 100 points · official solutions v1.1 agree with every answer here · prev: HW7 ([[exams/quiz-2|Quiz 2 page]]) · next: HW9 (walkthrough after its Oct 30 due date) · [[homework/index|all homework]]*
+*Homework 8 · due Fri Oct 23, 2026, 11:59 pm (Gradescope) · [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lectures 17]]–[[4-sampling-and-reconstruction/19-aliasing|19]] · topics: [[concepts/aliasing|aliasing]], [[concepts/sampling|sampling]], [[concepts/nyquist-criterion|Nyquist criterion]], [[concepts/ideal-reconstruction|ideal reconstruction]], [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · 6 problems, 100 points · official solutions v1.1 agree with every answer here · prev: HW7 ([[exams/quiz-2|Quiz 2 page]]) · next: [[homework/hw9|HW9]] · [[homework/index|all homework]]*
 
 > [!abstract] In one breath
 > - $\cos(\Omega_0t)$ sampled at $T$ gives $\cos(\Omega_0Tn)$; $\Omega_0T$ is known only up to sign and $2\pi k$, so neither $\Omega_0$ nor $T$ is unique.

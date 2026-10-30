@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["modulo indexing", "circular shift", "circular time reversal", "periodic extension", "circular reversal", "modulo operation"]
 ---
 
-*Lecture 21 (Mon Oct 19) §1 · also [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] §2.2 · HW9 #1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
+*Lecture 21 (Mon Oct 19) §1 · also [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] §2.2 · [[homework/hw9|HW9]] #1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
 > [!abstract] In one breath
 > - DFT and inverse DFT are $N$-periodic: a length-$N$ signal acts as its periodic extension $x[\langle n\rangle_N]$.

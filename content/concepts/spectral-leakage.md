@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["leakage", "spectral leakage", "picket fence", "picket-fence effect", "DFT of a cosine", "DFT of a sinusoid"]
 ---
 
-*Lecture 22 (Wed Oct 21) §1.2 · HW9 #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lecture 22 (Wed Oct 21) §1.2 · [[homework/hw9|HW9]] #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - The DFT of $A\cos(\omega_0n)$ on $N$ samples is the two [[concepts/periodic-sinc|periodic-sinc]] lobes sampled every $\frac{2\pi}{N}$.
