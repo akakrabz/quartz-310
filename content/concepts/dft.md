@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["DFT", "discrete Fourier transform", "X[k]", "DFT matrix", "twiddle factor", "inverse DFT", "IDFT"]
 ---
 
-*Lecture 20 (Fri Oct 16) §1–2.2, 2.4 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
+*Lecture 20 (Fri Oct 16) §1–2.2, 2.4 · HW9 #3, #5 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
 
 > [!abstract] In one breath
 > - A computer cannot evaluate the DTFT: the sum is infinite and $\omega$ is continuous.
@@ -118,6 +118,24 @@ $$
 >
 > So $\mathbf W^*\mathbf W=N\mathbf I$: $N$ orthogonal nonzero vectors in $\mathbb C^N$, a basis. The same identity gives $\mathbf W^{-1}=\frac1N\mathbf W^*$.
 
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · values, periodicity, hertz
+> $x[n]=\{\underset{\uparrow}{2},\ 1,\ 0,\ 1\}$. (a) Compute $X[k]$, $0\le k\le3$. (b) Give $X[6]$ and $X_d\!\left(\frac{3\pi}{2}\right)$ without new sums. (c) Sampled at $f_s=8$ kHz: which frequency does $X[1]$ measure, and which bin measures $4$ kHz?
+
+> [!success]- Answer
+> - (a) $X[k]=2+e^{-j\frac{\pi}{2}k}+e^{-j\frac{3\pi}{2}k}=2+2\cos\!\left(\frac{\pi k}{2}\right)$: $\{4,\ 2,\ 0,\ 2\}$. Real and even, as $x[\langle-n\rangle_4]=x[n]$.
+> - (b) $X[6]=X[2]=0$ ($N$-periodic). $\frac{3\pi}{2}=\frac{2\pi\cdot3}{4}$: $X_d\!\left(\frac{3\pi}{2}\right)=X[3]=2$.
+> - (c) $f_k=\frac{kf_s}{N}$: $X[1]$ ↔ $2$ kHz; $4$ kHz $=\frac{f_s}{2}$ ↔ $k=\frac N2=2$.
+
+> [!question] Q2 · True or false
+> (a) For a length-6 $x[n]$, the synthesis sum evaluated at $n=6$ gives $0$. (b) For $N=12$, $X[8]=X_d\!\left(-\frac{2\pi}{3}\right)$. (c) Every real $x[n]$ has a real $X[0]$.
+
+> [!success]- Answer
+> - (a) **False:** the sum is $N$-periodic; at $n=6$ it returns $x[0]$.
+> - (b) **True:** $\frac{2\pi\cdot8}{12}=\frac{4\pi}{3}\equiv-\frac{2\pi}{3}$.
+> - (c) **True:** $X[0]=\sum_nx[n]$.
+
 > [!trap] Where points go
 > - **Bins past $\frac N2$ are negative frequencies:** $X[k]=X_d\!\left(\frac{2\pi k}{N}-2\pi\right)$.
 > - **The inverse DFT is $N$-periodic,** not zero outside $0\le n\le N-1$: the inverse DFT of $\{1,2,3,4\}$ has $x[4]=x[0]=2.5$.
@@ -126,7 +144,7 @@ $$
 > - A length-$N$ DFT of a cosine is two clean bins only when $\frac{\omega_0N}{2\pi}$ is an integer ([[concepts/spectral-leakage|leakage]]).
 
 > [!exam] Midterm 2 (on all seven past exams)
-> DFT values from the definition, bins as DTFT samples (with zero padding), $N$-periodicity, bins as analog frequencies ($\omega=\Omega T$). Shifts, symmetry, circular convolution: [[concepts/dft-properties|DFT properties]].
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. DFT values from the definition, bins as DTFT samples (with zero padding), $N$-periodicity, bins as analog frequencies ($\omega=\Omega T$). Shifts, symmetry: [[concepts/dft-properties|DFT properties]].
 > - Values and matching bins: [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #7(a,c) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #9(a,c) · [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #7 · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #3(a) · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #5, #6(b) · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #7(a,b)
 > - Bins in hertz: [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #2 · [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #6
 > - True/False ([[exams/midterm-2/true-false-bank|T/F bank]] Q16–Q17, Q30–Q36): [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #1(d) · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(b,d) · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(i) · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #1(c,e) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #1(d) · [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #1(b) · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(h)

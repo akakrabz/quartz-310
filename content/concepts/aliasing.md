@@ -5,7 +5,7 @@ tags: [concept, sampling, aliasing, nyquist, midterm-2]
 aliases: ["aliasing effect", "alias", "aliased", "principal alias", "folding", "folding frequency", "anti-aliasing filter", "aliasing of sinusoids", "recovered frequency"]
 ---
 
-*Lecture 19 (Wed Oct 14) §2–2.1 · HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]*
+*Lecture 19 (Wed Oct 14) §2–2.1 · HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #1–2, #6(c) · family: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]*
 
 > [!abstract] In one breath
 > - Below the Nyquist rate the copies overlap: **aliasing**. $x[n]$ no longer expresses $x_a(t)$ and the ideal D/A returns a different signal, for good.
@@ -101,8 +101,27 @@ $$
 > $$
 > Two choices: $\boldsymbol{\Omega_0=\frac{100\pi}{3}}$ **rad/s** (no aliasing) and $\boldsymbol{\Omega_0=\frac{500\pi}{3}}$ **rad/s**: $\frac{500\pi}{3}\cdot\frac{1}{100}=\frac{5\pi}{3}$, and $\cos\!\left(\frac{5\pi}{3}n\right)=\cos\!\left(2\pi n-\frac{\pi}{3}n\right)=\cos\!\left(\frac{\pi}{3}n\right)$. Others: $\frac{700\pi}{3},\ \frac{1100\pi}{3},\dots$
 
+- [[homework/hw8|HW8]] #1 is slide 19 at $1000$ samples/s: $\Omega_0=\frac{1000\pi(6k\pm1)}{3}$ rad/s. HW8 #2: $\sin(10\pi t)+\cos(20\pi t)$ gives $\sin(\frac\pi5n)+\cos(\frac{2\pi}{5}n)$ for $T=\frac{1+10k}{50}$ s ($\frac1{50}$, $\frac{11}{50}$, …); the sine fixes the sign, both tones must agree.
 - **Avoid it:** sample faster, or (practice, Singer–Munson) an analog anti-aliasing low-pass before the A/D.
 - **Allowed aliasing:** exams accept overlap a digital filter will delete, $\omega_c\le2\pi-\Omega_{\max}T$ ([[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]], [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]).
+
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · a cosine with a phase
+> $x_a(t)=3\cos(1400\pi t+\frac{\pi}{4})$ is sampled at $f_s=1$ kHz and passed through an ideal D/A. (a) $\omega_0$ and its principal alias. (b) The output. (c) Which $f_s$ avoid aliasing?
+
+> [!success]- Answer
+> - (a) $\omega_0=\frac{1400\pi}{1000}=1.4\pi$; principal alias $1.4\pi-2\pi=-0.6\pi$.
+> - (b) $\hat\Omega=-0.6\pi\cdot1000=-600\pi$: $3\cos(-600\pi t+\frac\pi4)=\boldsymbol{3\cos(600\pi t-\frac{\pi}{4})}$, a $300$ Hz tone ($700-1000$ Hz) with its phase flipped.
+> - (c) $f_s\gt1400$ Hz (strict).
+
+> [!question] Q2 · True or false
+> (a) At $f_s=200$ Hz, $\sin(260\pi t)$ and $-\sin(140\pi t)$ give the same samples. (b) A digital filter after the A/D can undo aliasing inside its passband. (c) A $1.2$ kHz cosine sampled at $1$ kHz comes back from the ideal D/A at $200$ Hz.
+
+> [!success]- Answer
+> - (a) **True:** $130-200=-70$ Hz, and the sine flips sign: $\sin(-140\pi t)=-\sin(140\pi t)$.
+> - (b) **False:** the alias and the true component sit at the same $\omega$; nothing after the A/D separates them.
+> - (c) **True:** $1200-1000=200$ Hz.
 
 > [!trap] Where points go
 > - **The sine's sign:** at $80$ Hz the output is $-\sin(60\pi t)$, not $\sin(60\pi t)$; for a sine only $+\omega_0$ reproduces the samples ([[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #8(a), [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #6(c)).
@@ -113,16 +132,16 @@ $$
 > - **Aliasing is the overlap, not the copies;** overlap can sum to a constant ([[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #8(b)) or zero ([[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #7(c)).
 
 > [!exam] How it is tested (Midterm 2)
-> Aliased sinusoids, alone or inside a sampling problem; allowed aliasing before a filter on the [[problems/digital-filtering-of-analog-signals|digital filtering]] family.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Aliased sinusoids, alone or inside a sampling problem; allowed aliasing before a filter on the [[problems/digital-filtering-of-analog-signals|digital filtering]] family.
 > - Which $\Omega_0$ or $T$ fit given samples: [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #3 · [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #6(a) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #8(a) · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #1(a) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #1(a)
 > - What the ideal D/A returns: [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #6(b,c) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #8(b) · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #9
 > - Overlapping copies (with Lecture 17): [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #8(b) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #7(c) · [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #5(b) · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #4
 > - True/False ([[exams/midterm-2/true-false-bank|T/F bank]] §4): [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(d) · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(e)
 
-**Where it appears:** [[4-sampling-and-reconstruction/19-aliasing|L19]] §2–2.1, [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]] §2, [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|L18]] §3; HW7 #4 ([[exams/quiz-2|Quiz 2 page]]); [[problems/sampling-and-the-nyquist-rate|sampling family]]; [[exams/midterm-2/true-false-bank|T/F bank]]; [[demos/sampling-explorer|sampling explorer]].
+**Where it appears:** [[4-sampling-and-reconstruction/19-aliasing|L19]] §2–2.1, [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]] §2, [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|L18]] §3; HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]); [[homework/hw8|HW8]] #1–2, #6(c); [[problems/sampling-and-the-nyquist-rate|sampling family]]; [[exams/midterm-2/true-false-bank|T/F bank]]; [[demos/sampling-explorer|sampling explorer]].
 
 ## Related
 [[concepts/nyquist-criterion|Nyquist criterion]] · [[concepts/sampling|sampling]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]]
 
 ### Sources for this page
-Snyder, Lecture 19 notes §2–2.1 (eqs. 6–17, Figures 2–3) and slides 8–19 of Oct 14, 2026; Lecture 17 §2; HW7 #4; Singer–Munson §3.2; Midterm 2 keys cited.
+Snyder, Lecture 19 notes §2–2.1 (eqs. 6–17, Figures 2–3) and slides 8–19 of Oct 14, 2026; Lecture 17 §2; HW7 #4; HW8 #1–2 key; Singer–Munson §3.2; Midterm 2 keys cited.

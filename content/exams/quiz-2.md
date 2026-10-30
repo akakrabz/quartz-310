@@ -28,7 +28,7 @@ tags: [exam, quiz-2, midterm-2, dtft, frequency-response, sampling]
 | 18 | Oct 12 | ideal D/A: sinc interpolation; in frequency, a low-pass that keeps one copy and multiplies by $T$; the A/D → $H_d$ → D/A example | HW7 #4 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Lecture 18]] |
 
 - **In scope for sampling** (HW7): Nyquist rate of a sketched $X_a(\Omega)$; $X_d(\omega)$ at a given $T$, overlaps included; A/D → ideal digital filter → ideal D/A as $X_d$, $Y_d$, $Y_a$.
-- **Outside the announced scope** (background): time-domain sinc interpolation; aliasing of sampled sinusoids (Lecture 19; it returns in HW8).
+- **Outside the announced scope** (background): time-domain sinc interpolation; aliasing of sampled sinusoids (Lecture 19; it returns in [[homework/hw8|HW8]]).
 - **Not on this quiz:** [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]], the DFT.
 
 Methods and traps: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]] · [[problems/lti-response-to-sinusoids|response to sinusoids]] · [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]] · [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] · [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]. Drills: [DTFT values](/static/demos/drills/#dtftv) · [sinusoidal response](/static/demos/drills/#sinr) · [magnitude & phase](/static/demos/drills/#magph).
@@ -47,10 +47,16 @@ From a student who took it: mostly routine. The parts that took thought:
 > \sum_n x[n]y^*[n]=\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)Y_d^*(\omega)\,d\omega,\qquad \int_{-\pi}^{\pi}X_d(\omega)e^{j\omega n_0}\,d\omega=2\pi\,x[n_0]
 > $$
 > $$
-> X_d(\omega_0)=\sum_n x[n]e^{-j\omega_0n}:\quad \omega_0=0\to\sum_n x[n],\quad \omega_0=\pi\to\sum_n(-1)^nx[n],\quad \omega_0=\tfrac{\pi}{2}\to\sum_n(-j)^nx[n]
+> \begin{gathered}
+> X_d(\omega_0)=\sum_n x[n]e^{-j\omega_0n}:\\
+> \omega_0=0\to\sum_n x[n],\quad \omega_0=\pi\to\sum_n(-1)^nx[n],\quad \omega_0=\tfrac{\pi}{2}\to\sum_n(-j)^nx[n]
+> \end{gathered}
 > $$
 > $$
-> x[n]\ \text{real}\iff X_d(-\omega)=X_d^*(\omega)\iff \lvert X_d\rvert\ \text{even},\ \angle X_d\ \text{odd}\iff \operatorname{Re}X_d\ \text{even},\ \operatorname{Im}X_d\ \text{odd}
+> \begin{gathered}
+> x[n]\ \text{real}\iff X_d(-\omega)=X_d^*(\omega)\\
+> \iff \lvert X_d\rvert\ \text{even},\ \angle X_d\ \text{odd}\iff \operatorname{Re}X_d\ \text{even},\ \operatorname{Im}X_d\ \text{odd}
+> \end{gathered}
 > $$
 
 > [!question] A1 · Parseval without squares

@@ -22,7 +22,7 @@ Exams write $x_c$, $X_c$, $T_N$ ($T_{NYQ}$) for Lecture 17's $x_a$, $X_a$, $\fra
 | instance | given → asked |
 |---|---|
 | [[exams/midterm-2/past-exams/fall-2019\|FA2019]] #2 | $X_a=0$ for $\lvert\Omega\rvert\ge2\pi(20000)$, $F_s=40$ kHz → analog Hz of a digital $\omega$ |
-| FA2019 #8(b) | ideal D/A of $\delta[n-3]$ → sketch ((a), a zero-order hold, is not in Lecture 18) |
+| FA2019 #8(b) | ideal D/A of $\delta[n-3]$ → sketch ((a), a zero-order hold, is not in Lecture 18; see [[concepts/ideal-reconstruction\|ideal reconstruction]] §5 and [[homework/hw8\|HW8]] #4) |
 | FA2019 #9(a) | $\Omega_{\max}=1000\pi$ rad/s → $T_{NYQ}$ |
 | [[exams/midterm-2/past-exams/spring-2021\|SP2021]] #8 | $X_c=\frac{\lvert\Omega\rvert}{10000\pi}$ on $\lvert\Omega\rvert\le10000\pi$, $F_s=5$ kHz → Nyquist rate; $X_d$; is $x[n]$ real? |
 | SP2021 #9 | D/A returns $2\cos(300\pi t)$ at $F_s=400$ Hz, $x_c$ bandlimited to 400 Hz → $x[n]$; the two input cosines |
@@ -34,6 +34,7 @@ Exams write $x_c$, $X_c$, $T_N$ ($T_{NYQ}$) for Lecture 17's $x_a$, $X_a$, $\fra
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #5(a) | triangle on $\lvert\Omega\rvert\le200\pi$ → $X_d$ at $T=\frac{1}{300}$ |
 | SP2025 #6 | (a) $\sin(100\pi t)\to\sin(\frac{\pi}{2}n)$: which of $T=\frac{1}{400},\frac{1}{200},\frac{1}{100},\frac{1}{40},\frac{1}{20}$; (b) $\sin(40\pi t)$ returned unchanged: which of $\frac{1}{100},\frac{1}{60},\frac{1}{40},\frac{1}{20},\frac{1}{10}$; (c) $\sin(30\pi t)+\sin(100\pi t)$ returned as $\sin(10\pi t)+\sin(30\pi t)$: $T$ |
 | T/F | SP2021 #1(a) $\cos(17\pi t)\to\cos(\frac{3\pi}{4}n)$?, (b) $x_c(2t)$ · FA2021 #1(c) causal D/A?, (e) larger $T$ shrinks the DTFT? · SP2023 #1(a) $\cos(\pi^3t)$, (b) $x_c(3t)$, (e) "bandlimited" · FA2023 #1(d) Nyquist rate for every signal?, (e) and FA2024 #1(c) one sample → impulse? · SP2025 #1(c) $x_a(3)=0$? · [[exams/midterm-2/true-false-bank\|T/F bank]] Q18–Q24, Q26–Q29 |
+| course | HW7 #3 ([[exams/quiz-2\|Quiz 2 page]]) · [[homework/hw8\|HW8]] #1–2 (two $\Omega_0$ for $\cos(\frac{\pi}{3}n)$ at 1000 samples/s; non-unique $T$), #3 ($\lvert X_a\rvert$, $\lvert X_d\rvert$ for $\cos(400\pi t)$ at $T=1$, $2$ ms; $T_{\max}$), #4 (ZOH and ideal D/A) |
 
 > [!success]- Answers
 > | instance | answer |

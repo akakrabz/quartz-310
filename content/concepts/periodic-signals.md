@@ -5,7 +5,7 @@ tags: [concept, dtft, fourier-series, fourier-analysis, unit-3]
 aliases: ["periodic signal", "fundamental period", "harmonics", "discrete-time sinusoid", "equivalent frequencies"]
 ---
 
-*Lecture 13 (Wed Sep 23) §1 · not on homework · feeds [[concepts/fourier-series|Fourier series]] and the [[concepts/dtft|DTFT]]*
+*Lecture 13 (Wed Sep 23) §1 · background in [[homework/hw6|HW6]] #7 (input $j^n=e^{j\frac{\pi}{2}n}$) and HW7 #2 ([[exams/quiz-2|Quiz 2 page]]; $\sin(-\frac{\pi}{3}n)$) · feeds [[concepts/fourier-series|Fourier series]] and the [[concepts/dtft|DTFT]]*
 
 > [!abstract] In one breath
 > - Continuous time: every $\Omega_0$ gives a different periodic $e^{j\Omega_0t}$; harmonics $e^{jk\Omega_0t}$ are orthogonal over a period.
@@ -55,7 +55,9 @@ aliases: ["periodic signal", "fundamental period", "harmonics", "discrete-time s
 > [!question] Slide 6: which signals equal $x[n]=\sin(\tfrac{\pi}{3}n)$? (Select all that apply.)
 > (a) $\sin(-\tfrac{\pi}{3}n)$ $\quad$ (b) $\sin(-\tfrac{5\pi}{3}n)$ $\quad$ (c) $\sin(\tfrac{4\pi}{3}n)$ $\quad$ (d) $\sin(\tfrac{13\pi}{3}n)$
 
-> [!success]- Answer: (b) and (d)
+> [!success]- Answer
+> **(b) and (d).**
+>
 > $\tfrac{\pi}{3}-2\pi=-\tfrac{5\pi}{3}$ gives (b); $\tfrac{\pi}{3}+4\pi=\tfrac{13\pi}{3}$ gives (d). (a) $\sin(-\tfrac{\pi}{3}n)=-\sin(\tfrac{\pi}{3}n)$. (c) $\tfrac{4\pi}{3}-2\pi=-\tfrac{2\pi}{3}$, so $\sin(\tfrac{4\pi}{3}n)=-\sin(\tfrac{2\pi}{3}n)$: a different frequency.
 
 ## 3. Why it matters downstream
@@ -64,16 +66,35 @@ aliases: ["periodic signal", "fundamental period", "harmonics", "discrete-time s
 - Every [[concepts/dtft|DTFT]] is $2\pi$-periodic for the same reason: $e^{-j(\omega+2\pi)n}=e^{-j\omega n}$.
 - A sinusoid is a sum of two $e^{\pm j\omega_0n}$ ([[concepts/complex-exponential|complex exponential]]); an LTI system sees each as an [[concepts/eigenfunctions-of-lti-systems|eigenfunction]] at frequency $\omega_0$ read modulo $2\pi$ ([[concepts/frequency-response|frequency response]]).
 
+## 4. Midterm 2 quick check
+
+> [!question] Q1 · Period of a sum
+> Find the fundamental period of $x[n]=\cos(\frac{3\pi}{10}n)+\sin(\frac{\pi}{4}n)$.
+
+> [!success]- Answer
+> $\frac{\omega_0}{2\pi}=\frac{3}{20}$: period $20$; $\frac18$: period $8$. The sum repeats when both do: $N_0=\operatorname{lcm}(20,8)=\boldsymbol{40}$. In discrete time a sum of periodic sequences is always periodic (integer periods have a common multiple).
+
+> [!question] Q2 · True or False
+> (a) $\cos(1.8\pi n)$ oscillates faster than $\cos(0.6\pi n)$. (b) $\sin(2n)$ is periodic with period $\pi$.
+
+> [!success]- Answer
+> (a) **False.** $1.8\pi-2\pi=-0.2\pi$, so $\cos(1.8\pi n)=\cos(0.2\pi n)$: slower than $0.6\pi$. Speed is distance to the nearest multiple of $2\pi$.
+> (b) **False.** A period must be an integer number of samples; $\frac{2}{2\pi}=\frac1\pi$ is irrational, so $\sin(2n)$ never repeats.
+
 > [!trap]
 > - $N_0=L$ from $\omega_0/2\pi=K/L$ in lowest terms, not $2\pi/\omega_0$.
 > - $\sin(\tfrac34n)$ is not periodic at all: $\tfrac{3}{8\pi}$ is irrational.
 > - $\sin(-\omega_0n)=-\sin(\omega_0n)$ is a sign flip, not the same signal; $\sin((\omega_0+2\pi)n)$ is.
 > - $\omega=\pi$ is the highest discrete-time frequency; $\omega=1.9\pi$ is low (it equals $-0.1\pi$).
 
-**Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] §1 (slides 3–6); background for [[concepts/fourier-series|Fourier series]], [[concepts/dtft|DTFT]] periodicity, [[concepts/aliasing|aliasing]] (Lecture 19); [[exams/midterm-2/true-false-bank|MT2 T/F bank]] Q3–Q5.
+> [!exam] Exam
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Never a problem of its own: it settles sampling and aliasing answers ($\omega$ modulo $2\pi$, the sign of a sine). Family: [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]].
+> - [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #3 · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #1(a), #9(b) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #1(a) · [[exams/midterm-2/true-false-bank|MT2 T/F bank]] Q3–Q5
+
+**Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] §1 (slides 3–6); [[homework/hw6|HW6]] #7, HW7 #2; background for [[concepts/fourier-series|Fourier series]], [[concepts/dtft|DTFT]] periodicity, [[concepts/aliasing|aliasing]] (Lecture 19); [[exams/midterm-2/true-false-bank|MT2 T/F bank]] Q3–Q5.
 
 ## Related
 [[concepts/fourier-series|Fourier series]] · [[concepts/dtft|DTFT]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/aliasing|aliasing]] · [[concepts/frequency-response|frequency response]]
 
 ### Sources for this page
-Lecture 13 notes §1.1–1.2 (eqs. 1–18), slides 3–6 (slide 6 answer ours).
+Lecture 13 notes §1.1–1.2 (eqs. 1–18), slides 3–6 (slide 6 answer ours); HW6–HW7; Midterm 2 keys cited.

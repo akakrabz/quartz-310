@@ -24,7 +24,7 @@ lecture: 17
 - Slide 7, sampling $\cos(\Omega_0t)$ to read off $\omega=\Omega T$ → [[concepts/sampling|Sampling]] §3
 - Example 2 (slides 10–12), the triangle to $100\pi$ rad/s at $150/100/75$ Hz → [[concepts/nyquist-criterion|Nyquist criterion]] §2
 
-**Practice:** HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · [[problems/sampling-and-the-nyquist-rate|family]] · [[demos/sampling-explorer|explorer]]
+**Practice:** HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #3 · [[problems/sampling-and-the-nyquist-rate|family]] · [[demos/sampling-explorer|explorer]]
 
 ## Related
 

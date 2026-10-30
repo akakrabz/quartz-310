@@ -5,12 +5,14 @@ tags: [concept, dft, midterm-2]
 aliases: ["modulo indexing", "circular shift", "circular time reversal", "periodic extension", "circular reversal", "modulo operation"]
 ---
 
-*Lecture 21 (Mon Oct 19) §1 · also [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] §2.2 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
+*Lecture 21 (Mon Oct 19) §1 · also [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] §2.2 · HW9 #1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
 > [!abstract] In one breath
 > - DFT and inverse DFT are $N$-periodic: a length-$N$ signal acts as its periodic extension $x[\langle n\rangle_N]$.
 > - $\langle n\rangle_N$ = remainder of $n$ divided by $N$, in $\{0,\dots,N-1\}$.
 > - Circular reversal keeps $x[0]$ in place and reverses the rest: $x[\langle-n\rangle_N]=x[0],\,x[N-1],\,\dots,\,x[1]$.
+
+**On Fall 2026 MT2 (instructor):** DFT properties incl. circular shifting are tested; computing circular convolution is not.
 
 ## 1. Periodicity in frequency and time
 
@@ -53,6 +55,23 @@ Every DFT belongs to a finite-length signal, periodically extended. Shifts and r
 > - (b) indices $2,3,4,0,1$: $\{\underset{\uparrow}{2},\ 4,\ 5,\ 3,\ 1\}$ (circular advance by 2).
 > - (c) indices $1,0,4,3,2$: $\{\underset{\uparrow}{1},\ 3,\ 5,\ 4,\ 2\}$ = (a) circularly delayed by 1, since $x[\langle 1-n\rangle_5]=x[\langle -(n-1)\rangle_5]$.
 
+## 3. Midterm 2 quick check
+
+> [!question] Q1 · shift, reverse, transform
+> $x[n]=\{\underset{\uparrow}{3},\ 1,\ 4,\ 1,\ 5,\ 9,\ 2\}$ (real, length 7) has DFT $X[k]$. (a) Write $y_1[n]=x[\langle n-3\rangle_7]$ and $Y_1[k]$ in terms of $X[k]$. (b) Same for $y_2[n]=x[\langle 2-n\rangle_7]$.
+
+> [!success]- Answer
+> - (a) Indices $4,5,6,0,1,2,3$: $y_1=\{\underset{\uparrow}{5},\ 9,\ 2,\ 3,\ 1,\ 4,\ 1\}$, a circular delay by 3: $Y_1[k]=e^{-j\frac{6\pi k}{7}}X[k]$.
+> - (b) $x[\langle-(n-2)\rangle_7]$: reverse, then delay by 2. Indices $2,1,0,6,5,4,3$: $y_2=\{\underset{\uparrow}{4},\ 1,\ 3,\ 2,\ 9,\ 5,\ 1\}$; $Y_2[k]=e^{-j\frac{4\pi k}{7}}X[\langle-k\rangle_7]=e^{-j\frac{4\pi k}{7}}X^*[k]$ ($x$ real).
+
+> [!question] Q2 · True or false
+> (a) A circular shift never changes $\lvert X[k]\rvert$. (b) $x[\langle -n\rangle_N]=x[N-1-n]$. (c) $\langle -7\rangle_5=3$.
+
+> [!success]- Answer
+> - (a) **True:** it multiplies $X[k]$ by $e^{-j\frac{2\pi mk}{N}}$, of magnitude 1.
+> - (b) **False:** $x[N-1-n]$ is the plain flip, $x[\langle-(n+1)\rangle_N]$: circular reversal advanced by 1, DFT $e^{j\frac{2\pi k}{N}}X[\langle-k\rangle_N]$.
+> - (c) **True:** $-7=(-2)\cdot5+3$.
+
 > [!trap] Circular, not linear
 > - $x[\langle -n\rangle_N]=\{x[0],x[N-1],\dots,x[1]\}$: $x[0]$ stays put; not the plain flip.
 > - Remainders lie in $0,\dots,N-1$: $\langle -1\rangle_3=2$, never $-1$.
@@ -61,7 +80,7 @@ Every DFT belongs to a finite-length signal, periodically extended. Shifts and r
 > - Only the DFT's implied extension is periodic; the length-$N$ signal itself is not.
 
 > [!exam] Midterm 2
-> Write a circularly shifted or reversed sequence; recognise one from its DFT. [[exams/midterm-2/past-exams/spring-2025|SP2025 #7(b), #8]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #8]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #9(b), #1(d)]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #4]] · [[exams/midterm-2/past-exams/spring-2021|SP2021 #4]] · [[exams/midterm-2/true-false-bank|T/F bank]] §6.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Write a circularly shifted or reversed sequence; recognise one from its DFT. [[exams/midterm-2/past-exams/spring-2025|SP2025 #7(b), #8]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #8]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #3(b)]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #9(b), #1(d)]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #4]] · [[exams/midterm-2/past-exams/spring-2021|SP2021 #4]] · [[exams/midterm-2/true-false-bank|T/F bank]] §6.
 
 **Where it appears:** [[5-dft-and-fft/21-dft-properties|L21]] §1 (eqs. 1–6, 19, Figure 1, slides 4–8) · [[5-dft-and-fft/20-discrete-fourier-transform|L20]] §2.2 · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]].
 

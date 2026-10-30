@@ -28,7 +28,7 @@ lecture: 20
 - Slides Zero-padding Example 2 (slide 13), smallest $N$ holding $X_d(\frac\pi5)$, $X_d(\frac\pi3)$ → [[concepts/zero-padding|zero padding]] §2
 - Lecture exercise, columns of $\mathbf W$ orthogonal → [[concepts/dft|DFT]] §4
 
-**Practice:** [[problems/dft-values-and-zero-padding|DFT values and zero padding family]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3, §6
+**Practice:** HW9 #3 · [[problems/dft-values-and-zero-padding|DFT values and zero padding family]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3, §6
 
 ## Related
 [[5-dft-and-fft/index|Unit 5]] · [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] · [[5-dft-and-fft/21-dft-properties|Lecture 21]] · [[concepts/index|Concepts]]

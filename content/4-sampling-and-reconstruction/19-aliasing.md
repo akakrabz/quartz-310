@@ -24,11 +24,11 @@ lecture: 19
 - Slides 9–13, $\sin(100\pi t)$ at $160$, $120$, $80$, $40$ Hz (eqs. 12–17): $\omega_k$, alias, $x_k[n]$, $\hat\Omega_k$ → [[concepts/aliasing|Aliasing]] §3
 - Slide 19, two $\Omega_0$ that give $\cos\!\left(\frac{\pi}{3}n\right)$ at $f_s=100$ Hz → [[concepts/aliasing|Aliasing]] §4
 
-**Practice:** HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[problems/sampling-and-the-nyquist-rate|family]] · [[problems/digital-filtering-of-analog-signals|allowed aliasing]] · [[demos/sampling-explorer|explorer]]
+**Practice:** HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #1–2 · [[problems/sampling-and-the-nyquist-rate|family]] · [[problems/digital-filtering-of-analog-signals|allowed aliasing]] · [[demos/sampling-explorer|explorer]]
 
 ## Related
 
-[[4-sampling-and-reconstruction/index|Unit 4]] · prev [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] · next [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] · [[concepts/index|Concepts]] · [[concepts/sampling|sampling]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/dtft-pairs|DTFT pairs]]
+[[4-sampling-and-reconstruction/index|Unit 4]] · prev [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]] · next [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] · [[concepts/index|Concepts]] · [[concepts/sampling|sampling]] · [[concepts/ideal-reconstruction|ideal reconstruction]]
 
 ### Sources for this page
 

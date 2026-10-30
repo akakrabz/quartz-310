@@ -1,10 +1,10 @@
 ---
 title: "Exams"
-description: "Past ECE 310 exams as a self-test layer: Midterm 1 review guide, cheat sheet, banks and seven past exams; Quiz 2 review; Midterm 2 (Units 3–5, Lectures 13–23) overview, T/F bank and seven past exams."
+description: "Past ECE 310 exams as a self-test layer: Midterm 1 review guide, cheat sheet, banks and seven past exams; Quiz 2 review; Midterm 2 (Wed Nov 4, Lectures 13–23) review, practice midterm, T/F bank, seven past exams."
 tags: [exam]
 ---
 
-*Exams · Midterm 1 (L1–11) · Quiz 2 (L13–18) · Midterm 2 (Units 3–5, L13–23) · fourteen past exams with folded solutions*
+*Exams · Midterm 1 (L1–11) · Quiz 2 (L13–18) · Midterm 2 (Wed Nov 4, L13–23) · fourteen past exams with folded solutions*
 
 > [!recipe] Self-test, then repair
 > 1. Finish the unit first: its topic pages, folded questions, homework.
@@ -26,8 +26,9 @@ Held Wed Sep 30, 2026: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/i
 - [[exams/quiz-2|Quiz 2 review]] — formula sheet, HW7 worked, practice quiz.
 
 ## Midterm 2 — Units 3–5, Lectures 13–23
-Date not yet announced (past fall exams: early November). Scope: [[3-fourier-analysis/index|Unit 3]], [[4-sampling-and-reconstruction/index|Unit 4]], [[5-dft-and-fft/index|Unit 5]] through Lecture 23 (spectral analysis and window functions), HW5–HW7 and later sets.
-- [[exams/midterm-2/index|Midterm 2 overview]] — scope, format, problem types, preparation, formula boxes (Units 3–5).
+**Wed Nov 4, 2026, 7–9 pm** · ECEB 1002 (NetIDs aa–sz), ECEB 2017 (ta–zz) · conflict exam TBA · one handwritten two-sided 8.5 × 11 in sheet, no calculator. Scope: HW5–HW9 = [[3-fourier-analysis/index|Unit 3]], [[4-sampling-and-reconstruction/index|Unit 4]], [[5-dft-and-fft/index|Unit 5]] through Lecture 23 (spectral analysis and window functions). Computing circular convolution is not on it (instructor announcement); the DFT properties, circular shift included, are.
+- [[exams/midterm-2/index|Midterm 2 review guide]] — scope, on/not on, format, problem types, day-by-day plan (Oct 30 – Nov 4), sheet checklist, formula boxes.
+- [[exams/midterm-2/practice-exam|Practice midterm]] — Fall 2026 scope; take it timed (plan: Tue Nov 3).
 - [[exams/midterm-2/true-false-bank|True/False bank]]
 - [[exams/midterm-2/past-exams/index|Past Midterm 2 exams]] — seven, problem by problem.
 - Families: [[problems/dtft-and-inverse-dtft|DTFTs]] · [[problems/lti-response-to-sinusoids|response to sinusoids]] · [[problems/magnitude-phase-and-group-delay|magnitude and phase]] · [[problems/sampling-and-the-nyquist-rate|sampling]] · [[problems/digital-filtering-of-analog-signals|A/D → filter → D/A]] · [[problems/dft-values-and-zero-padding|DFT values and zero padding]] · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]] · [[problems/dft-spectral-analysis|DFT spectral analysis]].
@@ -49,4 +50,4 @@ Date not yet announced (past fall exams: early November). Scope: [[3-fourier-ana
 [[problems/index|Problem families]] · [[concepts/index|Concepts]] · [[homework/index|homework]] · [[demos/practice-drills|practice drills]] · [[0-toolkit/05-errata|errata]] · [[index|home]]
 
 ### Sources for this page
-Cover pages of the fourteen past exams (MT1 FA2019–FA2025, MT2 FA2019–SP2025).
+Cover pages of the fourteen past exams (MT1 FA2019–FA2025, MT2 FA2019–SP2025); course website and instructor announcement (Oct 30, 2026) for Midterm 2.

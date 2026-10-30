@@ -25,7 +25,7 @@ lecture: 16
 - Slide 6 (concept check), which of five $H_k(\omega)$ have $\pm\pi$ jumps → §4
 - Slides 10–11, what $e^{-jk\omega}$ does to $e^{j\omega_0n}$ · Exercises 1–2 revisited, image denoising (Figure 3, slides 13–15) → [[concepts/group-delay|Group delay]] §1–3
 
-**Practice:** [[homework/hw6|HW6]] #6–#7 · [[problems/magnitude-phase-and-group-delay|family]] · [[demos/frequency-response-explorer|explorer]] · [[exams/quiz-2|Quiz 2]]
+**Practice:** [[homework/hw6|HW6]] #3(b), #6–#7 · HW7 #1 ([[exams/quiz-2|Quiz 2 page]]) · [[problems/magnitude-phase-and-group-delay|family]] · [[demos/frequency-response-explorer|explorer]]
 
 ## Related
 

@@ -8,7 +8,7 @@ tags: [exam, midterm-2]
 
 > [!abstract] In one breath
 > - 2 hours (90–110 min in 2019–2021), 7–11 problems, 100 points, no calculator. Unit 3: 18–42 points; rest: sampling, filtering, DFT.
-> - Self-test by unit; take SP2025 and FA2024 whole once the scope is out.
+> - Self-test by unit with the other exams; save SP2025 for one timed run ([[exams/midterm-2/index|plan]]: Mon Nov 2). Fall 2026 drops circular-convolution computation and the FFT.
 
 ## The seven exams
 
@@ -29,7 +29,7 @@ Unit 3 points count zero-padding T/F as Unit 3 (exam pages: 30, 38, 34 for FA202
 > [!tip] By unit
 > - **Unit 3:** SP2025 #2–#4 and FA2024 #2–#4 timed (~50 min). Bank: FA2023 #2, #4; SP2023 #2–#6; FA2021 #2; SP2021 #2, #3, #7; FA2019 #3, #5–#7. [[exams/midterm-2/true-false-bank|T/F bank]] Q1–Q16.
 > - **Unit 4:** SP2025 #5, #6; FA2024 #5; FA2023 #3, #5; SP2023 #7, #8; FA2021 #4, #5; SP2021 #8, #9; FA2019 #8(b), #9. T/F Q18–Q29.
-> - **Unit 5 ([[5-dft-and-fft/index|DFT]]):** SP2025 #7–#9; FA2024 #6–#9; FA2023 #6, #7; SP2023 #9, #10; FA2021 #3, #6, #7; SP2021 #4–#6; FA2019 #2, #4, #11. T/F Q30–Q42.
+> - **Unit 5 ([[5-dft-and-fft/index|DFT]]):** SP2025 #7–#9; FA2024 #6–#9; FA2023 #6, #7; SP2023 #9, #10; FA2021 #3, #7; SP2021 #4–#6; FA2019 #2, #4. T/F Q30–Q40. Not on Fall 2026: FA2021 #6, FA2019 #11, Q41–Q43.
 > - Repair each lost point by [[problems/index|family]].
 
 > [!trap] Unit 3 traps
@@ -107,7 +107,7 @@ Families: [[problems/dtft-and-inverse-dtft|DTFT]] · [[problems/lti-response-to-
 | 3 | 10 | 8-point DFT at even $k$; DFT of $x[\langle 3-n\rangle_8]\,j^n$ | [[problems/dft-values-and-zero-padding\|DFT values]] · [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
 | 4 | 15 | sampler → high-pass → D/A at two rates | [[problems/digital-filtering-of-analog-signals\|A/D–D/A]] |
 | 5 | 15 | largest $T$; $H_d$ realising $H_a$ | [[problems/digital-filtering-of-analog-signals\|A/D–D/A]] |
-| 6 | 15 | linear vs 6-point circular convolution | [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
+| 6 | 15 | linear vs 6-point circular convolution (not on Fall 2026 MT2: circular convolution computation) | [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
 | 7 | 15 | DFT peaks of a cosine, $L = 500$, padded to 1024 | [[problems/dft-spectral-analysis\|spectral analysis]] |
 
 ### [[exams/midterm-2/past-exams/spring-2021|Spring 2021]]
@@ -128,7 +128,7 @@ Families: [[problems/dtft-and-inverse-dtft|DTFT]] · [[problems/lti-response-to-
 
 | # | pts | asks | family |
 |---|---|---|---|
-| 1 | 20 | ten T/F: DTFT, DFT, circular convolution, FFT | DTFT · [[problems/dft-values-and-zero-padding\|DFT values]] · [[problems/dft-spectral-analysis\|spectral analysis]] · [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
+| 1 | 20 | ten T/F: DTFT, DFT, circular convolution, FFT; (g), (h) (not on Fall 2026 MT2: circular convolution computation) | DTFT · [[problems/dft-values-and-zero-padding\|DFT values]] · [[problems/dft-spectral-analysis\|spectral analysis]] · [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
 | 2 | 6 | bins $k = 300, 800$ in Hz; spacing | [[problems/dft-values-and-zero-padding\|DFT values]] |
 | 3 | 9 | $X_d(0)$, $X_d(\pi)$, $\int X_d$ of 7 samples | [[problems/dtft-and-inverse-dtft\|DTFT]] |
 | 4 | 5 | sequence with DFT $e^{-j\frac{\pi}{4}k}X[k]$ | [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
@@ -138,7 +138,7 @@ Families: [[problems/dtft-and-inverse-dtft|DTFT]] · [[problems/lti-response-to-
 | 8 | 10 | D/A of $\delta[n-3]$: ZOH, ideal | [[problems/sampling-and-the-nyquist-rate\|sampling]] |
 | 9 | 15 | A/D → LPF → D/A: $H_a$, largest $T$ | [[problems/digital-filtering-of-analog-signals\|A/D–D/A]] |
 | 10 | 4 | 32-point DIT FFT flow graph | FFT |
-| 11 | 8 | zero-padding for DFT/FFT linear convolution | [[problems/circular-convolution-and-dft-properties\|DFT properties]] · FFT |
+| 11 | 8 | zero-padding for DFT/FFT linear convolution (not on Fall 2026 MT2: circular convolution computation) | [[problems/circular-convolution-and-dft-properties\|DFT properties]] · FFT |
 
 ## Key slips
 

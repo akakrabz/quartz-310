@@ -24,7 +24,7 @@ lecture: 15
 - Slide 6, $|H_d|=|\omega|$, $\angle H_d=-\frac{\omega}{2}$: write $H_d$, respond to two exponentials → [[concepts/frequency-response|Frequency response]] §2
 - Slide 8, why the cosine rule needs real $h$ · slide 10 (concept check), $|H_d|=\cos^2\omega$, $\angle H_d=\sin\omega$, three input terms · slide 11, read $H_d$ off one input–output pair → §3
 
-**Practice:** [[homework/hw6|HW6]] #5–#7 · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · [[demos/frequency-response-explorer|explorer]] · [[exams/quiz-2|Quiz 2]]
+**Practice:** [[homework/hw6|HW6]] #5–#7 · HW7 #2, #4 ([[exams/quiz-2|Quiz 2 page]]) · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]] · [[demos/frequency-response-explorer|explorer]]
 
 ## Related
 

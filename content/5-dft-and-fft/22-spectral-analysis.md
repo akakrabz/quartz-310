@@ -26,7 +26,7 @@ lecture: 22
 - Notes example (eqs. 13–14), $\cos(\frac\pi3n)$, $N=24$ vs $22$; Example 2 (slide 10), two/four nonzero bins or more → [[concepts/spectral-leakage|spectral leakage]] §2
 - Notes example (eq. 17), tones at $0.55\pi$, $0.65\pi$, $N=32$, padded to $128$ → [[concepts/spectral-analysis|spectral analysis]] §2
 
-**Practice:** [[problems/dft-spectral-analysis|DFT spectral analysis family]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7
+**Practice:** HW9 #4–5 · [[problems/dft-spectral-analysis|DFT spectral analysis family]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7
 
 ## Related
 [[5-dft-and-fft/index|Unit 5]] · [[5-dft-and-fft/21-dft-properties|Lecture 21]] · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|Lecture 23]] · [[concepts/index|Concepts]]

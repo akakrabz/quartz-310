@@ -5,7 +5,7 @@ tags: [concept, frequency-response, dtft, midterm-2]
 aliases: ["frequency response", "sinusoidal response", "response to sinusoids", "steady-state response", "cosine rule"]
 ---
 
-*Lecture 15 (Fri Oct 2) · [[homework/hw6|HW6]] #5–#7 · family: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]*
+*Lecture 15 (Fri Oct 2) · [[homework/hw6|HW6]] #5–#7, HW7 #2, #4 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]*
 
 > [!abstract] In one breath
 > - Frequency response $H_d(\omega)$ = DTFT of $h[n]$ = $H(z)$ on the unit circle when the system is stable.
@@ -145,6 +145,26 @@ Notes Figure 1. **Zeros notch, poles peak:** $1+z^{-4}$ removes $\frac{\pi}{4}$ 
 | $y[n]=x[n]+2x[n-3]+x[n-6]$ | $\left(2+2\cos3\omega\right)e^{-j3\omega}$ | [[exams/midterm-2/past-exams/spring-2025\|SP2025 MT2]] #3 |
 | $y[n]=x[n]+x[n-10]$ | $2\cos(5\omega)\,e^{-j5\omega}$ | [[homework/hw6\|HW6]] #6 |
 
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · Sines through a first difference
+> $y[n]=x[n]-x[n-1]$. Find $y[n]$ for $x[n]=5+4\sin(\frac{\pi}{3}n-\frac{\pi}{4})+2\cos(\pi n)$, all $n$.
+
+> [!success]- Answer
+> $H_d(\omega)=1-e^{-j\omega}=e^{-j\omega/2}\,2j\sin\frac{\omega}{2}=2\sin\frac{\omega}{2}\,e^{j(\frac{\pi}{2}-\frac{\omega}{2})}$; $h$ real.
+> - $\omega=0$: $H_d(0)=0$; the $5$ disappears.
+> - $\omega=\frac{\pi}{3}$: gain $2\sin\frac{\pi}{6}=1$, phase $\frac{\pi}{2}-\frac{\pi}{6}=\frac{\pi}{3}$; the sine stays a sine: $4\sin(\frac{\pi}{3}n-\frac{\pi}{4}+\frac{\pi}{3})$.
+> - $\omega=\pi$: $H_d(\pi)=2$, so $2\cos(\pi n)\to4(-1)^n$.
+>
+> $y[n]=4\sin(\frac{\pi}{3}n+\frac{\pi}{12})+4(-1)^n$.
+
+> [!question] Q2 · True or False
+> (a) For real $h$, $A\sin(\omega_0n)\to A|H_d(\omega_0)|\sin(\omega_0n+\angle H_d(\omega_0))$. (b) In Q1's system, $x[n]=\cos(\frac{\pi}{3}n)u[n]$ gives $y[n]=\cos(\frac{\pi}{3}n+\frac{\pi}{3})$ for all $n\ge0$.
+
+> [!success]- Answer
+> (a) **True.** Eq. 15 holds for sine as for cosine.
+> (b) **False.** The rule needs the input for all $n$. $y[0]=x[0]-x[-1]=1$, not $\cos\frac{\pi}{3}=\frac12$; from $n=1$ on, $y[n]=\cos(\frac{\pi}{3}n+\frac{\pi}{3})$: a one-sample transient.
+
 > [!trap]
 > - $\cos(\omega_0 n)$ is not an eigenfunction; only $e^{j\omega_0 n}$ is ([[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] 1(a)).
 > - Cosine rule ⇔ Hermitian $H_d$ ⇔ real $h$; check $H_d(-\omega)=H_d^*(\omega)$ first ([[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #6, [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #4 have complex $h$).
@@ -154,13 +174,13 @@ Notes Figure 1. **Zeros notch, poles peak:** $1+z^{-4}$ removes $\frac{\pi}{4}$ 
 > - Real $h$ ⇒ $H_d(\pm\pi)$ real; a formula giving different values at $\pm\pi$ jumps there ([[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #4).
 
 > [!exam] Exam
-> Sinusoid response from a given $H_d$ or $H(z)$: 5 of 7 past exams, 8–18 points. First decide whether $h$ is real. Family: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]].
-> - [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3, #4 · [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #3, #4 · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #5, #6 · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #4 · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(a), #2(c) · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(d), #6, #7 · [[homework/hw6|HW6]] #5–#7
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Sinusoid response from a given $H_d$ or $H(z)$: 5 of 7 past exams, 8–18 points. First decide whether $h$ is real. Family: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]].
+> - [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3, #4 · [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #3, #4 · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #5, #6 · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #4 · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(a), #2(c) · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(d), #6, #7 · [[homework/hw6|HW6]] #5–#7 · HW7 #2, #4 ([[exams/quiz-2|Quiz 2 page]])
 
-**Where it appears:** [[3-fourier-analysis/15-frequency-response|L15]] (slides 4–11), [[3-fourier-analysis/16-magnitude-and-phase-response|L16]]; [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]; [[homework/hw6|HW6]] #5–#7; [[exams/quiz-2|Quiz 2]]; [[demos/frequency-response-explorer|frequency response explorer]].
+**Where it appears:** [[3-fourier-analysis/15-frequency-response|L15]] (slides 4–11), [[3-fourier-analysis/16-magnitude-and-phase-response|L16]]; [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]; [[homework/hw6|HW6]] #5–#7; HW7 #2, #4 on [[exams/quiz-2|Quiz 2]]; [[demos/frequency-response-explorer|frequency response explorer]].
 
 ## Related
 [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]] · [[concepts/transfer-function|transfer function]] · [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/magnitude-and-phase-response|magnitude and phase response]] · [[concepts/group-delay|group delay]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/periodic-signals|periodic signals]]
 
 ### Sources for this page
-Lecture 15 notes §1–1.3 (eqs. 1–22, Figure 1), slides 4–11 (unannotated; answers worked here); Lecture 14 §1; HW6 #5–#7; Midterm 2 keys cited.
+Lecture 15 notes §1–1.3 (eqs. 1–22, Figure 1), slides 4–11 (unannotated; answers worked here); Lecture 14 §1; HW6 #5–#7, HW7 #2; Midterm 2 keys cited.

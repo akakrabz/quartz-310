@@ -9,12 +9,14 @@ lectures: [21]
 
 *Problem family · all seven past Midterm 2 exams · 5–18 points · [[5-dft-and-fft/21-dft-properties|Lecture 21]] · in the course: Lecture 21 Examples 1–3, the notes' circular convolution*
 
+> [!warning] Fall 2026 Midterm 2: computing circular convolution is not tested (instructor announcement); the DFT property x⊛h ↔ X[k]H[k] and the other DFT properties are.
+
 ## What it looks like on the exam
 
 - **A** $y[n]$ whose DFT is $e^{\pm j\frac{2\pi m}{N}k}X[k]$, possibly with a sign: a circular shift.
 - **B** $y[n]$ whose DFT is a rearranged, sign-flipped list of the $X_k$: frequency shift (modulation) plus time shift.
 - **C** $Y[k]$ in terms of the $X_k$ for a reversed and shifted $x[n]$.
-- **D** Linear vs $N$-point circular convolution; the $N$ that makes them agree; zeros to pad.
+- **D** Linear vs $N$-point circular convolution; the $N$ that makes them agree; zeros to pad (not on Fall 2026 MT2).
 - **E** Conjugation and symmetry: is $x$ real? two real DFTs from one complex DFT; Parseval.
 
 Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\frac{2\pi}{N}}$.
@@ -22,17 +24,17 @@ Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\fra
 | instance | given → asked |
 |---|---|
 | [[exams/midterm-2/past-exams/fall-2019\|FA2019]] #4 | $x=\{1,\dots,8\}$, $Y[k]=e^{-j\frac{\pi}{4}k}X[k]$ → $y[n]$ |
-| FA2019 #11 | lengths 15 and 8 → zeros to pad each for linear convolution by DFT; by radix-2 FFT |
-| FA2019 #1(g), (h) | T/F: linear convolution via circular + padding? circular convolution for any two lengths? |
+| FA2019 #11 (not on Fall 2026 MT2) | lengths 15 and 8 → zeros to pad each for linear convolution by DFT; by radix-2 FFT |
+| FA2019 #1(g), (h) (not on Fall 2026 MT2) | T/F: linear convolution via circular + padding? circular convolution for any two lengths? |
 | [[exams/midterm-2/past-exams/spring-2021\|SP2021]] #4 | $x=\{1,-2,3,-4,5,-6,7,-8\}$, $Y[k]=e^{-j(\frac{6\pi}{8}k+\pi)}X[k]$ → $y[n]$ |
 | [[exams/midterm-2/past-exams/fall-2021\|FA2021]] #3(b) | $x=\{1,3,2,0,1,3,2,0\}$, $y[n]=x[\langle3-n\rangle_8]\,j^n$ → $Y[k]$ at $k=0,2,4,6$ |
-| FA2021 #6 | $x=\{-2,3,0,3\}$, $h=\{-2,5,1,5,-3\}$ → $x*h$; 6-point $x\circledast h$; is $N=7$ enough? |
+| FA2021 #6 (not on Fall 2026 MT2) | $x=\{-2,3,0,3\}$, $h=\{-2,5,1,5,-3\}$ → $x*h$; 6-point $x\circledast h$; is $N=7$ enough? |
 | [[exams/midterm-2/past-exams/spring-2023\|SP2023]] #9(b) | $x=\{1,2,-3,-4,5,6\}$, $Y=\{X_4,-X_5,X_0,-X_1,X_2,-X_3\}$ → $y[n]$ |
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023]] #7 | prove $b^*[n]\leftrightarrow B^*[N-k]$; $B^*[N]$; $X[k]$, $Y[k]$ of real $x$, $y$ from $Z=\mathrm{DFT}\{x+jy\}$ |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #8 | $x=\{3,0,-1,2,4\}$, $y=\{0,3,4,2,-1\}$ → $Y[k]$ in terms of $X_0,\dots,X_4$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #7(b) | $x=\{1,2,-3,-4,5,6,-2,2\}$, $Y=\{-X_5,X_6,-X_7,X_0,-X_1,X_2,-X_3,X_4\}$ → $y[n]$ |
 | SP2025 #8 | $x=\{1,\dots,8\}$, $Y[m]=X[m]e^{j\frac{3\pi}{4}m}$ → $y[n]$ |
-| course | Lecture 21 Example 2: $\{2,0,1,3,0\}\circledast\{4,1,0,2,2\}$ · Example 3: $x=\{1,\dots,6\}$, $Y=\{X_2,-X_3,X_4,-X_5,X_0,-X_1\}$ · [[exams/midterm-2/true-false-bank\|T/F bank]] Q41–Q42 |
+| course | Lecture 21 Example 2: $\{2,0,1,3,0\}\circledast\{4,1,0,2,2\}$ (not on Fall 2026 MT2) · Example 3: $x=\{1,\dots,6\}$, $Y=\{X_2,-X_3,X_4,-X_5,X_0,-X_1\}$ · [[exams/midterm-2/true-false-bank\|T/F bank]] Q41–Q42 (not on Fall 2026 MT2) |
 
 > [!success]- Answers
 > | instance | answer |
@@ -65,20 +67,20 @@ Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\fra
 > 1. **Phase ramp on $X[k]$.** Write it as $e^{-j\frac{2\pi}{N}km}$: $m\gt0$ delays, $e^{+j\dots}$ advances ($x[\langle n+m\rangle_N]=x[\langle n-(N-m)\rangle_N]$); a constant $e^{j\phi}$ scales every sample ($e^{-j\pi}=-1$). Shifts are circular: the list keeps its length and wraps.
 > 2. **Rearranged $X_k$.** Find $m$ with $Y[k]=\pm X[\langle k-m\rangle_N]$, then read the sign pattern as a shift: $(-1)^k=e^{-j\frac{2\pi}{N}k\frac N2}$ delays by $\frac N2$. Build $y$ in that order: $V[k]=X[\langle k-m\rangle_N]$ is $v[n]=e^{j\frac{2\pi m}{N}n}x[n]$; $Y[k]=(-1)^kV[k]$ is $y[n]=v[\langle n-\frac N2\rangle_N]=(-1)^me^{j\frac{2\pi m}{N}n}x[\langle n-\frac N2\rangle_N]$ (the exponential picks up $(-1)^m$ from the shift). A pattern $(-1)^{k+1}$ adds one more minus. Test with $Y[0]=\sum y[n]$.
 > 3. **Reversed and shifted $x$.** Match $y$ to $x[\langle\pm(n-m)\rangle_N]$: reversal keeps $x[0]$ in place, $\{x_0,x_{N-1},\dots,x_1\}$; then count the delay. $Y[k]=e^{-j\frac{2\pi m}{N}k}X[\langle-k\rangle_N]$; with $j^n$ or $(-1)^n$ attached, shift $k$ afterwards (FA2021 #3(b)).
-> 4. **Circular convolution.** Pad both to the DFT length $N$. Either run the table with $h[\langle n-m\rangle_N]$ (periodically extended rows, each a circular shift of the reversed $h$), or compute the linear $y=x*h$ and wrap: $y_N[n]=\sum_ry[n+rN]$. Linear $=$ circular iff $N\ge N_1+N_2-1$; pad each to that $N$ (next power of 2 for a radix-2 FFT). Check $\sum y=\sum x\cdot\sum h$ either way.
-> 5. **Symmetry.** $x$ real $\iff X[\langle-k\rangle_N]=X^*[k]$; $X[0]$, $X[\frac N2]$ real. Two real signals in one DFT: $z=x+jy$, $Z^*[\langle-k\rangle_N]\leftrightarrow z^*$, so $X=\frac12(Z[k]+Z^*[\langle-k\rangle_N])$, $Y=\frac{1}{2j}(Z[k]-Z^*[\langle-k\rangle_N])$ with $Z^*[N]=Z^*[0]$.
-> 6. **Check** with $N$-periodicity ($Y[N]=Y[0]$), $Y[0]=\sum y[n]$, Parseval, and one sample from the inverse DFT.
+> 4. **Symmetry.** $x$ real $\iff X[\langle-k\rangle_N]=X^*[k]$; $X[0]$, $X[\frac N2]$ real. Two real signals in one DFT: $z=x+jy$, $Z^*[\langle-k\rangle_N]\leftrightarrow z^*$, so $X=\frac12(Z[k]+Z^*[\langle-k\rangle_N])$, $Y=\frac{1}{2j}(Z[k]-Z^*[\langle-k\rangle_N])$ with $Z^*[N]=Z^*[0]$.
+> 5. **Check** with $N$-periodicity ($Y[N]=Y[0]$), $Y[0]=\sum y[n]$, Parseval, and one sample from the inverse DFT.
+> 6. **Circular convolution** (not on Fall 2026 MT2). Pad both to the DFT length $N$. Either run the table with $h[\langle n-m\rangle_N]$ (periodically extended rows, each a circular shift of the reversed $h$), or compute the linear $y=x*h$ and wrap: $y_N[n]=\sum_ry[n+rN]$. Linear $=$ circular iff $N\ge N_1+N_2-1$; pad each to that $N$ (next power of 2 for a radix-2 FFT). Check $\sum y=\sum x\cdot\sum h$ either way.
 
 > [!trap] Where the points go
 > - **Sign of the ramp.** $e^{+j\frac{3\pi}{4}m}$ is an advance, $\{4,5,6,7,8,1,2,3\}$; the delay $\{6,7,8,1,2,3,4,5\}$ loses it (SP2025 #8). A linear shift giving nine samples $\{0,1,\dots,8\}$ is wrong (FA2019 #4).
 > - **$X[\langle k-m\rangle_N]$ means $e^{+j\frac{2\pi m}{N}n}$**, not $e^{-j\dots}$ (SP2025 #7(b)).
 > - **Alternating signs are a shift by $\frac N2$**, not a negation (SP2023 #9(b)); $e^{-j\pi}$ alone is the negation (SP2021 #4).
 > - **Reversal keeps $x[0]$**: $\{x_0,x_4,x_3,x_2,x_1\}$ (FA2024 #8); it reverses $k$ as well (FA2021 #3(b)).
-> - **Wrap, don't drop.** $y_6[0]=y[0]+y[6]$ (FA2021 #6(b)); $N=7\lt8$ still wraps $y[7]$; $N\ge N_1+N_2-1$, not $\max(N_1,N_2)$ (FA2019 #11).
+> - **Wrap, don't drop** (not on Fall 2026 MT2). $y_6[0]=y[0]+y[6]$ (FA2021 #6(b)); $N=7\lt8$ still wraps $y[7]$; $N\ge N_1+N_2-1$, not $\max(N_1,N_2)$ (FA2019 #11).
 
 ## Practice problems
 
-> [!question] Practice 1 — linear vs circular
+> [!question] Practice 1 — linear vs circular (not on Fall 2026 MT2)
 > $x=\{\underset{\uparrow}{1},\ 2,\ 0,\ -1\}$, $h=\{\underset{\uparrow}{3},\ 1,\ 2\}$. (a) $x*h$. (b) The 4-point $x\circledast h$ (pad $h$ with one zero). (c) Smallest $N$ for which the $N$-point circular convolution equals $x*h$. (d) The 5-point circular convolution.
 
 > [!success]- Solution

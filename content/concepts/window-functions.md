@@ -74,6 +74,24 @@ Multiply sample by sample, $s[n]h[n]$, then take the DTFT or DFT (figure in §1,
 - Why tapering helps: a window weights the samples it keeps. The DFT's periodic extension puts a discontinuity at the window edges ([[concepts/spectral-leakage|leakage]]); down-weighting the edge samples lowers their influence on the spectrum.
 - **Windowing is not an LTI system.** It is multiplication in time, convolution in frequency; convolution in time (filtering) is multiplication in frequency. There is no impulse response and no $H_d(\omega)$ to multiply by.
 
+## 6. Midterm 2 quick check
+
+> [!question] Q1 · rectangular or Hamming, $N=50$
+> (a) Main-lobe width of each window. (b) Two equal tones $0.1\pi$ apart: which window gives full-lobe separation? (c) Peak height for $2\cos(0.4\pi n)$ with each window.
+
+> [!success]- Answer
+> - (a) Rectangular $\frac{4\pi}{50}=0.08\pi$; Hamming $\frac{8\pi}{50}=0.16\pi$.
+> - (b) Rectangular only: $0.1\pi\gt0.08\pi$, but $0.1\pi\lt0.16\pi$.
+> - (c) $\frac A2\sum_nw[n]$. Rectangular: $50$. Hamming: the cosine term sums to $1$ over $0\le n\le N-1$, so $\sum_nh[n]=0.54N-0.46=26.54$, peak $\approx26.5$. Read $A$ by dividing by $\sum_nw[n]$, not $N$.
+
+> [!question] Q2 · True or false
+> (a) A tone 30 dB weaker than a strong tone several main-lobe widths away is easier to see with Hamming than with rectangular. (b) To separate two equal tones as close as possible with fixed $N$, use Hamming. (c) Applying a Hamming window is an LTI filter.
+
+> [!success]- Answer
+> - (a) **True:** rectangular side lobes ($-13$ dB) can bury it; Hamming's stay below $-42$ dB.
+> - (b) **False:** rectangular has the narrower main lobe, $\frac{4\pi}{N}$ vs $\frac{8\pi}{N}$.
+> - (c) **False:** multiplication in time, convolution in frequency.
+
 > [!trap]
 > - Hamming does **not** narrow main lobes: twice as wide, with lower side lobes ([[exams/midterm-2/past-exams/spring-2025|SP2025 #1(f)]]).
 > - "No window" is the rectangular window: $-13$ dB side lobes are always there.
@@ -82,7 +100,7 @@ Multiply sample by sample, $s[n]h[n]$, then take the DTFT or DFT (figure in §1,
 > - The Hamming cosine's denominator is $N-1$, with $N$ the window length.
 
 > [!exam] Midterm 2
-> Window tradeoff as True/False; weak-tone masking inside spectral-analysis problems. [[exams/midterm-2/past-exams/spring-2025|SP2025 #1(f)]] · [[exams/midterm-2/true-false-bank|T/F bank]] Q40 · [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]].
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Window tradeoff as True/False; weak-tone masking inside spectral-analysis problems. [[exams/midterm-2/past-exams/spring-2025|SP2025 #1(f)]] · [[exams/midterm-2/true-false-bank|T/F bank]] Q40 · [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]].
 
 **Where it appears:** [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] §3–3.1 (eqs. 16–21, Figures 2–4, slides 9–13) · [[5-dft-and-fft/20-discrete-fourier-transform|L20]] §1 (windowing motivates the DFT) · [[3-fourier-analysis/14-dtft-properties|L14]] (windowing property) · [[problems/dft-spectral-analysis|DFT spectral analysis]].
 

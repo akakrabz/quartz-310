@@ -5,7 +5,7 @@ tags: [concept, frequency-response, dtft, midterm-2]
 aliases: ["group delay", "linear phase", "generalized linear phase", "uniform group delay", "non-uniform group delay", "constant group delay"]
 ---
 
-*Lecture 16 (Wed Oct 7) §2.2.1 · [[homework/hw6|HW6]] #3(b), #6 · family: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]*
+*Lecture 16 (Wed Oct 7) §2.2.1 · [[homework/hw6|HW6]] #3(b), #6, HW7 #1 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]*
 
 > [!abstract] In one breath
 > - $H_d(\omega)=e^{-jk\omega}$ sends $e^{j\omega_0n}$ to $e^{j\omega_0(n-k)}$: a linear phase is a pure delay of $k$ samples.
@@ -60,6 +60,32 @@ Magnitude decides which frequencies survive; phase decides where they land.
 > [!key] Symmetric or antisymmetric FIR ⇒ generalized linear phase (Singer–Munson §6.4)
 > Real $h[n]$, length $N$, centre $M=\frac{N-1}{2}$. Symmetric $h[n]=h[N-1-n]$: $H_d(\omega)=e^{-jM\omega}R(\omega)$; antisymmetric $h[n]=-h[N-1-n]$: $H_d(\omega)=je^{-jM\omega}R(\omega)$; $R$ real. So $\tau_{gd}=M$ everywhere. Causal rational IIR filters cannot have generalized linear phase.
 
+## 4. Midterm 2 quick check
+
+> [!question] Q1 · An antisymmetric FIR
+> $y[n]=2x[n]-x[n-1]+x[n-3]-2x[n-4]$. (a) Group delay? (b) $H_d(\frac{\pi}{2})$ in polar form. (c) Output for $x[n]=\cos(\frac{\pi}{2}n)$.
+
+> [!success]- Answer
+> **(a)** $h=\{\underset{\uparrow}{2},-1,0,1,-2\}$, antisymmetric about $M=2$:
+> $$
+> \begin{aligned}
+> H_d(\omega)&=e^{-j2\omega}\left(2e^{j2\omega}-2e^{-j2\omega}-e^{j\omega}+e^{-j\omega}\right)\\
+> &=2j\,e^{-j2\omega}\,(2\sin2\omega-\sin\omega),
+> \end{aligned}
+> $$
+> so $\tau_{gd}=2$ for every $\omega$: the $j$ and the sign of the real factor add only constants and $\pi$ jumps.
+>
+> **(b)** $2\sin\pi-\sin\frac{\pi}{2}=-1$: $H_d(\frac{\pi}{2})=2j\,e^{-j\pi}(-1)=2j=2e^{j\pi/2}$. Phase $+\frac{\pi}{2}$, delay still $2$.
+>
+> **(c)** $y[n]=2\cos(\frac{\pi}{2}n+\frac{\pi}{2})=-2\sin(\frac{\pi}{2}n)$.
+
+> [!question] Q2 · True or False
+> (a) $y[n]=\frac12y[n-1]+x[n]$ delays every frequency by one sample. (b) Cascading linear-phase FIR filters with group delays $2$ and $3$ gives group delay $5$.
+
+> [!success]- Answer
+> (a) **False.** $H_d=\frac{1}{1-\frac12e^{-j\omega}}$ has non-linear phase: $\tau_{gd}(\omega)=\dfrac{\frac12\cos\omega-\frac14}{\frac54-\cos\omega}$, $1$ at $\omega=0$ but $-\frac13$ at $\pm\pi$.
+> (b) **True.** Phases add, $-2\omega-3\omega$ plus constants and jumps: $\tau_{gd}=5$. E.g. $\{1,0,0,0,1\}*\{1,2,3,4,3,2,1\}$ is symmetric about $n=5$.
+
 > [!trap]
 > - Jumps ($\pi$ or $2\pi$) do not make a phase non-linear; read the slope between breaks.
 > - The slope is the delay, not the phase value: $e^{-j2\omega}$ has principal angle $+\frac{\pi}{2}$ at $\frac{3\pi}{4}$, delay $2$.
@@ -67,13 +93,13 @@ Magnitude decides which frequencies survive; phase decides where they land.
 > - Zero phase is linear phase with slope $0$: $1+2\cos2\omega$ ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3) has $\tau_{gd}=0$, non-causal.
 
 > [!exam] Exam
-> No past Midterm 2 asks for a group delay; linear-phase factoring appears inside every magnitude-and-phase sketch. Family: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]].
-> - [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #3 · [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3 · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(b) · [[homework/hw6|HW6]] #3(b), #6
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. No past Midterm 2 asks for a group delay by name; linear phase and fractional delays appear inside magnitude-and-phase and inverse-DTFT problems. Family: [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]].
+> - [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #3 · [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3 · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(b) · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #5 · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #2, #3 · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #5 · [[homework/hw6|HW6]] #3(b), #6 · HW7 #1 ([[exams/quiz-2|Quiz 2 page]])
 
-**Where it appears:** [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] §2.2.1 (slides 10–15); [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]; [[homework/hw6|HW6]] #3(b), #6; [[exams/quiz-2|Quiz 2]]; [[demos/frequency-response-explorer|frequency response explorer]].
+**Where it appears:** [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]] §2.2.1 (slides 10–15); [[problems/magnitude-phase-and-group-delay|magnitude, phase and group delay]]; [[homework/hw6|HW6]] #3(b), #6; HW7 #1 on [[exams/quiz-2|Quiz 2]]; [[demos/frequency-response-explorer|frequency response explorer]].
 
 ## Related
 [[concepts/magnitude-and-phase-response|magnitude and phase response]] · [[concepts/frequency-response|frequency response]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/fir-and-iir|FIR and IIR]]
 
 ### Sources for this page
-Lecture 16 notes §2.2.1 (eqs. 28–30, Fig. 3), slides 10–15 (unannotated; answers worked here); Singer–Munson §5.3, §6.4; FA2023, FA2024, SP2025 MT2 keys; HW6.
+Lecture 16 notes §2.2.1 (eqs. 28–30, Fig. 3), slides 10–15 (unannotated; answers worked here); Singer–Munson §5.3, §6.4; FA2019–SP2025 MT2 keys; HW6–HW7.

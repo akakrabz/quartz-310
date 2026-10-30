@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["periodic sinc", "Dirichlet function", "Dirichlet kernel", "C(ω)", "digital sinc", "DTFT of a finite cosine"]
 ---
 
-*Lectures 22 (Wed Oct 21) §1.1 and 23 (Fri Oct 23) §1 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lectures 22 (Wed Oct 21) §1.1 and 23 (Fri Oct 23) §1 · HW9 #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - A length-$N$ cosine $A\cos(\omega_0n)$ has DTFT $\frac A2C(\omega-\omega_0)+\frac A2C(\omega+\omega_0)$.
@@ -63,6 +63,23 @@ $x[n]=A\cos(\omega_0n)$, $0\le n\le N-1$ (notes eq. 1; cosine rather than sine a
 >
 > The exact $\lvert X_d(\frac\pi3)\rvert$ is $68$: the mirror term adds $\frac A2\lvert C(\frac{2\pi}{3})\rvert=4$ for $N=16$. Plots and keys read the lobe alone.
 
+## 3. Midterm 2 quick check
+
+> [!question] Q1 · predict the lobe
+> $x[n]=6\cos(0.4\pi n)$, $0\le n\le19$. (a) Height, centre and nulls of the main lobe of $\lvert X_d(\omega)\rvert$ on $0\le\omega\le\pi$. (b) The same for $6e^{j0.4\pi n}$, $0\le n\le19$.
+
+> [!success]- Answer
+> - (a) $N=20$: height $\frac{AN}{2}=60$ at $\omega_0=0.4\pi$; nulls $\frac{2\pi}{20}=0.1\pi$ either side, at $0.3\pi$ and $0.5\pi$ (width $\frac{4\pi}{N}=0.2\pi$). $\lvert X_d(0.4\pi)\rvert=60$ exactly: $0.4\pi=\frac{2\pi\cdot4}{20}$ is a null of the mirror lobe.
+> - (b) One lobe of height $AN=120$ at $0.4\pi$, same nulls; nothing at $-0.4\pi$.
+
+> [!question] Q2 · True or false
+> (a) Doubling $N$ doubles the main-lobe height and halves its width. (b) $C\!\left(\frac{\pi}{N}\right)=0$. (c) A length-$N$ cosine's DTFT has Dirac impulses at $\pm\omega_0$.
+
+> [!success]- Answer
+> - (a) **True:** height $N$, width $\frac{4\pi}{N}$.
+> - (b) **False:** nulls sit at $\frac{2\pi k}{N}$, $k\ne0$; $\frac{\pi}{N}$ is inside the main lobe, $\lvert C\rvert=\frac{1}{\sin(\pi/2N)}\approx\frac{2N}{\pi}$.
+> - (c) **False:** finite $N$ gives lobes of height $\frac{AN}{2}$; impulses only as $N\to\infty$.
+
 > [!trap]
 > - $\frac{4\pi}{N}$ is the full null-to-null width; the half-width is $\frac{2\pi}{N}$.
 > - A cosine puts $\frac{AN}{2}$ in each lobe; $Ae^{j\omega_0n}$ puts $AN$ in one.
@@ -70,7 +87,7 @@ $x[n]=A\cos(\omega_0n)$, $0\le n\le N-1$ (notes eq. 1; cosine rather than sine a
 > - The course sinc is $\frac{\sin t}{t}$; $C(\omega)$ is a ratio of sines and $2\pi$-periodic.
 
 > [!exam] Midterm 2
-> Read $\omega_0$, $N$, $A$ from a lobe; the finite cosine's spectrum is lobes, not impulses. [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(c)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Read $\omega_0$, $N$, $A$ from a lobe; the finite cosine's spectrum is lobes, not impulses. [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(c)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
 
 **Where it appears:** [[5-dft-and-fft/22-spectral-analysis|L22]] §1.1 (eqs. 1–10, Figure 1, slides 4–6) · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] §1 (eqs. 3–4) · [[problems/dft-spectral-analysis|DFT spectral analysis]].
 

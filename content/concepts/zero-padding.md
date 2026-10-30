@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["zero padding", "zero-padding", "zero-padded DFT", "padding", "padded DFT"]
 ---
 
-*Lectures 20 (Fri Oct 16) §2.3 and 22 (Wed Oct 21) §2.1 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
+*Lectures 20 (Fri Oct 16) §2.3 and 22 (Wed Oct 21) §2.1 · HW9 #3 · family: [[problems/dft-values-and-zero-padding|DFT values and zero padding]]*
 
 > [!abstract] In one breath
 > - Append $L$ zeros: same nonzero samples, same DTFT; the $(N+L)$-point DFT samples $X_d(\omega)$ every $\frac{2\pi}{N+L}$.
@@ -58,7 +58,25 @@ aliases: ["zero padding", "zero-padding", "zero-padded DFT", "padding", "padded 
 - The notes' example ([[concepts/spectral-analysis|spectral analysis]] §2, Figure 3): two tones at $0.55\pi$ and $0.65\pi$, $N=32$, show one peak; padded with $96$ zeros to $128$, two main lobes at $\approx0.547\pi$ and $\approx0.641\pi$, the second half as tall.
 - Zeros add no energy and no information: padding only reads more values of the same DTFT.
 - It does **not** help [[concepts/frequency-resolution|lobe separation]] (Lecture 23 §2): the lobes stay $\frac{4\pi}{N}$ wide; resolving closer tones needs more real samples.
-- Padding for [[concepts/circular-convolution|circular convolution]]: both inputs to $N\ge N_1+N_2-1$ makes circular equal linear.
+- Padding for [[concepts/circular-convolution|circular convolution]]: both inputs to $N\ge N_1+N_2-1$ makes circular equal linear (computing it is not on Fall 2026 MT2).
+
+## 4. Midterm 2 quick check
+
+> [!question] Q1 · which bins match
+> A length-10 $x[n]$ (DFT $X[k]$) is padded with 6 zeros to $y[n]$ (length 16, DFT $Y[k]$). (a) Which $X[k]$ appear in $Y[k]$? (b) Which $Y[k]$ equals $X_d\!\left(\frac{3\pi}{4}\right)$? (c) Fewest zeros to append instead so that the padded DFT holds every $X[k]$ and $X_d\!\left(\frac{\pi}{4}\right)$?
+
+> [!success]- Answer
+> - (a) $k'=\frac{16k}{10}=\frac{8k}{5}$ is an integer only for $k=0,5$: $\boldsymbol{X[0]=Y[0]}$, $\boldsymbol{X[5]=Y[8]}$; no other match.
+> - (b) $\frac{2\pi k'}{16}=\frac{3\pi}{4}\Rightarrow k'=6$: $\boldsymbol{Y[6]}$ (not a bin of $X$: $k=3.75$).
+> - (c) The length must be a multiple of $10$ (every $X[k]$) and of $8$ ($\frac{\pi}{4}=\frac{2\pi}{8}$): $\mathrm{lcm}=40$, **30 zeros**; then $X[k]=\tilde X[4k]$, $X_d\!\left(\frac\pi4\right)=\tilde X[5]$.
+
+> [!question] Q2 · True or false ($x[n]$ of length $N$ padded with $N$ zeros to $y[n]$)
+> (a) $Y[2k]=X[k]$. (b) $Y[2k+1]$ are values of $X_d(\omega)$ halfway between the bins of $X$. (c) $\sum_k\lvert Y[k]\rvert^2=\sum_k\lvert X[k]\rvert^2$.
+
+> [!success]- Answer
+> - (a) **True:** $\frac{2\pi\cdot2k}{2N}=\frac{2\pi k}{N}$.
+> - (b) **True:** $\frac{2\pi(2k+1)}{2N}=\frac{(2k+1)\pi}{N}$: more samples of the same DTFT.
+> - (c) **False:** Parseval on each, $\sum_n\lvert x[n]\rvert^2=\frac1N\sum\lvert X\rvert^2=\frac{1}{2N}\sum\lvert Y\rvert^2$, so $\sum\lvert Y\rvert^2=2\sum\lvert X\rvert^2$.
 
 > [!trap]
 > - **Zero padding never changes $X_d(\omega)$;** it only refines the DFT grid.
@@ -68,7 +86,7 @@ aliases: ["zero padding", "zero-padding", "zero-padded DFT", "padding", "padded 
 > - $X_d(\omega)=Y_d(3\omega)$ after padding to $3N$ is false; $X_d(\omega)=Y_d(\omega)$ and $X[k]=Y[3k]$ are true.
 
 > [!exam] Midterm 2 (the most repeated idea)
-> Bin matching after padding, smallest $N$ containing given frequencies, padded vs longer DFTs. [[exams/midterm-2/past-exams/spring-2025|SP2025 #7(c), #1(d)]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #9(c), #1(c)]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #7, #1(d)]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6(c), #1(f)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7(b), #1(d)]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(a)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3 (Q12–Q17).
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Bin matching after padding, smallest $N$ containing given frequencies, padded vs longer DFTs. [[exams/midterm-2/past-exams/spring-2025|SP2025 #7(c), #1(d)]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #9(c), #1(c)]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #7, #1(d)]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6(c), #1(f)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7(b), #1(d)]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(a)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3 (Q12–Q17).
 
 **Where it appears:** [[5-dft-and-fft/20-discrete-fourier-transform|L20]] §2.3 (eqs. 20–31, Exercise 1, slides 11–13) · [[5-dft-and-fft/22-spectral-analysis|L22]] §2.1 · [[problems/dft-values-and-zero-padding|DFT values and zero padding]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3.
 

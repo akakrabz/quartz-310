@@ -5,7 +5,7 @@ tags: [concept, dtft, midterm-2]
 aliases: ["DTFT pairs", "DTFT table", "common DTFT pairs", "Dirac delta", "impulse pairs", "DTFT of periodic signals"]
 ---
 
-*Lecture 14 (Fri Sep 25) §2 · [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5 · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
+*Lecture 14 (Fri Sep 25) §2 · [[homework/hw5|HW5]] #1(b)–(d), [[homework/hw6|HW6]] #3–#5 · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
 
 > [!abstract] In one breath
 > - Absolutely summable signals: $X(z)$ at $z=e^{j\omega}$, or the geometric series.
@@ -43,6 +43,7 @@ aliases: ["DTFT pairs", "DTFT table", "common DTFT pairs", "Dirac delta", "impul
 | $\cos(\omega_0 n+\theta)$ | $\pi\left[e^{j\theta}\delta(\omega-\omega_0)+e^{-j\theta}\delta(\omega+\omega_0)\right]$ |
 | $u[n]$ | $\dfrac{1}{1-e^{-j\omega}}+\pi\,\delta(\omega)$ |
 | $(-1)^n u[n]$ | $\dfrac{1}{1+e^{-j\omega}}+\pi\,\delta(\omega-\pi)$ |
+| $e^{j\omega_0 n}u[n]$ ([[homework/hw6\|HW6]] #4(b)) | $\dfrac{1}{1-e^{-j(\omega-\omega_0)}}+\pi\,\delta(\omega-\omega_0)$ |
 
 ## 2. Ordinary pairs (Lecture 14, Table 1, with conditions)
 
@@ -60,11 +61,12 @@ aliases: ["DTFT pairs", "DTFT table", "common DTFT pairs", "Dirac delta", "impul
 
 Notes' definitions (eqs. 23–25): $\mathrm{sinc}(Ln)=\frac{\sin(Ln)}{Ln}$; $\mathrm{rect}\!\left(\frac{n-k}{L}\right)=1$ for $k-\frac L2\lt n\le k+\frac L2$; $\Delta\!\left(\frac nL\right)=1-\left|\frac nL\right|$ for $|n|\le L$. Every entry repeats every $2\pi$. $\mathrm{sinc}^2$ is absolutely summable.
 
-> [!key] Energy-only pair: ideal low-pass (not absolutely summable)
+> [!key] Energy-only pairs: ideal low-pass, fractional delay (not absolutely summable)
 > | $x[n]$ | $X_d(\omega)$ on $-\pi\le\omega\le\pi$ | holds when |
 > |---|---|---|
 > | $\dfrac{\sin(Wn)}{\pi n}=\dfrac{W}{\pi}\,\mathrm{sinc}(Wn)$ | $1$ for $\lvert\omega\rvert\le W$, else $0$ | $0\lt W\lt\pi$ |
 > | $\mathrm{sinc}(Ln)$ | $\dfrac{\pi}{L}\,\mathrm{rect}\!\left(\frac{\omega}{2L}\right)$: $\dfrac{\pi}{L}$ for $\lvert\omega\rvert\lt L$, else $0$ | $0\lt L\lt\pi$ |
+> | $\dfrac{\sin(\pi(n-D))}{\pi(n-D)}$ ($D=3.5$: $\dfrac{(-1)^n}{\pi(n-3.5)}$, [[homework/hw6\|HW6]] #3(b)) | $e^{-j\omega D}$ | $D$ not an integer |
 >
 > The sinc decays like $1/n$: not absolutely summable, converges in energy.
 
@@ -76,6 +78,31 @@ Notes' definitions (eqs. 23–25): $\mathrm{sinc}(Ln)=\frac{\sin(Ln)}{Ln}$; $\ma
 
 Course $\mathrm{sinc}(x)=\frac{\sin x}{x}$. Routes: geometric series; $X(z)$ at $z=e^{j\omega}$ when the ROC contains $|z|=1$; [[concepts/dtft-properties|properties]] applied to a known pair. No DTFT: $2^nu[n]$, anything whose ROC misses the unit circle without touching it (a pole on $|z|=1$ gives impulses).
 
+## 3. Midterm 2 quick check
+
+> [!question] Q1 · A sine with a phase
+> Find $X_d(\omega)$ on $[-\pi,\pi]$ for $x[n]=2+4\sin(\frac{\pi}{3}n+\frac{\pi}{6})$.
+
+> [!success]- Answer
+> $4\sin\theta=-2je^{j\theta}+2je^{-j\theta}$ with $\theta=\frac{\pi}{3}n+\frac{\pi}{6}$, and $-je^{j\pi/6}=e^{-j\pi/3}$:
+> $$
+> x[n]=2+2e^{-j\pi/3}e^{j\frac{\pi}{3}n}+2e^{j\pi/3}e^{-j\frac{\pi}{3}n}
+> $$
+> $$
+> X_d(\omega)=4\pi\,\delta(\omega)+4\pi e^{-j\pi/3}\,\delta\!\left(\omega-\tfrac{\pi}{3}\right)+4\pi e^{j\pi/3}\,\delta\!\left(\omega+\tfrac{\pi}{3}\right),
+> $$
+> repeated every $2\pi$. Areas at $\pm\frac{\pi}{3}$ are conjugates (real $x$); the constant $2$ gives area $2\pi\cdot2$.
+
+> [!question] Q2 · True or False
+> (a) The DTFT of $(\frac12)^{|n|}$ is real and positive for every $\omega$. (b) $\cos(\frac{\pi}{4}n)u[n]\leftrightarrow\frac{\pi}{2}\big[\delta(\omega-\frac{\pi}{4})+\delta(\omega+\frac{\pi}{4})\big]$.
+
+> [!success]- Answer
+> (a) **True.** Row $a^{\lvert n\rvert}$: $\frac{3/4}{5/4-\cos\omega}$, from $\frac13$ (at $\pm\pi$) to $3$ (at $0$).
+> (b) **False.** The impulses are right, but a one-sided cosine also has an ordinary part. Modulation of the $u[n]$ pair:
+> $$
+> X_d(\omega)=\frac{1-\frac{\sqrt2}{2}e^{-j\omega}}{1-\sqrt2\,e^{-j\omega}+e^{-j2\omega}}+\frac{\pi}{2}\left[\delta\!\left(\omega-\tfrac{\pi}{4}\right)+\delta\!\left(\omega+\tfrac{\pi}{4}\right)\right].
+> $$
+
 > [!trap]
 > - $\frac{1}{1-2e^{-j\omega}}$ is not the DTFT of $2^nu[n]$ ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] 1(a)).
 > - Finite length means no impulses: $\cos(\frac{\pi}{32}n)$, $0\le n\le15$ ([[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] 1(c)).
@@ -83,8 +110,8 @@ Course $\mathrm{sinc}(x)=\frac{\sin x}{x}$. Routes: geometric series; $X(z)$ at 
 > - $e^{-j\omega/2}$ inverts to $\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$, not $\delta[n-\frac12]$ ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] 1(b)).
 
 > [!exam] Exam
-> Sinc and impulse pairs, sketching a spectrum, inverse DTFT of a piecewise-constant $X_d$. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
-> - [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(c), #2 · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #2–#4 · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #7 · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(b), #3, #5 · [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] #9 · [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Sinc and impulse pairs, sketching a spectrum, inverse DTFT of a piecewise-constant $X_d$. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
+> - [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #2 · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(b), (c), #2 · [[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #2–#4 · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #7 · [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #2(c) · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(b), (c), #3, #5 · [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] #9 · [[homework/hw5|HW5]] #1(b)–(d), [[homework/hw6|HW6]] #3–#5
 
 **Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]] Exercise 2, [[3-fourier-analysis/14-dtft-properties|L14]] §2 (slides 7–9); [[problems/dtft-and-inverse-dtft|DTFT family]]; [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #3–#5.
 
@@ -92,4 +119,4 @@ Course $\mathrm{sinc}(x)=\frac{\sin x}{x}$. Routes: geometric series; $X(z)$ at 
 [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/z-transform-pairs|z-transform pairs]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
-Lecture 14 notes §2 (eqs. 13–25), Table 1, slides 7–9; Lecture 13 Exercise 2; transform tables Table 6; HW5 #1 solutions; Midterm 2 keys cited.
+Lecture 14 notes §2 (eqs. 13–25), Table 1, slides 7–9; Lecture 13 Exercise 2; transform tables Table 6; HW5 #1, HW6 #3–#4 solutions; Midterm 2 keys cited.

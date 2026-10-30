@@ -63,6 +63,24 @@ $$
 >
 > Half-lobe: $N\gt1600$, $0.2$ s.
 
+## 3. Midterm 2 quick check
+
+> [!question] Q1 · how many samples?
+> Two equal-amplitude tones at $\omega_1=0.30\pi$ and $\omega_2=0.34\pi$. (a) Smallest $N$ for full-lobe and for half-lobe separation. (b) With $N=20$, does zero padding to 256 separate them? (c) In hertz: $f_s=2$ kHz, tones $10$ Hz apart; samples and seconds for full-lobe separation?
+
+> [!success]- Answer
+> - (a) $\Delta\omega=0.04\pi$. Full: $N\gt\frac{4\pi}{0.04\pi}=100$, so $N=101$. Half: $N\gt50$, so $N=51$.
+> - (b) **No.** At $N=20$ the lobes are $\frac{4\pi}{20}=0.2\pi$ wide (half-lobe would need $\Delta\omega\gt0.1\pi$); padding samples the same merged lobe more densely: one peak.
+> - (c) $N\gt\frac{2f_s}{\Delta f}=\frac{4000}{10}=400$ samples; $NT\gt\frac{2}{\Delta f}=0.2$ s (half-lobe: 200 samples, $0.1$ s).
+
+> [!question] Q2 · True or false
+> (a) Doubling $f_s$ for the same recording time resolves tones closer in hertz. (b) Half-lobe separation needs half as many samples as full-lobe. (c) A Hamming window lets the same $N$ separate closer tones.
+
+> [!success]- Answer
+> - (a) **False:** $N$ doubles but $\Delta\omega=\frac{2\pi\Delta f}{f_s}$ halves; the limit $\Delta f\gt\frac{2}{NT}$ depends on the duration only.
+> - (b) **True:** $\frac{2\pi}{\Delta\omega}$ vs $\frac{4\pi}{\Delta\omega}$.
+> - (c) **False:** Hamming main lobes are twice as wide ([[concepts/window-functions|window functions]]).
+
 > [!trap]
 > - $\frac{4\pi}{N}$ is the full lobe width; the edges are $\pm\frac{2\pi}{N}$ from the peak, so full separation needs $\Delta\omega\gt\frac{4\pi}{N}$, not $\frac{2\pi}{N}$.
 > - $N$ counts real samples: padding to $N+L$ leaves the lobes $\frac{4\pi}{N}$ wide ([[exams/midterm-2/past-exams/fall-2023|FA2023 #6(c)]]).
@@ -70,7 +88,7 @@ $$
 > - The criteria assume similar amplitudes; a weak tone needs a [[concepts/window-functions|window]] even when separated.
 
 > [!exam] Midterm 2
-> Resolution appears inside spectral-analysis problems: does padding resolve closer tones, which record length separates two given frequencies. [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Resolution appears inside spectral-analysis problems: does padding resolve closer tones, which record length separates two given frequencies. [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3.
 
 **Where it appears:** [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] §2 (eqs. 5–15, Exercise 1, slides 6–8) · [[problems/dft-spectral-analysis|DFT spectral analysis]].
 

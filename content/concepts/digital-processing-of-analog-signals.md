@@ -5,7 +5,7 @@ tags: [concept, sampling, reconstruction, frequency-response, midterm-2]
 aliases: ["A/D → H_d → D/A", "digital filtering of analog signals", "effective analog filter", "discrete-time processing of continuous-time signals", "overall sampling system", "analog cutoff"]
 ---
 
-*Lecture 18 (Mon Oct 12) §3, slides 10–11 · HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]]*
+*Lecture 18 (Mon Oct 12) §3, slides 10–11 · HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #5–6 · family: [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]]*
 
 > [!abstract] In one breath
 > - Chain: $x_a(t)\to$ ideal A/D ($T$) $\to x[n]\to H_d(\omega)\to y[n]\to$ ideal D/A ($T$) $\to y_a(t)$. Three sketches: $X_d$, $Y_d=H_dX_d$, $Y_a$.
@@ -66,6 +66,25 @@ Three sketches: $X_d$ ([[concepts/sampling|sampling]]), then $Y_d=H_dX_d$ ([[con
 - Same $H_d$, different $T$, different analog cutoff $\omega_c/T$: $40\pi$ vs $25\pi$ rad/s.
 - Aliasing is harmless while the foreign copy starts beyond the cutoff: the copy at $2\pi$ begins at $2\pi-\Omega_{\max}T$, so the condition is $\omega_c\le2\pi-\Omega_{\max}T$ (here $\frac{\pi}{2}\le2\pi-60\pi T$, i.e. $T\le\frac{1}{40}$ s).
 - The exam recipe (largest $T$ for a wanted low-, high- or band-pass, $f_s\ge f_c+B$, the sketches and the keys) lives on the family page [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]]; HW7 #4 (triangle to $50\pi$, $\omega_c=\frac{\pi}{2}$, $T=\frac{1}{50},\frac{1}{40}$ s) is worked on the [[exams/quiz-2|Quiz 2 page]].
+- [[homework/hw8|HW8]] #5–6, same rule: low-pass $\frac{\pi}{8}$ at $f_s=10$ kHz stays LTI for $B$ up to $\frac{2\pi-\pi/8}{2\pi T}=9375$ Hz; a $300$ Hz–$6$ kHz band-pass of a $12$ kHz signal needs $\frac{2\pi}{T}-24000\pi\ge12000\pi$, so $f_s\ge18$ kHz (Nyquist rate $24$ kHz), passband $\frac{\pi}{30}\le\lvert\omega\rvert\le\frac{2\pi}{3}$.
+
+## 4. Midterm 2 quick check
+
+> [!question] Q1 · an alias in the passband
+> $x_a(t)=\cos(600\pi t)+\cos(2200\pi t)$; ideal A/D and D/A at $f_s=2$ kHz; $H_d$ an ideal high-pass passing $\frac{\pi}{2}\lt\lvert\omega\rvert\le\pi$. (a) Where does each tone land in $\omega$? (b) $y_a(t)$? (c) Is the chain an analog high-pass with cutoff $\frac{\omega_c}{T}$?
+
+> [!success]- Answer
+> - (a) $300$ Hz → $0.3\pi$; $1100$ Hz → $1.1\pi\equiv-0.9\pi$, and $\cos(1.1\pi n)=\cos(0.9\pi n)$.
+> - (b) The high-pass drops $0.3\pi$, keeps $0.9\pi$: $y[n]=\cos(0.9\pi n)$, $y_a(t)=\cos(1800\pi t)$, a $900$ Hz tone that was not in the input.
+> - (c) **No.** Cutoff $\frac{\pi/2}{T}=1000\pi$ rad/s ($500$ Hz); an analog high-pass would return $\cos(2200\pi t)$. $2$ kHz $\lt2\cdot1100$ Hz and the alias lands in the passband.
+
+> [!question] Q2 · True or false
+> (a) With $f_s\gt2B$, the chain equals the analog filter $H_d(\Omega T)$ on $\lvert\Omega\rvert\lt\frac{\pi}{T}$. (b) The same $H_d$ at twice the $f_s$ has twice the analog cutoff. (c) Any aliasing in the A/D distorts the output.
+
+> [!success]- Answer
+> - (a) **True** (§1).
+> - (b) **True:** $\frac{\omega_c}{T}=\omega_cf_s$.
+> - (c) **False:** overlap outside the passband is removed by $H_d$ (slide 11; HW8 #6(c)).
 
 > [!trap]
 > - The D/A gain $T$ cancels the sampler's $\frac1T$: $Y_a$ has the heights of $X_a$.
@@ -75,13 +94,13 @@ Three sketches: $X_d$ ([[concepts/sampling|sampling]]), then $Y_d=H_dX_d$ ([[con
 > - $Y_d=H_dX_d$ keeps the $\frac1T$ and the $2\pi$-periodicity; signs and zeros of $H_d$ pass through.
 
 > [!exam] On past exams
-> Six of seven past Midterm 2 exams have an A/D → $H_d$ → D/A chain (SP2021 #9: A/D → D/A, no filter): sketch $X_d$, $Y_d$, $Y_a$; analog cutoff; largest $T$ keeping the output clean. Practice: [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]].
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Six of seven past Midterm 2 exams have an A/D → $H_d$ → D/A chain (SP2021 #9: A/D → D/A, no filter): sketch $X_d$, $Y_d$, $Y_a$; analog cutoff; largest $T$ keeping the output clean. Practice: [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]].
 > - [[exams/midterm-2/past-exams/fall-2019|FA2019]] #9(b)–(c) · [[exams/midterm-2/past-exams/spring-2021|SP2021]] #9 · [[exams/midterm-2/past-exams/fall-2021|FA2021]] #4, #5(b) · [[exams/midterm-2/past-exams/spring-2023|SP2023]] #7(b)–(c) · [[exams/midterm-2/past-exams/fall-2023|FA2023]] #5 · [[exams/midterm-2/past-exams/fall-2024|FA2024]] #5(b)–(c) · [[exams/midterm-2/past-exams/spring-2025|SP2025]] #5 · [[exams/midterm-2/true-false-bank|T/F bank]] §5
 
-**Where it appears:** [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|L18]] §3; HW7 #4 ([[exams/quiz-2|Quiz 2 page]]); [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]; [[demos/sampling-explorer|sampling explorer]].
+**Where it appears:** [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|L18]] §3; HW7 #4 ([[exams/quiz-2|Quiz 2 page]]); [[homework/hw8|HW8]] #5–6; [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]; [[demos/sampling-explorer|sampling explorer]].
 
 ## Related
 [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/sampling|sampling]] · [[concepts/nyquist-criterion|Nyquist criterion]] · [[concepts/aliasing|aliasing]] · [[concepts/frequency-response|frequency response]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]
 
 ### Sources for this page
-Snyder, Lecture 18 slides 10–11 of Oct 12, 2026 with the inked deck; HW7 #4 with solution; past Midterm 2 exams with keys.
+Snyder, Lecture 18 slides 10–11 of Oct 12, 2026 with the inked deck; HW7 #4 and HW8 #5–6 with solutions; past Midterm 2 exams with keys.

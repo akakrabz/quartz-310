@@ -1,10 +1,10 @@
 ---
 title: "Homework"
-description: "ECE 310 homework sets with due dates, lectures, topics and exam skills, linked to walkthroughs: HW1–HW4 (Units 1–2), HW5–HW6 (Unit 3); HW7 worked on the Quiz 2 page."
+description: "ECE 310 homework sets HW1–HW9: due dates, lectures, topics, exam skills and walkthroughs (HW7 on the Quiz 2 page; HW9 after its Oct 30 due date)."
 tags: [homework]
 ---
 
-*Homework · HW1–HW4: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/index|Unit 2]] · HW5–HW6: [[3-fourier-analysis/index|Unit 3]] · HW7: [[exams/quiz-2|Quiz 2 page]] · [[exams/index|Exams]]*
+*Homework HW1–HW9 · HW1–HW4: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/index|Unit 2]] · HW5–HW6: [[3-fourier-analysis/index|Unit 3]] · HW7: [[exams/quiz-2|Quiz 2 page]] · HW8: [[4-sampling-and-reconstruction/index|Unit 4]] · HW9: [[5-dft-and-fft/index|Unit 5]] · Midterm 1 = HW1–HW4, [[exams/midterm-2/index|Midterm 2]] = HW5–HW9 · [[exams/index|Exams]]*
 
 Solve on paper, then open the folded solution. Each problem's **On the exam** line names past problems that reuse the idea.
 
@@ -19,6 +19,8 @@ Solve on paper, then open the folded solution. Each problem's **On the exam** li
 | HW5 | Sun Oct 4 | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]]–[[3-fourier-analysis/14-dtft-properties\|L14]] | DTFTs from the definition; $X_d(0)$, $X_d(\pi)$, $\int X_d$, $\int\lvert X_d\rvert^2$ from a plot | [[homework/hw5\|HW5]] |
 | HW6 | Fri Oct 9 | [[3-fourier-analysis/13-fourier-analysis-and-the-dtft\|L13]]–[[3-fourier-analysis/16-magnitude-and-phase-response\|L16]] | CTFT pairs; $x^*[n]$, $x^*[-n]$; inverse DTFTs; DTFT vs z-transform; accumulator; $x[n]+x[n-10]$; $\omega e^{j\sin\omega}$ | [[homework/hw6\|HW6]] |
 | HW7 | Fri Oct 16 | [[3-fourier-analysis/15-frequency-response\|L15]]–[[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] | magnitude and phase; sinusoid response; sampled spectrum; A/D → $H_d$ → D/A | [[exams/quiz-2\|Quiz 2 page]] |
+| HW8 | Fri Oct 23 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]]–[[4-sampling-and-reconstruction/19-aliasing\|L19]] | aliased sinusoids; choosing $T$; sampled spectra, $T_{\max}$; zero-order hold and ideal D/A; largest $T$ or bandwidth for A/D → $H_d$ → D/A | [[homework/hw8\|HW8]] |
+| HW9 | Fri Oct 30 | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions\|L23]] | circular shift from stem plots; DFT shifted by $N/2$; zero padding 18 → 30; cosines from $\lvert X[k]\rvert$; piano notes from a 256-point DFT | HW9 · DFT properties, zero padding, spectral analysis (walkthrough after its Oct 30 due date) |
 
 ## Homework × exam families
 
@@ -38,7 +40,10 @@ Solve on paper, then open the folded solution. Each problem's **On the exam** li
 | [[problems/dtft-and-inverse-dtft\|DTFTs and inverse DTFTs]] | MT2 | HW5 #1, #2; HW6 #2–#5 |
 | [[problems/lti-response-to-sinusoids\|Response to sinusoids]] | MT2 | HW6 #6(b), #7; HW7 #2 |
 | [[problems/magnitude-phase-and-group-delay\|Magnitude, phase, group delay]] | MT2 | HW6 #6(a); HW7 #1 |
-| [[problems/sampling-and-the-nyquist-rate\|Sampling]] · [[problems/digital-filtering-of-analog-signals\|A/D → filter → D/A]] | MT2 | HW7 #3, #4 |
+| [[problems/sampling-and-the-nyquist-rate\|Sampling]] · [[problems/digital-filtering-of-analog-signals\|A/D → filter → D/A]] | MT2 | HW7 #3, #4; HW8 #1–#6 |
+| [[problems/circular-convolution-and-dft-properties\|DFT properties]] | MT2 | HW9 #1, #2 |
+| [[problems/dft-values-and-zero-padding\|DFT values and zero padding]] | MT2 | HW9 #3 |
+| [[problems/dft-spectral-analysis\|DFT spectral analysis]] | MT2 | HW9 #4, #5 |
 
 ### Sources for this page
-ECE 310 Fall 2026 HW1–HW7 with official solutions (HW6 key posted Oct 16); slide-deck lecture dates.
+ECE 310 Fall 2026 HW1–HW9 and official solutions for HW1–HW8 (HW6 key posted Oct 16, HW8 key v1.1); slide-deck lecture dates.

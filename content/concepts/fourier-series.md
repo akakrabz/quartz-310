@@ -5,7 +5,7 @@ tags: [concept, fourier-series, fourier-analysis, unit-3]
 aliases: ["Fourier series", "CTFS", "DTFS", "continuous-time Fourier series", "discrete-time Fourier series", "Fourier coefficients", "harmonics", "CTFT", "continuous-time Fourier transform"]
 ---
 
-*Lecture 13 (Wed Sep 23) §2–3 · [[homework/hw6|HW6]] #1 · not computed on exams (starred objectives); leads to the [[concepts/dtft|DTFT]]*
+*Lecture 13 (Wed Sep 23) §2–3 · [[homework/hw6|HW6]] #1(a)–(c) (CTFTs) · not computed on exams (starred objectives); leads to the [[concepts/dtft|DTFT]]*
 
 > [!abstract] In one breath
 > - Harmonics are orthogonal, so an inner product with $e^{-jk\Omega_0t}$ picks out one coefficient $c_k$.
@@ -60,6 +60,16 @@ Aperiodic signal = limit $T_0\to\infty$, so $\Omega_0\to0$ and the harmonics fil
 > Versus the series: integral over all time; $k\Omega_0\to\Omega$; no $1/T_0$; the synthesis sum becomes an integral.
 
 - Exists under the Dirichlet conditions on every finite interval (notes); slide 12: finite energy $\int|x(t)|^2dt<\infty$. Unique if it exists.
+- Pairs and properties for [[homework/hw6|HW6]] #1 (from the transform tables, not the notes), then the three results:
+
+$$
+\begin{gathered}
+\delta(t)\leftrightarrow1,\qquad e^{j\Omega_0t}\leftrightarrow2\pi\,\delta(\Omega-\Omega_0),\qquad u(t)\leftrightarrow\tfrac{1}{j\Omega}+\pi\,\delta(\Omega),\\
+x(at)\leftrightarrow\tfrac{1}{|a|}X_c\!\left(\tfrac{\Omega}{a}\right),\qquad x(t-t_0)\leftrightarrow e^{-j\Omega t_0}X_c(\Omega),\\
+\delta(5t-2)\leftrightarrow\tfrac15e^{-j2\Omega/5},\qquad u(t)-u(t-T)\leftrightarrow e^{-j\Omega T/2}\,\frac{2\sin(\Omega T/2)}{\Omega},\\
+\cos(\Omega_0t+\phi_0)\leftrightarrow\pi\big[e^{j\phi_0}\delta(\Omega-\Omega_0)+e^{-j\phi_0}\delta(\Omega+\Omega_0)\big].
+\end{gathered}
+$$
 - Tells how much of every frequency is in a signal, periodic or not. Returns in Unit 4 as $X_a(\Omega)$ ([[concepts/sampling|sampling]]).
 
 ## 3. Discrete-time Fourier series
@@ -94,11 +104,33 @@ Discrete-time harmonics $e^{j\frac{2\pi}{N_0}kn}$: only $N_0$ are distinct, sinc
 > $$
 > The DTFS samples the DTFT at $N_0$ evenly spaced frequencies; the only difference is the $1/N_0$. Worked for the pulse on the [[concepts/dtft|DTFT]] page (Exercise 2).
 
+## 4. Midterm 2 quick check
+
+> [!question] Q1 · DTFS from DTFT samples
+> $\tilde x[n]$ has period $4$; one period is $\{\underset{\uparrow}{1},2,0,0\}$. Use $c_k=\frac{1}{N_0}X_d(\frac{2\pi k}{N_0})$ to find $c_0,\dots,c_3$; check the synthesis at $n=1$.
+
+> [!success]- Answer
+> One period: $X_d(\omega)=1+2e^{-j\omega}$. At $\omega_k=\frac{\pi k}{2}$, $e^{-j\omega_k}=(-j)^k$:
+> $$
+> c_k=\tfrac14\big(1+2(-j)^k\big):\qquad c_0=\tfrac34,\quad c_1=\tfrac{1-2j}{4},\quad c_2=-\tfrac14,\quad c_3=\tfrac{1+2j}{4}.
+> $$
+> Synthesis: $\sum_kc_k\,j^k=\frac34+\frac{2+j}{4}+\frac14+\frac{2-j}{4}=2=\tilde x[1]$. These are the 4-point [[concepts/dft|DFT]] values divided by $4$.
+
+> [!question] Q2 · True or False
+> (a) A sequence with period $N_0=6$ needs infinitely many distinct DTFS coefficients. (b) If $\tilde x[n]$ is real, $c_{N_0-k}=c_k^*$.
+
+> [!success]- Answer
+> (a) **False:** $c_{k+6}=c_k$, six distinct values. (b) **True:** Hermitian symmetry at $\omega_k$: $c_{-k}=c_k^*$ and $c_{-k}=c_{N_0-k}$; in Q1, $c_3=c_1^*$.
+
 > [!trap]
 > - DTFS coefficients carry $\frac{1}{N_0}$; DTFT values do not.
 > - Notes eq. 40, $\angle c_k=-\frac{\pi k}{N_0}(L-1)$, is only the exponential's angle: where the sine ratio is negative, add $\pm\pi$. $N_0=12$, $L=4$: $c_4=\frac{1}{12}\,e^{-j\pi}\,(-1)=+\frac{1}{12}$, so $\angle c_4=0$ (notes Fig. 2(e)), not $-\pi$.
 > - Gibbs overshoot (about $9\%$ of a jump in the limit) does not shrink with more terms.
 > - Discrete-time period: $N_0=L$ from $\omega_0/2\pi=K/L$, not $2\pi/\omega_0$ ([[concepts/periodic-signals|periodic signals]]).
+
+> [!exam] Exam
+> Fall 2026 MT2 (Wed Nov 4) covers Lecture 13, but computing a CTFS or DTFS is starred (not required). What returns: DTFT samples, $X[k]=X_d(\frac{2\pi k}{N})$ ([[concepts/dft|DFT]]), and the CTFT as $X_a(\Omega)$.
+> - [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #7 · [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(h) · [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]] #6(c) · [[homework/hw6|HW6]] #1
 
 **Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]] §2–3 (slides 7–13), [[3-fourier-analysis/12-convolution-as-template-matching|Lecture 12]]; [[homework/hw6|HW6]] #1; returns with the DFT ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #7, [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(h)).
 
@@ -106,4 +138,4 @@ Discrete-time harmonics $e^{j\frac{2\pi}{N_0}kn}$: only $N_0$ are distinct, sinc
 [[concepts/periodic-signals|periodic signals]] · [[concepts/dtft|DTFT]] · [[concepts/dft|DFT]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/template-matching|template matching]] · [[supplements/singer-munson-notes|Singer–Munson notes]]
 
 ### Sources for this page
-Lecture 13 notes §2–3 (eqs. 19–40, 49, Figs. 1–2), slides 7–13; Singer–Munson §2.1, §2.3; HW6; FA2024, FA2023 MT2 keys.
+Lecture 13 notes §2–3 (eqs. 19–40, 49, Figs. 1–2), slides 7–13; Singer–Munson §2.1, §2.3; HW6 #1 key; FA2024, FA2023, SP2021 MT2 keys.

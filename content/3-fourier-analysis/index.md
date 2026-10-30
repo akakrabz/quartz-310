@@ -9,6 +9,8 @@ tags: [dtft, frequency-response, fourier-analysis]
 - What an LTI system does to each frequency: L13 builds the DTFT, L14 ties it to $X(z)$.
 - L15–16: the DTFT of $h[n]$ is the frequency response $H_d(\omega)$: magnitude, phase, group delay.
 
+**Midterm 2:** Wed Nov 4, 7–9 pm, Lectures 13–23 (this unit opens it) → [[exams/midterm-2/index|Midterm 2 review]].
+
 ## Topics
 
 **Fourier analysis**

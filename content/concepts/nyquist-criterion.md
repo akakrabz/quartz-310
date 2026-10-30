@@ -5,7 +5,7 @@ tags: [concept, sampling, nyquist, aliasing, midterm-2]
 aliases: ["Nyquist criterion", "Nyquist rate", "Nyquist frequency", "Nyquist period", "Nyquist interval", "Nyquist sampling theorem", "bandlimited", "bandlimited signal", "guard band", "sampling at the Nyquist rate"]
 ---
 
-*Lecture 17 (Fri Oct 9) §2 and Lecture 19 (Wed Oct 14) §1, §2.1 (slide 7) · HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]*
+*Lecture 17 (Fri Oct 9) §2 and Lecture 19 (Wed Oct 14) §1, §2.1 (slide 7) · HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #3(c), #5(a), #6(a) · family: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]*
 
 > [!abstract] In one breath
 > - Bandlimited to $B$ Hz: $X_a(\Omega)=0$ for $|\Omega|\gt2\pi B$. Copies stay apart iff $f_s\gt2B$ (equivalently $T\lt\frac{1}{2B}$, or $2\pi BT\lt\pi$).
@@ -118,6 +118,24 @@ Same inequality as §1's non-overlap condition: the copy at $2\pi$ starts at $2\
 > - $f_s=800$ Hz: $440$ Hz lands at $1.1\pi\equiv-0.9\pi$, same as a $360$ Hz tone: aliased.
 > - $f_s=880$ Hz: $\sin(2\pi\cdot440\,t)$ samples to $\sin(\pi n)=0$; the criterion is strict.
 
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · Nyquist rates
+> Find the Nyquist rate of (a) $x_a(t)=\cos(300\pi t)\cos(100\pi t)$, (b) $x_a\!\left(\frac t2\right)$, (c) $x_a^2(t)$.
+
+> [!success]- Answer
+> - (a) $\frac12\cos(400\pi t)+\frac12\cos(200\pi t)$: $B=200$ Hz, rate $\boldsymbol{400}$ **Hz** ($T_N=2.5$ ms). Not $2\cdot150$: a product adds frequencies.
+> - (b) Stretching by 2 halves every frequency: $B=100$ Hz, rate $\boldsymbol{200}$ **Hz**.
+> - (c) Squaring doubles the band: $\cos^2(400\pi t)$ contains $\cos(800\pi t)$, $B=400$ Hz, rate $\boldsymbol{800}$ **Hz**.
+
+> [!question] Q2 · True or false
+> (a) If $x_a(t)$ has Nyquist rate $f_N$, then $x_a(t)\cos(2\pi f_1t)$ has Nyquist rate $f_N+2f_1$. (b) A rectangular pulse in time can be sampled without aliasing if $f_s$ is high enough. (c) $\cos(200\pi t)+\sin(500\pi t)$ has Nyquist rate $500$ Hz.
+
+> [!success]- Answer
+> - (a) **True:** modulation moves the band to $\pm f_1$: $B+f_1$, rate $2B+2f_1$.
+> - (b) **False:** time-limited means not bandlimited; it aliases at every $f_s$.
+> - (c) **True:** $B=250$ Hz.
+
 > [!trap]
 > - **$B$ is in hertz:** $\Omega_{\max}=1000\pi$ rad/s means $B=500$ Hz, rate $1000$ Hz (not $2000\pi$), $T_N=1$ ms ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #5(a)).
 > - **Rate or period?** [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #5(a) asks for the largest $T$: $\frac{1}{8000}$ s for a $4$ kHz signal.
@@ -127,10 +145,10 @@ Same inequality as §1's non-overlap condition: the copy at $2\pi$ starts at $2\
 > - Some exams allow aliasing outside a filter's passband and ask for $T\gt T_N$ ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #5(c); [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]]).
 
 > [!exam] On past exams
-> Nyquist rate or period $T_N$ of a given spectrum, then $X_d(\omega)$ above, at or below it; T/F on bandlimiting and the strict inequality. Practice: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]].
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Nyquist rate or period $T_N$ of a given spectrum, then $X_d(\omega)$ above, at or below it; T/F on bandlimiting and the strict inequality. Practice: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]].
 > - [[exams/midterm-2/past-exams/fall-2019|FA2019]] #9(a) · [[exams/midterm-2/past-exams/spring-2021|SP2021]] #1(b), #8(a) · [[exams/midterm-2/past-exams/fall-2021|FA2021]] #1(e), #5(a) · [[exams/midterm-2/past-exams/spring-2023|SP2023]] #1(b), (e), #7(a) · [[exams/midterm-2/past-exams/fall-2023|FA2023]] #1(d) · [[exams/midterm-2/past-exams/fall-2024|FA2024]] #5(a) · [[exams/midterm-2/past-exams/spring-2025|SP2025]] #5(a) · [[exams/midterm-2/true-false-bank|T/F bank]] §4
 
-**Where it appears:** [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]] §2, [[4-sampling-and-reconstruction/19-aliasing|L19]] §1 and §2.1 (slide 7); HW7 #3 ([[exams/quiz-2|Quiz 2 page]]); [[problems/sampling-and-the-nyquist-rate|sampling family]]; [[exams/midterm-2/true-false-bank|T/F bank]]; [[demos/sampling-explorer|sampling explorer]].
+**Where it appears:** [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]] §2, [[4-sampling-and-reconstruction/19-aliasing|L19]] §1 and §2.1 (slide 7); HW7 #3 ([[exams/quiz-2|Quiz 2 page]]); [[homework/hw8|HW8]] #3(c) ($T_{\max}=2.5$ ms for $\cos(400\pi t)$), #5(a), #6(a); [[problems/sampling-and-the-nyquist-rate|sampling family]]; [[exams/midterm-2/true-false-bank|T/F bank]]; [[demos/sampling-explorer|sampling explorer]].
 
 ## Related
 [[concepts/sampling|sampling]] · [[concepts/aliasing|aliasing]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · [[concepts/dtft|DTFT]]

@@ -27,7 +27,7 @@ Opening parts ($T_N$, $X_d$) belong to the [[problems/sampling-and-the-nyquist-r
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023]] #5 | triangle on $\lvert f\rvert\le10$ kHz → largest $T$ and $H_d$: (a) low-pass to 5 kHz; (b) high-pass above 5 kHz |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #5(b),(c) | triangle on $\lvert\Omega\rvert\le1000\pi$ → (b) no filter: $Y_c$ at $T_N$, $2T_N$; (c) largest $T$ and $\omega_c$ removing $\lvert\Omega\rvert\gt500\pi$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #5 | triangle on $\lvert\Omega\rvert\le200\pi$ → (a) $T=\frac{1}{300}$ s, $\omega_c=\frac{\pi}{3}$: $X_d$, $Y_d$, $Y_a$; (b) largest $T$ and $\omega_c$ removing everything above 50 Hz |
-| course | HW7 #4 ([[exams/quiz-2\|Quiz 2 review]]): triangle to $50\pi$, low-pass $\frac{\pi}{2}$, $T=\frac{1}{50}$, $\frac{1}{40}$ s · Lecture 18: semicircle to $60\pi$, low-pass $\frac{\pi}{2}$, $T=\frac{1}{80}$, $\frac{1}{50}$ s |
+| course | HW7 #4 ([[exams/quiz-2\|Quiz 2 review]]): triangle to $50\pi$, low-pass $\frac{\pi}{2}$, $T=\frac{1}{50}$, $\frac{1}{40}$ s · [[homework/hw8\|HW8]] #5–6: low-pass $\frac{\pi}{8}$ (max $T$; max bandwidth for LTI at $f_s=10$ kHz), band-pass 300 Hz–6 kHz with aliasing allowed outside the passband · Lecture 18: semicircle to $60\pi$, low-pass $\frac{\pi}{2}$, $T=\frac{1}{80}$, $\frac{1}{50}$ s |
 
 > [!success]- Answers
 > | instance | answer |

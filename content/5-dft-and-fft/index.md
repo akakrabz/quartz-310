@@ -6,6 +6,8 @@ tags: [dft, spectral-analysis, midterm-2]
 
 *Unit 5 · Lectures 20 (Oct 16) to 23 (Oct 23) · prev: [[4-sampling-and-reconstruction/index|Unit 4]] · Lecture 23 is the last Midterm 2 content*
 
+**Midterm 2** (Wed Nov 4, 7–9 pm) covers all of Unit 5 → [[exams/midterm-2/index|Midterm 2 review]]. DFT properties (circular shift, reversal, modulation, symmetry) are tested; computing circular convolution is not (instructor).
+
 - The DTFT is an infinite sum over a continuous $\omega$: not computable. Keep $N$ samples and $N$ frequencies $\omega_k=\frac{2\pi k}{N}$: the DFT.
 - The DFT periodically extends both $x[n]$ and $X[k]$, so shifts, reversals and convolution become circular.
 - A finite cosine is a periodic-sinc lobe pair, not an impulse pair: leakage, resolution limits and side-lobe masking are the price, windows and longer records the remedies.
@@ -44,7 +46,7 @@ tags: [dft, spectral-analysis, midterm-2]
 > - **Resolution and windows:** $N\gt\frac{4\pi}{\Delta\omega}$ (full lobe), $\frac{2\pi}{\Delta\omega}$ (half); rectangular $-13$ dB vs Hamming $-42$ dB with twice the lobe width.
 
 > [!exam] Exam
-> DFT computation and properties on 7/7 past Midterm 2 exams, spectral analysis on 6/7, linear vs circular convolution and the FFT on 2/7: [[exams/midterm-2/index|Midterm 2]] · [[exams/midterm-2/past-exams/index|past exams]] · families: [[problems/dft-values-and-zero-padding|DFT values and zero padding]] · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]] · [[problems/dft-spectral-analysis|DFT spectral analysis]].
+> DFT computation and properties on 7/7 past Midterm 2 exams, spectral analysis on 6/7, linear vs circular convolution and the FFT on 2/7 (neither on Fall 2026 Midterm 2): [[exams/midterm-2/index|Midterm 2]] · [[exams/midterm-2/past-exams/index|past exams]] · families: [[problems/dft-values-and-zero-padding|DFT values and zero padding]] · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]] · [[problems/dft-spectral-analysis|DFT spectral analysis]].
 
 ## Related
 [[4-sampling-and-reconstruction/index|Unit 4]] · [[concepts/dtft|DTFT]] · [[concepts/dft|DFT]] · [[concepts/spectral-analysis|spectral analysis]] · [[concepts/index|Concepts]] · [[exams/index|Exams]]

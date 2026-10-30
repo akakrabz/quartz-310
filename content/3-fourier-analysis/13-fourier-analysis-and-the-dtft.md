@@ -27,7 +27,7 @@ lecture: 13
 - Figure 1 / slide 10, sawtooth $x(t)=t$ → [[concepts/fourier-series|Fourier series]] §1 · Exercise 1, DTFS of the periodic pulse → §3
 - Exercise 2 / Figure 2, DTFT of the pulse → [[concepts/dtft|DTFT]] §2 · slides 15–16, $\{\underset{\uparrow}{1},0,1,0,1\}$ and the sequence behind $2j\sin\omega$ → §4
 
-**Practice:** [[homework/hw5|HW5]] #1 · [[homework/hw6|HW6]] #1 · [[problems/dtft-and-inverse-dtft|family]] · [[exams/quiz-2|Quiz 2]]
+**Practice:** [[homework/hw5|HW5]] #1–#2 · [[homework/hw6|HW6]] #1, #3 · [[problems/dtft-and-inverse-dtft|family]] · [[exams/quiz-2|Quiz 2]]
 
 ## Related
 

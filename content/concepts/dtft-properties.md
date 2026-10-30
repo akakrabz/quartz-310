@@ -5,7 +5,7 @@ tags: [concept, dtft, midterm-2]
 aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table", "Hermitian symmetry", "modulation property", "Parseval's relation", "windowing"]
 ---
 
-*Lecture 14 (Fri Sep 25) §3 · [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #2, #7 · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
+*Lecture 14 (Fri Sep 25) §3 · [[homework/hw5|HW5]] #1(d), #2, [[homework/hw6|HW6]] #2, #3(a), #4(b), #6(a), #7, HW7 #2 ([[exams/quiz-2|Quiz 2 page]]; real $h$ ⇒ Hermitian) · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
 
 > [!abstract] In one breath
 > - Most rows are the z-transform's with $z=e^{j\omega}$; new ones: modulation, windowing (periodic convolution), Parseval.
@@ -24,6 +24,7 @@ aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table", "H
 > | modulation | $x[n]\cos(\omega_0 n)$ | $\tfrac12X_d(\omega-\omega_0)+\tfrac12X_d(\omega+\omega_0)$ | Euler + frequency shift |
 > | time reversal | $x[-n]$ | $X_d(-\omega)$ | $X(1/z)$ |
 > | conjugation | $x^*[n]$ | $X_d^*(-\omega)$ | $X^*(z^*)$ |
+> | conjugate reversal (HW6 #2(b)) | $x^*[-n]$ | $X_d^*(\omega)$ | $X^*(1/z^*)$ |
 > | differentiation | $n\,x[n]$ | $+j\,\dfrac{dX_d(\omega)}{d\omega}$ ⚠ | $-z\,\dfrac{dX}{dz}$ |
 > | convolution | $x[n]*h[n]$ | $X_d(\omega)H_d(\omega)$ | $X(z)H(z)$ |
 > | windowing | $x[n]\,w[n]$ | $\dfrac{1}{2\pi}\displaystyle\int_{-\pi}^{\pi}X_d(\theta)W_d(\omega-\theta)\,d\theta$ | DTFT only |
@@ -67,7 +68,9 @@ Plot and compute on $\omega\in[-\pi,\pi]$, where the symmetry is easiest to see.
 
 > [!question] Slide 12: $X_d(\omega)=\omega^2 e^{j\cos\omega}$ (on $-\pi\le\omega\le\pi$). Is $x[n]$ real-valued?
 
-> [!success]- Answer: no
+> [!success]- Answer
+> **no.**
+>
 > Magnitude $\omega^2$ is even, but the phase $\cos\omega$ is **even**, not odd:
 > $$
 > X_d(-\omega)=\omega^2e^{j\cos\omega}\qquad\text{but}\qquad X_d^*(\omega)=\omega^2e^{-j\cos\omega},
@@ -77,7 +80,9 @@ Plot and compute on $\omega\in[-\pi,\pi]$, where the symmetry is easiest to see.
 > [!question] Slide 13: $x[n]$ is real. Which are true?
 > (a) $X_d(0)=X_d(2\pi)$ $\quad$ (b) $X_d(\frac{\pi}{3})=X_d(-\frac{\pi}{3})$ $\quad$ (c) $X_d(\frac{\pi}{3})=X_d^*(-\frac{\pi}{3})$ $\quad$ (d) $X_d(\pi)=X_d(7\pi)$ $\quad$ (e) $X_d(\frac{2\pi}{3})=X_d^*(\frac{4\pi}{3})$
 
-> [!success]- Answer: (a), (c), (d), (e)
+> [!success]- Answer
+> **(a), (c), (d), (e).**
+>
 > (a) periodicity. (b) not in general: the values at $\pm\frac{\pi}{3}$ are conjugates; only the magnitudes are equal. (c) Hermitian symmetry. (d) $7\pi=\pi+3\cdot2\pi$. (e) $\frac{4\pi}{3}=-\frac{2\pi}{3}+2\pi$, so $X_d(\frac{4\pi}{3})=X_d(-\frac{2\pi}{3})=X_d^*(\frac{2\pi}{3})$.
 
 ## 3. Periodicity, shifting, modulation
@@ -101,6 +106,15 @@ $$
 > $$
 > The first three are the definitions at $\omega=0$, $\omega=\pi$ and $n=0$; the last is **Parseval's relation**. [[homework/hw5|HW5]] #2: $x=\{2,-1,\underset{\uparrow}{1},-1,2\}$ gives $3$, $7$, $2\pi$, $22\pi$.
 
+- **Parseval without squares** (not in the notes' table; Quiz 2 asked it). From the windowing and convolution rows:
+
+$$
+\begin{gathered}
+\sum_n x[n]\,y^*[n]=\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)\,Y_d^*(\omega)\,d\omega,\\
+\sum_n x[n]\,y[-n]=(x*y)[0]=\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)\,Y_d(\omega)\,d\omega .
+\end{gathered}
+$$
+
 - **Convolution:** $x[n]*h[n]\leftrightarrow X_d(\omega)H_d(\omega)$ ($z=e^{j\omega}$ in the z-transform property). With $h$ an impulse response, $H_d(\omega)$ is the [[concepts/frequency-response|frequency response]].
 - **Windowing** (multiplication in time), eqs. 47–51:
 
@@ -110,6 +124,23 @@ $$
 
 - Continuous (periodic) convolution in frequency. Proof: substitute the inverse DTFT of $X_d$ and swap sum and integral. Multiplying by a fixed $w[n]$ is **not** LTI. Returns as [[concepts/spectral-leakage|spectral leakage]] (Unit 5).
 
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · Parseval without squares
+> $x[n]=\{\underset{\uparrow}{1},2,-1\}$, $y[n]=\{2,\underset{\uparrow}{1},3\}$. Find (a) $\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)Y_d^*(\omega)\,d\omega$, (b) $\frac{1}{2\pi}\int_{-\pi}^{\pi}X_d(\omega)Y_d(\omega)\,d\omega$.
+
+> [!success]- Answer
+> (a) $\sum_nx[n]y^*[n]$; the sequences overlap at $n=0,1$: $1\cdot1+2\cdot3=\boldsymbol{7}$.
+> (b) No conjugate: $X_dY_d$ is the DTFT of $x*y$, and the integral returns $(x*y)[0]=\sum_kx[k]\,y[-k]=x[0]y[0]+x[1]y[-1]=1+4=\boldsymbol{5}$.
+> (Squaring by habit gives $\sum_n|x[n]|^2=6$, a different question.)
+
+> [!question] Q2 · True or False
+> (a) $(-1)^nx[n]\leftrightarrow X_d(\omega-\pi)$, so its DTFT at $\omega=0$ equals $X_d(\pi)$. (b) If $x[-n]=x[n]$, then $X_d(\omega)$ is real.
+
+> [!success]- Answer
+> (a) **True.** $(-1)^n=e^{j\pi n}$: frequency shift by $\pi$; at $\omega=0$, $X_d(-\pi)=X_d(\pi)$.
+> (b) **False.** Even gives an even $X_d$; real needs $x[-n]=x^*[n]$. $x=\{j,\underset{\uparrow}{1},j\}$ is even, with $X_d(\omega)=1+2j\cos\omega$.
+
 > [!trap]
 > - Integer shifts only; $e^{-j\omega k}$ with non-integer $k$ is a shifted sinc, not $\delta[n-k]$.
 > - Conjugation flips $\omega$ too: $x^*[n]\leftrightarrow X_d^*(-\omega)$.
@@ -118,14 +149,14 @@ $$
 > - Substitute $z=e^{j\omega}$ only if the ROC contains $|z|=1$ ([[concepts/dtft|DTFT]]).
 
 > [!exam] Exam
-> Symmetry and periodicity true/false, values without $X_d$, modulation sketches, property chains. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Symmetry and periodicity true/false, values without $X_d$, modulation sketches, property chains. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
 > - MT2: [[exams/midterm-2/past-exams/fall-2024|FA2024]] #1(a), (b), #2, #4(a) · [[exams/midterm-2/past-exams/fall-2023|FA2023]] #1(a)–(c), #2 · [[exams/midterm-2/past-exams/spring-2023|SP2023]] #2–#4 · [[exams/midterm-2/past-exams/spring-2025|SP2025]] #2 · [[exams/midterm-2/past-exams/spring-2021|SP2021]] #6, #7 · [[exams/midterm-2/past-exams/fall-2021|FA2021]] #2(c) · [[exams/midterm-2/past-exams/fall-2019|FA2019]] #1(b), (e), #3, #5, #6
-> - MT1: [[exams/midterm-1/past-exams/spring-2023|SP2023]] #1(d), (e), #9 · homework: [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #2–#5, #7
+> - MT1: [[exams/midterm-1/past-exams/spring-2023|SP2023]] #1(d), (e), #9 · homework: [[homework/hw5|HW5]] #1(d), #2, [[homework/hw6|HW6]] #2–#4, #6(a), #7
 
-**Where it appears:** [[3-fourier-analysis/14-dtft-properties|L14]] §3 (slides 10–15), [[3-fourier-analysis/15-frequency-response|L15]], [[3-fourier-analysis/16-magnitude-and-phase-response|L16]]; [[problems/dtft-and-inverse-dtft|DTFT family]]; [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #2, #7; [[exams/quiz-2|Quiz 2]].
+**Where it appears:** [[3-fourier-analysis/14-dtft-properties|L14]] §3 (slides 10–15), [[3-fourier-analysis/15-frequency-response|L15]], [[3-fourier-analysis/16-magnitude-and-phase-response|L16]]; [[problems/dtft-and-inverse-dtft|DTFT family]]; [[homework/hw5|HW5]] #1(d), #2, [[homework/hw6|HW6]] #2–#4, #7; HW7 #2 and Parseval without squares on [[exams/quiz-2|Quiz 2]].
 
 ## Related
 [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/frequency-response|frequency response]] · [[concepts/window-functions|window functions]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
-Lecture 14 notes §3 (eqs. 26–51), Table 2, slides 10–15; transform tables Table 5; HW5 #1–#2 solutions; Midterm 2 keys cited.
+Lecture 14 notes §3 (eqs. 26–51), Table 2, slides 10–15; transform tables Table 5; HW5 #1–#2, HW6 #2 solutions; Quiz 2 report; Midterm 2 keys cited.

@@ -57,7 +57,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 [[exams/index|Exams hub]]
 - **Midterm 1** (L1–11, Sep 30): [[exams/midterm-1/index|review guide]] · [[exams/midterm-1/cheat-sheet|cheat sheet]] · [[exams/midterm-1/true-false-bank|T/F]] and [[exams/midterm-1/system-property-bank|system-property]] banks · [[exams/midterm-1/past-exams/index|past exams]]
 - **Quiz 2** (L13–18): [[exams/quiz-2|review]]
-- **Midterm 2** (Units 3–5, L13–23, date TBA): [[exams/midterm-2/index|overview]] · [[exams/midterm-2/true-false-bank|T/F bank]] · [[exams/midterm-2/past-exams/index|past exams]]
+- **Midterm 2** (Units 3–5, L13–23, **Wed Nov 4, 7–9 pm**): [[exams/midterm-2/index|review guide]] · [[exams/midterm-2/practice-exam|practice midterm]] · [[exams/midterm-2/true-false-bank|T/F bank]] · [[exams/midterm-2/past-exams/index|past exams]]
 
 ### Reference
 [[concepts/index|All topics]], one line each ([[concepts/concept-map.canvas|concept map]], Units 1–2) · [[supplements/index|Supplements]] (summary, tables, notation)
@@ -108,7 +108,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 > [!success]- Answer
 > Folded solution.
 
-*Status (Oct 25, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content); walkthroughs HW1–HW6.*
+*Status (Oct 30, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content); walkthroughs HW1–HW6, [[homework/hw8|HW8]]. **Midterm 2: Wed Nov 4, 7–9 pm** (HW5–9, L13–23): [[exams/midterm-2/index|review guide]] · [[exams/midterm-2/practice-exam|practice midterm]].*
 
 ### Sources for this page
 Snyder, ECE 310 notes and slides L1–23 (Fall 2026); notation supplement; exam cover pages.

@@ -7,6 +7,8 @@ aliases: ["circular convolution", "⊛", "circulant matrix", "modified table met
 
 *Lecture 21 (Mon Oct 19) §2–2.1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
+> [!warning] Fall 2026 Midterm 2: computing circular convolution is not tested (instructor announcement); the DFT property x⊛h ↔ X[k]H[k] and the other DFT properties are.
+
 > [!abstract] In one breath
 > - Product of DFTs ↔ **circular** convolution $\sum_mx[m]\,h[\langle n-m\rangle_N]$, length $N$.
 > - Compute it with Lecture 4's table, the moving sequence periodically extended (rows = rotations of the circular reversal), or as a circulant matrix times a vector.
@@ -99,7 +101,7 @@ $x$ of length $N_1$, $h$ of length $N_2$: $x*h$ has length $N_1+N_2-1$.
 > - Each table row is a rotation, never a shift with zeros entering.
 
 > [!exam] Midterm 2
-> Compute a circular convolution; compare with linear; the padding length that makes them equal. [[exams/midterm-2/past-exams/fall-2021|FA2021 #6]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(g), (h), #11]] · [[exams/midterm-2/true-false-bank|T/F bank]] §8 (Q41–Q42).
+> Fall 2026: only the property $x\circledast h\leftrightarrow X[k]H[k]$; computing one is not tested. Past exams computed it, compared it with linear, asked the padding length (not on Fall 2026 MT2): [[exams/midterm-2/past-exams/fall-2021|FA2021 #6]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(g), (h), #11]] · [[exams/midterm-2/true-false-bank|T/F bank]] §8 (Q41–Q42).
 
 **Where it appears:** [[5-dft-and-fft/21-dft-properties|L21]] §2–2.1 (eqs. 7–24, slides 9–13) · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]] · [[exams/midterm-2/true-false-bank|T/F bank]] §8.
 

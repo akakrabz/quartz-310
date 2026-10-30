@@ -22,11 +22,11 @@ lecture: 21
 ## Exercises from this lecture
 
 - Example 1 (slide 8), $x=\{3,1,2,4,5\}$: $x[\langle-n\rangle_5]$, $x[\langle n+2\rangle_5]$, $x[\langle1-n\rangle_5]$ → [[concepts/circular-shift-and-reversal|circular shift and reversal]] §2
-- Notes example (eqs. 17–24), the 6-point $\{3,1,0,3,1,1\}\circledast\{-4,-1,-7,5,5,1\}$, table and matrix → [[concepts/circular-convolution|circular convolution]] §2
-- Example 2 (slide 13), the 5-point $\{2,0,1,3,0\}\circledast\{4,1,0,2,2\}$ vs linear → [[concepts/circular-convolution|circular convolution]] §3
+- Notes example (eqs. 17–24), the 6-point $\{3,1,0,3,1,1\}\circledast\{-4,-1,-7,5,5,1\}$, table and matrix → [[concepts/circular-convolution|circular convolution]] §2 (computation not on Fall 2026 MT2)
+- Example 2 (slide 13), the 5-point $\{2,0,1,3,0\}\circledast\{4,1,0,2,2\}$ vs linear → [[concepts/circular-convolution|circular convolution]] §3 (computation not on Fall 2026 MT2)
 - Example 3 (slide 15), $y[n]$ from $Y[k]=\{X_2,-X_3,X_4,-X_5,X_0,-X_1\}$ → [[concepts/dft-properties|DFT properties]]
 
-**Practice:** [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties family]] · [[exams/midterm-2/true-false-bank|T/F bank]] §6, §8
+**Practice:** HW9 #1–2 · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties family]] · [[exams/midterm-2/true-false-bank|T/F bank]] §6, §8
 
 ## Related
 [[5-dft-and-fft/index|Unit 5]] · [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] · [[5-dft-and-fft/22-spectral-analysis|Lecture 22]] · [[concepts/index|Concepts]]

@@ -251,21 +251,21 @@ lectures: [13, 14, 15]
 > [!success]- Answer
 > **False.** Lower sidelobes (about $-42$ dB vs $-13$ dB) but a main lobe about **twice as wide**.
 
-## 8. Circular convolution ([[5-dft-and-fft/21-dft-properties|Lecture 21]]) and the FFT (later)
+## 8. Circular convolution ([[5-dft-and-fft/21-dft-properties|Lecture 21]]) and the FFT (neither computation is on Fall 2026 MT2)
 
 [[concepts/circular-convolution|circular convolution]] · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]
 
-**Q41** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(g) · Linear convolution can be computed as a circular convolution via zero-padding.
+**Q41** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(g) (not on Fall 2026 MT2: circular convolution computation) · Linear convolution can be computed as a circular convolution via zero-padding.
 
 > [!success]- Answer
 > **True.** Pad both to $N\ge L_x+L_h-1$.
 
-**Q42** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(h) · Circular convolution can be applied to two finite duration sequences with arbitrary lengths.
+**Q42** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(h) (not on Fall 2026 MT2: circular convolution computation) · Circular convolution can be applied to two finite duration sequences with arbitrary lengths.
 
 > [!success]- Answer
 > **False** (key's answer). $N$-point circular convolution needs two length-$N$ sequences; pad first.
 
-**Q43** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(j) · FFT is just an efficient algorithm to evaluate DFT.
+**Q43** · [[exams/midterm-2/past-exams/fall-2019|FA2019 MT2]] #1(j) (not on Fall 2026 MT2: the FFT) · FFT is just an efficient algorithm to evaluate DFT.
 
 > [!success]- Answer
 > **True.** Same values in about $N\log_2N$ operations instead of $N^2$.

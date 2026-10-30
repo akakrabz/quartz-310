@@ -24,12 +24,12 @@ lecture: 18
 - Slide 10, the semicircle to $60\pi$ rad/s through a low-pass with $\omega_c=\frac{\pi}{2}$ at $T=\frac{1}{80}$ s: $X_d$, $Y_d$, $Y_a$ → [[concepts/digital-processing-of-analog-signals|Digital processing of analog signals]] §2
 - Slide 11, the same at $T=\frac{1}{50}$ s (aliasing outside the passband) → [[concepts/digital-processing-of-analog-signals|Digital processing of analog signals]] §2–3
 
-**Practice:** HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[problems/digital-filtering-of-analog-signals|family]] · [[demos/sampling-explorer|explorer]]
+**Practice:** HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #4–6 (ZOH → [[concepts/ideal-reconstruction|ideal reconstruction]] §5) · [[problems/digital-filtering-of-analog-signals|family]] · [[demos/sampling-explorer|explorer]]
 
 ## Related
 
-[[4-sampling-and-reconstruction/index|Unit 4]] · prev [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] · next [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] · [[concepts/index|Concepts]] · [[concepts/convolution|convolution]] · [[concepts/frequency-response|frequency response]]
+[[4-sampling-and-reconstruction/index|Unit 4]] · prev [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] · next [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] · [[concepts/index|Concepts]]
 
 ### Sources for this page
 
-Snyder, ECE 310 Lecture 18 notes (§1, eqs. 1–14, Figures 1–3) and slides of Oct 12, 2026 with the inked deck (slides 4–11).
+Snyder, Lecture 18 notes (§1, eqs. 1–14, Figures 1–3) and inked slides 4–11, Oct 12, 2026.

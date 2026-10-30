@@ -117,13 +117,14 @@ as targets) and compiles every equation with KaTeX in strict mode. Run it before
   fresh practice problems with folded solutions, listed in a live table by the Bases plugin (`problems/exam-problem-families.base`).
 - **Exams** (`exams/index.md`, the self-test layer). Midterm 1: a review guide (scope, format, frequency of every problem type, a plan
   for the last day, top traps, the review-lecture problems), a cheat sheet, a true/false bank (43 statements), a system-property bank
-  (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2 (Units 3–5, Lectures 13–23; date not yet announced): an overview
-  (scope with the topic pages per lecture, format, what gets asked on each past exam by family, a preparation plan and formula
-  boxes for Units 3, 4 and 5), a true/false bank (all 43 statements of the seven exams) and 7 past exams (FA2019 … SP2025),
+  (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2 (Units 3–5, Lectures 13–23, HW5–HW9; Wed Nov 4, 2026, 7–9 pm): a review guide
+  (scope with homework per unit and an on/not-on box — computing circular convolution is not tested — format, problem types by
+  family, a day-by-day plan Oct 30–Nov 4, a sheet checklist and formula boxes for Units 3, 4 and 5), a practice midterm
+  (`exams/midterm-2/practice-exam.md`), a true/false bank (all 43 statements of the seven exams) and 7 past exams (FA2019 … SP2025),
   typed with folded solutions.
   Quiz 2 (`exams/quiz-2.md`, Oct 2026): a review page for HW5–HW7 / Lectures 13–18 with a formula box, HW7 worked against the
   official key, a one-section summary of Lecture 18 (ideal D/A) and a practice quiz; numbers in `verify/Q2_numbers.py`, figures in `verify/Q2_figs.py`.
-- **Homework walkthroughs** HW1–HW6 (HW6's was released with `tools/hw6_release.py` after its Oct 9 due date; the script is kept as the pattern for later sets).
+- **Homework walkthroughs** HW1–HW6, HW8 and HW9 (HW7 is worked on `exams/quiz-2.md`). HW9's page is `draft: true` until its Oct 30, 11:59 pm due date; run `python3 tools/hw9_release.py` after that (`--dry-run` to preview) to publish it and restore its links.
 - A **toolkit** (complex numbers, geometric series, signal transformations, factoring and long division, errata in the course
   materials) and **supplements** (Singer–Munson notes reading guide, notation, course summary, transform tables, the demo notebooks).
 - **Interactive**: convolution explorer, pole-zero & ROC explorer, difference-equation simulator, frequency-response explorer, sampling explorer, Python

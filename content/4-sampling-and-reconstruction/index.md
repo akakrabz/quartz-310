@@ -6,6 +6,8 @@ tags: [sampling, nyquist, ctft, dtft]
 
 *Unit 4 · Lectures 17–19 · Midterm 2 · prev: [[3-fourier-analysis/index|Unit 3]] · next: [[5-dft-and-fft/index|Unit 5]]*
 
+**Midterm 2** (Wed Nov 4, 7–9 pm) covers all of Unit 4 → [[exams/midterm-2/index|Midterm 2 review]].
+
 - Sampling $x[n]=x_a(nT)$ copies the analog spectrum every $2\pi/T$; $\omega=\Omega T$ gives the DTFT. Copies stay apart iff $f_s\gt2B$.
 - Ideal D/A: a sinc per sample = low-pass of height $T$; a digital filter between the converters acts like $H_d(\Omega T)$ if no aliasing reaches its passband.
 - Below Nyquist the copies overlap; a sinusoid returns as its alias.
@@ -16,7 +18,7 @@ tags: [sampling, nyquist, ctft, dtft]
 |---|---|
 | [[concepts/sampling\|Sampling (ideal A/D)]] | impulse-train model; $X_s(\Omega)=\frac1T\sum_nX_a(\Omega-\frac{2\pi}{T}n)$; $\omega=\Omega T$; $X_d(\omega)$; the box example; sketching recipe |
 | [[concepts/nyquist-criterion\|Nyquist criterion]] | bandlimited to $B$ Hz; $f_s\gt2B$ derived twice; Nyquist rate and period; above/at/below with the triangle at $150/100/75$ Hz; sampling exactly at $2B$ |
-| [[concepts/ideal-reconstruction\|Ideal reconstruction (ideal D/A)]] | $x_a(t)=\sum_nx[n]g(t-nT)$ as a convolution; $G_a=T$ on $\lvert\Omega\rvert\le\frac{\pi}{T}$; sinc interpolation; the slide-9 sketch |
+| [[concepts/ideal-reconstruction\|Ideal reconstruction (ideal D/A)]] | $x_a(t)=\sum_nx[n]g(t-nT)$ as a convolution; $G_a=T$ on $\lvert\Omega\rvert\le\frac{\pi}{T}$; sinc interpolation; the slide-9 sketch; zero-order hold (HW8 #4) |
 | [[concepts/digital-processing-of-analog-signals\|Digital processing of analog signals]] | A/D → $H_d$ → D/A; $Y_a(\Omega)=T\,Y_d(\Omega T)$; analog cutoff $\omega_c/T$; the semicircle at $T=\frac{1}{80},\frac{1}{50}$ s; allowed aliasing $\omega_c\le2\pi-\Omega_{\max}T$ |
 | [[concepts/aliasing\|Aliasing]] | overlap of copies; principal alias; $\sin(100\pi t)$ at $160,120,80,40$ Hz; folding $f_0-kf_s$; which $\Omega_0$ fit given samples |
 
@@ -25,7 +27,7 @@ tags: [sampling, nyquist, ctft, dtft]
 | # | page | one line |
 |---|---|---|
 | 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | Fri Oct 9 · sampling §1–1.1, Nyquist criterion §2; Examples 1 (box) and 2 (triangle) |
-| 18 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Ideal digital-to-analog conversion]] | Mon Oct 12 · ideal reconstruction §1; slide 9 sketch; slides 10–11 A/D → $H_d$ → D/A (HW7 #4) |
+| 18 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Ideal digital-to-analog conversion]] | Mon Oct 12 · ideal reconstruction §1; slide 9 sketch; slides 10–11 A/D → $H_d$ → D/A (HW7 #4, HW8 #5–6) |
 | 19 | [[4-sampling-and-reconstruction/19-aliasing\|The aliasing effect]] | Wed Oct 14 · Nyquist via $\omega=\Omega T$ §1; aliasing §2; sinusoids §2.1; slide 19 |
 
 > [!key] The unit on one card
@@ -42,7 +44,7 @@ tags: [sampling, nyquist, ctft, dtft]
 > [!exam] Exam
 > Sampling on 7/7 past Midterm 2 exams, alone or inside A/D → $H_d$ → D/A. Families: [[problems/sampling-and-the-nyquist-rate|sampling and the Nyquist rate]] · [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]. T/F: [[exams/midterm-2/true-false-bank|T/F bank]] §4. Maps: [[exams/midterm-2/index|Midterm 2]] · [[exams/midterm-2/past-exams/index|past exams]].
 
-**Homework:** HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]) (worked on the Quiz 2 page) · **Demos:** [[demos/sampling-explorer|sampling explorer]] · [[demos/practice-drills|drills]] · [[supplements/demo-notebooks|notebooks]] (`demo_sampling`)
+**Homework:** HW7 #3–4 (worked on the [[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #1–6 (aliasing, sampled spectra, ZOH and ideal D/A, A/D → $H_d$ → D/A) · **Demos:** [[demos/sampling-explorer|sampling explorer]] · [[demos/practice-drills|drills]] · [[supplements/demo-notebooks|notebooks]] (`demo_sampling`)
 
 **Background concepts:** [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/discrete-time-signal|discrete-time signal]] · [[concepts/index|all concepts]]
 

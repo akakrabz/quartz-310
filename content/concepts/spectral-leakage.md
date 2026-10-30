@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["leakage", "spectral leakage", "picket fence", "picket-fence effect", "DFT of a cosine", "DFT of a sinusoid"]
 ---
 
-*Lecture 22 (Wed Oct 21) §1.2 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lecture 22 (Wed Oct 21) §1.2 · HW9 #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - The DFT of $A\cos(\omega_0n)$ on $N$ samples is the two [[concepts/periodic-sinc|periodic-sinc]] lobes sampled every $\frac{2\pi}{N}$.
@@ -50,6 +50,23 @@ Can we choose $N$ to avoid leakage? Not in general: real signals carry many comp
 > - (b) $N=20$: $k_0=\frac{(3\pi/5)\cdot20}{2\pi}=6$: **exactly two**, $X[6]=-j10$, $X[14]=j10$.
 > - (c) $N=48$: $\frac\pi4\to k_0=6$, $\frac\pi3\to k_0=8$, both integers: **exactly four**, $k=6,8,40,42$, each $24$.
 
+## 3. Midterm 2 quick check
+
+> [!question] Q1 · on-bin or off-bin?
+> $x[n]=4\cos\!\left(\frac{\pi}{4}n\right)+2\sin\!\left(\frac{2\pi}{3}n\right)$. (a) For $0\le n\le23$, list every nonzero $X[k]$. (b) For $0\le n\le11$, are there exactly four nonzero bins?
+
+> [!success]- Answer
+> - (a) $N=24$: $k_0=\frac{24}{8}=3$ and $\frac{24}{3}=8$, both integers. Cosine: $X[3]=X[21]=\frac{4\cdot24}{2}=48$. Sine: $X[8]=-j\frac{2\cdot24}{2}=-24j$, $X[16]=24j$. All other bins $0$.
+> - (b) **No.** $N=12$: the sine sits on bin 4, but the cosine has $k_0=\frac{12}{8}=1.5$ and leaks: all 12 bins are nonzero.
+
+> [!question] Q2 · True or false
+> (a) $\cos(0.3\pi n)$, $0\le n\le39$, has exactly two nonzero DFT bins. (b) $\sin\!\left(\frac{\pi}{5}n\right)$, $0\le n\le14$, has exactly two. (c) Zero-padding a leaking cosine to $4N$ leaves two nonzero bins.
+
+> [!success]- Answer
+> - (a) **True:** $k_0=\frac{0.3\pi\cdot40}{2\pi}=6$; $X[6]=X[34]=20$.
+> - (b) **False:** $k_0=\frac{(\pi/5)\cdot15}{2\pi}=1.5$: all 15 bins nonzero.
+> - (c) **False:** padding samples the same leaky DTFT more densely ($\cos(\frac\pi3n)$, $N=22$, padded to 88: 87 nonzero bins).
+
 > [!trap]
 > - "Two bins" needs $\frac{\omega_0N}{2\pi}$ to be an integer, not just a "nice" $\omega_0$: $\cos(\frac\pi8n)$ on $24$ samples has $k_0=1.5$ and leaks ([[exams/midterm-2/past-exams/fall-2023|FA2023 #1(g)]]).
 > - A leaking cosine's tallest bin is below $\frac{AN}{2}$ and its neighbours are not zero: read $A$ from an on-bin plot only.
@@ -57,7 +74,7 @@ Can we choose $N$ to avoid leakage? Not in general: real signals carry many comp
 > - Bins $k\gt\frac N2$ are negative frequencies: the mirror peak at $N-k_0$ is the same component, not a second one.
 
 > [!exam] Midterm 2
-> DFT of a sampled cosine (two bins or leakage), components read from a DFT plot. [[exams/midterm-2/past-exams/spring-2025|SP2025 #9, #1(e)]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6, #1(g)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(f)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. DFT of a sampled cosine (two bins or leakage), components read from a DFT plot. [[exams/midterm-2/past-exams/spring-2025|SP2025 #9, #1(e)]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6, #1(g)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(f)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
 
 **Where it appears:** [[5-dft-and-fft/22-spectral-analysis|L22]] §1.2 (eqs. 11–14, Figure 2, slides 7–10) · [[problems/dft-spectral-analysis|DFT spectral analysis]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
 

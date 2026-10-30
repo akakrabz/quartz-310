@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["spectral analysis", "sinusoids in noise", "frequency estimation", "spectral components", "spectral analysis problem"]
 ---
 
-*Lectures 22 (Wed Oct 21) §2 and 23 (Fri Oct 23) §1 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lectures 22 (Wed Oct 21) §2 and 23 (Fri Oct 23) §1 · HW9 #4–5 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - Problem: $x[n]=\sum_{m=1}^{M}A_m\cos(\omega_mn)$, $0\le n\le N-1$; find $M$, the $\omega_m$ and the $A_m$ from the DFT.
@@ -49,6 +49,24 @@ $A_1=1$, $A_2=\frac12$, $\omega_1=0.55\pi$, $\omega_2=0.65\pi$, $N=32$.
 > 3. Amplitude: an on-bin lobe has height $\frac{A_mN}{2}$, so $A_m=\frac{2\lvert X[k_m]\rvert}{N}$; with a window $w[n]$, divide by $\sum w[n]$ instead of $N$.
 > 4. Before trusting a small lobe, check separation ($\Delta\omega$ against $\frac{4\pi}{N}$) and side-lobe masking.
 
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · bins → hertz → amplitudes
+> $x[n]=x_a(nT)$, $f_s=1$ kHz, $N=200$. On $0\le k\le100$, $\lvert X[k]\rvert$ is zero except $\lvert X[20]\rvert=300$ and $\lvert X[45]\rvert=50$. (a) Frequencies (rad/sample, Hz) and amplitudes. (b) Which other bins are nonzero? (c) Could $x_a(t)$ have held a $900$ Hz tone instead of $100$ Hz?
+
+> [!success]- Answer
+> - (a) $\omega_k=\frac{2\pi k}{200}$, $f_k=\frac{k\cdot1000}{200}=5k$ Hz: bin 20 → $0.2\pi$, $100$ Hz; bin 45 → $0.45\pi$, $225$ Hz. Isolated clean bins are on-bin lobes of height $\frac{AN}{2}$: $A_1=\frac{2\cdot300}{200}=3$, $A_2=\frac{2\cdot50}{200}=0.5$.
+> - (b) The mirrors $k=180$ and $155$ (negative frequencies), same magnitudes.
+> - (c) Yes: at $f_s=1$ kHz, $900$ Hz aliases to $-100$ Hz, the same samples ([[concepts/aliasing|aliasing]]). Reading bins as hertz assumes no aliasing.
+
+> [!question] Q2 · True or false (64-point DFT, $f_s=8$ kHz)
+> (a) Bins are $125$ Hz apart. (b) Bin $k=40$ measures $5$ kHz. (c) One peak on $0\le k\le32$ means one sinusoid.
+
+> [!success]- Answer
+> - (a) **True:** $\frac{f_s}{N}=125$ Hz.
+> - (b) **False:** $40\gt\frac N2$: $(40-64)\cdot125=-3$ kHz, the mirror of $3$ kHz.
+> - (c) **False:** close tones can merge into one lobe (§2, Figure 3(a)).
+
 > [!trap]
 > - One peak in a short DFT does not mean one component: pad first (Figure 3).
 > - Padding refines the grid; only more real samples narrow the lobes.
@@ -57,7 +75,7 @@ $A_1=1$, $A_2=\frac12$, $\omega_1=0.55\pi$, $\omega_2=0.65\pi$, $N=32$.
 > - On an exam plot the frequency axis may be $k$, $\omega$ or Hz: convert with $\omega_k=\frac{2\pi k}{N}$, $f_k=\frac{kf_s}{N}$.
 
 > [!exam] Midterm 2 (6 of 7 past exams)
-> Components from a DFT plot, bins in hertz, padded vs longer DFTs. [[exams/midterm-2/past-exams/spring-2025|SP2025 #9]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #6, #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #2]] · T/F: [[exams/midterm-2/true-false-bank|bank]] §3, §7.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Components from a DFT plot, bins in hertz, padded vs longer DFTs. [[exams/midterm-2/past-exams/spring-2025|SP2025 #9]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #6, #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #2]] · T/F: [[exams/midterm-2/true-false-bank|bank]] §3, §7.
 
 **Where it appears:** [[5-dft-and-fft/22-spectral-analysis|L22]] §2–2.2 (eqs. 15–17, Figure 3, slides 3, 11–13) · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] §1 (eqs. 1–4) · [[problems/dft-spectral-analysis|DFT spectral analysis]] · [[exams/midterm-2/index|Midterm 2]].
 

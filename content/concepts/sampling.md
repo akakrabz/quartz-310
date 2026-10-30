@@ -5,7 +5,7 @@ tags: [concept, sampling, ctft, dtft, midterm-2]
 aliases: ["sampling", "ideal sampling", "impulse train", "impulse-train model", "spectral copies", "sampled spectrum", "A/D conversion", "ideal A/D conversion", "analog-to-digital conversion", "sampling period", "sampling frequency", "analog and digital frequency", "sifting property"]
 ---
 
-*Lecture 17 (Fri Oct 9) §1–1.1 · HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]*
+*Lecture 17 (Fri Oct 9) §1–1.1 · HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #3 · family: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]]*
 
 > [!abstract] In one breath
 > - Sampling = multiplying by an impulse train: the spectrum is copied every $2\pi/T$ rad/s, each copy scaled by $\frac1T$; overlapping copies add.
@@ -89,6 +89,26 @@ Sample a sinusoid (eqs. 12–13): $x_a(t)=\sin(\Omega t)$ gives $x[n]=\sin(\Omeg
 
 Lecture 17's triangle at $150/100/75$ Hz is worked on [[concepts/nyquist-criterion|Nyquist criterion]] §2.
 
+- A sampled cosine keeps impulse area $\pi$: $\cos(\Omega_0t)\to\cos(\omega_0n)\leftrightarrow\pi\delta(\omega\mp\omega_0)$, repeated every $2\pi$; the $\frac1T$ cancels against $\delta\!\left(\frac{\omega}{T}\right)=T\delta(\omega)$ ([[homework/hw8|HW8]] #3: $\cos(400\pi t)$ at $T=1$, $2$ ms lands at $\pm0.4\pi$, $\pm0.8\pi$).
+
+## 4. Midterm 2 quick check
+
+> [!question] Q1 · overlap and heights
+> $X_a(\Omega)=2$ for $\lvert\Omega\rvert\le600\pi$ rad/s, $0$ otherwise; $f_s=500$ Hz. (a) Nyquist rate? (b) $X_d(\omega)$ on $[-\pi,\pi]$. (c) $Y_a(\Omega)$ from an ideal D/A with the same $T$.
+
+> [!success]- Answer
+> - (a) $B=300$ Hz, rate $600$ Hz: $500$ Hz is below it.
+> - (b) Edge $600\pi\cdot\frac{1}{500}=1.2\pi$, height $2\cdot500=1000$. The copy at $2\pi$ starts at $0.8\pi$ (the one at $-2\pi$ ends at $-0.8\pi$): $X_d(\omega)=1000$ for $\lvert\omega\rvert\lt0.8\pi$, $2000$ for $0.8\pi\lt\lvert\omega\rvert\le\pi$.
+> - (c) $T\,X_d(\Omega T)$ on $\lvert\Omega\rvert\lt\frac{\pi}{T}=500\pi$: $2$ for $\lvert\Omega\rvert\lt400\pi$, $4$ for $400\pi\lt\lvert\Omega\rvert\lt500\pi$, $0$ beyond. Not $X_a$: [[concepts/aliasing|aliasing]].
+
+> [!question] Q2 · True or false (bandlimited $x_a$, above Nyquist)
+> (a) Halving $T$ doubles the height of $X_d(\omega)$ and halves the width of its central copy. (b) $X_s(\Omega)$ is $2\pi$-periodic. (c) $x_s(t)$ is a discrete-time signal.
+
+> [!success]- Answer
+> - (a) **True:** height $\frac1T$, edge $2\pi BT$.
+> - (b) **False:** period $\frac{2\pi}{T}$ rad/s; $X_d(\omega)$ is the $2\pi$-periodic one.
+> - (c) **False:** an impulse train in continuous time; $x[n]$ holds its areas.
+
 > [!trap]
 > - **Forgetting $1/T$:** heights scale by $f_s$; a height-1 triangle sampled at $1$ kHz has height $1000$ ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #5(b), [[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #5(a)).
 > - **Two spacings:** $2\pi/T$ in $\Omega$, $2\pi$ in $\omega$. Do not mix the axes.
@@ -98,10 +118,10 @@ Lecture 17's triangle at $150/100/75$ Hz is worked on [[concepts/nyquist-criteri
 > - $x_s(t)$ is continuous-time; $x[n]$ is the sequence of impulse areas.
 
 > [!exam] On past exams
-> Sketch $X_d(\omega)$ at a given $T$, heights $\frac1T$, overlaps added: the first half of every A/D → $H_d$ → D/A problem. Practice: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]].
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Sketch $X_d(\omega)$ at a given $T$, heights $\frac1T$, overlaps added: the first half of every A/D → $H_d$ → D/A problem. Practice: [[problems/sampling-and-the-nyquist-rate|Sampling and the Nyquist rate]].
 > - [[exams/midterm-2/past-exams/fall-2019|FA2019]] #9(a) · [[exams/midterm-2/past-exams/spring-2021|SP2021]] #1(b), #8(a)–(c) · [[exams/midterm-2/past-exams/fall-2021|FA2021]] #1(e), #4, #5(a) · [[exams/midterm-2/past-exams/spring-2023|SP2023]] #1(b), (e), #7 · [[exams/midterm-2/past-exams/fall-2023|FA2023]] #1(d) · [[exams/midterm-2/past-exams/fall-2024|FA2024]] #5(a)–(b) · [[exams/midterm-2/past-exams/spring-2025|SP2025]] #5(a) · [[exams/midterm-2/true-false-bank|T/F bank]] §4
 
-**Where it appears:** [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]] §1–1.1, then [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|L18]], [[4-sampling-and-reconstruction/19-aliasing|L19]]; HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]); [[problems/sampling-and-the-nyquist-rate|sampling family]], [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]; [[demos/sampling-explorer|sampling explorer]].
+**Where it appears:** [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]] §1–1.1, then [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|L18]], [[4-sampling-and-reconstruction/19-aliasing|L19]]; HW7 #3–4 ([[exams/quiz-2|Quiz 2 page]]); [[homework/hw8|HW8]] #3; [[problems/sampling-and-the-nyquist-rate|sampling family]], [[problems/digital-filtering-of-analog-signals|digital filtering of analog signals]]; [[demos/sampling-explorer|sampling explorer]].
 
 ## Related
 [[concepts/nyquist-criterion|Nyquist criterion]] · [[concepts/aliasing|aliasing]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] (windowing) · [[concepts/discrete-time-signal|discrete-time signal]]

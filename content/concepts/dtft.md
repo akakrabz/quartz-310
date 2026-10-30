@@ -5,7 +5,7 @@ tags: [concept, dtft, fourier-analysis, midterm-2]
 aliases: ["DTFT", "discrete-time Fourier transform", "inverse DTFT", "spectrum", "frequency spectrum", "magnitude spectrum", "phase spectrum"]
 ---
 
-*Lectures 13 (Wed Sep 23) §4 and 14 (Fri Sep 25) §1 · [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #1 · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
+*Lectures 13 (Wed Sep 23) §4 and 14 (Fri Sep 25) §1 · [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #3–#5, HW7 #1, #3 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
 
 > [!abstract] In one breath
 > - $X_d(\omega)=\sum_nx[n]e^{-j\omega n}$ scores $x$ against every $e^{j\omega n}$; it is $2\pi$-periodic, so $[-\pi,\pi]$ says everything.
@@ -82,6 +82,8 @@ $$
 | $\cos(\omega_0n)$ | $\pi\big[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\big]$ |
 | $u[n]$ | $\dfrac{1}{1-e^{-j\omega}}+\pi\,\delta(\omega)$ |
 
+Inverse by inspection: rewrite $X_d$ as a sum of $e^{\pm jk\omega}$. [[homework/hw6|HW6]] #3(c): $\cos^2\omega=\frac12+\frac14e^{j2\omega}+\frac14e^{-j2\omega}$, so $x[n]=\frac12\delta[n]+\frac14\delta[n+2]+\frac14\delta[n-2]$.
+
 More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT properties]] (note $n\,x[n]\leftrightarrow+j\,\frac{dX_d(\omega)}{d\omega}$; Lecture 14's table prints $-j$).
 
 > [!question] Lecture 13 slide 15: DTFT of $x[n]=\{\underset{\uparrow}{1},0,1,0,1\}$
@@ -96,7 +98,9 @@ More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT proper
 > [!question] Lecture 13 slide 16: $X_d(\omega)=2j\sin\omega$. Which sequence is $x[n]$?
 > (a) $\{\underset{\uparrow}{1},0,-1\}$ $\quad$ (b) $\{1,\underset{\uparrow}{0},-1\}$ $\quad$ (c) $\{\underset{\uparrow}{2},0,-2\}$ $\quad$ (d) $\{2,\underset{\uparrow}{0},-2\}$
 
-> [!success]- Answer: (b)
+> [!success]- Answer
+> **(b).**
+>
 > $2j\sin\omega=e^{j\omega}-e^{-j\omega}$: $x[-1]=1$, $x[1]=-1$. Others: (a) $1-e^{-j2\omega}$, (c) $2-2e^{-j2\omega}$, (d) $2e^{j\omega}-2e^{-j\omega}=4j\sin\omega$.
 
 > [!question] Lecture 14 slide 4: compute the DTFT
@@ -121,12 +125,36 @@ More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT proper
 > $$
 > For each: (a) does not exist; (b) replace $z^{-1}$ by $e^{-j\omega}$; (c) replace $z^{-1}$ by $j\omega$.
 
-> [!success]- Answer: $X_1$ (b), $X_2$ (a)
+> [!success]- Answer
+> **$X_1$ (b), $X_2$ (a).**
+>
 > $X_1$: ROC contains the unit circle, $X_1(\omega)=\dfrac{1-e^{-j\omega}}{1-\frac12 e^{-j\omega}}$.
 >
 > $X_2$: $1-2z^{-1}-3z^{-2}=(1-3z^{-1})(1+z^{-1})$; the zero at $-1$ cancels the pole at $-1$, leaving $\frac{1}{1-3z^{-1}}$: right-sided $3^nu[n]$, ROC $|z|>3$, no DTFT. (The slide's "$|z|>2$" contains the pole $z=3$, so it cannot be an ROC; the unit circle is outside either way.)
 >
 > (c) is never right: $s=j\Omega$ is the Laplace habit.
+
+## 5. Midterm 2 quick check
+
+> [!question] Q1 · One frequency, three values
+> $x[n]=\{\underset{\uparrow}{1},3,2\}$. Find $X_d(\frac{2\pi}{3})$ in polar form (principal phase), then $X_d(-\frac{2\pi}{3})$ and $X_d(\frac{8\pi}{3})$ without recomputing.
+
+> [!success]- Answer
+> $e^{-j2\pi/3}=-\frac12-j\frac{\sqrt3}{2}$ and $e^{-j4\pi/3}=-\frac12+j\frac{\sqrt3}{2}$:
+> $$
+> \begin{aligned}
+> X_d(\tfrac{2\pi}{3})&=1+3\left(-\tfrac12-j\tfrac{\sqrt3}{2}\right)+2\left(-\tfrac12+j\tfrac{\sqrt3}{2}\right)\\
+> &=-\tfrac32-j\tfrac{\sqrt3}{2}=\sqrt3\,e^{-j5\pi/6}.
+> \end{aligned}
+> $$
+> Third quadrant: $\tan^{-1}\frac{-\sqrt3/2}{-3/2}=\frac{\pi}{6}$ is the wrong angle; subtract $\pi$. Real $x$: $X_d(-\frac{2\pi}{3})=X_d^*(\frac{2\pi}{3})=\sqrt3\,e^{j5\pi/6}$. Period $2\pi$: $X_d(\frac{8\pi}{3})=X_d(\frac{2\pi}{3})=\sqrt3\,e^{-j5\pi/6}$.
+
+> [!question] Q2 · True or False
+> (a) $x[n]=-2^nu[-n-1]$ has a DTFT, namely $\frac{1}{1-2e^{-j\omega}}$. (b) If $X_d(\omega)$ is real for every $\omega$, then $x[n]$ is real.
+
+> [!success]- Answer
+> (a) **True.** $X(z)=\frac{1}{1-2z^{-1}}$ with ROC $|z|\lt2$, which contains $|z|=1$; $\sum_n|x[n]|=\sum_{n\le-1}2^n=1$. Same formula as FA2024 MT2 #1(a), opposite answer: the ROC decides.
+> (b) **False.** Real $X_d$ $\iff$ $x[-n]=x^*[n]$. $x[n]=-j\delta[n+1]+j\delta[n-1]$ is complex, yet $X_d(\omega)=-je^{j\omega}+je^{-j\omega}=2\sin\omega$.
 
 > [!trap]
 > - $2^nu[n]$ has no DTFT although $\frac{1}{1-2e^{-j\omega}}$ evaluates fine; "$X_d=X(e^{j\omega})$ always" is False ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #1(a), [[exams/midterm-1/past-exams/spring-2023|SP2023 MT1]] #1(d)). A pole on $|z|=1$ ($u[n]$) needs an extra impulse.
@@ -136,9 +164,9 @@ More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT proper
 > - A real $X_d$ can be negative; a magnitude cannot: $1+2\cos(2\omega)=-1$ at $\omega=\frac{\pi}{2}$ means magnitude $1$, phase $\pi$ (the centred $\delta[n+2]+\delta[n]+\delta[n-2]$, [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3; slide 15's causal version adds $e^{-j2\omega}$).
 
 > [!exam] Exam
-> DTFTs of short sequences from the definition; existence via the ROC; true/false on uniqueness, $2\pi$-periodicity and zero-padding. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
-> - MT2: [[exams/midterm-2/past-exams/fall-2024|FA2024]] #1(a), (b), (d), #3(a) · [[exams/midterm-2/past-exams/fall-2023|FA2023]] #1(a), (b), (f) · [[exams/midterm-2/past-exams/spring-2023|SP2023]] #1(c), #3 · [[exams/midterm-2/past-exams/spring-2025|SP2025]] #1(a), (d) · [[exams/midterm-2/past-exams/spring-2021|SP2021]] #3 · [[exams/midterm-2/past-exams/fall-2019|FA2019]] #1(a)–(c), (e)
-> - MT1: [[exams/midterm-1/past-exams/spring-2023|SP2023]] #1(d), #8 · homework: [[homework/hw5|HW5]] #1, [[homework/hw6|HW6]] #1
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. DTFTs of short sequences from the definition; existence via the ROC; true/false on uniqueness, $2\pi$-periodicity and zero-padding. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
+> - MT2: [[exams/midterm-2/past-exams/fall-2024|FA2024]] #1(a), (b), (d), #3(a) · [[exams/midterm-2/past-exams/fall-2023|FA2023]] #1(a), (b), (f) · [[exams/midterm-2/past-exams/spring-2023|SP2023]] #1(c), #3 · [[exams/midterm-2/past-exams/spring-2025|SP2025]] #1(a), (d) · [[exams/midterm-2/past-exams/spring-2021|SP2021]] #3, #6(a) · [[exams/midterm-2/past-exams/fall-2021|FA2021]] #2(c) · [[exams/midterm-2/past-exams/fall-2019|FA2019]] #1(a)–(c), (e)
+> - MT1: [[exams/midterm-1/past-exams/spring-2023|SP2023]] #1(d), #8 · homework: [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #3–#5, HW7 #1, #3 ([[exams/quiz-2|Quiz 2 page]])
 
 **Where it appears:** [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]] §4 (slides 14–16), [[3-fourier-analysis/14-dtft-properties|L14]] §1 (slides 3–6), [[3-fourier-analysis/15-frequency-response|L15]]–[[3-fourier-analysis/16-magnitude-and-phase-response|L16]]; [[problems/dtft-and-inverse-dtft|DTFT family]]; [[homework/hw5|HW5]], [[homework/hw6|HW6]]; [[exams/quiz-2|Quiz 2]]; all seven past Midterm 2 exams.
 
@@ -146,4 +174,4 @@ More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT proper
 [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/fourier-series|Fourier series]] · [[concepts/periodic-signals|periodic signals]] · [[concepts/frequency-response|frequency response]] · [[concepts/magnitude-and-phase-response|magnitude and phase]] · [[concepts/region-of-convergence|ROC]] · [[concepts/z-transform|z-transform]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
-Lecture 13 notes §4 (eqs. 41–49, Exercise 2, Fig. 2), slides 14–16; Lecture 14 notes §1–1.1 (eqs. 1–12), slides 3–6; HW5–HW6; Midterm 2 keys FA2019–SP2025.
+Lecture 13 notes §4 (eqs. 41–49, Exercise 2, Fig. 2), slides 14–16; Lecture 14 notes §1–1.1 (eqs. 1–12), slides 3–6; HW5–HW7; Midterm 2 keys FA2019–SP2025.
