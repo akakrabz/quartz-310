@@ -4,13 +4,13 @@ description: "Lectures 20–23: the DFT as N samples of the DTFT, N-periodicity,
 tags: [dft, spectral-analysis, midterm-2]
 ---
 
-*Unit 5 · Lectures 20 (Oct 16) to 23 (Oct 23) · prev: [[4-sampling-and-reconstruction/index|Unit 4]] · Lecture 23 is the last Midterm 2 content*
+*Unit 5 · Lectures 20 (Oct 16) to 23 (Oct 23–28) · prev: [[4-sampling-and-reconstruction/index|Unit 4]] · Lecture 23 is the last Midterm 2 content*
 
 **Midterm 2** (Wed Nov 4, 7–9 pm) covers all of Unit 5 → [[exams/midterm-2/index|Midterm 2 review]]. DFT properties (circular shift, reversal, modulation, symmetry) are tested; computing circular convolution is not (instructor).
 
-- The DTFT is an infinite sum over a continuous $\omega$: not computable. Keep $N$ samples and $N$ frequencies $\omega_k=\frac{2\pi k}{N}$: the DFT.
-- The DFT periodically extends both $x[n]$ and $X[k]$, so shifts, reversals and convolution become circular.
-- A finite cosine is a periodic-sinc lobe pair, not an impulse pair: leakage, resolution limits and side-lobe masking are the price, windows and longer records the remedies.
+- Implement the DTFT on a DSP chip, or in a Python function? An infinite sum over a continuous $\omega$: not achievable. Keep $N$ samples, evaluate $N$ frequencies $\omega_k=\frac{2\pi k}{N}$: the DFT, a practical realization of values of the DTFT.
+- Evaluating at $N$ points makes both domains periodic, so every property returns with modular arithmetic: circular shift, reversal, convolution. Zero padding does two jobs: a finer look at the same DTFT, and making circular convolution linear.
+- Spectral analysis is the DFT's application: a finite cosine is a periodic-sinc lobe pair, so leakage, merging lobes and side-lobe masking are the price; longer records and tapered windows the tools. Next: computing the DFT fast, the FFT (after Midterm 2).
 
 ## Topics
 
@@ -32,9 +32,9 @@ tags: [dft, spectral-analysis, midterm-2]
 | # | page | one line |
 |---|---|---|
 | 20 | [[5-dft-and-fft/20-discrete-fourier-transform\|The discrete Fourier transform]] | computing the DTFT; $X[k]=X_d(2\pi k/N)$; $N$-periodicity; zero padding; matrix form (optional) |
-| 21 | [[5-dft-and-fft/21-dft-properties\|DFT properties]] | modulo $\langle n\rangle_N$ and circular reversal; circular convolution (table, circulant matrix); properties table |
-| 22 | [[5-dft-and-fft/22-spectral-analysis\|Spectral analysis with the DFT]] | finite cosine and the periodic sinc; leakage; the spectral analysis problem; zero padding; two challenges |
-| 23 | [[5-dft-and-fft/23-spectral-analysis-and-window-functions\|Spectral analysis and window functions]] | full/half-lobe separation; guitar example; rectangular vs Hamming; the tradeoff. **Last Midterm 2 lecture.** |
+| 21 | [[5-dft-and-fft/21-dft-properties\|DFT properties]] | guest lecture (Mon Oct 19): modulo $\langle n\rangle_N$ and circular reversal; circular convolution (table, circulant matrix); properties table |
+| 22 | [[5-dft-and-fft/22-spectral-analysis\|Spectral analysis with the DFT]] | Oct 21–23: finite cosine and the periodic sinc; leakage; the spectral analysis problem; zero padding; two challenges |
+| 23 | [[5-dft-and-fft/23-spectral-analysis-and-window-functions\|Spectral analysis and window functions]] | Oct 23–28: full/half-lobe separation; guitar example; rectangular vs Hamming; the tradeoff. **Last Midterm 2 lecture.** |
 
 > [!key] The unit on one card
 > - **DFT** ([[concepts/dft|DFT]]): $X[k]=\sum_{n=0}^{N-1}x[n]\,e^{-j\frac{2\pi k}{N}n}$, $0\le k\le N-1$; inverse $x[n]=\frac1N\sum_{k=0}^{N-1}X[k]\,e^{j\frac{2\pi k}{N}n}$, $0\le n\le N-1$.
@@ -52,4 +52,4 @@ tags: [dft, spectral-analysis, midterm-2]
 [[4-sampling-and-reconstruction/index|Unit 4]] · [[concepts/dtft|DTFT]] · [[concepts/dft|DFT]] · [[concepts/spectral-analysis|spectral analysis]] · [[concepts/index|Concepts]] · [[exams/index|Exams]]
 
 ### Sources for this page
-Snyder, ECE 310 Lectures 20–23 notes and slides (Oct 16–23, 2026); past Midterm 2 exams.
+Snyder, ECE 310 Lectures 20–23 notes and slides (Oct 16–28, 2026); past Midterm 2 exams.

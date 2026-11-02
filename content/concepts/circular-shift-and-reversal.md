@@ -1,11 +1,11 @@
 ---
 title: "Circular shift, reversal and modulo indexing"
-description: "The DFT makes a length-N signal its periodic extension x[⟨n⟩_N]; shifts and reversals wrap around. Modulo ⟨n⟩_N with examples, circular reversal x[⟨−n⟩_N] = x[0], x[N−n], the notes' Figure 1 and slide Example 1."
+description: "The DFT makes a length-N signal its periodic extension x[⟨n⟩_N]; shifts and reversals wrap around. Modulo ⟨n⟩_N with examples, circular reversal x[⟨−n⟩_N] = x[0], x[N−n], the notes' Figure 1, slide Example 1 and a lecture drill."
 tags: [concept, dft, midterm-2]
 aliases: ["modulo indexing", "circular shift", "circular time reversal", "periodic extension", "circular reversal", "modulo operation"]
 ---
 
-*Lecture 21 (Mon Oct 19) §1 · also [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] §2.2 · [[homework/hw9|HW9]] #1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
+*Lecture 21 (Mon Oct 19, guest lecture by Prof. Kamalabadi; recapped Wed Oct 21) §1 · also [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] §2.2 · [[homework/hw9|HW9]] #1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
 > [!abstract] In one breath
 > - DFT and inverse DFT are $N$-periodic: a length-$N$ signal acts as its periodic extension $x[\langle n\rangle_N]$.
@@ -30,9 +30,15 @@ $$
 > $$
 > - $X[k]$ uses only $x[0],\dots,x[N-1]$; the inverse DFT returns those values, periodically extended (proofs: [[concepts/dft|DFT]] §3).
 > - Modulo form: $x[n]=x[\langle n\rangle_N]$, $X[k]=X[\langle k\rangle_N]$ for all $n,k$.
-> - $\langle a\rangle_N$ = remainder of $a$ divided by $N$, always in $\{0,\dots,N-1\}$: $\langle7\rangle_4=3$, $\langle-1\rangle_3=2$, $\langle6\rangle_3=0$, $\langle11\rangle_3=2$.
+> - $\langle a\rangle_N$ = remainder of $a$ divided by $N$, always in $\{0,\dots,N-1\}$: write $a=lN+r$ with $l$ any integer (negative too) and $r$ the remainder — equivalently, how much to subtract from $a$ to reach a multiple of $N$. $\langle7\rangle_4=3$, $\langle-1\rangle_3=2$, $\langle6\rangle_3=0$, $\langle11\rangle_3=2$, $\langle-5\rangle_4=3$, $\langle-2\rangle_4=2$.
+
+> [!lecture] In lecture — L21, Oct 19 (guest lecturer)
+> Recall how sampling in time was modelled: multiply by an impulse train, whose transform is another impulse train; the convolution in frequency "brings whatever that center frequency is and centers it at each one of those impulses" — the replicas. Here we sample the DTFT in frequency, modelled the same way with an impulse train, so it should not be surprising that replicas appear in time: "when you sample something in one domain, you create a periodic version of that" in the other. That periodicity is the basis of all the modular arithmetic. For $k\bmod N$, be explicit: $k=lN+r$, $l$ an integer "positive or negative," $r$ in $0,\dots,N-1$ — $7=1\cdot4+3$, $-5=(-2)\cdot4+3$, $-2=(-1)\cdot4+2$. "This has to become almost second nature."
 
 Every DFT belongs to a finite-length signal, periodically extended. Shifts and reversals therefore wrap around the length-$N$ window: **circular**.
+
+> [!lecture] In lecture — L21, Oct 21
+> The modulus: "how much do I have to subtract before I reach a multiple of that integer? Specifically subtract." For $7$, take $3$ away to reach a multiple of $4$; for $6$, nothing; for $-1$, subtract $2$ to reach a multiple of $3$ (namely $-3$). Really helpful for negative mod operations. Is the DFT one-way, since it creates copies? No — invertible, unique, "a bijection," guaranteed by mandating that the signal is finite length; information is forfeited only when a window is chopped out of a longer signal. Does the extension change the length? Still finite length: the window of length $N$ holds all the unique information, and "the periodic extension is just repetition. It's not unique or new information."
 
 ## 2. Circular time reversal
 
@@ -54,6 +60,15 @@ Every DFT belongs to a finite-length signal, periodically extended. Shifts and r
 > - (a) indices $0,4,3,2,1$: $\{\underset{\uparrow}{3},\ 5,\ 4,\ 2,\ 1\}$.
 > - (b) indices $2,3,4,0,1$: $\{\underset{\uparrow}{2},\ 4,\ 5,\ 3,\ 1\}$ (circular advance by 2).
 > - (c) indices $1,0,4,3,2$: $\{\underset{\uparrow}{1},\ 3,\ 5,\ 4,\ 2\}$ = (a) circularly delayed by 1, since $x[\langle 1-n\rangle_5]=x[\langle -(n-1)\rangle_5]$.
+
+> [!question] Example — in lecture (L21, Oct 19): circular shift of $\{1,3,5,7,9\}$
+> $x[n]=\{\underset{\uparrow}{1},\ 3,\ 5,\ 7,\ 9\}$, $N=5$. Write (a) $x[\langle n-1\rangle_5]$ and (b) $x[\langle n-2\rangle_5]$ two ways: reduce each index mod 5, and read a length-5 window of the shifted periodic extension. Give their DFTs in terms of $X[k]$.
+
+> [!success]- Answer
+> Keep the shift fixed and step through the five values of $n$.
+> - (a) $\langle n-1\rangle_5$ for $n=0,\dots,4$: indices $4,0,1,2,3$ ⇒ $\{\underset{\uparrow}{9},\ 1,\ 3,\ 5,\ 7\}$. The 9 wraps to the front; everything else moves right by one. DFT: $e^{-j\frac{2\pi k}{5}}X[k]$.
+> - (b) indices $3,4,0,1,2$ ⇒ $\{\underset{\uparrow}{7},\ 9,\ 1,\ 3,\ 5\}$, i.e. (a) delayed once more. DFT: $e^{-j\frac{4\pi k}{5}}X[k]$.
+> - Extension view: $\dots,7,9,\mathbf{1,3,5,7,9},1,3,5,\dots$; delay the whole infinite sequence by $m$ and read $0\le n\le4$ — the same two sequences. Shifting the periodic extension is nothing but wrapping the original sequence around.
 
 ## 3. Midterm 2 quick check
 
@@ -88,4 +103,4 @@ Every DFT belongs to a finite-length signal, periodically extended. Shifts and r
 [[concepts/dft|DFT]] · [[concepts/dft-properties|DFT properties]] · [[concepts/circular-convolution|circular convolution]] · [[concepts/periodic-signals|periodic signals]]
 
 ### Sources for this page
-Snyder, Lecture 21 notes §1 (eqs. 1–6, 19, Figure 1) and slides 4–8 (Example 1), Oct 19, 2026; Lecture 20 §2.2.
+Snyder, Lecture 21 notes §1 (eqs. 1–6, 19, Figure 1) and slides 4–8 (Example 1), Oct 19, 2026; Lecture 20 §2.2; lecture recording Oct 19 (guest lecture, condensed); lecture recording Oct 21 (condensed).

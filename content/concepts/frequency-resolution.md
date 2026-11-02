@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["full-lobe separation", "half-lobe separation", "frequency resolution", "lobe separation", "resolution criteria", "lobe separation criteria"]
 ---
 
-*Lecture 23 (Fri Oct 23) §2 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lecture 23 (Mon Oct 26) §2 · Exercise 1(b) and demos Wed Oct 28 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - Equal amplitudes, close frequencies: resolved iff the two main lobes (each $\frac{4\pi}{N}$ wide) do not merge.
@@ -20,7 +20,7 @@ $$
 X_d(\omega)=C(\omega-\omega_1)+C(\omega+\omega_1)+C(\omega-\omega_2)+C(\omega+\omega_2).
 $$
 
-- On $0\le\omega\le\pi$ the two [[concepts/periodic-sinc|periodic sincs]] at $\omega_1$, $\omega_2$ distort each other. For $N$ large enough (e.g. $N\gt32$, easy in practice) the cross terms are negligible (eq. 7):
+- The signal is real, so Hermitian symmetry puts the mirror lobes on $[-\pi,0]$: on $0\le\omega\le\pi$ only the two [[concepts/periodic-sinc|periodic sincs]] at $\omega_1$, $\omega_2$ matter, and they distort each other through the cross term $2C(\omega-\omega_1)C(\omega-\omega_2)$. That term is a second-order effect once $N$ is not very small (heuristic: $N\gt32$): the side-lobe nulls crowd together and the side lobes decay (for short $N$ the approximation breaks down and the spectrum gets distorted). Eq. 7:
 $$
 \lvert X_d(\omega)\rvert\approx\lvert C(\omega-\omega_1)\rvert+\lvert C(\omega+\omega_1)\rvert+\lvert C(\omega-\omega_2)\rvert+\lvert C(\omega+\omega_2)\rvert .
 $$
@@ -38,6 +38,13 @@ $$
 > $$
 > \omega_2-\omega_1\gt\frac{2\pi}{N}\quad\Longleftrightarrow\quad N\gt\frac{2\pi}{\lvert\omega_1-\omega_2\rvert}.
 > $$
+> **With a Hamming [[concepts/window-functions|window]]** (main lobe $\frac{8\pi}{N}$, slide 13) every bound doubles: full $N\gt\frac{8\pi}{\lvert\omega_1-\omega_2\rvert}$, half $N\gt\frac{4\pi}{\lvert\omega_1-\omega_2\rvert}$.
+
+> [!lecture] In lecture — L23, Oct 26
+> Many components "might seem like a really difficult problem, but in practice we can just focus on separating pairs of frequencies." "If I can separate any pair of components, then I can separate all pairs of components." And not every pair — "just pairs that are close to each other": apply the criterion to your two closest frequencies, written as $\lvert\omega_2-\omega_1\rvert$ so that it does not matter which is larger. When that difference is really, really small, "we are going to require a lot of samples to be able to shrink the width of those main lobes" and guarantee they separate.
+
+> [!lecture] In lecture — L23, Oct 28
+> "All of our full-lobe, half-lobe resolution criteria get twice as expensive with the Hamming window because the width is twice as wide." All the math we did is the same, "it just gets doubled." In the demo, two equal tones spaced exactly $\frac{4\pi}{N}$ ($N=128$) had their main lobes just meeting under the rectangular window; with Hamming he could "hardly even notice the side lobes," but the two main lobes ran together into one odd shape — "if we just reduce the spacing just a tiny bit, it'll fully combine into one lobe" — so "if we can't guarantee adequate spacing, we may have that these components absorb into each other."
 
 - Longer signal, closer frequencies resolvable. At exactly $\Delta\omega=\frac{2\pi}{N}$ each peak sits on the other lobe's first null.
 - **Zero padding does not help:** it does not change the DTFT of a finite-length signal, so the lobes keep their width ([[concepts/zero-padding|zero padding]]).
@@ -62,6 +69,9 @@ $$
 > (b) No. $N\gt\frac{4\pi}{2\pi\Delta f\,T}=\frac{2}{\Delta f\,T}=\frac{2f_s}{\Delta f}$ scales with $f_s$ ($6400$ at $16$ kHz, $1600$ at $4$ kHz), but the time $NT=\frac{2}{\Delta f}=\frac25=0.4$ s does not. Resolution is set by how long you listen, not how fast you sample.
 >
 > Half-lobe: $N\gt1600$, $0.2$ s.
+
+> [!lecture] In lecture — L23, Oct 28
+> Double the sampling rate, or cut it in half? "It actually does not matter. You will have to record for the same amount of time." Two effects cancel. Sampling faster makes $T$ smaller, so the separation $\omega_2-\omega_1=(\Omega_2-\Omega_1)T$ gets tighter and $N\gt\frac{4\pi}{\Delta\omega}$ demands more samples — but "because I'm sampling quicker, I don't actually have to sample for longer." Sampling slower spreads the two frequencies apart and needs fewer samples, "but because I'm sampling slower, I need to wait longer to get that fewer number of samples." "How long you have to record actually comes down to only the separation frequency."
 
 ## 3. Midterm 2 quick check
 
@@ -88,7 +98,7 @@ $$
 > - The criteria assume similar amplitudes; a weak tone needs a [[concepts/window-functions|window]] even when separated.
 
 > [!exam] Midterm 2
-> Fall 2026 MT2 (Wed Nov 4) covers this topic. Resolution appears inside spectral-analysis problems: does padding resolve closer tones, which record length separates two given frequencies. [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Resolution appears inside spectral-analysis problems: does padding resolve closer tones, which record length separates two given frequencies. Said Oct 30: the criteria are tested "to the extent they're used on homework." [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3.
 
 **Where it appears:** [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] §2 (eqs. 5–15, Exercise 1, slides 6–8) · [[problems/dft-spectral-analysis|DFT spectral analysis]].
 
@@ -96,4 +106,4 @@ $$
 [[concepts/spectral-analysis|spectral analysis]] · [[concepts/periodic-sinc|periodic sinc]] · [[concepts/window-functions|window functions]] · [[concepts/zero-padding|zero padding]] · [[concepts/spectral-leakage|spectral leakage]] · [[concepts/sampling|sampling]]
 
 ### Sources for this page
-Snyder, Lecture 23 notes §2 (eqs. 5–15, Exercise 1) and slides 6–8 (Example 1), Oct 23, 2026.
+Snyder, Lecture 23 notes §2 (eqs. 5–15, Exercise 1) and slides 6–8 (Example 1), 13, Oct 26, 2026; lecture recording Oct 26 (condensed); lecture recording Oct 28 (condensed); lecture recording Oct 30 (condensed).

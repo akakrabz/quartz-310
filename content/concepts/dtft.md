@@ -5,7 +5,7 @@ tags: [concept, dtft, fourier-analysis, midterm-2]
 aliases: ["DTFT", "discrete-time Fourier transform", "inverse DTFT", "spectrum", "frequency spectrum", "magnitude spectrum", "phase spectrum"]
 ---
 
-*Lectures 13 (Wed Sep 23) §4 and 14 (Fri Sep 25) §1 · [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #3–#5, HW7 #1, #3 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
+*Lectures 13 (Wed Sep 23) §4 and 14 (Sep 25, Oct 2) §1 · [[homework/hw5|HW5]] #1–#2, [[homework/hw6|HW6]] #3–#5, HW7 #1, #3 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
 
 > [!abstract] In one breath
 > - $X_d(\omega)=\sum_nx[n]e^{-j\omega n}$ scores $x$ against every $e^{j\omega n}$; it is $2\pi$-periodic, so $[-\pi,\pi]$ says everything.
@@ -29,7 +29,7 @@ Let $N_0\to\infty$ in the [[concepts/fourier-series|DTFS]]: the harmonic frequen
 > $$
 > Sufficient, not necessary. If the DTFT exists, it is unique; then $X_d$ is bounded and continuous. Everlasting sinusoids and $u[n]$ need impulses ([[concepts/dtft-pairs|DTFT pairs]]); growing sequences have no DTFT.
 
-- Like the CTFT: complex-valued, continuous in $\omega$, says how much of each frequency is in $x[n]$.
+- Like the CTFT: complex-valued and **continuous in $\omega$** — the "D" says the *input* is discrete, not the transform (the DFT discretizes it later, Unit 5); says how much of each frequency is in $x[n]$.
 - Unlike the CTFT: **$2\pi$-periodic**, so one period ($[-\pi,\pi]$) says everything; $\omega\approx0$ low, $\omega\approx\pm\pi$ high frequency:
 
 $$
@@ -65,9 +65,19 @@ $$
 > $$
 > Hence the textbook's $X(e^{j\omega})$. $\sum|x[n]|<\infty$ $\iff$ the ROC contains $|z|=1$, and only then may $z^{-1}$ be replaced by $e^{-j\omega}$.
 
+> [!lecture] In lecture — L14, Oct 2
+> Both transforms tell me how much of each building block is in my signal — the z-transform of each $z^n$, the DTFT of each $e^{j\omega n}$ — so where do they intersect? At $z=e^{j\omega}$: plug it in and we directly get the DTFT sum. Remember 210: in the s-plane we "slice out just that vertical imaginary axis" and unroll it — that is the Fourier transform. Here "we slice out the unit circle … and unwrap that into the DTFT." The $j\Omega$ axis runs through infinitely many frequencies, so the CTFT goes from $-\infty$ to $\infty$; here "I just do one loop around the unit circle. I travel 2π radians" — a geometric reason why only $[0,2\pi)$ matters.
+
 - Why keep the z-transform: it covers every $z$. $x[n]=2^nu[n]$ has $X(z)=\frac{1}{1-2z^{-1}}$, $|z|>2$, but $\sum_n|x[n]|=\infty$: no DTFT (eqs. 3–5). Example that works: $(\tfrac12)^nu[n]$ gives $X_d(\omega)=\frac{1}{1-\frac12e^{-j\omega}}$, $X_d(0)=2$, $X_d(\pi)=\frac23$.
 - Stability ([[concepts/bibo-stability|BIBO]]): BIBO stable $\iff\sum_n|h[n]|<\infty\iff$ ROC of $H(z)$ contains $|z|=1\iff$ the DTFT sum of $h$ converges absolutely (eq. 6). So the [[concepts/frequency-response|frequency response]] of a stable system is $H(e^{j\omega})$.
 - *Absolutely* matters: the ideal low-pass $h[n]=\frac{\sin(Wn)}{\pi n}$ has a DTFT (a rectangle) but is not stable.
+
+> [!lecture] In lecture — L14, Oct 2
+> Finding the DTFT "does not need to be this whole new venture": all the hard work with the z-transform still applies; we're not pressing reset. One nuance, though — the z-transform pretty much always exists, at least some values of $z$ converge, "while the DTFT may straight up just not exist at all." Student: so it depends on stability? For transfer functions, yes. For a signal, we ask whether its ROC contains the unit circle, "and that's it. We wouldn't refer to signals as being stable."
+
+> [!lecture] In lecture — L15, Oct 5
+> Mentimeter: $Y_d=X_dH_d$ versus $Y(z)=H(z)X(z)$ — why are these different? They are "one and the same if we are evaluating the transfer function along the unit circle." The transfer function is more expansive: it can look at components that are not periodic, like $2^n$ or $(\tfrac12)^n$. But $2^n$ blows up as $n\to\infty$ and $(\tfrac12)^n$ blows up as $n\to-\infty$, so "the only places in the z-domain that are actually tangible, that don't blow up anywhere, are actually on the unit circle."
+
 - **Linear-algebra view** (eqs. 10–12, optional): $X_d(\omega)=\mathbf{v}^*\mathbf{u}$ with $\mathbf{u}=x[n]$, $\mathbf{v}=e^{j\omega n}$: how similar $x$ is to frequency $\omega$ ([[concepts/template-matching|template matching]]).
 
 ## 4. Short sequences by hand
@@ -162,6 +172,7 @@ More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT proper
 > - Impulses need all $n$: a finite piece of a cosine has an ordinary DTFT. Zero-padding changes nothing.
 > - $e^{-j\omega/2}$ is not $\delta[n-\frac12]$; its inverse is $\frac{\sin(\pi(n-\frac12))}{\pi(n-\frac12)}$ ([[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #1(b)).
 > - A real $X_d$ can be negative; a magnitude cannot: $1+2\cos(2\omega)=-1$ at $\omega=\frac{\pi}{2}$ means magnitude $1$, phase $\pi$ (the centred $\delta[n+2]+\delta[n]+\delta[n-2]$, [[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #3; slide 15's causal version adds $e^{-j2\omega}$).
+> - "Stable" describes systems, not signals: for $x[n]$ ask only whether the ROC of $X(z)$ contains $|z|=1$ (L14 Q&A, Oct 2).
 
 > [!exam] Exam
 > Fall 2026 MT2 (Wed Nov 4) covers this topic. DTFTs of short sequences from the definition; existence via the ROC; true/false on uniqueness, $2\pi$-periodicity and zero-padding. Family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]].
@@ -174,4 +185,4 @@ More: [[concepts/dtft-pairs|DTFT pairs]], [[concepts/dtft-properties|DTFT proper
 [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/fourier-series|Fourier series]] · [[concepts/periodic-signals|periodic signals]] · [[concepts/frequency-response|frequency response]] · [[concepts/magnitude-and-phase-response|magnitude and phase]] · [[concepts/region-of-convergence|ROC]] · [[concepts/z-transform|z-transform]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
-Lecture 13 notes §4 (eqs. 41–49, Exercise 2, Fig. 2), slides 14–16; Lecture 14 notes §1–1.1 (eqs. 1–12), slides 3–6; HW5–HW7; Midterm 2 keys FA2019–SP2025.
+Lecture 13 notes §4 (eqs. 41–49, Exercise 2, Fig. 2), slides 14–16; Lecture 14 notes §1–1.1 (eqs. 1–12), slides 3–6; HW5–HW7; Midterm 2 keys FA2019–SP2025; lecture recording Oct 2 (condensed); lecture recording Oct 5 (condensed).

@@ -8,9 +8,9 @@ tags: [sampling, nyquist, ctft, dtft]
 
 **Midterm 2** (Wed Nov 4, 7–9 pm) covers all of Unit 4 → [[exams/midterm-2/index|Midterm 2 review]].
 
-- Sampling $x[n]=x_a(nT)$ copies the analog spectrum every $2\pi/T$; $\omega=\Omega T$ gives the DTFT. Copies stay apart iff $f_s\gt2B$.
-- Ideal D/A: a sinc per sample = low-pass of height $T$; a digital filter between the converters acts like $H_d(\Omega T)$ if no aliasing reaches its passband.
-- Below Nyquist the copies overlap; a sinusoid returns as its alias.
+- How do we choose $T$? Too fine is costly, too coarse loses the signal, and the time domain cannot say which. In frequency, sampling copies $X_a$ every $2\pi/T$ (scaled $\frac1T$), $\omega=\Omega T$ relabels the axis, and no overlap means $f_s\gt2B$.
+- Ideal D/A "is just extracting the central copy": a low-pass of height $T$, cutoff $\pi/T$ because the band limit is unknown but the copy spacing is not; in time, sinc interpolation. Sample, filter digitally, reconstruct: sharp edges are easier digitally.
+- Below Nyquist the central copy changes shape: aliasing. A sinusoid comes back at its principal alias, needing a $\pm2\pi$ shift *is* aliasing, and as $f_s$ falls the recovered frequency zigzags through the central copy (wagon wheels, frozen wings).
 
 ## Topics
 
@@ -26,9 +26,9 @@ tags: [sampling, nyquist, ctft, dtft]
 
 | # | page | one line |
 |---|---|---|
-| 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | Fri Oct 9 · sampling §1–1.1, Nyquist criterion §2; Examples 1 (box) and 2 (triangle) |
-| 18 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Ideal digital-to-analog conversion]] | Mon Oct 12 · ideal reconstruction §1; slide 9 sketch; slides 10–11 A/D → $H_d$ → D/A (HW7 #4, HW8 #5–6) |
-| 19 | [[4-sampling-and-reconstruction/19-aliasing\|The aliasing effect]] | Wed Oct 14 · Nyquist via $\omega=\Omega T$ §1; aliasing §2; sinusoids §2.1; slide 19 |
+| 17 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|Ideal analog-to-digital conversion]] | Fri Oct 9 · sampling §1–1.1, Nyquist criterion §2; Example 1 (box); Example 2 (triangle) deferred to Mon Oct 12 |
+| 18 | [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|Ideal digital-to-analog conversion]] | Mon Oct 12, Wed Oct 14 · ideal reconstruction §1; slide 9 sketch; slides 10–11 A/D → $H_d$ → D/A (HW7 #4, HW8 #5–6) |
+| 19 | [[4-sampling-and-reconstruction/19-aliasing\|The aliasing effect]] | Wed Oct 14, Fri Oct 16 · Nyquist via $\omega=\Omega T$ §1; aliasing §2; sinusoids §2.1; slide 19 |
 
 > [!key] The unit on one card
 > - **Ideal sampling** ([[concepts/sampling|sampling]]): $x[n]=x_a(nT)$, $f_s=\frac1T$. Model $x_s(t)=\sum_nx_a(nT)\,\delta(t-nT)$.
@@ -49,4 +49,4 @@ tags: [sampling, nyquist, ctft, dtft]
 **Background concepts:** [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/complex-exponential|complex exponential]] · [[concepts/discrete-time-signal|discrete-time signal]] · [[concepts/index|all concepts]]
 
 ### Sources for this page
-Snyder, ECE 310 Lectures 17–19 notes and slides with inked decks (Fall 2026); past Midterm 2 exams with keys.
+Snyder, ECE 310 Lectures 17–19 notes and slides with inked decks (Fall 2026); past Midterm 2 exams with keys; lecture recordings Oct 9, 14 and 16 (condensed).

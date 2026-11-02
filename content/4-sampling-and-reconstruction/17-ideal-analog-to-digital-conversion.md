@@ -12,17 +12,20 @@ lecture: 17
 > - With $\omega=\Omega T$ the copies sit every $2\pi$: that is the DTFT $X_d(\omega)$.
 > - Bandlimited to $B$ Hz: copies stay apart iff $f_s\gt2B$ (Nyquist). Below, they overlap: aliasing.
 
+> [!lecture] In lecture — L17, Oct 9
+> "I promise it's really important": the question is how we choose $T$ — a femtosecond is safe but extremely costly, one sample a second won't sound like me, so the answer sits in between and needs justifying. "Looking just in the time domain seems to be insufficient," so: frequency domain, copies every $2\pi/T$, $\omega=\Omega T$, no overlap, $f_s\gt2B$. It takes "two or three attempts … to start to sink in."
+
 ## What was covered
 
 1. **§1 Ideal sampling of analog signals** (eqs. 1–11, Figure 1, Example 1) → [[concepts/sampling|Sampling]] §1–2
 2. **§1.1 Converting to a discrete-time sequence** (eqs. 12–16, Figure 2) → [[concepts/sampling|Sampling]] §3
-3. **§2 Nyquist criteria** (eqs. 17–21, Figure 3, Example 2) → [[concepts/nyquist-criterion|Nyquist criterion]] §1–2
+3. **§2 Nyquist criteria** (eqs. 17–21, Figure 3) → [[concepts/nyquist-criterion|Nyquist criterion]] §1–2
 
 ## Exercises from this lecture
 
 - Example 1 (slide 6), the box $\operatorname{rect}(\Omega/20\pi)$ sampled at $T=\frac{1}{20}$ and $\frac{1}{10}$ s → [[concepts/sampling|Sampling]] §2
 - Slide 7, sampling $\cos(\Omega_0t)$ to read off $\omega=\Omega T$ → [[concepts/sampling|Sampling]] §3
-- Example 2 (slides 10–12), the triangle to $100\pi$ rad/s at $150/100/75$ Hz → [[concepts/nyquist-criterion|Nyquist criterion]] §2
+- Example 2 (slides 10–12), the triangle to $100\pi$ rad/s at $150/100/75$ Hz — deferred to Lecture 18 (Mon Oct 12) → [[concepts/nyquist-criterion|Nyquist criterion]] §2
 
 **Practice:** HW7 #3 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #3 · [[problems/sampling-and-the-nyquist-rate|family]] · [[demos/sampling-explorer|explorer]]
 
@@ -32,4 +35,4 @@ lecture: 17
 
 ### Sources for this page
 
-Snyder, ECE 310 Lecture 17 notes (§1–2, eqs. 1–21, Figures 1–3) and slides of Oct 9, 2026 with the inked deck.
+Snyder, Lecture 17 notes (§1–2, eqs. 1–21, Figures 1–3), slides of Oct 9, 2026 (inked deck); lecture recording Oct 9 (condensed).

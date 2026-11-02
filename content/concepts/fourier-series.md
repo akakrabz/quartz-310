@@ -102,7 +102,7 @@ Discrete-time harmonics $e^{j\frac{2\pi}{N_0}kn}$: only $N_0$ are distinct, sinc
 > $$
 > c_k=\frac{1}{N_0}X_d\!\left(\frac{2\pi k}{N_0}\right),\qquad X_d \text{ the DTFT of one period.}
 > $$
-> The DTFS samples the DTFT at $N_0$ evenly spaced frequencies; the only difference is the $1/N_0$. Worked for the pulse on the [[concepts/dtft|DTFT]] page (Exercise 2).
+> The DTFS evaluates the DTFT at $N_0$ evenly spaced frequencies; the only difference is the $1/N_0$. Worked for the pulse on the [[concepts/dtft|DTFT]] page (Exercise 2).
 
 ## 4. Midterm 2 quick check
 

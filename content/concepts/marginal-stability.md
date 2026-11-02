@@ -35,6 +35,8 @@ $$
 > \frac{1}{(1-e^{j\omega}z^{-1})^2} \leftrightarrow (n+1)e^{j\omega n}u[n],\quad \lvert z\rvert>1 .
 > $$
 
+Unit 3 view (L14, Oct 2): a pole on $\lvert z\rvert=1$ means a periodic component ($u[n]$, $e^{j\omega_0n}u[n]$), so the DTFT of a marginally stable signal or system carries Dirac deltas, $\pi\,\delta(\omega-\omega_0)$ ([[concepts/dtft-pairs|DTFT pairs]]).
+
 Slides 16–17 (eqs. 21–23): $h[n] = a^n u[n]$, $\lvert a\rvert = 1$; input $x[n] = b^n u[n]$:
 
 - $\lvert b\rvert > 1$: input unbounded; not a BIBO test input.

@@ -5,7 +5,7 @@ tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["spectral analysis", "sinusoids in noise", "frequency estimation", "spectral components", "spectral analysis problem"]
 ---
 
-*Lectures 22 (Wed Oct 21) §2 and 23 (Fri Oct 23) §1 · [[homework/hw9|HW9]] #4–5 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lectures 22 (Wed Oct 21, Fri Oct 23) §2 and 23 (Fri Oct 23) §1 · demos Oct 26–28 · [[homework/hw9|HW9]] #4–5 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - Problem: $x[n]=\sum_{m=1}^{M}A_m\cos(\omega_mn)$, $0\le n\le N-1$; find $M$, the $\omega_m$ and the $A_m$ from the DFT.
@@ -18,9 +18,10 @@ aliases: ["spectral analysis", "sinusoids in noise", "frequency estimation", "sp
 > $$
 > x[n]=\sum_{m=1}^{M}A_m\cos(\omega_mn),\qquad0\le n\le N-1 .
 > $$
-> Unknown: the number of components $M$, the frequencies $\omega_m$, the amplitudes $A_m$. Primary goal: all $M$ frequencies. All the tools come from the $M=2$ case, $s[n]=A_1\cos(\omega_1n)+A_2\cos(\omega_2n)$.
+> Unknown: the number of components $M$, the frequencies $\omega_m$, the amplitudes $A_m$. Primary goal: all $M$ frequencies. All the tools come from the $M=2$ case, $s[n]=A_1\cos(\omega_1n)+A_2\cos(\omega_2n)$: $M$ cosines are $\binom M2$ pairs, most of them trivial — only the closest pair is hard.
 
 - If $N\to\infty$ the task is trivial: locate Dirac deltas (inked slide 3). Finite $N$ turns each delta into a lobe of height $\frac{A_mN}{2}$ and width $\frac{4\pi}{N}$ with side lobes: [[concepts/spectral-leakage|leakage]].
+- Amplitudes and the count matter too, not only the frequencies (demo Oct 21, recapped Oct 26): the same C4 on an acoustic guitar and a digital piano sounds different because the harmonics (overtones) and how their amplitudes decay differ — timbre, the quality of a sound.
 - Sampled from $x_a(t)$ with period $T$: $\omega_m=\Omega_mT$; bin $k$ sits at $\frac{kf_s}{N}$ Hz ([[concepts/dft|DFT]]).
 - Lecture 23 analyses with the DTFT (cleaner notation); every criterion holds unchanged for the DFT, its samples.
 
@@ -41,6 +42,9 @@ $A_1=1$, $A_2=\frac12$, $\omega_1=0.55\pi$, $\omega_2=0.65\pi$, $N=32$.
 | frequencies too close ($\lvert\omega_1-\omega_2\rvert$ small) | the two main lobes merge into one | a longer record: [[concepts/frequency-resolution\|full-lobe]] $N\gt\frac{4\pi}{\Delta\omega}$, half-lobe $N\gt\frac{2\pi}{\Delta\omega}$; zero padding does not help |
 | amplitudes very different ($A_1\gg A_2$, e.g. $\frac1{10}$ or $\frac1{100}$) | the strong component's side lobes ($-13$ dB with a rectangular window) are taller than the weak main lobe, which is covered up | a tapered [[concepts/window-functions\|window]]: Hamming, side lobes $-42$ dB, main lobe twice as wide |
 
+> [!lecture] In lecture — L22, Oct 23
+> Length is rarely the bottleneck: audio at 8 or 44 kHz for more than a few seconds "is very, very long as it is," so we usually don't need to worry about having enough samples — the two real challenges are the ones in the table, and they are not equally hard. Close frequencies make us "mistake two components to actually just be one," but that problem "is actually usually pretty easy to solve" (the L23 criteria). Very different amplitudes — $A_1=1$ while $A_2=\frac1{100}$ — is "the more difficult one because we have very, very little control over it." What we do control is how we extract the finite window from the signal: "we actually have some design freedom in it."
+
 ## 4. Reading a DFT plot
 
 > [!recipe] From $\lvert X[k]\rvert$ to components
@@ -48,6 +52,12 @@ $A_1=1$, $A_2=\frac12$, $\omega_1=0.55\pi$, $\omega_2=0.65\pi$, $N=32$.
 > 2. Frequency: $\omega_m\approx\frac{2\pi k_m}{N}$ at each peak bin, $\Omega_m=\frac{\omega_m}{T}$. An off-bin peak lies between the two tallest neighbours; zero-pad to locate it.
 > 3. Amplitude: an on-bin lobe has height $\frac{A_mN}{2}$, so $A_m=\frac{2\lvert X[k_m]\rvert}{N}$; with a window $w[n]$, divide by $\sum w[n]$ instead of $N$.
 > 4. Before trusting a small lobe, check separation ($\Delta\omega$ against $\frac{4\pi}{N}$) and side-lobe masking.
+
+> [!lecture] In lecture — L22, Oct 23
+> In many cases "simply finding the index $k$ that corresponds to a peak is going to give us either exactly the correct frequency or a really good approximation": with $N=24$, $k=4$ gives $\frac{2\pi\cdot4}{24}=\frac\pi3$ exactly; with $N=22$ the peak is still $k=4$, now $\frac{2\pi\cdot4}{22}=\frac{4\pi}{11}$ — not exactly $\frac\pi3$, but pretty close. A student asked why not just ignore the small bins and read the big ones: "If I have one component, yes. Unfortunately, if I have multiple components, it's far more complicated than that" — which is what the rest of spectral analysis is about.
+
+> [!lecture] In lecture — L23, Oct 28
+> Python demo, $A_1=1$, $A_2=\frac1{50}$, rectangular window: on a linear plot the weak component is a bump that, "unless you have really sharp eyes, you're not gonna catch" — "a really, really modest effect," and the strong lobe's side lobes have displaced it. On a log scale "you can see it a little bit better, but it still is really, really hard to capture." With a Hamming window it becomes "an actual pretty distinct bump" even on a linear scale, and obvious on a log scale: "often we will do spectral analysis on a log scale" (hence the dB window figures).
 
 ## 5. Midterm 2 quick check
 
@@ -73,9 +83,10 @@ $A_1=1$, $A_2=\frac12$, $\omega_1=0.55\pi$, $\omega_2=0.65\pi$, $N=32$.
 > - "No window" is the rectangular window: every finite-length DFT carries $-13$ dB side lobes.
 > - Bins past $\frac N2$ are negative frequencies, not extra components.
 > - On an exam plot the frequency axis may be $k$, $\omega$ or Hz: convert with $\omega_k=\frac{2\pi k}{N}$, $f_k=\frac{kf_s}{N}$.
+> - Small bins can be ignored only when there is one component; with several, a "small" bump may be a weak tone, its peak displaced by the strong tone's side lobes.
 
 > [!exam] Midterm 2 (6 of 7 past exams)
-> Fall 2026 MT2 (Wed Nov 4) covers this topic. Components from a DFT plot, bins in hertz, padded vs longer DFTs. [[exams/midterm-2/past-exams/spring-2025|SP2025 #9]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #6, #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #2]] · T/F: [[exams/midterm-2/true-false-bank|bank]] §3, §7.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Components from a DFT plot, bins in hertz, padded vs longer DFTs. Said Oct 30: spectral analysis parts 1 and 2 are tested "to the extent they're used on homework," which is "mostly identifying frequencies." [[exams/midterm-2/past-exams/spring-2025|SP2025 #9]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #6, #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #2]] · T/F: [[exams/midterm-2/true-false-bank|bank]] §3, §7.
 
 **Where it appears:** [[5-dft-and-fft/22-spectral-analysis|L22]] §2–2.2 (eqs. 15–17, Figure 3, slides 3, 11–13) · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] §1 (eqs. 1–4) · [[problems/dft-spectral-analysis|DFT spectral analysis]] · [[exams/midterm-2/index|Midterm 2]].
 
@@ -83,4 +94,4 @@ $A_1=1$, $A_2=\frac12$, $\omega_1=0.55\pi$, $\omega_2=0.65\pi$, $N=32$.
 [[concepts/periodic-sinc|periodic sinc]] · [[concepts/spectral-leakage|spectral leakage]] · [[concepts/zero-padding|zero padding]] · [[concepts/frequency-resolution|frequency resolution]] · [[concepts/window-functions|window functions]] · [[concepts/dft|DFT]] · [[concepts/dtft|DTFT]]
 
 ### Sources for this page
-Snyder, Lecture 22 notes §2–2.2 (eqs. 15–17, Figure 3) and slides 3, 11–13 (inked), Lecture 23 notes §1 (eqs. 1–4), Oct 21–23, 2026; past Midterm 2 exams.
+Snyder, Lecture 22 notes §2–2.2 (eqs. 15–17, Figure 3) and slides 3, 11–13 (inked), Lecture 23 notes §1 (eqs. 1–4), Oct 21–23, 2026; past Midterm 2 exams; lecture recording Oct 21 (condensed); lecture recording Oct 23 (condensed); lecture recording Oct 28 (condensed); lecture recording Oct 30 (condensed).

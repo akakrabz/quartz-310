@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["DFT property table", "circular time shift", "circular frequency shift", "circular modulation", "DFT conjugation", "DFT duality", "DFT Parseval"]
 ---
 
-*Lecture 21 (Mon Oct 19) §3 · [[homework/hw9|HW9]] #1–2 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
+*Lecture 21 (Mon Oct 19, guest lecture by Prof. Kamalabadi; Table 1 recapped Wed Oct 21) §3 · [[homework/hw9|HW9]] #1–2 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
 > [!abstract] In one breath
 > - The [[concepts/dtft-properties|DTFT properties]] return with every shift and reversal circular: both $x[n]$ and $X[k]$ are $N$-periodic.
@@ -36,6 +36,12 @@ aliases: ["DFT property table", "circular time shift", "circular frequency shift
 - **Circular convolution**, **windowing**: [[concepts/circular-convolution|circular convolution]] (computing it: not on MT2).
 - **Shift by $\frac N2$:** $m=\frac N2$ in eq. 26 gives $e^{j\pi n}=(-1)^n$, so $(-1)^nx[n]\leftrightarrow X[\langle k-\frac N2\rangle_N]$; by eq. 25, $(-1)^kX[k]\leftrightarrow x[\langle n-\frac N2\rangle_N]$ ($N$ even).
 - Notes typos: p. 2 "refer to lecture 21" means Lecture 20 (its eqs. 13–17); under eq. 25 "slope $-2\pi m/M$" means $-2\pi m/N$.
+
+> [!lecture] In lecture — L21, Oct 21
+> A lot of these are properties you have seen before with the DTFT, or the Fourier transform more broadly: we still have time shifting, frequency shifting, modulation, windowing, convolution — "but we see that there is this circularity add-on to all these properties." The shift isn't just a shift, it's a circular shift; when you modulate, you circularly shift in frequency; circular convolution in time is multiplication in the DFT domain. Why do we want these shifts? "Unfortunately, because they are mathematically necessary" — not a remedy we choose, "just a fact of the DFT."
+
+> [!lecture] In lecture — L21, Oct 19 (guest lecturer)
+> Real $x[n]$ keeps the DTFT's symmetries — even magnitude, odd angle — but with the mod: $|X[k]|=|X[\langle N-k\rangle_N]|$, $\angle X[k]=-\angle X[\langle N-k\rangle_N]$. "What happens if I don't have the mod operation?" For $k=1,\dots,N-1$ nothing: the remainder is the index itself, "except for one index." At $k=0$ you would write $|X[0]|=|X[N]|$, out of range — "it doesn't give you any information." What you really mean is that the sample at $0$ equals the sample at $N$, the first sample of the next period. On an $N=8$ picture, $X[1]$ pairs with $X[7]$, $X[2]$ with $X[6]$, and $X[0]$ with itself.
 
 > [!question] Example 3 (slide 15) — applying DFT properties
 > $x[n]=\{\underset{\uparrow}{1},\ 2,\ 3,\ 4,\ 5,\ 6\}$ has DFT $X[k]=\{X_0,X_1,X_2,X_3,X_4,X_5\}$. Find $y[n]$ with $Y[k]=\{X_2,\ -X_3,\ X_4,\ -X_5,\ X_0,\ -X_1\}$.
@@ -78,7 +84,7 @@ aliases: ["DFT property table", "circular time shift", "circular frequency shift
 > - Parseval carries the $\frac1N$ on the frequency side; windowing is a circular convolution of DFTs over $N$.
 
 > [!exam] Midterm 2
-> Fall 2026 MT2 (Wed Nov 4) covers this topic. Read a permuted or phase-ramped DFT list as shifts, modulation, reversal; prove a property. [[exams/midterm-2/past-exams/spring-2025|SP2025 #7(b), #8]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #8]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #9(b)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #3(b)]] · [[exams/midterm-2/past-exams/spring-2021|SP2021 #4, #5]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(h), #4]] · [[exams/midterm-2/true-false-bank|T/F bank]] §6.
+> Fall 2026 MT2 (Wed Nov 4) covers this topic. Read a permuted or phase-ramped DFT list as shifts, modulation, reversal; prove a property. Example 3 above is, in his words (Oct 21), "midterm two content — applying DFT properties, but no circular convolution." [[exams/midterm-2/past-exams/spring-2025|SP2025 #7(b), #8]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #8]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #9(b)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #3(b)]] · [[exams/midterm-2/past-exams/spring-2021|SP2021 #4, #5]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(h), #4]] · [[exams/midterm-2/true-false-bank|T/F bank]] §6.
 
 **Where it appears:** [[5-dft-and-fft/21-dft-properties|L21]] §3 (eqs. 25–29, Table 1, slides 14–15) · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]].
 
@@ -86,4 +92,4 @@ aliases: ["DFT property table", "circular time shift", "circular frequency shift
 [[concepts/dft|DFT]] · [[concepts/circular-shift-and-reversal|circular shift and reversal]] · [[concepts/circular-convolution|circular convolution]] · [[concepts/dtft-properties|DTFT properties]]
 
 ### Sources for this page
-Snyder, Lecture 21 notes §3 (eqs. 25–29, Table 1) and slides 14–15 (Example 3), Oct 19, 2026; past Midterm 2 exams.
+Snyder, Lecture 21 notes §3 (eqs. 25–29, Table 1) and slides 14–15 (Example 3), Oct 19, 2026; past Midterm 2 exams; lecture recording Oct 19 (guest lecture, condensed); lecture recording Oct 21 (condensed).

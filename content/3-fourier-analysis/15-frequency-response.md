@@ -5,12 +5,15 @@ tags: [lecture, midterm-2, frequency-response, dtft]
 lecture: 15
 ---
 
-*Lecture 15 · Fri Oct 2, 2026 · notes + slides "Frequency response" · prev: [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · next: [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]]*
+*Lecture 15 · Mon Oct 5, 2026 · notes + slides "Frequency response" · prev: [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · next: [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]]*
 
 > [!abstract] In one breath
 > - Frequency response $H_d(\omega)$ = DTFT of $h[n]$ = $H(z)$ on the unit circle for a stable system.
 > - Any LTI system: $Ae^{j\omega_0 n}\to H_d(\omega_0)\,Ae^{j\omega_0 n}$.
 > - Real $h$: $A\cos(\omega_0 n+\theta)\to A|H_d(\omega_0)|\cos(\omega_0 n+\theta+\angle H_d(\omega_0))$. Any input: $Y_d=X_dH_d$.
+
+> [!lecture] In lecture — L15, Oct 5
+> Frequency response "is a topic you've actually seen before" in 210, now "from a little bit of a different angle": the DTFT of $h[n]$, which is $H(z)$ evaluated along the unit circle. The thread: $Az^n\to H(z)Az^n$, so $Ae^{j\omega_0 n}\to H_d(\omega_0)Ae^{j\omega_0 n}$; for real $h$ this becomes the cosine rule, with the real-$h$ condition 210 never needed. HW6 is the practice: "lecture 15's basically close enough" to cover it.
 
 ## What was covered
 
@@ -32,4 +35,4 @@ lecture: 15
 
 ### Sources for this page
 
-Snyder, Lecture 15 notes (§1–1.3, Figure 1) and slides (unannotated; answers worked on the concept page).
+Snyder, Lecture 15 notes (§1–1.3, Figure 1) and slides (unannotated; answers worked on the concept page); lecture recording Oct 5 (condensed).

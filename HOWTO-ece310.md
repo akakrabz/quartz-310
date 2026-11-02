@@ -61,7 +61,8 @@ Mermaid diagram). The demos and drills are fully self-contained.
 - One thin pointer page per lecture in `content/<unit>/NN-slug.md`, in the unit folders `1-signals-and-systems/`, `2-z-transform/`,
   `3-fourier-analysis/`, `4-sampling-and-reconstruction/` and `5-dft-and-fft/` (each with an `index.md` listing the unit's
   topics first, then its lectures); frontmatter `title`, `description`, `tags`, `lecture`. A lecture page (≤ ~220 words) has the
-  header line, an `abstract`, **What was covered** (the notes' sections, each pointing to its concept page), **Exercises from
+  header line, an `abstract`, one `lecture` callout (≤ 70 words, not counted: how the professor framed the lecture and what he
+  said to focus on), **What was covered** (the notes' sections, each pointing to its concept page), **Exercises from
   this lecture** (each example and where it is worked), a **Practice** line and `## Related`; no key callouts, figures,
   worked answers or exam callouts — those live on the concept pages.
 - Problem families in `content/problems/` (frontmatter also `family_frequency`, `typical_points`, `lectures` — the Bases table
@@ -75,8 +76,11 @@ Mermaid diagram). The demos and drills are fully self-contained.
   Unit 3 writes the DTFT $X_d(\omega)$ and the frequency response $H_d(\omega)$, with $\omega$ in radians per sample plotted on
   $[-\pi,\pi]$, the phase as a principal angle in $[-\pi,\pi]$ and the magnitude never negative; continuous-time transforms are
   $X_c(\Omega)$ or $X_a(\Omega)$, as the exams write them.
-- Callouts: the Obsidian types plus this site's `key`, `recipe`, `trap`, `exam`, `intuition`, `derivation` (styled in
+- Callouts: the Obsidian types plus this site's `key`, `recipe`, `trap`, `exam`, `intuition`, `derivation`, `lecture` (styled in
   `quartz/styles/custom.scss`). Worked answers go in folded `> [!success]-` callouts so pages work for self-testing.
+  A `lecture` callout (title `In lecture — L16, Oct 7`) carries what the professor said in class, condensed from the lecture
+  recording and lightly edited (grammar, dropped fillers; his phrasing and analogies kept); usually ≤ 2 per concept page (3 at most),
+  ≤ 120 words each, never a substitute for the notes' equation (it sits right after the `key` callout it explains).
   Exam material is one layer: on a concept page, one `exam` callout near the end (≤ 40 words plus a list of linked exam
   problems, no solutions); citations name term, exam and problem (`FA2024 MT2 #4`) and link the exam page.
 - Figures: inline `<figure class="ece-fig">…SVG…</figure>` with **no blank lines inside** and **a blank line after**; strokes use
@@ -97,7 +101,15 @@ Mermaid diagram). The demos and drills are fully self-contained.
 as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
 2,827 links, 12,321 equations).
 
-## 6. What's here (build 6, October 2026 — Lectures 1–23, organised by topic)
+## 6. What's here (build 7, November 2026 — Lectures 1–23, organised by topic, with the lecture recordings folded in)
+
+- **The lecture-recording layer (build 7, Nov 1).** Twelve recordings (Oct 2–30: L14–L23 plus the Oct 28/30 wrap-up and FFT start) were
+  transcribed, digested and folded into the Midterm 2 pages as `lecture` callouts: 60 of them on 21 concept pages (≤ 3 each) and on the
+  ten lecture pages L14–L23 (one each), two worked examples he did aloud (circular shift of {1,3,5,7,9}; leakage of cos(πn/5) at
+  N = 50/51/55/60), spoken warnings as trap bullets, his exam remarks in the pages' exam callouts and in the review guide's §5
+  ("What was said in lecture about the exam"), and the lecture dates corrected (L14 Sep 25 + Oct 2, L15 Oct 5, L18 Oct 12 + 14,
+  L19 Oct 14 + 16, L21 Oct 19 guest lecture by Prof. Kamalabadi, L22 Oct 21 + 23, L23 Oct 23 + 26, demos Oct 28). Every callout was
+  checked against the transcript by a separate reviewer; every new number recomputed. No recording exists for L13.
 
 - **Home**: a learning hub — how to learn with the site (topic page → lecture pages as pointers → folded questions → problem
   families → homework → drills and demos → past exams as self-tests), the course map by topic (each unit's concept pages,

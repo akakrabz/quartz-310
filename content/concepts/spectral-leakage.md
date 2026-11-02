@@ -1,11 +1,11 @@
 ---
 title: "Spectral leakage"
-description: "DFT of a finite cosine: X[k] = (A/2)[C(2πk/N − ω0) + C(2πk/N + ω0)]. On-bin ω0 = 2πk0/N: two nonzero bins of AN/2. Off-bin: the lobes are sampled off their peaks and nulls, leakage everywhere."
+description: "DFT of a finite cosine, X[k] = (A/2)[C(2πk/N − ω0) + C(2πk/N + ω0)]. On-bin (ω0 = 2πk0/N): two bins of AN/2. Off-bin: leakage into every bin, worst at a half cycle (cos(πn/5), N = 50–60)."
 tags: [concept, dft, spectral-analysis, midterm-2]
 aliases: ["leakage", "spectral leakage", "picket fence", "picket-fence effect", "DFT of a cosine", "DFT of a sinusoid"]
 ---
 
-*Lecture 22 (Wed Oct 21) §1.2 · [[homework/hw9|HW9]] #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
+*Lecture 22 (Fri Oct 23) §1.2 · demo Lecture 23 (Wed Oct 28) · [[homework/hw9|HW9]] #4 · family: [[problems/dft-spectral-analysis|DFT spectral analysis]]*
 
 > [!abstract] In one breath
 > - The DFT of $A\cos(\omega_0n)$ on $N$ samples is the two [[concepts/periodic-sinc|periodic-sinc]] lobes sampled every $\frac{2\pi}{N}$.
@@ -19,6 +19,9 @@ aliases: ["leakage", "spectral leakage", "picket fence", "picket-fence effect", 
 > X[k]=X_d(\omega)\Big|_{\omega=\frac{2\pi k}{N}}=\frac A2\,C\!\left(\frac{2\pi k}{N}-\omega_0\right)+\frac A2\,C\!\left(\frac{2\pi k}{N}+\omega_0\right),
 > $$
 > $0\le k\le N-1$, with $C$ the periodic sinc of length $N$ (main lobe height $N$, nulls every $\frac{2\pi}{N}$). The length $N$ decides what the DFT looks like.
+
+> [!lecture] In lecture — L22, Oct 23
+> The nulls sit at $\omega_0\pm\frac{2\pi}{N}$, then $\pm\frac{4\pi}{N}$, $\pm\frac{6\pi}{N},\dots$ — multiples of $\frac{2\pi}{N}$, "reminiscent of how we space our frequencies in the discrete Fourier transform," $\omega_k=\frac{2\pi k}{N}$. So if we evaluate the DTFT exactly at the peak, every other bin lands on a null: "we can actually get a really clean spectrum because we'll actually have a bunch of zeros everywhere." If the closest $k$ misses the peak, every bin misses the nulls too, and the spectrum takes on a skewed appearance. No new math for the DFT of a finite cosine: "we can just evaluate our previous solution at $\omega$ is $2\pi k$ over $N$ … That's it."
 
 > [!recipe] Two bins, or leakage?
 > $k_0=\frac{\omega_0N}{2\pi}=\frac{N}{\text{period}}$, the number of periods in the window.
@@ -40,7 +43,10 @@ Two readings of the same fact (notes p. 3):
 - **Periodic extension.** The DFT implies $N$-periodic extension in time ([[concepts/circular-shift-and-reversal|periodic extension]]). Extending $x_1$ gives a smooth, endless $\cos(\frac\pi3n)$: only $\pm\frac\pi3$ present. Extending $x_2$ leaves a discontinuity at every copy boundary (the fractional period); discontinuities need new frequencies, and the DFT shows them.
 - **Sampling the lobes.** With $\omega_0=\frac{2\pi k_0}{N}$ the DFT evaluates $C$ at its peak and at integer multiples of $\frac{2\pi}{N}$ from it, its nulls. Otherwise it samples the main and side lobes away from both.
 
-Can we choose $N$ to avoid leakage? Not in general: real signals carry many components at unknown frequencies ([[concepts/spectral-analysis|spectral analysis]]); a tapered [[concepts/window-functions|window]] reduces it instead.
+> [!lecture] In lecture — L22, Oct 23
+> "What would happen if I stapled each of these signals onto themselves?" — when I reach the end, the next sample is the first one again, because the DFT periodically extends. $x_1$ ($N=24$) continues to vary very smoothly as $\cos(\frac\pi3n)$. $x_2$ ($N=22$): "I shoot up to 1" and keep varying "quite inelegantly" — a sharp discontinuity at every join. "This discontinuity due to periodic extension causes new erroneous frequencies to appear" — erroneous meaning not actually part of the signal, since only $\pm\frac\pi3$ is present. The proper peak is $12$; off-bin the tallest bin is a little below $10$: "think of that energy from that peak as leaking out" into the adjacent frequencies. Hence the name.
+
+Leakage is graded by the fractional cycle (example below). Can we choose $N$ to avoid it? Only in a toy problem: a real recording holds many components at unknown frequencies ([[concepts/spectral-analysis|spectral analysis]]), so leakage is unavoidable in practice; a tapered [[concepts/window-functions|window]] reduces it instead.
 
 > [!question] Slide Example 2 — exactly two/four nonzero bins, or more?
 > (a) $x_1[n]=\sin\!\left(\frac{\pi}{11}n\right)$, $0\le n\le32$. (b) $x_2[n]=\sin\!\left(\frac{3\pi}{5}n\right)$, $0\le n\le19$. (c) $x_3[n]=\cos\!\left(\frac\pi4n\right)+\cos\!\left(\frac\pi3n\right)$, $0\le n\le47$.
@@ -49,6 +55,18 @@ Can we choose $N$ to avoid leakage? Not in general: real signals carry many comp
 > - (a) $N=33$: $k_0=\frac{(\pi/11)\cdot33}{2\pi}=1.5$, not an integer: **more than two** (all 33 bins nonzero).
 > - (b) $N=20$: $k_0=\frac{(3\pi/5)\cdot20}{2\pi}=6$: **exactly two**, $X[6]=-j10$, $X[14]=j10$.
 > - (c) $N=48$: $\frac\pi4\to k_0=6$, $\frac\pi3\to k_0=8$, both integers: **exactly four**, $k=6,8,40,42$, each $24$.
+
+> [!question] Example — in lecture (L23, Oct 28): one cosine, four record lengths
+> $x[n]=\cos\!\left(\frac\pi5n\right)$ (period $10$) is kept for $N=50$, $51$, $55$ and $60$ samples. For each $N$: how many DFT bins are nonzero, where is the peak, how tall is it?
+
+> [!success]- Answer
+> $k_0=\frac{N}{10}$, the number of cycles in the window.
+> - $N=50$: $k_0=5$. Nonzero only at $k=5$ ($\omega_5=\frac\pi5$) and $k=45$ ($\equiv-\frac\pi5$), each $\frac{AN}{2}=25$.
+> - $N=51$: $k_0=5.1$. One extra sample, the same information, yet all $51$ bins are nonzero. Peak still $k=5$ ($\omega_5\approx0.196\pi$), $\lvert X[5]\rvert\approx25.3$ (just under $\frac{AN}{2}=25.5$); the neighbours $k=4$, $6$ are about $2.6$ and $2.5$, a tenth of the peak. Mild leakage.
+> - $N=55$: $k_0=5.5$, half a cycle extra: the worst case. All $55$ bins nonzero; the peak straddles two bins, $\lvert X[5]\rvert\approx16.8$ and $\lvert X[6]\rvert\approx18.2$, neither near $\frac{AN}{2}=27.5$; even the smallest bin is $1.0$.
+> - $N=60$: $k_0=6$. Clean again: $k=6$ and $k=54$, each $30$.
+>
+> Nothing leaks at an integer number of cycles, the most at a half cycle, and it cleans up again at the next integer.
 
 ## 3. Midterm 2 quick check
 
@@ -72,14 +90,15 @@ Can we choose $N$ to avoid leakage? Not in general: real signals carry many comp
 > - A leaking cosine's tallest bin is below $\frac{AN}{2}$ and its neighbours are not zero: read $A$ from an on-bin plot only.
 > - Leakage comes from truncation, not from aliasing and not from [[concepts/zero-padding|zero padding]]; padding only shows the leaked lobes more finely.
 > - Bins $k\gt\frac N2$ are negative frequencies: the mirror peak at $N-k_0$ is the same component, not a second one.
+> - "Almost an integer" is not an integer: one extra sample on an on-bin record ($N=50\to51$) already leaks into every bin; and for a real recording you cannot pick $N$ to avoid it (instructor, Oct 28).
 
 > [!exam] Midterm 2
 > Fall 2026 MT2 (Wed Nov 4) covers this topic. DFT of a sampled cosine (two bins or leakage), components read from a DFT plot. [[exams/midterm-2/past-exams/spring-2025|SP2025 #9, #1(e)]] · [[exams/midterm-2/past-exams/fall-2024|FA2024 #9]] · [[exams/midterm-2/past-exams/fall-2023|FA2023 #6, #1(g)]] · [[exams/midterm-2/past-exams/fall-2021|FA2021 #7]] · [[exams/midterm-2/past-exams/spring-2023|SP2023 #10]] · [[exams/midterm-2/past-exams/fall-2019|FA2019 #1(f)]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
 
-**Where it appears:** [[5-dft-and-fft/22-spectral-analysis|L22]] §1.2 (eqs. 11–14, Figure 2, slides 7–10) · [[problems/dft-spectral-analysis|DFT spectral analysis]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
+**Where it appears:** [[5-dft-and-fft/22-spectral-analysis|L22]] §1.2 (eqs. 11–14, Figure 2, slides 7–10) · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] demo (Oct 28) · [[problems/dft-spectral-analysis|DFT spectral analysis]] · [[exams/midterm-2/true-false-bank|T/F bank]] §7.
 
 ## Related
 [[concepts/periodic-sinc|periodic sinc]] · [[concepts/spectral-analysis|spectral analysis]] · [[concepts/zero-padding|zero padding]] · [[concepts/window-functions|window functions]] · [[concepts/frequency-resolution|frequency resolution]] · [[concepts/dft|DFT]]
 
 ### Sources for this page
-Snyder, Lecture 22 notes §1.2 (eqs. 11–14, Figure 2) and slides 7–10 (Example 2, inked slide 9), Oct 21, 2026.
+Snyder, Lecture 22 notes §1.2 (eqs. 11–14, Figure 2) and slides 7–10 (Example 2, inked slide 9), Oct 23, 2026; lecture recording Oct 23 (condensed); lecture recording Oct 28 (condensed; Python demo of $\cos(\frac\pi5n)$, recomputed).

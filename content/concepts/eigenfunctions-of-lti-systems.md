@@ -51,6 +51,9 @@ $H(z)=\sum_k h[k]z^{-k}$ is *defined* as that eigenvalue. Think of a signal as a
 
 On the unit circle, $z_0=e^{j\omega}$, the eigenvalue gets its own name: $H_d(\omega)=\sum_k h[k]\,e^{-j\omega k}$, the [[concepts/frequency-response|frequency response]], equal to $H(e^{j\omega})$ for a stable system (ROC contains every $e^{j\omega}$). So $e^{j\omega_0n}\mapsto H_d(\omega_0)\,e^{j\omega_0n}$, and for real $h$ a sinusoid leaves as $A\cos(\omega_0n+\theta)\mapsto A\lvert H_d(\omega_0)\rvert\cos\big(\omega_0n+\theta+\angle H_d(\omega_0)\big)$: same frequency, new amplitude and phase ([[concepts/magnitude-and-phase-response|magnitude and phase response]]). The full version is on the [[concepts/frequency-response|frequency response]] page (Lecture 15 §1). The cosine itself is not an eigenfunction unless its two eigenvalues happen to be equal, which [[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] #1(a) tests.
 
+> [!lecture] In lecture — L15, Oct 5
+> Pass $Ae^{j\omega_0 n}$ to an LTI system and you get the exact same periodic complex exponential back, just rescaled by some complex number. This leads to a really important and intrinsic property of LTI systems: "if I pass a singular frequency to the system, I get the exact same frequency back." In other words, "if you want to have a system that moves frequencies around, it is going to be inherently non-LTI." Think of the modulation property, which does shift frequencies: it is actually a time-varying process, not an LTI system — that is why it can move them.
+
 > [!trap]
 > - **"For all $n$" is essential** (Lecture 6): $z_0^nu[n]$ is not an eigenfunction; switching on at $n=0$ adds transients from the poles of $H$.
 > - **$z_0$ must lie in the ROC of $H$**, otherwise the sum defining the output diverges.
@@ -68,4 +71,4 @@ On the unit circle, $z_0=e^{j\omega}$, the eigenvalue gets its own name: $H_d(\o
 [[concepts/complex-exponential|complex exponential]] · [[concepts/transfer-function|transfer function]] · [[concepts/z-transform|z-transform]] · [[concepts/lti-system|LTI system]] · [[concepts/convolution|convolution]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/marginal-stability|marginal stability]] · [[concepts/frequency-response|frequency response]]
 
 ### Sources for this page
-Lecture 6 notes §1 (eqs. 1–9) and slides 3–6; Lecture 9 §1; Lecture 11 §1.2.1 (eqs. 24–28); Lecture 15 §1; SP2025 #1c and #6, FA2025 #8b, FA2021 MT2 #1(a).
+Lecture 6 notes §1 (eqs. 1–9) and slides 3–6; Lecture 9 §1; Lecture 11 §1.2.1 (eqs. 24–28); Lecture 15 §1; SP2025 #1c and #6, FA2025 #8b, FA2021 MT2 #1(a); lecture recording Oct 5 (condensed).

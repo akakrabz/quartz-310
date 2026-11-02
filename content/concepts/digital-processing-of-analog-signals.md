@@ -5,7 +5,7 @@ tags: [concept, sampling, reconstruction, frequency-response, midterm-2]
 aliases: ["A/D → H_d → D/A", "digital filtering of analog signals", "effective analog filter", "discrete-time processing of continuous-time signals", "overall sampling system", "analog cutoff"]
 ---
 
-*Lecture 18 (Mon Oct 12) §3, slides 10–11 · HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #5–6 · family: [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]]*
+*Lecture 18 §3, slides 10–11 (slide 10 worked Wed Oct 14; slide 11 left to the posted solutions) · HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #5–6 · family: [[problems/digital-filtering-of-analog-signals|Digital filtering of analog signals]]*
 
 > [!abstract] In one breath
 > - Chain: $x_a(t)\to$ ideal A/D ($T$) $\to x[n]\to H_d(\omega)\to y[n]\to$ ideal D/A ($T$) $\to y_a(t)$. Three sketches: $X_d$, $Y_d=H_dX_d$, $Y_a$.
@@ -33,6 +33,9 @@ Three sketches: $X_d$ ([[concepts/sampling|sampling]]), then $Y_d=H_dX_d$ ([[con
 > $$
 > Digital cutoff $\omega_c$ ↔ analog cutoff $\frac{\omega_c}{T}$ rad/s ($\frac{\omega_c}{2\pi T}$ Hz).
 
+> [!lecture] In lecture — L18, Oct 14
+> A student pointed out that $Y_a\ne X_a$ on slide 10. Correct — but only because the filter in the middle removed frequencies, which is what we wanted. Then why not just have an analog filter do it? "You could. However, in practice it's really hard to design good analog filters," especially to get sharper edges; "it's much easier to get sharp edges in digital filters." So we very often sample analog signals, process them digitally, and recover them to analog. Of course there is additional cost in the sampling and reconstruction, but it is an alternate route that makes the system easier to design.
+
 ## 2. Example: a semicircle through a low-pass (slides 10–11)
 
 > [!question] Slide 10 — $T=\frac{1}{80}$ s
@@ -48,6 +51,9 @@ Three sketches: $X_d$ ([[concepts/sampling|sampling]]), then $Y_d=H_dX_d$ ([[con
 > Y_a(\Omega)=\begin{cases}\sqrt{1-(\Omega/60\pi)^2}, & |\Omega|\le40\pi\\ 0, & \text{otherwise,}\end{cases}
 > $$
 > the original semicircle cut at $\pm40\pi$.
+
+> [!lecture] In lecture — L18, Oct 14
+> "How is $H_d$ a low-pass filter if it's a DTFT?" — wouldn't the other rectangles also let high frequencies through? Keep in mind that "all unique information in a digital signal is contained between plus or minus $\pi$, because we only have unique frequencies in any $2\pi$ range"; for symmetry we usually choose $-\pi$ to $\pi$. So while this may look like it's not low-pass because it extends further, all the unique information of the signal sits in that window, and "within this window it only passes low frequencies, and it cuts off the highest possible frequencies, plus or minus $\pi$." The $H_d$ on the slide is drawn periodic on purpose, next edge at $\frac{3\pi}{2}$.
 
 > [!question] Slide 11 — $T=\frac{1}{50}$ s
 > Same $X_a$ and $H_d$. Sketch (a) $X_d(\omega)$, (b) $Y_d(\omega)$, (c) $Y_a(\Omega)$.
@@ -103,4 +109,4 @@ Three sketches: $X_d$ ([[concepts/sampling|sampling]]), then $Y_d=H_dX_d$ ([[con
 [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/sampling|sampling]] · [[concepts/nyquist-criterion|Nyquist criterion]] · [[concepts/aliasing|aliasing]] · [[concepts/frequency-response|frequency response]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]
 
 ### Sources for this page
-Snyder, Lecture 18 slides 10–11 of Oct 12, 2026 with the inked deck; HW7 #4 and HW8 #5–6 with solutions; past Midterm 2 exams with keys.
+Snyder, Lecture 18 slides 10–11 (Oct 12–14, 2026) with the inked deck; HW7 #4 and HW8 #5–6 with solutions; past Midterm 2 exams with keys; lecture recording Oct 14 (condensed).

@@ -5,7 +5,7 @@ tags: [concept, frequency-response, dtft, midterm-2]
 aliases: ["frequency response", "sinusoidal response", "response to sinusoids", "steady-state response", "cosine rule"]
 ---
 
-*Lecture 15 (Fri Oct 2) · [[homework/hw6|HW6]] #5–#7, HW7 #2, #4 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]*
+*Lecture 15 (Mon Oct 5) · [[homework/hw6|HW6]] #5–#7, HW7 #2, #4 ([[exams/quiz-2|Quiz 2 page]]) · family: [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]*
 
 > [!abstract] In one breath
 > - Frequency response $H_d(\omega)$ = DTFT of $h[n]$ = $H(z)$ on the unit circle when the system is stable.
@@ -74,6 +74,9 @@ Real $h$ ⇒ Hermitian $H_d$ (eqs. 12–13): $H_d^*(\omega)=H_d(-\omega)$, so $|
 
 Why real $h$ is needed (slide 8 asks): $h[n]=\frac12\big(\delta[n]+j\,\delta[n-1]\big)$ has $H_d(\frac{\pi}{2})=1$ but $H_d(-\frac{\pi}{2})=0$, so $\cos(\frac{\pi}{2}n)\to\frac12\,e^{j\frac{\pi}{2}n}$, a complex output.
 
+> [!lecture] In lecture — L15, Oct 5
+> In 210 we used exactly this property with no condition attached: every system you could build in the lab, all those RLC circuits, had a real-valued impulse response. "We cannot actually guarantee that here in 310," so the rule carries the clause *if and only if $h[n]$ is real-valued*. A cosine is two conjugate exponentials, scaled by $H_d(\omega_0)$ and $H_d(-\omega_0)$. What if the magnitudes at $\omega_0$ and $-\omega_0$ are not the same? Then the two terms don't line up and I can't use Euler's identity; Hermitian symmetry is what lines them up (a sine too, $\theta=\pm\frac{\pi}{2}$). Complex $h$: process each exponential separately — doable, more work — and such systems are common in communications and mixed-signal systems.
+
 > [!recipe] Response to a sum of sinusoids
 > 1. Decide whether $h$ is real.
 > 2. List each term's frequency in $[-\pi,\pi]$; evaluate $H_d$ there in polar form. Gain $0$ deletes the term.
@@ -88,7 +91,7 @@ Why real $h$ is needed (slide 8 asks): $h[n]=\frac12\big(\delta[n]+j\,\delta[n-1
 >
 > **(b)**
 > - $\omega=\frac{\pi}{3}$: gain $\cos^2\frac{\pi}{3}=\frac14$, phase $\sin\frac{\pi}{3}=\frac{\sqrt3}{2}$ rad.
-> - $\omega=\frac{\pi}{2}$: gain $\cos^2\frac{\pi}{2}=0$: cosine removed.
+> - $\omega=\frac{\pi}{2}$: gain $\cos^2\frac{\pi}{2}=0$: cosine removed; its phase $\sin\frac{\pi}{2}=1$ rad is irrelevant (convention: phase $0$ where the gain is $0$).
 > - $\omega=\pi$: $H_d(\pi)=\cos^2\pi\,e^{j\sin\pi}=1$.
 > $$
 > y[n]=\tfrac14\sin\!\left(\tfrac{\pi}{3}n+\tfrac{\sqrt3}{2}\right)+(-1)^n .
@@ -124,11 +127,16 @@ Why real $h$ is needed (slide 8 asks): $h[n]=\frac12\big(\delta[n]+j\,\delta[n-1
 > $$
 > Multiply the DTFTs (when both exist), then invert. Two uses: the response to any signal with a DTFT; the design of systems that pass or stop chosen bands (filters).
 
+> [!lecture] In lecture — L15, Oct 5
+> The way we can intuit this: $X_d(\omega)$, the DTFT of my input, "tells me how much every frequency … from $-\pi$ to $\pi$ is present in my signal." The frequency response $H_d(\omega)$ "tells me how my system treats each frequency." My signal has some energy at different frequencies, and the system, by multiplication, reduces or increases the strength of each. So we could filter things out where the frequency response is zero, attenuate them where the magnitude is between zero and one, or actually amplify them — sharpen them — where it is greater than one. "Something we return to a few times throughout the rest of the semester."
+
 > [!derivation]- Eq. 6 again from eq. 16 (eqs. 17–22)
 > $X_d(\omega)=2\pi A\,\delta(\omega-\omega_0)$, so $Y_d(\omega)=2\pi A\,H_d(\omega_0)\,\delta(\omega-\omega_0)$ and
 > $$
 > y[n]=\frac{1}{2\pi}\int_{-\pi}^{\pi}2\pi A\,H_d(\omega_0)\,\delta(\omega-\omega_0)\,e^{j\omega n}\,d\omega=H_d(\omega_0)\,A\,e^{j\omega_0 n}.
 > $$
+
+Asked (Oct 5) why not transform, multiply by $H_d$ and invert for slide 6's complex-exponential input: "you can absolutely do that" — Dirac deltas appear and the inverse integral needs the sifting property — "and you will arrive at the exact same answer, I promise. But this is a lot nicer": evaluate $H_d$ at the input frequencies.
 
 | | z-domain: transfer function $H(z)$ | frequency domain: frequency response $H_d(\omega)$ |
 |---|---|---|
@@ -166,11 +174,11 @@ Notes Figure 1. **Zeros notch, poles peak:** $1+z^{-4}$ removes $\frac{\pi}{4}$ 
 > (b) **False.** The rule needs the input for all $n$. $y[0]=x[0]-x[-1]=1$, not $\cos\frac{\pi}{3}=\frac12$; from $n=1$ on, $y[n]=\cos(\frac{\pi}{3}n+\frac{\pi}{3})$: a one-sample transient.
 
 > [!trap]
-> - $\cos(\omega_0 n)$ is not an eigenfunction; only $e^{j\omega_0 n}$ is ([[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] 1(a)).
+> - $\cos(\omega_0 n)$ is not an eigenfunction; only $e^{j\omega_0 n}$ is ([[exams/midterm-2/past-exams/fall-2021|FA2021 MT2]] 1(a)). $j^n=e^{j\pi n/2}$ is one exponential, with no partner at $-\frac{\pi}{2}$.
 > - Cosine rule ⇔ Hermitian $H_d$ ⇔ real $h$; check $H_d(-\omega)=H_d^*(\omega)$ first ([[exams/midterm-2/past-exams/spring-2023|SP2023 MT2]] #6, [[exams/midterm-2/past-exams/fall-2023|FA2023 MT2]] #4 have complex $h$).
-> - Phase is in radians: $\angle H_d=\sin\omega$ at $\frac{\pi}{3}$ is $\frac{\sqrt3}{2}$ rad, not $\frac{\sqrt3}{2}\pi$.
-> - $j^n=e^{j\pi n/2}$ is one exponential, with no partner at $-\frac{\pi}{2}$.
-> - Magnitude never negative: $H_d(\frac{\pi}{2})=-1$ is gain $1$, phase $\pi$.
+> - Read $H_d(\omega_0)$ in polar form: phase in radians ($\sin\omega$ at $\frac{\pi}{3}$ is $\frac{\sqrt3}{2}$ rad, not $\frac{\sqrt3}{2}\pi$); $H_d(\frac{\pi}{2})=-1$ is gain $1$, phase $\pi$, never a negative magnitude.
+> - A term with gain $0$ gets no phase: slide 10's $\sin\frac{\pi}{2}=1$ rad is "adding phase to something that has already been muted completely" — drop the term.
+> - From an LCCDE, go to $H(z)$ first, then set $z=e^{j\omega}$ — valid only if the ROC contains the unit circle. Taking $Y_d/X_d$ straight from the DTFT presumes a stable system (L17 Q&A, Oct 9).
 > - Real $h$ ⇒ $H_d(\pm\pi)$ real; a formula giving different values at $\pm\pi$ jumps there ([[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #4).
 
 > [!exam] Exam
@@ -183,4 +191,4 @@ Notes Figure 1. **Zeros notch, poles peak:** $1+z^{-4}$ removes $\frac{\pi}{4}$ 
 [[concepts/eigenfunctions-of-lti-systems|eigenfunctions]] · [[concepts/transfer-function|transfer function]] · [[concepts/dtft|DTFT]] · [[concepts/dtft-properties|DTFT properties]] · [[concepts/magnitude-and-phase-response|magnitude and phase response]] · [[concepts/group-delay|group delay]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/periodic-signals|periodic signals]]
 
 ### Sources for this page
-Lecture 15 notes §1–1.3 (eqs. 1–22, Figure 1), slides 4–11 (unannotated; answers worked here); Lecture 14 §1; HW6 #5–#7, HW7 #2; Midterm 2 keys cited.
+Lecture 15 notes §1–1.3 (eqs. 1–22, Figure 1), slides 4–11 (unannotated; answers worked here); Lecture 14 §1; HW6 #5–#7, HW7 #2; Midterm 2 keys cited; lecture recording Oct 5 (condensed); lecture recording Oct 9 (condensed).

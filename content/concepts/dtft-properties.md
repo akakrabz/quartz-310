@@ -2,10 +2,10 @@
 title: "DTFT properties"
 description: "Shift, modulation, reversal, conjugation, differentiation, convolution, windowing; 2π-periodicity, Hermitian symmetry, Parseval; four free numbers; the sign erratum in Lecture 14's differentiation row."
 tags: [concept, dtft, midterm-2]
-aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table", "Hermitian symmetry", "modulation property", "Parseval's relation", "windowing"]
+aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table", "Hermitian symmetry", "conjugate symmetry", "modulation property", "Parseval's relation", "windowing"]
 ---
 
-*Lecture 14 (Fri Sep 25) §3 · [[homework/hw5|HW5]] #1(d), #2, [[homework/hw6|HW6]] #2, #3(a), #4(b), #6(a), #7, HW7 #2 ([[exams/quiz-2|Quiz 2 page]]; real $h$ ⇒ Hermitian) · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
+*Lecture 14 (Fri Oct 2; slides 14–15 Mon Oct 5) §3 · [[homework/hw5|HW5]] #1(d), #2, [[homework/hw6|HW6]] #2, #3(a), #4(b), #6(a), #7, HW7 #2 ([[exams/quiz-2|Quiz 2 page]]; real $h$ ⇒ Hermitian) · family: [[problems/dtft-and-inverse-dtft|DTFT and inverse DTFT]]*
 
 > [!abstract] In one breath
 > - Most rows are the z-transform's with $z=e^{j\omega}$; new ones: modulation, windowing (periodic convolution), Parseval.
@@ -44,6 +44,9 @@ aliases: ["DTFT properties", "properties of the DTFT", "DTFT property table", "H
 > \end{aligned}
 > $$
 > Magnitude even, phase odd. "If and only if" (slide 11). For real $x$: $X_d(0)$ and $X_d(\pi)$ are real.
+
+> [!lecture] In lecture — L14, Oct 2
+> Two equivalent forms: conjugating equals flipping, $X_d^*(\omega)=X_d(-\omega)$, or $X_d(\omega)$ equals the conjugated *and* reversed. "Just conjugating and reversing is very liable to small errors, so I definitely prefer the top version." How to test: "even though we do have this variable ω, this is really just a complex number. It's in exponential form already." Read off magnitude and angle; conjugating just negates the angle; then replace $\omega$ by $-\omega$ and compare (slide 12: the angle $\cos\omega$ is even, so the two sides differ and $x[n]$ is necessarily complex). Real-valued is "the really, really important condition", and the relation is an if and only if. Even: $\omega^2$, $|\omega|$, $\cos\omega$; odd: $\omega$, $\omega^3$, $\sin\omega$.
 
 > [!derivation]- Real and imaginary parts (eqs. 26–30)
 > With $e^{-j\omega n}=\cos(\omega n)-j\sin(\omega n)$:
@@ -90,6 +93,9 @@ Plot and compute on $\omega\in[-\pi,\pi]$, where the symmetry is easiest to see.
 $$
 X_d(\omega+2\pi k)=\sum_n x[n]\,e^{-j\omega n}\underbrace{e^{-j2\pi kn}}_{=1}=X_d(\omega),\qquad k\in\mathbb{Z}.
 $$
+
+> [!lecture] In lecture — L14, Oct 2
+> The only thing used: $kn$ is an integer "no matter what", so $e^{-j2\pi kn}=1$. No assumption on $x[n]$ — not real, not symmetric, not periodic: "I told you literally nothing about $x[n]$ other than it just has a DTFT. And it is guaranteed to be 2π periodic." That is also why the inverse integrates over just one period: all the unique information that constructs the signal lives in frequencies from $0$ to $2\pi$. "Almost exact same proof like five times this semester. This is the second time" — the first was L13's observation that only frequencies from $0$ to $2\pi$ are distinct.
 
 - $e^{j\omega_0n}x[n]\leftrightarrow X_d(\omega-\omega_0)$: $\sum_n x[n]e^{j\omega_0 n}e^{-j\omega n}=\sum_n x[n]e^{-j(\omega-\omega_0)n}$ (eqs. 39–42).
 - Euler gives modulation: $x[n]\cos(\omega_0n)\leftrightarrow\frac12X_d(\omega-\omega_0)+\frac12X_d(\omega+\omega_0)$, two half-height copies (eq. 43). Key in digital and wireless communications.
@@ -145,7 +151,7 @@ $$
 > - Integer shifts only; $e^{-j\omega k}$ with non-integer $k$ is a shifted sinc, not $\delta[n-k]$.
 > - Conjugation flips $\omega$ too: $x^*[n]\leftrightarrow X_d^*(-\omega)$.
 > - Modulation halves heights; copies past $\pm\pi$ wrap and can overlap ([[exams/midterm-2/past-exams/spring-2025|SP2025 MT2]] #2(b)).
-> - Real $x$: $X_d(\omega)$ and $X_d(-\omega)$ are conjugates, not equal; test magnitude even and phase odd on the whole period ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #4(a), [[homework/hw6|HW6]] #7).
+> - Real $x$: $X_d(\frac{\pi}{3})=X_d(-\frac{\pi}{3})$ "almost looks like a statement of Hermitian symmetry, but we don't have that conjugate there" — the two values are conjugates, not equal; test magnitude even and phase odd on the whole period ([[exams/midterm-2/past-exams/fall-2024|FA2024 MT2]] #4(a), [[homework/hw6|HW6]] #7).
 > - Substitute $z=e^{j\omega}$ only if the ROC contains $|z|=1$ ([[concepts/dtft|DTFT]]).
 
 > [!exam] Exam
@@ -159,4 +165,4 @@ $$
 [[concepts/dtft|DTFT]] · [[concepts/dtft-pairs|DTFT pairs]] · [[concepts/z-transform-properties|z-transform properties]] · [[concepts/frequency-response|frequency response]] · [[concepts/window-functions|window functions]] · [[supplements/transform-tables|transform tables]]
 
 ### Sources for this page
-Lecture 14 notes §3 (eqs. 26–51), Table 2, slides 10–15; transform tables Table 5; HW5 #1–#2, HW6 #2 solutions; Quiz 2 report; Midterm 2 keys cited.
+Lecture 14 notes §3 (eqs. 26–51), Table 2, slides 10–15; transform tables Table 5; HW5 #1–#2, HW6 #2 solutions; Quiz 2 report; Midterm 2 keys cited; lecture recording Oct 2 (condensed).

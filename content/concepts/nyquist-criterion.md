@@ -22,6 +22,9 @@ Copies of $X_a$ sit $2\pi/T$ apart ([[concepts/sampling|sampling]]). $T$ too lar
 > $$
 > $B$: highest linear frequency, in Hz ($B=\Omega_{\max}/2\pi$).
 
+> [!lecture] In lecture — L21, Oct 19 (guest lecturer)
+> Why does a slide say a recording is only "nearly band-limited"? A finite-length record is an infinite signal times a window of that length. Multiplication in time is convolution in frequency, so even if the infinite sequence had finite support, "you're convolving that finite bandwidth with a sinc function that has energy everywhere." So "there's no such thing, if you're dealing with a finite-length sequence, as being band-limited." The energy can become negligible, because the ripples of the sinc get smaller — and in practice you sometimes filter things before processing, to create a band-limited signal.
+
 No overlap: right edge of the $n=0$ copy left of the left edge of the $n=1$ copy (eqs. 18–20, slide 8):
 
 $$
@@ -33,6 +36,9 @@ $$
 > f_s\gt2B\qquad\Longleftrightarrow\qquad T\lt\frac{1}{2B},\qquad\qquad f_{\text{Nyquist}}=2B .
 > $$
 > Then $x_a(t)$ can be recovered from $x[n]$; otherwise aliasing. Exams call $\frac{1}{2B}$ the **Nyquist period** (interval) $T_N$.
+
+> [!lecture] In lecture — L17, Oct 9
+> Why insist on no overlap? "Our favorite choice of such a spectrum is a triangle": the central copy has height $1/T$ and edges $\pm2\pi B$; the $n=1$ copy sits at $2\pi/T$ with edges $2\pi/T\pm2\pi B$. "If I want to be able to recover my signal, I can't have the shape of my spectrum change" — we go from analog to digital and eventually back from digital to analog, and "I need to have the shape of this triangle be undisturbed." So the right edge of the central copy must stay left of the next copy's left edge: $2\pi B\lt\frac{2\pi}{T}-2\pi B$, i.e. $f_s\gt2B$. "If the signal is band-limited, which is critical, then we do have the Nyquist criterion."
 
 ## 2. Above, at and below the Nyquist rate
 
@@ -112,6 +118,11 @@ Same inequality as §1's non-overlap condition: the copy at $2\pi$ starts at $2\
 > $$
 > Every sample hits a zero crossing; no way to tell what was sampled. A cosine gives $\cos(\pi n)=(-1)^n$, but $\cos(\Omega_0t+\phi)$ gives $\cos\phi\,(-1)^n$: amplitude and phase merge. Hence the strict $f_s\gt2B$.
 
+> [!lecture] In lecture — L19, Oct 14
+> Can I sample at exactly the Nyquist rate? The sketch says yes: grab the central copy and it matches the shape of the original triangle. The sine says no. Sampling $\sin(\Omega_0t)$ at $T=\pi/\Omega_0$ hits it "only at its zeros" — "a completely useless signal". "Even if I told you these samples belong to a sinusoid, you still would be out of luck, because you have no idea what the amplitude is." In frequency: a zero spectrum — the sine's two flipped Dirac deltas, pushed out to $\pm\pi$, "end up overlapping and canceling each other"; a cosine "expresses this phenomenon a little bit differently".
+
+- Any integer multiple of the Nyquist period does the same: $T=\frac{m\pi}{\Omega_0}$ gives $\sin(m\pi n)=0$, every sample "at the exact same point in phase" (Oct 16: the hovering-bird video — the frame period a multiple of the wingbeat's Nyquist period, so each frame catches the same phase and the wings look frozen).
+
 > [!example] Two tones
 > $x_a(t)=\cos(2\pi\cdot60\,t)+\cos(2\pi\cdot440\,t)$: $B=440$ Hz, Nyquist rate $880$ Hz.
 > - $f_s=1$ kHz: tones at $0.12\pi$ and $0.88\pi$.
@@ -154,4 +165,4 @@ Same inequality as §1's non-overlap condition: the copy at $2\pi$ starts at $2\
 [[concepts/sampling|sampling]] · [[concepts/aliasing|aliasing]] · [[concepts/ideal-reconstruction|ideal reconstruction]] · [[concepts/digital-processing-of-analog-signals|A/D → filter → D/A]] · [[concepts/dtft|DTFT]]
 
 ### Sources for this page
-Snyder, Lecture 17 notes §2 (eqs. 17–21, Figure 3), slides 8–12; Lecture 19 notes §1 (eqs. 1–5, Figure 1) and §2.1 (eqs. 6–11), slides 3–7 (slide 7 inked); Midterm 2 keys cited.
+Snyder, Lecture 17 notes §2 (eqs. 17–21, Figure 3), slides 8–12; Lecture 19 notes §1 (eqs. 1–5, Figure 1) and §2.1 (eqs. 6–11), slides 3–7 (slide 7 inked); Midterm 2 keys cited; lecture recordings Oct 9, Oct 14, Oct 16 and Oct 19 (condensed).

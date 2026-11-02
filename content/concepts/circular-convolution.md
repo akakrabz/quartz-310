@@ -5,7 +5,7 @@ tags: [concept, dft, midterm-2]
 aliases: ["circular convolution", "⊛", "circulant matrix", "modified table method", "linear vs circular convolution"]
 ---
 
-*Lecture 21 (Mon Oct 19) §2–2.1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
+*Lecture 21 (Mon Oct 19, guest lecture by Prof. Kamalabadi; §2 recapped Wed Oct 21; §2.1 from the notes and slides) §2–2.1 · family: [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]]*
 
 > [!warning] Fall 2026 Midterm 2: computing circular convolution is not tested (instructor announcement); the DFT property x⊛h ↔ X[k]H[k] and the other DFT properties are.
 
@@ -41,6 +41,9 @@ z-transform and DTFT: $x*h\leftrightarrow X(z)H(z)$, $X_d(\omega)H_d(\omega)$ (e
 > $$
 > - Two length-$N$ inputs, length-$N$ output ($0\le n\le N-1$). Unequal lengths: zero-pad the shorter; $\circledast_N$ = both padded to $N$ (slide 10).
 > - The DFT version of [[concepts/convolution|convolution]] ↔ multiplication. Dual (windowing): $x[n]w[n]\leftrightarrow\frac1NX[k]\circledast W[k]$.
+
+> [!lecture] In lecture — L21, Oct 21
+> Does convolution ↔ multiplication hold in the DFT domain? "It almost holds, but unfortunately that periodic extension complicates things." Slide one sequence past the other: at partial overlap, two samples hang off the left edge. Previously you said they "are just lining up with zeros, that's fine." How could we assume that? "I just told you to trust me way back in lecture four" — because we were implicitly using the DTFT, whose zero extension made that exact. With the DFT, samples of the periodic extension wrap back instead: "we don't have zeros overlapping. We have periodic extension of our signals overlapping." The only change: "we circularly flip and shift." Unlike linear convolution's finite/infinite cases, "there's literally one case."
 
 ## 2. Computing it (§2.1)
 
@@ -78,6 +81,9 @@ $x$ of length $N_1$, $h$ of length $N_2$: $x*h$ has length $N_1+N_2-1$.
 - $N$-point circular = linear with the tail wrapped (time aliasing): $(x\circledast_Nh)[n]=\sum_r(x*h)[n+rN]$, $0\le n\le N-1$.
 - Equal for all such inputs iff $N\ge N_1+N_2-1$: zero-pad both to $N$, multiply the DFTs, invert.
 
+> [!lecture] In lecture — L21, Oct 19 (guest lecturer)
+> What was convolution? Flip one sequence, shift it, multiply and add, for all shifts — "so shifting is inherent in convolution, and that's exactly why this … cyclic behavior becomes important": multiplying two DFTs gives the same mechanics with a wraparound at each shift. Why want that? All the underlying math exists because what we actually want is a standard linear convolution — autofocus, denoising on your phone — only not in the time domain, which is inefficient. Fast means DFTs (the FFT, Lecture 24), whose product gives a circular convolution: "it's not something that we actually implement to use … we have to live with a circular convolution," and make it equal the regular one by zero padding.
+
 > [!question] Example 2 (slide 13) — circular convolution
 > $x[n]=\{\underset{\uparrow}{2},\ 0,\ 1,\ 3,\ 0\}$, $h[n]=\{\underset{\uparrow}{4},\ 1,\ 0,\ 2,\ 2\}$ (slide calls it $y[n]$). Compute the 5-point $x\circledast h$. Compare with the linear $x*h$.
 
@@ -109,4 +115,4 @@ $x$ of length $N_1$, $h$ of length $N_2$: $x*h$ has length $N_1+N_2-1$.
 [[concepts/convolution|convolution]] · [[concepts/dft|DFT]] · [[concepts/dft-properties|DFT properties]] · [[concepts/circular-shift-and-reversal|circular shift and reversal]] · [[concepts/zero-padding|zero padding]] · [[problems/finite-length-convolution|finite-length convolution family]]
 
 ### Sources for this page
-Snyder, Lecture 21 notes §2–2.1 (eqs. 7–24) and slides 9–13 (Example 2), Oct 19, 2026; past Midterm 2 exams.
+Snyder, Lecture 21 notes §2–2.1 (eqs. 7–24) and slides 9–13 (Example 2), Oct 19, 2026; past Midterm 2 exams; lecture recording Oct 19 (guest lecture, condensed); lecture recording Oct 21 (condensed).

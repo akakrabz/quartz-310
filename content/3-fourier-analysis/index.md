@@ -6,8 +6,9 @@ tags: [dtft, frequency-response, fourier-analysis]
 
 *Unit 3 · Lectures 12–16 · Midterm 2 · prev: [[2-z-transform/index|Unit 2]] · next: [[4-sampling-and-reconstruction/index|Unit 4]]*
 
-- What an LTI system does to each frequency: L13 builds the DTFT, L14 ties it to $X(z)$.
-- L15–16: the DTFT of $h[n]$ is the frequency response $H_d(\omega)$: magnitude, phase, group delay.
+- L13, the 210 route: periodic signals, harmonics, Fourier series, then let the period grow — the transform. In discrete time only one $2\pi$ window of frequencies is distinct, so every DTFT repeats.
+- L14, one step from the z-transform: $X_d(\omega)=X(z)$ on the unit circle when the ROC contains it. Marginal cases — ROC on $\lvert z\rvert=1$, periodic signals — get Dirac impulses. Two properties unique to the DTFT: $2\pi$-periodicity, Hermitian symmetry.
+- L15–16, 210's frequency response from a new angle: the DTFT of $h[n]$. One frequency in, the same frequency out, rescaled by $H_d(\omega_0)$; real $h$: the cosine rule; $Y_d=H_dX_d$ filters. Magnitude is easy, phase is the skill: symmetric FIR → linear phase → group delay.
 
 **Midterm 2:** Wed Nov 4, 7–9 pm, Lectures 13–23 (this unit opens it) → [[exams/midterm-2/index|Midterm 2 review]].
 
@@ -29,8 +30,8 @@ tags: [dtft, frequency-response, fourier-analysis]
 ## Lectures
 12. [[3-fourier-analysis/12-convolution-as-template-matching|Convolution as template matching]] (Sep 21)
 13. [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Fourier analysis, DTFT]] (Sep 23)
-14. [[3-fourier-analysis/14-dtft-properties|DTFT properties]] (Sep 25)
-15. [[3-fourier-analysis/15-frequency-response|Frequency response]] (Oct 2)
+14. [[3-fourier-analysis/14-dtft-properties|DTFT properties]] (Sep 25, Oct 2)
+15. [[3-fourier-analysis/15-frequency-response|Frequency response]] (Oct 5)
 16. [[3-fourier-analysis/16-magnitude-and-phase-response|Magnitude and phase]] (Oct 5, 7)
 
 > [!key] The unit on one card

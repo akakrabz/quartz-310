@@ -26,7 +26,7 @@ Held Wed Sep 30, 2026: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/i
 - [[exams/quiz-2|Quiz 2 review]] — formula sheet, HW7 worked, practice quiz.
 
 ## Midterm 2 — Units 3–5, Lectures 13–23
-**Wed Nov 4, 2026, 7–9 pm** · ECEB 1002 (NetIDs aa–sz), ECEB 2017 (ta–zz) · conflict exam TBA · one handwritten two-sided 8.5 × 11 in sheet, no calculator. Scope: HW5–HW9 = [[3-fourier-analysis/index|Unit 3]], [[4-sampling-and-reconstruction/index|Unit 4]], [[5-dft-and-fft/index|Unit 5]] through Lecture 23 (spectral analysis and window functions). Computing circular convolution is not on it (instructor announcement); the DFT properties, circular shift included, are.
+**Wed Nov 4, 2026, 7–9 pm** · ECEB 1002 (NetIDs aa–sz), ECEB 2017 (ta–zz) · conflict exam: MT2-specific request form on the course website · one handwritten two-sided 8.5 × 11 in sheet, no calculator. Scope: HW5–HW9 = [[3-fourier-analysis/index|Unit 3]], [[4-sampling-and-reconstruction/index|Unit 4]], [[5-dft-and-fft/index|Unit 5]] through Lecture 23 (spectral analysis and window functions). Computing circular convolution is not on it (instructor announcement); the DFT properties, circular shift included, are.
 - [[exams/midterm-2/index|Midterm 2 review guide]] — scope, on/not on, format, problem types, day-by-day plan (Oct 30 – Nov 4), sheet checklist, formula boxes.
 - [[exams/midterm-2/practice-exam|Practice midterm]] — Fall 2026 scope; take it timed (plan: Tue Nov 3).
 - [[exams/midterm-2/true-false-bank|True/False bank]]

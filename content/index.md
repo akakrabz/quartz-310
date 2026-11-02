@@ -8,7 +8,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 ## How to learn
 
 > [!tip] A path through each topic
-> 1. **Topic page** (concept page): definitions, worked examples, traps.
+> 1. **Topic page** (concept page): definitions, worked examples, traps; its `lecture` callouts carry what Prof. Snyder (Oct 19: the guest lecturer, so titled) said about the idea in class, condensed from the recordings.
 > 2. **Lecture pages**: what each lecture covered, pointing to the topics.
 > 3. **Folded questions**: answer first.
 > 4. **Problem families**, one exam problem type each.
@@ -99,6 +99,9 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 > [!intuition]
 > The picture behind it.
 
+> [!lecture] In lecture
+> What Prof. Snyder said in class (Oct 19: the guest lecturer) — condensed from the recording, lightly edited.
+
 > [!derivation]-
 > Folded derivation.
 
@@ -108,7 +111,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 > [!success]- Answer
 > Folded solution.
 
-*Status (Oct 30, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content); walkthroughs HW1–HW6, [[homework/hw8|HW8]], [[homework/hw9|HW9]]. **Midterm 2: Wed Nov 4, 7–9 pm** (HW5–9, L13–23): [[exams/midterm-2/index|review guide]] · [[exams/midterm-2/practice-exam|practice midterm]].*
+*Status (Nov 1, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content), with the Oct 2–30 lecture recordings folded in as `lecture` callouts; walkthroughs HW1–HW6, [[homework/hw8|HW8]], [[homework/hw9|HW9]]. **Midterm 2: Wed Nov 4, 7–9 pm** (HW5–9, L13–23): [[exams/midterm-2/index|review guide]] (§5: what he said in lecture about the exam) · [[exams/midterm-2/practice-exam|practice midterm]].*
 
 ### Sources for this page
-Snyder, ECE 310 notes and slides L1–23 (Fall 2026); notation supplement; exam cover pages.
+Snyder, ECE 310 notes and slides L1–23 (Fall 2026); lecture recordings Oct 2–30 (condensed); notation supplement; exam cover pages.

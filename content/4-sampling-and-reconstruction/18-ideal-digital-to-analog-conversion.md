@@ -5,12 +5,15 @@ tags: [lecture, midterm-2, sampling, reconstruction, sinc, ctft, dtft]
 lecture: 18
 ---
 
-*Lecture 18 · Mon Oct 12, 2026 · notes + slides "Ideal digital-to-analog conversion" · prev: [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] · next: [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]]*
+*Lecture 18 · Mon Oct 12, Wed Oct 14, 2026 · notes + slides "Ideal digital-to-analog conversion" · prev: [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]] · next: [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]]*
 
 > [!abstract] In one breath
 > - D/A: place $x[n]$ at $t=nT$ and interpolate, $x_a(t)=\sum_nx[n]\,g(t-nT)=x_s(t)*g(t)$.
 > - Ideal $g$: low-pass $G_a=T$ on $|\Omega|\le\frac{\pi}{T}$, so $g(t)=\mathrm{sinc}\!\left(\frac{\pi t}{T}\right)$. Keeps the central copy, undoes the $\frac1T$.
 > - With a digital filter between the converters, $Y_a(\Omega)=T\,Y_d(\Omega T)$ on $|\Omega|\lt\frac{\pi}{T}$: one analog filter with cutoff $\omega_c/T$.
+
+> [!lecture] In lecture — L18, Oct 14
+> In time "almost the entirety of the signal is unknown"; one minor assumption (band-limited) recovers it perfectly. "All ideal digital-to-analog conversion is doing is just extracting the central copy. So all it is, is a perfect ideal low-pass filter." Slide 10: "put together everything we've discussed in these two lectures" (HW7 #4). Why filter digitally? Sharp edges are hard in analog, easy in digital.
 
 ## What was covered
 
@@ -20,9 +23,9 @@ lecture: 18
 
 ## Exercises from this lecture
 
-- Slide 9, $x[n]=3\delta[n-1]+\delta[n-4]$ through an ideal D/A with $T=2$ s → [[concepts/ideal-reconstruction|Ideal reconstruction]] §4
-- Slide 10, the semicircle to $60\pi$ rad/s through a low-pass with $\omega_c=\frac{\pi}{2}$ at $T=\frac{1}{80}$ s: $X_d$, $Y_d$, $Y_a$ → [[concepts/digital-processing-of-analog-signals|Digital processing of analog signals]] §2
-- Slide 11, the same at $T=\frac{1}{50}$ s (aliasing outside the passband) → [[concepts/digital-processing-of-analog-signals|Digital processing of analog signals]] §2–3
+- Slide 9, $x[n]=3\delta[n-1]+\delta[n-4]$ through an ideal D/A with $T=2$ s (skipped; practice) → [[concepts/ideal-reconstruction|Ideal reconstruction]] §4
+- Slide 10, the semicircle to $60\pi$ rad/s through a low-pass with $\omega_c=\frac{\pi}{2}$ at $T=\frac{1}{80}$ s: $X_d$, $Y_d$, $Y_a$ → [[concepts/digital-processing-of-analog-signals|A/D → $H_d$ → D/A]] §2
+- Slide 11, the same at $T=\frac{1}{50}$ s (aliasing outside the passband; solutions posted) → [[concepts/digital-processing-of-analog-signals|A/D → $H_d$ → D/A]] §2–3
 
 **Practice:** HW7 #4 ([[exams/quiz-2|Quiz 2 page]]) · [[homework/hw8|HW8]] #4–6 (ZOH → [[concepts/ideal-reconstruction|ideal reconstruction]] §5) · [[problems/digital-filtering-of-analog-signals|family]] · [[demos/sampling-explorer|explorer]]
 
@@ -32,4 +35,4 @@ lecture: 18
 
 ### Sources for this page
 
-Snyder, Lecture 18 notes (§1, eqs. 1–14, Figures 1–3) and inked slides 4–11, Oct 12, 2026.
+Snyder, Lecture 18 notes (§1, eqs. 1–14, Figures 1–3), inked slides 4–11, Oct 12 and 14, 2026; lecture recording Oct 14 (condensed).
