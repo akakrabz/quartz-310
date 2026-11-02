@@ -132,8 +132,8 @@ as targets) and compiles every equation with KaTeX in strict mode. Run it before
   (46 systems) and 7 past exams (FA2025 … FA2019). Midterm 2 (Units 3–5, Lectures 13–23, HW5–HW9; Wed Nov 4, 2026, 7–9 pm): a review guide
   (scope with homework per unit and an on/not-on box — computing circular convolution is not tested — format, problem types by
   family, a day-by-day plan Oct 30–Nov 4, a sheet checklist and formula boxes for Units 3, 4 and 5), a practice midterm
-  (`exams/midterm-2/practice-exam.md`), a true/false bank (all 43 statements of the seven exams) and 7 past exams (FA2019 … SP2025),
-  typed with folded solutions.
+  (`exams/midterm-2/practice-exam.md`), a true/false bank (all 49 statements of the eight exams) and 8 past exams (FA2019 … FA2025;
+  FA2025, Do & Snyder, added Nov 1 with hand-written SVG figures and a numerically reconstructed #8), typed with folded solutions.
   Quiz 2 (`exams/quiz-2.md`, Oct 2026): a review page for HW5–HW7 / Lectures 13–18 with a formula box, HW7 worked against the
   official key, a one-section summary of Lecture 18 (ideal D/A) and a practice quiz; numbers in `verify/Q2_numbers.py`, figures in `verify/Q2_figs.py`.
 - **Homework walkthroughs** HW1–HW6, HW8 and HW9 (HW7 is worked on `exams/quiz-2.md`). HW9's page is `draft: true` until its Oct 30, 11:59 pm due date; run `python3 tools/hw9_release.py` after that (`--dry-run` to preview) to publish it and restore its links.

@@ -2,19 +2,19 @@
 title: "DFT spectral analysis"
 description: "Midterm 2 spectral-analysis problems: the DFT of a finite cosine (clean bins or leakage), amplitudes and frequencies from a DFT plot, bins in hertz, zero padding, lobe-separation criteria, rectangular vs Hamming windows."
 tags: [problem-family, problem, dft, spectral-analysis, midterm-2]
-family_frequency: "6 of 7 Midterm 2 exams"
+family_frequency: "7 of 8 Midterm 2 exams"
 typical_points: "10–16"
 lectures: [22, 23]
 ---
 
-*Problem family · six of seven past Midterm 2 exams (not SP2021) · one 10–16-point problem plus True/False items · [[5-dft-and-fft/22-spectral-analysis|Lecture 22]], [[5-dft-and-fft/23-spectral-analysis-and-window-functions|Lecture 23]] · in the course: Lecture 22 Examples 1–2, Lecture 23 Example 1*
+*Problem family · seven of eight past Midterm 2 exams (not SP2021) · one 10–16-point problem plus True/False items · [[5-dft-and-fft/22-spectral-analysis|Lecture 22]], [[5-dft-and-fft/23-spectral-analysis-and-window-functions|Lecture 23]] · in the course: Lecture 22 Examples 1–2, Lecture 23 Example 1*
 
 ## What it looks like on the exam
 
 - **A** DFT of $N$ samples of a cosine: two bins of height $\frac{AN}{2}$, or leakage everywhere; sketch it.
 - **B** Read a DFT plot: how many cosines, their amplitudes $A_m=\frac{2\lvert X[k_m]\rvert}{N}$, their frequencies $\Omega_m=\frac{2\pi k_m}{N}f_s$.
 - **C** Unknown frequency between bins: estimate, bracket, and explain a zero-padded plot.
-- **D** Where the peaks land before and after padding; smallest $N$ to separate two tones; which window.
+- **D** Where the peaks land before and after padding; smallest $N$ to separate two tones; which window; match unlabeled plots to a padded, longer or Hamming-windowed DFT (FA2025 #8).
 - **E** True/False: whole periods, Hamming window, impulses vs lobes.
 
 Exams write $\lambda_0$ or $\omega_0$ for the digital frequency, $x_c(t)$, $\Omega$ in rad/s.
@@ -29,6 +29,7 @@ Exams write $\lambda_0$ or $\omega_0$ for the digital frequency, $x_c(t)$, $\Ome
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #9 | $A_1\cos\Omega_1t+A_2\cos\Omega_2t$ at 64 Hz for 0.5 s; 32-point plot with 48 at $k=3$, 32 at $k=8$ → $A_1,A_2,\Omega_1,\Omega_2$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #9 | $\{\cos(\frac{\pi}{2}n)\}_{n=0}^{15}$ → DFT, sketched |
 | SP2025 #1(e), (f) | T/F: $\cos(50\pi t)$ at 50 Hz for 1 s: one nonzero bin? Hamming: lower sidelobes and narrower main lobe? |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #8 | $A_1\cos\Omega_1t+A_2\cos\Omega_2t$, $T=\frac{1}{100}$ s, $0\lt\Omega_i\lt100\pi$, $N=16$; four unlabeled $\lvert X[k]\rvert$ plots → (a) which is DFT I (16 samples, 16-point), II (16 samples padded to 32), III (32 samples), IV (Hamming on the 32); (b) $A_1,A_2,\Omega_1,\Omega_2$ |
 | course | L22 Example 1: $\omega_0$, $N$, $A$ from a $\lvert X_d\rvert$ plot · Example 2: $\sin(\frac{\pi}{11}n)$, $N=33$; $\sin(\frac{3\pi}{5}n)$, $N=20$; $\cos(\frac{\pi}{4}n)+\cos(\frac{\pi}{3}n)$, $N=48$: two or four nonzero bins? · L23 Example 1: guitar notes 82 and 87 Hz at 8 kHz, full-lobe $N$ and time · bins in hertz: [[problems/dft-values-and-zero-padding\|DFT values family]] · [[exams/midterm-2/true-false-bank\|T/F bank]] Q37–Q40 |
 
 > [!success]- Answers
@@ -42,6 +43,7 @@ Exams write $\lambda_0$ or $\omega_0$ for the digital frequency, $x_c(t)$, $\Ome
 > | FA2024 #9 | $N=32$, $\Omega=\frac{2\pi k}{32}\cdot64=4\pi k$; height $16A$: $A_1=3$, $A_2=2$, $\Omega_1=12\pi$, $\Omega_2=32\pi$ rad/s |
 > | SP2025 #9 | $\frac{\pi}{2}=\frac{2\pi\cdot4}{16}$: $X[4]=X[12]=8$, other bins 0 |
 > | SP2025 #1 | (e) T: $\cos(\pi n)=(-1)^n$, $X[25]=50$ only. (f) F: sidelobes $-42$ vs $-13$ dB, main lobe twice as wide |
+> | FA2025 #8 | (a) plot (a) = I (the only 16-point plot); (b) = IV (side lobes far down: Hamming); (c) = II (the stems of (a) at its even bins, new ones between: padding); (d) = III (taller, narrower lobes: more data). (b) from plot (c), $N=16$ samples padded to 32: peaks $k=7$ (≈ 8) and $k=10$ (≈ 6); $\frac{AN}{2}=8A$: $A_1\approx1$, $A_2\approx\frac34$; $\omega=\frac{2\pi k}{32}$: $\frac{7\pi}{16}$, $\frac{5\pi}{8}$; $\Omega=\frac{\omega}{T}$: $\Omega_1=\frac{175\pi}{4}$, $\Omega_2=\frac{125\pi}{2}$ rad/s (≈ 137, 196 rad/s; "reasonably close" earns full credit) |
 > | course | L22 Ex. 1: main lobe $\frac{4\pi}{N}=\frac{\pi}{4}$ gives $N=16$, height $\frac{AN}{2}=64$ gives $A=8$ · Ex. 2: $k_0=\frac{\omega_0N}{2\pi}=1.5$ (leaks, 33 nonzero); $6$ (two bins, $\mp10j$); $6$ and $8$ (four bins, height 24) · L23 Ex. 1: $N\gt\frac{4\pi}{2\pi\cdot5/8000}=3200$, $0.4$ s; doubling $f_s$ doubles $N$, same $0.4$ s |
 
 ## The recipe
@@ -65,7 +67,7 @@ Exams write $\lambda_0$ or $\omega_0$ for the digital frequency, $x_c(t)$, $\Ome
 > [!trap] Where the points go
 > - **Height is $\frac{AN}{2}$**, not $A$ or $AN$ (FA2024 #9, SP2023 #10); the mirror is at $N-k_0$, not $-k_0$ (SP2025 #9).
 > - **A fraction of a period leaks everywhere.** $\cos(\frac{\pi}{8}n)$, 24 samples: 1.5 periods (FA2023 #1(g)); but $\cos(\pi n)=(-1)^n$ is one bin, $k=\frac N2$ (SP2025 #1(e)).
-> - **Padding refines the grid, not the resolution.** Lobes keep width $\frac{4\pi}{N}$; the peak drops from 250 to about 245.6 (FA2021 #7(b), FA2023 #6(c)).
+> - **Padding refines the grid, not the resolution.** Lobes keep width $\frac{4\pi}{N}$; the peak drops from 250 to about 245.6 (FA2021 #7(b), FA2023 #6(c)); a padded plot keeps the short record's heights, a longer record doubles them (FA2025 #8: $\frac{AN}{2}$ with the number of samples, not the DFT length).
 > - **Hamming trades width for sidelobes**: lower sidelobes and a wider main lobe (SP2025 #1(f)).
 > - **Units and grid.** $\omega_k=\frac{2\pi k}{N}$, not $\frac{\pi k}{N}$ or $\frac{2\pi k}{N-1}$; answer in the units asked ($12\pi$ rad/s, not 6 Hz or $\frac{3\pi}{16}$) (FA2023 #6(a), FA2024 #9).
 
@@ -106,4 +108,4 @@ Exams write $\lambda_0$ or $\omega_0$ for the digital frequency, $x_c(t)$, $\Ome
 
 ### Sources for this page
 
-Lecture 22 notes (eqs. 8–12, Fig. 2–3) and slides (Examples 1–2); Lecture 23 notes (eqs. 8–10, 20–21, Exercise 1) and slides 7–13; past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new (verified numerically).
+Lecture 22 notes (eqs. 8–12, Fig. 2–3) and slides (Examples 1–2); Lecture 23 notes (eqs. 8–10, 20–21, Exercise 1) and slides 7–13; past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new (verified numerically).

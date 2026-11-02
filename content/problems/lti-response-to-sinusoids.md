@@ -2,16 +2,16 @@
 title: "LTI response to sinusoids and periodic inputs"
 description: "Midterm 2 problems feeding constants, (−1)ⁿ, complex exponentials and sinusoids into a system: list the frequencies, evaluate H_d at each, test whether h is real before the cosine shortcut."
 tags: [problem-family, problem, frequency-response, dtft, midterm-2]
-family_frequency: "6 of 7 Midterm 2 exams"
+family_frequency: "7 of 8 Midterm 2 exams"
 typical_points: "8–18"
 lectures: [14, 15]
 ---
 
-*Problem family · a full problem on five of seven past Midterm 2 exams, a True/False part on FA2019 and FA2021 · 8–18 points · [[3-fourier-analysis/15-frequency-response|Lecture 15]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · drill: [sinusoidal response](/static/demos/drills/#sinr)*
+*Problem family · a full problem on six of eight past Midterm 2 exams, a True/False part on FA2019, FA2021 and FA2025 · 8–18 points · [[3-fourier-analysis/15-frequency-response|Lecture 15]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · drill: [sinusoidal response](/static/demos/drills/#sinr)*
 
 ## What it looks like on the exam
 
-"$H_d(\omega)=\dots$; find the output for $x[n]=\dots$." Three or four kinds of term; $H_d$ chosen so one term is blocked, one tests symmetry, one needs care with a sign. Recent exams give a formula $H_d$ whose $h$ is never computed.
+"$H_d(\omega)=\dots$; find the output for $x[n]=\dots$." Three or four kinds of term; $H_d$ chosen so one term is blocked, one tests symmetry, one needs care with a sign. Recent exams give a formula $H_d$ whose $h$ is never computed; FA2025 #2 gives plots and asks for $h$ first.
 
 | instance | system | input | asked |
 |---|---|---|---|
@@ -20,8 +20,10 @@ lectures: [14, 15]
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023]] #4(b) | $H_d=(\frac12+\cos\omega)e^{j\lvert\omega\rvert}$ | $4j-2e^{j(\frac{2\pi}{3}n+\frac{\pi}{4})}+3\sin(\frac{3\pi}{4}n)$ | $y[n]$ |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #4 (12) | $H_d=\lvert\omega\rvert e^{-j\pi\sin\omega}$ | $3+\cos(\frac{\pi n}{6})+j^n$ | $h$ real? $y[n]$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #4 (10) | $H_d=j\omega e^{j\pi\sin\omega}$ | $5+2e^{j\frac{\pi}{4}n}+\sin(\frac{\pi}{2}n+\frac{\pi}{4})+(-1)^n$ | $y[n]$ |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #2(b) (14 with (a)) | plots: $\lvert H_d\rvert=2$ on $\lvert\omega\rvert\le\frac{\pi}{4}$, $1$ to $\frac{3\pi}{4}$, $0$ beyond; $\angle H_d=-\omega$ | $4+\cos(\frac{\pi}{6}n)+3j^n+(-1)^n$ | $y[n]$ |
 | FA2019 #1(d) | any LSI system | $\cos(\omega_0n+\phi)$ | T/F: the cosine rule for all $\omega_0,\phi$ allows complex $h$ |
 | [[exams/midterm-2/past-exams/fall-2021\|FA2021]] #1(a) | stable LTI | $\cos(\omega_0n)$ | T/F: an eigenfunction? |
+| FA2025 #1(c) | $\lvert H_d(\frac{\pi}{2})\rvert=2$, $\angle H_d(\frac{\pi}{2})=\frac{\pi}{4}$, nothing else | $\cos(\frac{\pi}{2}n)$ | T/F: output $2\cos(\frac{\pi}{2}n+\frac{\pi}{4})$? |
 | [[homework/hw6\|HW6]] #5–7 | accumulator; comb $x[n]+x[n-10]$; $H_d=\omega e^{j\sin\omega}$ | constants, sinusoids, $j^n$ | $H_d=H(e^{j\omega})$? outputs |
 
 > [!success]- Answers
@@ -32,8 +34,10 @@ lectures: [14, 15]
 > | FA2023 #4(b) | $6j+\frac{3(\sqrt2-1)}{2}\,e^{-j\pi/4}\sin(\frac{3\pi}{4}n)$ (exponential at $\frac{2\pi}{3}$ on a zero; $H_d$ even) |
 > | FA2024 #4 | $h$ real; $y=\frac{\pi}{6}\sin(\frac{\pi}{6}n)-\frac{\pi}{2}\,j^n$ |
 > | SP2025 #4 | key: $\frac{\pi}{2}e^{j(\frac{\pi}{4}n+\frac{\pi}{2}(1+\sqrt2))}+\frac{\pi}{2}\sin(\frac{\pi}{2}n-\frac{\pi}{4})+j\pi(-1)^n$; last term ambiguous ($H_d(\pi)=j\pi\ne H_d(-\pi)=-j\pi$); the real system returns 0 for $(-1)^n$ (exam page) |
+> | FA2025 #2(b) | $h$ real (even magnitude, odd phase). $H_d(0)=2$, $H_d(\frac{\pi}{6})=2e^{-j\pi/6}$, $H_d(\frac{\pi}{2})=e^{-j\pi/2}$, $H_d(\pi)=0$: $y=8+2\cos(\frac{\pi}{6}n-\frac{\pi}{6})+3e^{j\frac{\pi}{2}(n-1)}$ ($j^n=e^{j\frac{\pi}{2}n}$; the $(-1)^n$ term is removed) |
 > | FA2019 #1(d) | False: the rule for every $\omega_0,\phi$ forces real $h$ |
 > | FA2021 #1(a) | False: a delay gives $\cos(\omega_0n-\omega_0)$ |
+> | FA2025 #1(c) | False: the cosine rule needs $H_d(-\frac{\pi}{2})=H_d^*(\frac{\pi}{2})$ (real $h$), which one value of $H_d$ cannot show |
 
 ## The recipe
 
@@ -46,7 +50,7 @@ lectures: [14, 15]
 > 6. **Check:** real $h$, real input term → real output term; $H_d(0)$, $H_d(\pi)$ real for real $h$.
 
 > [!trap] Where the points go
-> - **The shortcut with a complex $h$** (SP2023 #6, FA2023 #4): a real sine in, a complex signal out.
+> - **The shortcut with a complex $h$** (SP2023 #6, FA2023 #4): a real sine in, a complex signal out. One value $H_d(\omega_0)$ never licenses it (FA2025 #1(c)); plotted even magnitude and odd phase do (FA2025 #2).
 > - **$H_d(-\omega_0)$:** in SP2025 #4, $H_d(-\frac{\pi}{2})=+j\frac{\pi}{2}$, the conjugate.
 > - **A lone exponential has no partner;** its coefficient stays ($2\cdot\frac{\pi}{4}=\frac{\pi}{2}$ in SP2025 #4). A constant $4j$ is $\omega=0$, not $j^n$ (FA2023 #4: $6j$).
 > - **Amplitude vs magnitude:** $2\cos(2\omega)e^{-j2\omega}$ at $\frac{\pi}{2}$ is $(-2)(-1)=+2$ (FA2019 #7).
@@ -91,4 +95,4 @@ lectures: [14, 15]
 
 ### Sources for this page
 
-Lectures 14–15 notes and slides; HW6 #5–7; past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new.
+Lectures 14–15 notes and slides; HW6 #5–7; past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new.

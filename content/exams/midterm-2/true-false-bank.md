@@ -1,16 +1,16 @@
 ---
 title: "Midterm 2 True/False bank"
-description: "All 43 True/False statements from the seven past ECE 310 Midterm 2 exams (FA2019–SP2025), grouped by topic, each with the official answer and a one-sentence reason folded away."
+description: "All 49 True/False statements from the eight past ECE 310 Midterm 2 exams (FA2019–FA2025), grouped by topic, each with the official answer and a one-sentence reason folded away."
 tags: [midterm-2, exam, problem-family, dtft]
-family_frequency: "7 of 7 Midterm 2 exams"
+family_frequency: "8 of 8 Midterm 2 exams"
 typical_points: "10–20"
 lectures: [13, 14, 15]
 ---
 
-*Problem family · 7 of 7 past Midterm 2 exams, always problem 1 · 10–20 pts · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]]–[[3-fourier-analysis/15-frequency-response|L15]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]]–[[4-sampling-and-reconstruction/19-aliasing|L19]], [[5-dft-and-fft/20-discrete-fourier-transform|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] · 43 statements, 24 False*
+*Problem family · 8 of 8 past Midterm 2 exams, always problem 1 · 10–20 pts · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|L13]]–[[3-fourier-analysis/15-frequency-response|L15]], [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|L17]]–[[4-sampling-and-reconstruction/19-aliasing|L19]], [[5-dft-and-fft/20-discrete-fourier-transform|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|L23]] · 49 statements, 28 False*
 
 > [!exam] How the problem looks
-> Formats: 10 × 2 (FA2019), 5 × 3 (SP2021, FA2021), 5 × 2 (SP2023), 8 × 2 (FA2023), 4 × 3 with a ≤ 2-sentence reason (FA2024), 6 × 2 (SP2025). SP2023/SP2025 grade +2 / −1 / 0: a guess right with probability $p$ is worth $3p-1$.
+> Formats: 10 × 2 (FA2019), 5 × 3 (SP2021, FA2021), 5 × 2 (SP2023), 8 × 2 (FA2023), 4 × 3 with a ≤ 2-sentence reason (FA2024), 6 × 2 (SP2025), 6 × 2 (FA2025). SP2023/SP2025 grade +2 / −1 / 0: a guess right with probability $p$ is worth $3p-1$; FA2025 (the newest, Do & Snyder) states no penalty.
 
 ## The counterexample kit
 
@@ -72,6 +72,11 @@ lectures: [13, 14, 15]
 > [!success]- Answer
 > **True.** $X_d(-\omega)=X_d^*(\omega)$: even magnitude, odd phase.
 
+**Q49** · [[exams/midterm-2/past-exams/fall-2025|FA2025 MT2]] #1(f) · A digital signal $x[n]$ has DTFT $X_d(\omega) = e^{-j\frac{5}{2}\omega}$. The signal $x[n] = \delta\big[n - \tfrac52\big]$.
+
+> [!success]- Answer
+> **False.** A half-sample delay is a sinc, as in Q8: $x[n]=\dfrac{\sin\big(\pi(n-\frac52)\big)}{\pi(n-\frac52)}$, with $x[2]=x[3]=\frac{2}{\pi}$.
+
 ## 2. Frequency response and sinusoids
 
 [[concepts/frequency-response|frequency response]] · [[problems/lti-response-to-sinusoids|LTI response to sinusoids]]
@@ -85,6 +90,11 @@ lectures: [13, 14, 15]
 
 > [!success]- Answer
 > **False.** A one-sample delay (stable) returns $\cos(\omega_0n-\omega_0)$.
+
+**Q46** · [[exams/midterm-2/past-exams/fall-2025|FA2025 MT2]] #1(c) · An LTI system has frequency response $H_d(\omega)$ where $\lvert H_d(\frac{\pi}{2})\rvert = 2$ and $\angle H_d(\frac{\pi}{2}) = \frac{\pi}{4}$. The input signal $x[n] = \cos(\frac{\pi}{2}n)$ will produce the output $y[n] = 2\cos(\frac{\pi}{2}n + \frac{\pi}{4})$.
+
+> [!success]- Answer
+> **False.** The cosine rule needs $H_d(-\frac{\pi}{2})=H_d^*(\frac{\pi}{2})$, i.e. real $h$ (Q10); nothing is given at $-\frac{\pi}{2}$. In general $y=e^{j(\frac{\pi}{2}n+\frac{\pi}{4})}+\frac12H_d(-\frac{\pi}{2})e^{-j\frac{\pi}{2}n}$.
 
 ## 3. Zero padding: the DTFT does not change
 
@@ -164,6 +174,11 @@ lectures: [13, 14, 15]
 > [!success]- Answer
 > **True.** The impulse at $t=0$ lies outside $[3,\infty)$.
 
+**Q48** · [[exams/midterm-2/past-exams/fall-2025|FA2025 MT2]] #1(e) · Let $x_a(t) = \cos^2(40\pi t)$. We sample $x_a(t)$ to produce $x[n] = x_a(nT)$. There will be no aliasing present in $x[n]$ if $T = \frac{1}{50}$ s.
+
+> [!success]- Answer
+> **False.** $\cos^2(40\pi t)=\frac12+\frac12\cos(80\pi t)$: the tone is 40 Hz, so $f_s=50\lt80$ Hz aliases it ($\frac{80\pi}{50}=\frac{8\pi}{5}\equiv-\frac{2\pi}{5}$, a 10 Hz alias).
+
 ## 5. Ideal D/A conversion and reconstruction
 
 [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]]: $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$, $\mathrm{sinc}(t)=\frac{\sin t}{t}$.
@@ -187,6 +202,11 @@ lectures: [13, 14, 15]
 
 > [!success]- Answer
 > **False.** $\frac{\sin(\pi t/T)}{\pi t/T}$ is nonzero for $t\lt0$.
+
+**Q47** · [[exams/midterm-2/past-exams/fall-2025|FA2025 MT2]] #1(d) · A digital signal $x[n] = 3\delta[n-2]$ is given to an ideal D/A converter with sampling period $T = \frac14$ s to recover analog signal $x_a(t)$. The recovered signal is $x_a(t) = 3\,\mathrm{sinc}\big(4\pi(t - \tfrac12)\big)$, where $\mathrm{sinc}(x) = \frac{\sin(x)}{x}$.
+
+> [!success]- Answer
+> **True.** One sinc per sample: $3\,\mathrm{sinc}\!\left(\frac{\pi(t-2T)}{T}\right)$ with $T=\frac14$ is $3\,\mathrm{sinc}\big(4\pi(t-\frac12)\big)$ (contrast Q26, Q27: not an impulse).
 
 ## 6. The DFT and its properties ([[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]], [[5-dft-and-fft/21-dft-properties|Lecture 21]])
 
@@ -226,6 +246,16 @@ lectures: [13, 14, 15]
 
 > [!success]- Answer
 > **True.** $X[11]=X_d\big(\frac{11\pi}{7}\big)=X_d\big(\frac{11\pi}{7}-2\pi\big)=X_d\big(-\frac{3\pi}{7}\big)$.
+
+**Q44** · [[exams/midterm-2/past-exams/fall-2025|FA2025 MT2]] #1(a) · The DTFT of a length-5 signal $x[n]$ is given by $X_d(\omega) = 3 + \cos(2\omega)$. The DFT of $x[n]$ is then $X[k] = 3 + \cos\big(\frac{4\pi}{5}k\big)$.
+
+> [!success]- Answer
+> **True.** $X[k]=X_d\big(\frac{2\pi k}{5}\big)=3+\cos\big(\frac{4\pi k}{5}\big)$. (Here $x=\{\frac12,\ 0,\ \underset{\uparrow}{3},\ 0,\ \frac12\}$; on $0\le n\le4$ it is the circular shift $\{3,0,\frac12,\frac12,0\}$, whose DFT is the same.)
+
+**Q45** · [[exams/midterm-2/past-exams/fall-2025|FA2025 MT2]] #1(b) · Suppose we have a length-4 DFT $\{X[k]\}_{k=0}^{3} = \{4, 0, 0, 0\}$. The signal $\{x[n]\} = \mathrm{DFT}^{-1}\{X[k]\} = \{\cdots, 0, 0, \underset{\uparrow}{1}, 1, 1, 1, 0, 0, \cdots\}$.
+
+> [!success]- Answer
+> **False.** $x[n]=\frac14\sum_kX[k]e^{j\frac{2\pi k}{4}n}=1$ for every $n$: the inverse DFT is 4-periodic, not zero outside $0\le n\le3$ (as Q34, Q35).
 
 ## 7. Spectral analysis with the DFT ([[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]], [[5-dft-and-fft/22-spectral-analysis|Lecture 22]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|Lecture 23]])
 
@@ -274,21 +304,23 @@ lectures: [13, 14, 15]
 
 > [!key] Eight patterns
 > 1. "DTFT is $X(e^{j\omega})$": check the ROC (Q1, Q2).
-> 2. $2\pi$-periodicity (Q3–Q5, Q36).
-> 3. Impulses need endless sinusoids (Q6); fractional delay is a sinc (Q8).
-> 4. DTFT of a finite sum is finite (Q7); inverse DFT is periodic (Q34, Q35).
-> 5. Real ⇔ Hermitian, licensing the cosine rule (Q9, Q10); cosines aren't eigenfunctions (Q11).
+> 2. $2\pi$-periodicity (Q3–Q5, Q36); the DFT samples the DTFT, $X[k]=X_d(\frac{2\pi k}{N})$ (Q36, Q44).
+> 3. Impulses need endless sinusoids (Q6); fractional delay is a sinc (Q8, Q49).
+> 4. DTFT of a finite sum is finite (Q7); inverse DFT is periodic (Q34, Q35, Q45).
+> 5. Real ⇔ Hermitian, licensing the cosine rule (Q9, Q10, Q46); cosines aren't eigenfunctions (Q11).
 > 6. Zero padding never changes the DTFT (Q12–Q16), refines the DFT grid (Q16, Q17): most repeated idea.
-> 7. $\omega=\Omega T$ mod $2\pi$ (Q18–Q24).
-> 8. Ideal D/A gives sincs (Q26–Q29); a cosine's DFT is clean only for whole periods (Q37–Q39).
+> 7. $\omega=\Omega T$ mod $2\pi$ (Q18–Q24, Q48).
+> 8. Ideal D/A gives sincs (Q26–Q29, Q47); a cosine's DFT is clean only for whole periods (Q37–Q39).
 
 > [!trap] Where points actually go
 > - Well-formed but wrong formulas (Q2, Q6); appending vs inserting zeros (Q15); "shrinks" read as height (Q24); blanks on +2/−1/0 exams.
+> - One value of $H_d$ is not a Hermitian check (Q46); $\cos^2$ doubles the frequency before you test $f_s$ (Q48).
 
 ## 10. Answers by exam
 
 | exam, problem | answers in order | on this page |
 |---|---|---|
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025 #1]] (12 pts) | T F F T F F | Q44, Q45, Q46, Q47, Q48, Q49 |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025 #1]] (12 pts, +2/−1/0) | T F T F T F | Q7, Q35, Q28, Q15, Q39, Q40 |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024 #1]] (12 pts, with reasons) | F T F T | Q2, Q3, Q27, Q16 |
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023 #1]] (16 pts) | F F T F F T F T | Q1, Q8, Q9, Q23, Q26, Q14, Q38, Q36 |
@@ -303,4 +335,4 @@ lectures: [13, 14, 15]
 
 ### Sources for this page
 
-Official keys of ECE 310 Midterm 2 #1, FA2019–SP2025 (FA2019 handwritten); Lectures 13–21.
+Official keys of ECE 310 Midterm 2 #1, FA2019–FA2025 (FA2019 handwritten; FA2025 circled answers only, reasons ours); Lectures 13–21.

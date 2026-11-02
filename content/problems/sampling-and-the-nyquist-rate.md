@@ -2,12 +2,12 @@
 title: "Sampling and the Nyquist rate"
 description: "Midterm 2 sampling questions: the Nyquist rate or period, a sketch of X_d(ω) after sampling, which T or Ω₀ fit a sampled sinusoid, what the ideal D/A returns, and True/False items."
 tags: [problem-family, problem, sampling, midterm-2]
-family_frequency: "7 of 7 Midterm 2 exams"
+family_frequency: "8 of 8 Midterm 2 exams"
 typical_points: "2–15"
 lectures: [17, 18, 19]
 ---
 
-*Problem family · all seven past Midterm 2 exams · 2–15 points · [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]], [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]]*
+*Problem family · all eight past Midterm 2 exams · 2–15 points · [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]], [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]]*
 
 ## What it looks like on the exam
 
@@ -33,7 +33,8 @@ Exams write $x_c$, $X_c$, $T_N$ ($T_{NYQ}$) for Lecture 17's $x_a$, $X_a$, $\fra
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #5(a),(b) | triangle of height 1 on $\lvert\Omega\rvert\le1000\pi$ → $T_N$; $X_d$ at $T_N$, $2T_N$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #5(a) | triangle on $\lvert\Omega\rvert\le200\pi$ → $X_d$ at $T=\frac{1}{300}$ |
 | SP2025 #6 | (a) $\sin(100\pi t)\to\sin(\frac{\pi}{2}n)$: which of $T=\frac{1}{400},\frac{1}{200},\frac{1}{100},\frac{1}{40},\frac{1}{20}$; (b) $\sin(40\pi t)$ returned unchanged: which of $\frac{1}{100},\frac{1}{60},\frac{1}{40},\frac{1}{20},\frac{1}{10}$; (c) $\sin(30\pi t)+\sin(100\pi t)$ returned as $\sin(10\pi t)+\sin(30\pi t)$: $T$ |
-| T/F | SP2021 #1(a) $\cos(17\pi t)\to\cos(\frac{3\pi}{4}n)$?, (b) $x_c(2t)$ · FA2021 #1(c) causal D/A?, (e) larger $T$ shrinks the DTFT? · SP2023 #1(a) $\cos(\pi^3t)$, (b) $x_c(3t)$, (e) "bandlimited" · FA2023 #1(d) Nyquist rate for every signal?, (e) and FA2024 #1(c) one sample → impulse? · SP2025 #1(c) $x_a(3)=0$? · [[exams/midterm-2/true-false-bank\|T/F bank]] Q18–Q24, Q26–Q29 |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #4 | $\sin(20\pi t)+\sin(90\pi t)$ through ideal A/D ($T_1$) and D/A ($T_2$) → (a) $x[n]$, $y_a(t)$ for $T_1=\frac{1}{100}$, $T_2=\frac{1}{20}$ s; (b) for $T_1=T_2=\frac{1}{60}$ s; (c) two $T_1=T_2=T$ that return $y_a=\sin(20\pi t)$ |
+| T/F | SP2021 #1(a) $\cos(17\pi t)\to\cos(\frac{3\pi}{4}n)$?, (b) $x_c(2t)$ · FA2021 #1(c) causal D/A?, (e) larger $T$ shrinks the DTFT? · SP2023 #1(a) $\cos(\pi^3t)$, (b) $x_c(3t)$, (e) "bandlimited" · FA2023 #1(d) Nyquist rate for every signal?, (e) and FA2024 #1(c) one sample → impulse? · SP2025 #1(c) $x_a(3)=0$? · FA2025 #1(d) $3\delta[n-2]$ at $T=\frac14$ gives $3\,\mathrm{sinc}(4\pi(t-\frac12))$?, (e) $\cos^2(40\pi t)$ at $T=\frac{1}{50}$ unaliased? · [[exams/midterm-2/true-false-bank\|T/F bank]] Q18–Q24, Q26–Q29, Q47, Q48 |
 | course | HW7 #3 ([[exams/quiz-2\|Quiz 2 page]]) · [[homework/hw8\|HW8]] #1–2 (two $\Omega_0$ for $\cos(\frac{\pi}{3}n)$ at 1000 samples/s; non-unique $T$), #3 ($\lvert X_a\rvert$, $\lvert X_d\rvert$ for $\cos(400\pi t)$ at $T=1$, $2$ ms; $T_{\max}$), #4 (ZOH and ideal D/A) |
 
 > [!success]- Answers
@@ -51,7 +52,8 @@ Exams write $x_c$, $X_c$, $T_N$ ($T_{NYQ}$) for Lecture 17's $x_a$, $X_a$, $\fra
 > | FA2024 #5 | $T_N=1$ ms. At $T_N$: height 1000, copies touch. At $2T_N$: copies add to 500. The key labels the $X_d$ axis $\Omega$, a slip |
 > | SP2025 #5(a) | height 300, edges $\pm\frac{2\pi}{3}$, no overlap |
 > | SP2025 #6 | (a) $100\pi T\equiv\frac{\pi}{2}$: ii, iv. (b) $40\pi T\lt\pi$: i, ii. (c) $f_s\gt30$ Hz and $100\pi T-2\pi=10\pi T$: $T=\frac{1}{45}$ s |
-> | T/F | SP2021 #1(a) T ($T=\frac{3}{68}$ s), (b) T · FA2021 #1(c) F (two-sided sinc), (e) F (stretches) · SP2023 #1(a) T ($T=\frac{3}{4\pi^2}$ s), (b) F ($3F_s$), (e) T · FA2023 #1(d) F (bandlimited only), (e) F · FA2024 #1(c) F · SP2025 #1(c) T ($\mathrm{sinc}(\pi)+2\,\mathrm{sinc}(-\pi)=0$) |
+> | FA2025 #4 | (a) $\omega=\Omega T_1$: $x=\sin(\frac{\pi}{5}n)+\sin(\frac{9\pi}{10}n)$; $\Omega=\omega/T_2$: $y_a=\sin(4\pi t)+\sin(18\pi t)$. (b) $\frac{3\pi}{2}\equiv-\frac{\pi}{2}$: $x=\sin(\frac{\pi}{3}n)-\sin(\frac{\pi}{2}n)$, $y_a=\sin(20\pi t)-\sin(30\pi t)$. (c) first tone unaliased ($20\pi T\lt\pi$), second killed ($90\pi T=k\pi$): $T=\frac{k}{90}$, $k=1,\dots,4$: $\frac{1}{90},\frac{1}{45},\frac{1}{30},\frac{2}{45}$ s, any two ($k=5$, $\frac{1}{18}$, aliases the first tone) |
+> | T/F | SP2021 #1(a) T ($T=\frac{3}{68}$ s), (b) T · FA2021 #1(c) F (two-sided sinc), (e) F (stretches) · SP2023 #1(a) T ($T=\frac{3}{4\pi^2}$ s), (b) F ($3F_s$), (e) T · FA2023 #1(d) F (bandlimited only), (e) F · FA2024 #1(c) F · SP2025 #1(c) T ($\mathrm{sinc}(\pi)+2\,\mathrm{sinc}(-\pi)=0$) · FA2025 #1(d) T ($3\,\mathrm{sinc}(\frac{\pi(t-2T)}{T})$, $T=\frac14$), (e) F ($\cos^2=\frac12+\frac12\cos(80\pi t)$: 40 Hz needs $f_s\gt80$) |
 
 ## The recipe
 
@@ -67,10 +69,10 @@ Exams write $x_c$, $X_c$, $T_N$ ($T_{NYQ}$) for Lecture 17's $x_a$, $X_a$, $\fra
 > 6. **D/A of samples.** $x_a(t)=\sum_nx[n]\,\mathrm{sinc}\!\left(\frac{\pi(t-nT)}{T}\right)$, $\mathrm{sinc}(t)=\frac{\sin t}{t}$: one two-sided sinc per sample, never an impulse or a staircase.
 
 > [!trap] Where the points go
-> - **Strict or not.** Keys accept $T=\frac{1}{2B}$ for a sketched $X_c$ zero at its edge (FA2021 #5(a), FA2024 #5(a)), not for a sinusoid: $\sin(40\pi t)$ at $T=\frac{1}{40}$ is $\sin(\pi n)=0$ (SP2025 #6(b)).
+> - **Strict or not.** Keys accept $T=\frac{1}{2B}$ for a sketched $X_c$ zero at its edge (FA2021 #5(a), FA2024 #5(a)), not for a sinusoid: $\sin(40\pi t)$ at $T=\frac{1}{40}$ is $\sin(\pi n)=0$ (SP2025 #6(b)); the same kill is the point of FA2025 #4(c): $90\pi T=k\pi$ removes $\sin(90\pi t)$.
 > - **Missing $\frac1T$:** 5000, not 1 (SP2021 #8).
 > - **Hz vs rad/s.** $1000\pi$ rad/s is 500 Hz: $T_N=1$ ms, not $\frac{1}{2000}$ s (FA2024 #5(a)).
-> - **Sign flips.** $\Omega_0=-200\pi$ gives $-\sin(\frac{\pi}{2}n)$ (FA2023 #3); $f_s=55$ Hz fails SP2025 #6(c) on the sign alone.
+> - **Sign flips.** $\Omega_0=-200\pi$ gives $-\sin(\frac{\pi}{2}n)$ (FA2023 #3); $f_s=55$ Hz fails SP2025 #6(c) on the sign alone; $\frac{3\pi}{2}\equiv-\frac{\pi}{2}$ turns $\sin(90\pi t)$ into $-\sin(30\pi t)$ (FA2025 #4(b)).
 > - **Modulo $2\pi$.** An aliasing $T$ can still fit: $T=\frac{1}{40}$ in SP2025 #6(a).
 
 ## Practice problems
@@ -115,4 +117,4 @@ Exams write $x_c$, $X_c$, $T_N$ ($T_{NYQ}$) for Lecture 17's $x_a$, $X_a$, $\fra
 
 ### Sources for this page
 
-Lectures 17–19 notes and slides; past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new.
+Lectures 17–19 notes and slides; past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new.

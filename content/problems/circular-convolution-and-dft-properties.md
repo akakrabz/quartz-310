@@ -2,12 +2,12 @@
 title: "Circular convolution and DFT properties"
 description: "Midterm 2 DFT-property problems: y[n] from a phase ramp or a rearranged X[k], Y[k] of a reversed and shifted x[n], circular vs linear convolution and padding to N1+N2−1, conjugation, symmetry, Parseval."
 tags: [problem-family, problem, dft, midterm-2]
-family_frequency: "7 of 7 Midterm 2 exams"
+family_frequency: "8 of 8 Midterm 2 exams"
 typical_points: "5–18"
 lectures: [21]
 ---
 
-*Problem family · all seven past Midterm 2 exams · 5–18 points · [[5-dft-and-fft/21-dft-properties|Lecture 21]] · in the course: Lecture 21 Examples 1–3, the notes' circular convolution*
+*Problem family · all eight past Midterm 2 exams · 5–18 points · [[5-dft-and-fft/21-dft-properties|Lecture 21]] · in the course: Lecture 21 Examples 1–3, the notes' circular convolution*
 
 > [!warning] Fall 2026 Midterm 2: computing circular convolution is not tested (instructor announcement); the DFT property x⊛h ↔ X[k]H[k] and the other DFT properties are.
 
@@ -18,6 +18,7 @@ lectures: [21]
 - **C** $Y[k]$ in terms of the $X_k$ for a reversed and shifted $x[n]$.
 - **D** Linear vs $N$-point circular convolution; the $N$ that makes them agree; zeros to pad (not on Fall 2026 MT2).
 - **E** Conjugation and symmetry: is $x$ real? two real DFTs from one complex DFT; Parseval.
+- **F** A proof from the definitions: what a duplicated or conjugated $X[k]$ does to $x[n]$ (FA2025 #7, FA2023 #7).
 
 Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\frac{2\pi}{N}}$.
 
@@ -34,6 +35,7 @@ Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\fra
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #8 | $x=\{3,0,-1,2,4\}$, $y=\{0,3,4,2,-1\}$ → $Y[k]$ in terms of $X_0,\dots,X_4$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #7(b) | $x=\{1,2,-3,-4,5,6,-2,2\}$, $Y=\{-X_5,X_6,-X_7,X_0,-X_1,X_2,-X_3,X_4\}$ → $y[n]$ |
 | SP2025 #8 | $x=\{1,\dots,8\}$, $Y[m]=X[m]e^{j\frac{3\pi}{4}m}$ → $y[n]$ |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #7 | $Y[k]$ = $\{X[0],\dots,X[N-1]\}$ written twice, length $2N$ → prove $y[2n]=x[n]$, $y[2n+1]=0$ from the DFT definitions |
 | course | Lecture 21 Example 2: $\{2,0,1,3,0\}\circledast\{4,1,0,2,2\}$ (not on Fall 2026 MT2) · Example 3: $x=\{1,\dots,6\}$, $Y=\{X_2,-X_3,X_4,-X_5,X_0,-X_1\}$ · [[exams/midterm-2/true-false-bank\|T/F bank]] Q41–Q42 (not on Fall 2026 MT2) |
 
 > [!success]- Answers
@@ -50,6 +52,7 @@ Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\fra
 > | FA2024 #8 | $y=x[\langle-(n-1)\rangle_5]$: $Y[k]=X[\langle-k\rangle_5]e^{-j\frac{2\pi k}{5}}=\{X_0,X_4e^{-j\frac{2\pi}{5}},X_3e^{-j\frac{4\pi}{5}},X_2e^{-j\frac{6\pi}{5}},X_1e^{-j\frac{8\pi}{5}}\}$ |
 > | SP2025 #7(b) | $Y[m]=(-1)^{m+1}X[\langle m-3\rangle_8]$: $y=e^{j\frac{3\pi}{4}n}x[\langle n-4\rangle_8]=\{5,6e^{j\frac{3\pi}{4}},2j,2e^{j\frac{\pi}{4}},-1,2e^{-j\frac{\pi}{4}},-3j,4e^{j\frac{\pi}{4}}\}$ |
 > | SP2025 #8 | $e^{+j\frac{2\pi\cdot3}{8}m}$: advance 3, $y=x[\langle n+3\rangle_8]=\{4,5,6,7,8,1,2,3\}$ |
+> | FA2025 #7 | $y[n]=\frac{1}{2N}\sum_{k=0}^{2N-1}Y[k]e^{j\frac{2\pi k}{2N}n}$; split at $k=N$, put $k=m+N$ in the second half ($e^{j\frac{2\pi(m+N)}{2N}n}=e^{j\frac{2\pi m}{2N}n}e^{j\pi n}$): $y[n]=\frac{1+(-1)^n}{2N}\sum_{k=0}^{N-1}X[k]e^{j\frac{2\pi k}{2N}n}$; $n=2n'$: $\frac1N\sum_kX[k]e^{j\frac{2\pi k}{N}n'}=x[n']$; odd $n$: 0 (upsampling by 2 ↔ repeating the DFT) |
 > | course | Ex. 2: $\{10,10,10,17,7\}$ · Ex. 3: $Y=(-1)^kX[\langle k+2\rangle_6]$, $y=e^{-j\frac{2\pi}{3}n}x[\langle n-3\rangle_6]=\{4,5e^{-j\frac{2\pi}{3}},6e^{j\frac{2\pi}{3}},1,2e^{-j\frac{2\pi}{3}},3e^{j\frac{2\pi}{3}}\}$ |
 
 ## The recipe
@@ -117,4 +120,4 @@ Exams write $X_k$ or $X[m]$; $\langle n\rangle_N$ is $n$ mod $N$; $W_N=e^{-j\fra
 
 ### Sources for this page
 
-Lecture 21 notes (eqs. 14–16, 19, 25–29, Table 1) and slides (Examples 1–3); past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new (verified numerically).
+Lecture 21 notes (eqs. 14–16, 19, 25–29, Table 1) and slides (Examples 1–3); past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new (verified numerically).

@@ -2,16 +2,16 @@
 title: "Magnitude, phase and group delay"
 description: "Midterm 2 \"find H_d(ω), sketch |H_d| and ∠H_d on [−π, π]\" problems: pull out the linear phase, read the magnitude, place π jumps and 2π wraps, compute the group delay."
 tags: [problem-family, problem, frequency-response, group-delay, midterm-2]
-family_frequency: "5 of 7 Midterm 2 exams"
+family_frequency: "6 of 8 Midterm 2 exams"
 typical_points: "10–18"
 lectures: [15, 16]
 ---
 
-*Problem family · five of seven past Midterm 2 exams, one problem each · 10–18 points · [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]], [[3-fourier-analysis/15-frequency-response|Lecture 15]] · drill: [magnitude & phase](/static/demos/drills/#magph)*
+*Problem family · six of eight past Midterm 2 exams, one problem each · 10–18 points · [[3-fourier-analysis/16-magnitude-and-phase-response|Lecture 16]], [[3-fourier-analysis/15-frequency-response|Lecture 15]] · drill: [magnitude & phase](/static/demos/drills/#magph)*
 
 ## What it looks like on the exam
 
-"Determine $H_d(\omega)$; plot $\lvert H_d\rvert$ and $\angle H_d$ for $-\pi\le\omega\le\pi$." A two- or three-tap FIR, or a closed-form $H_d$ whose real factor changes sign. No past exam asked for a group delay; Lecture 16 does.
+"Determine $H_d(\omega)$; plot $\lvert H_d\rvert$ and $\angle H_d$ for $-\pi\le\omega\le\pi$." A two- or three-tap FIR (non-causal on FA2025), or a closed-form $H_d$ whose real factor changes sign. No past exam asked for a group delay; Lecture 16 does.
 
 | instance | system | asked |
 |---|---|---|
@@ -20,6 +20,7 @@ lectures: [15, 16]
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023]] #4(a) | $H_d=(\frac12+\cos\omega)e^{j\lvert\omega\rvert}$ | magnitude, phase (even phase: $h$ complex) |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #3 (12) | $h[n]=\delta[n+2]+\delta[n]+\delta[n-2]$ | $H_d(0)$, $H_d(\frac{\pi}{2})$, $H_d(\pi)$; $\lvert H_d\rvert$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #3 (12) | $y[n]=x[n]+2x[n-3]+x[n-6]$ | $H_d$; magnitude, phase |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #3 (12) | $y[n]=x[n+3]-x[n]$ (non-causal) | $H_d$; magnitude, phase |
 | same factoring | SP2021 #3; FA2019 #7 ($1+z^{-4}=2\cos2\omega\,e^{-j2\omega}$) | |
 | [[homework/hw6\|HW6]] #6 | $y[n]=x[n]+x[n-10]$ | magnitude, phase, outputs |
 | Lecture 16 | $\{1,0,1\}$, $\{1,0,-1\}$, $\{3,2,1\}$ | magnitude, phase, group delay (Example 3 non-uniform) |
@@ -32,6 +33,7 @@ lectures: [15, 16]
 > | FA2023 #4(a) | $\lvert\frac12+\cos\omega\rvert$: $\frac32$ at 0, zeros $\pm\frac{2\pi}{3}$, $\frac12$ at $\pm\pi$ | $\lvert\omega\rvert$ for $\lvert\omega\rvert\lt\frac{2\pi}{3}$, $\lvert\omega\rvert-\pi$ beyond (even) |
 > | FA2024 #3 | $H_d=1+2\cos2\omega$: $3$, $-1$, $3$; zeros $\pm\frac{\pi}{3},\pm\frac{2\pi}{3}$, bumps of 1 at $\pm\frac{\pi}{2}$ | (not asked) 0, or $\pm\pi$ where negative |
 > | SP2025 #3 | $H_d=(2+2\cos3\omega)e^{-j3\omega}$: 4 at $0,\pm\frac{2\pi}{3}$, 0 at $\pm\frac{\pi}{3},\pm\pi$ | $-3\omega$ wrapped ($2\pi$ wraps at $\pm\frac{\pi}{3}$); group delay 3 |
+> | FA2025 #3 | $H_d=e^{j3\omega}-1=2je^{j\frac{3\omega}{2}}\sin\frac{3\omega}{2}$; $2\lvert\sin\frac{3\omega}{2}\rvert$: zeros $0,\pm\frac{2\pi}{3}$, peaks 2 at $\pm\frac{\pi}{3},\pm\pi$ | $\frac{\pi}{2}+\frac{3\omega}{2}$, $\pm\pi$ where $\sin\frac{3\omega}{2}\lt0$, wrapped: $\pi$ jumps at $0,\pm\frac{2\pi}{3}$, $2\pi$ wraps at $\pm\frac{\pi}{3}$; slope $+\frac32$ (group delay $-\frac32$: an advance) |
 
 ## The recipe
 
@@ -48,6 +50,7 @@ lectures: [15, 16]
 > - **A $\pi$ that is not there:** $2+2\cos3\omega\ge0$ (SP2025 #3); breaks at $\pm\frac{\pi}{3}$ are $2\pi$ wraps on double zeros.
 > - **Jumps vs wraps:** SP2023 #5 has only jumps; SP2021 #2 both.
 > - **Reflecting a non-real phase:** SP2021 #2 (imaginary), FA2023 #4 (even phase).
+> - **Non-causal taps slope up:** $x[n+3]-x[n]$ has centre $M=-\frac32$, so the phase is $+\frac{3\omega}{2}+\frac{\pi}{2}$ (the $j$ from the antisymmetric pair), not $-\frac{3\omega}{2}$ (FA2025 #3).
 > - **Group delay from the principal phase:** differentiate the unbroken line; negative values are allowed.
 
 ## Practice problems
@@ -87,4 +90,4 @@ lectures: [15, 16]
 
 ### Sources for this page
 
-Lectures 15–16 notes and slides; HW6 #6; past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new.
+Lectures 15–16 notes and slides; HW6 #6; past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new.

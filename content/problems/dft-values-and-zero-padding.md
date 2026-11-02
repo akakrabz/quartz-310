@@ -2,12 +2,12 @@
 title: "DFT values and zero padding"
 description: "Midterm 2 DFT questions: X[0], X[N/2] or one bin from the definition, the DFT as DTFT samples X[k] = X_d(2πk/N), which padded bin equals X[k], the inverse DFT, bins in hertz."
 tags: [problem-family, problem, dft, midterm-2]
-family_frequency: "7 of 7 Midterm 2 exams"
+family_frequency: "8 of 8 Midterm 2 exams"
 typical_points: "6–15"
 lectures: [20]
 ---
 
-*Problem family · all seven past Midterm 2 exams · 6–15 points, plus two or three True/False items · [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] · in the course: Lecture 20 Exercise 1, slide Examples 1–2*
+*Problem family · all eight past Midterm 2 exams · 6–15 points, plus two or three True/False items · [[5-dft-and-fft/20-discrete-fourier-transform|Lecture 20]] · in the course: Lecture 20 Exercise 1, slide Examples 1–2*
 
 ## What it looks like on the exam
 
@@ -37,7 +37,9 @@ Exams write $X_k$ or $X[m]$ for $X[k]$, $\{x[n]\}_{n=0}^{N-1}$ for a length-$N$ 
 | FA2024 #1(d) | T/F with reason: padded to $2N$: $X[k]=Y[2k]$ and $X_d=Y_d$? |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #7(a), (c) | $x=\{1,2,-3,-4,5,6,-2,2\}$ → $X_0$; padded with 52 zeros: which of $X[0]=Z[0]$, $X[1]=Z[1]$, $X[7]=Z[59]$, $X[2]=Z[15]$, $X[4]=Z^*[30]$, $X[6]=Z^*[15]$ |
 | SP2025 #1(a), (b), (d) | T/F: inverse DTFT vs inverse DFT of $\{1,2,3,4\}$; padded to $3N$: $X_d(\omega)=Y_d(3\omega)$? |
-| course | Lecture 20 Exercise 1: length 16 padded to 64, which $\tilde X[k]$ equal $X[1]$, $X[9]$ · slide Example 2: smallest $N$ holding $X_d(\frac{\pi}{5})$, $X_d(\frac{\pi}{3})$ · [[exams/midterm-2/true-false-bank\|T/F bank]] Q12–Q17, Q30–Q36 |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #6 | real length-32 $x$ → (a) T/F: $X[0]=X_d(2\pi)$, $X[2]=X_d(\frac{\pi}{8})$, $X[4]=X_d(\frac{\pi}{8})$, $X[6]=X_d^*(-\frac{3\pi}{8})$, $X[8]=X_d^*(-\frac{\pi}{2})$; (b) padded with $L$ zeros so that $Y[k]$ hits $X_d(\frac{\pi}{3})$ and $X_d(\frac{4\pi}{9})$: $L=4,16,22,40,48$? |
+| FA2025 #1(a), (b) | T/F: length-5 $x$ with $X_d=3+\cos2\omega$ has $X[k]=3+\cos(\frac{4\pi}{5}k)$? inverse DFT of $\{4,0,0,0\}$ is $\{\dots,0,\underset{\uparrow}{1},1,1,1,0,\dots\}$? |
+| course | Lecture 20 Exercise 1: length 16 padded to 64, which $\tilde X[k]$ equal $X[1]$, $X[9]$ · slide Example 2: smallest $N$ holding $X_d(\frac{\pi}{5})$, $X_d(\frac{\pi}{3})$ · [[exams/midterm-2/true-false-bank\|T/F bank]] Q12–Q17, Q30–Q36, Q44–Q45 |
 
 > [!success]- Answers
 > | instance | answer |
@@ -58,6 +60,8 @@ Exams write $X_k$ or $X[m]$ for $X[k]$, $\{x[n]\}_{n=0}^{N-1}$ for a length-$N$ 
 > | FA2024 #1(d) | T: $Y_d=X_d$; $Y[2k]=X_d(\frac{2\pi\cdot2k}{2N})=X[k]$ |
 > | SP2025 #7 | (a) $X_0=7$. (c) $X[k]=Z[\frac{60}{8}k]$ only when integer: i, iv ($Z[15]=X_d(\frac{\pi}{2})$), v ($X[4]=X_d(\pi)$ real), vi ($X[6]=X_d(-\frac{\pi}{2})=Z^*[15]$); ii, iii false |
 > | SP2025 #1 | (a) T: inverse DTFT of a finite sum is finite. (b) F: periodic, $x[4]=x[0]=\frac52$. (d) F: $Y_d=X_d$ ($X_d(3\omega)$ is zeros between samples) |
+> | FA2025 #6 | (a) $\omega_k=\frac{\pi k}{16}$: i T ($X_d(2\pi)=X_d(0)$), ii T, iii F ($\omega_4=\frac{\pi}{4}$), iv T ($\omega_6=\frac{3\pi}{8}$; real $x$: $X_d^*(-\omega)=X_d(\omega)$), v T ($\omega_8=\frac{\pi}{2}$). (b) $\frac{\pi}{3}=\frac{2\pi\cdot3}{18}$ and $\frac{4\pi}{9}=\frac{2\pi\cdot4}{18}$: need $18\mid(32+L)$: $L=4$ (36) T, 16 (48) F, 22 (54) T, 40 (72) T, 48 (80) F |
+> | FA2025 #1 | (a) T: $X[k]=X_d(\frac{2\pi k}{5})$. (b) F: the inverse DFT is 4-periodic ($x[n]=1$ for all $n$), not zero outside $0\le n\le3$ |
 > | course | Ex. 1: $X[1]=\tilde X[4]$, $X[9]=\tilde X[36]$ · slide Ex. 2: $\frac{N}{10},\frac{N}{6}$ integers: $N=30$, then $60$ |
 
 ## The recipe
@@ -70,7 +74,7 @@ Exams write $X_k$ or $X[m]$ for $X[k]$, $\{x[n]\}_{n=0}^{N-1}$ for a length-$N$ 
 > \end{gathered}
 > $$
 > 1. **Special bins.** $X[0]=\sum_nx[n]$; $X[\frac N2]=\sum_n(-1)^nx[n]$ ($N$ even); $X[\frac N4]=\sum_n(-j)^nx[n]$. Both $X[0]$ and $X[\frac N2]$ are real for real $x$. Any bin: multiply $x[n]$ by $W_N^{kn}$, reducing $kn$ mod $N$; a repeating $x$ factors (FA2021 #3(a)).
-> 2. **Bins are DTFT samples.** $\omega_k=\frac{2\pi k}{N}$, $0\le k\lt N$. Bins past $\frac N2$ sit at $\omega_k-2\pi\lt0$: $X[N-k]=X_d(-\omega_k)=X^*[k]$ for real $x$. $X_d(\omega_0)$ is in the DFT iff $\frac{\omega_0N}{2\pi}$ is an integer; two frequencies $\frac{2\pi p_i}{q_i}$ need $N$ a multiple of every $q_i$: smallest $N=\mathrm{lcm}$.
+> 2. **Bins are DTFT samples.** $\omega_k=\frac{2\pi k}{N}$, $0\le k\lt N$. Bins past $\frac N2$ sit at $\omega_k-2\pi\lt0$: $X[N-k]=X_d(-\omega_k)=X^*[k]$ for real $x$. $X_d(\omega_0)$ is in the DFT iff $\frac{\omega_0N}{2\pi}$ is an integer; two frequencies $\frac{2\pi p_i}{q_i}$ need $N$ a multiple of every $q_i$: smallest $N=\mathrm{lcm}$; after padding, test $N+L$ the same way (FA2025 #6(b): a multiple of 18).
 > 3. **Zero padding.** $L$ zeros make $M=N+L$ bins of the same $X_d$: $\tilde X[k]=X_d(\frac{2\pi k}{M})$, spacing $\frac{2\pi}{M}$. $X[k]=\tilde X[\frac{kM}{N}]$ when $\frac{kM}{N}$ is an integer, nothing else matches; odd bins of a $2N$-padding are new. The DTFT never changes.
 > 4. **Inverse DFT.** $x[0]=\frac1N\sum_kX[k]$; one bin $X[k_0]=N$ gives $e^{j\frac{2\pi k_0}{N}n}$; the formula returns $x[n+N]=x[n]$, so "$x[n]=0$ outside $0\le n\le N-1$" is false for an inverse DFT and true for an inverse DTFT of a finite sum.
 > 5. **Real or not.** $x$ real $\iff X[\langle-k\rangle_N]=X^*[k]$ for every $k$; check the pairs $k\leftrightarrow N-k$, or compute $x[0]$. A real $X[0]$ alone proves nothing.
@@ -79,8 +83,8 @@ Exams write $X_k$ or $X[m]$ for $X[k]$, $\{x[n]\}_{n=0}^{N-1}$ for a length-$N$ 
 > [!trap] Where the points go
 > - **Upper half is negative frequency.** $k=800$ of 1000 at 40 kHz is $-8$ kHz, not 32 kHz (FA2019 #2); $k=25$ of 30 is $-\frac{\pi}{3}$ (SP2023 #9(c)).
 > - **Padding changes the DFT, never the DTFT.** $X[1]=Z[1]$ fails (SP2025 #7(c) ii); $X_d(\omega)=Y_d(3\omega)$ is false (SP2025 #1(d)); $X[k]=Z[k\frac MN]$ needs an integer index.
-> - **Inverse DFT is periodic.** $x[4]=x[0]=2.5$ for $\{1,2,3,4\}$ (SP2023 #1(d), SP2025 #1(b)); the inverse DTFT of the same four terms is finite (SP2025 #1(a)).
-> - **Smallest $N$ is an lcm.** $N=15$ puts $\frac{\pi}{3}$ at $k=2.5$ (FA2024 #7).
+> - **Inverse DFT is periodic.** $x[4]=x[0]=2.5$ for $\{1,2,3,4\}$ (SP2023 #1(d), SP2025 #1(b)); $\{4,0,0,0\}$ gives 1 everywhere (FA2025 #1(b)); the inverse DTFT of the same four terms is finite (SP2025 #1(a)).
+> - **Smallest $N$ is an lcm.** $N=15$ puts $\frac{\pi}{3}$ at $k=2.5$ (FA2024 #7); $32+16=48$ holds $\frac{\pi}{3}$ but not $\frac{4\pi}{9}$ (FA2025 #6(b)).
 > - **Real $X[0]$ proves nothing** (SP2021 #5): compare $X[k]$ with $X^*[N-k]$.
 
 ## Practice problems
@@ -119,4 +123,4 @@ Exams write $X_k$ or $X[m]$ for $X[k]$, $\{x[n]\}_{n=0}^{N-1}$ for a length-$N$ 
 
 ### Sources for this page
 
-Lecture 20 notes (eqs. 8–9, 12, 20–25, Exercise 1) and slides 11–13; past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new (verified numerically).
+Lecture 20 notes (eqs. 8–9, 12, 20–25, Exercise 1) and slides 11–13; past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new (verified numerically).

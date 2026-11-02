@@ -10,7 +10,7 @@ tags: [exam, midterm-2]
 > - **Wed Nov 4, 7–9 pm**, ECEB 1002 (aa–sz) or ECEB 2017 (ta–zz); one handwritten sheet, no calculator.
 > - HW5–9 = Lectures 13–23: [[3-fourier-analysis/index|Unit 3]] DTFT, frequency response; [[4-sampling-and-reconstruction/index|Unit 4]] sampling, D/A; [[5-dft-and-fft/index|Unit 5]] DFT, its properties, spectral analysis, windows. **Not on it:** computing circular convolution, spectral analysis part 3 (spectrograms), the FFT, Lecture 12.
 > - What he said in lecture about the exam (§5): scope ends with spectral analysis part 2 (L23); DFT properties yes, computing circular convolution no; windows and lobe criteria at homework depth; no DFT pairs table needed; review class Mon Nov 2, 3 pm.
-> - Plan (§4): topics Fri–Sun, sheet Sun night, SP2025 timed Mon, practice midterm Tue, rest Wed.
+> - Plan (§4): topics Fri–Sun, sheet Sun night, FA2025 timed Mon (newest; Do & Snyder), practice midterm Tue, rest Wed.
 
 ## 1. Scope
 
@@ -31,54 +31,55 @@ tags: [exam, midterm-2]
 
 ## 2. Format
 
-| | Fall 2026 | past exams FA2019–SP2025 |
+| | Fall 2026 | past exams FA2019–FA2025 |
 |---|---|---|
-| when | Wed Nov 4, 7–9 pm; conflict exam: the MT2-specific request form on the course website (the MT1 and MT2 forms differ, Oct 30) | fall: evenings, Nov 1–9 (2019, 2021, 2023, 2024); spring: early April |
-| length | 2 hours | 2 hours (SP2023–SP2025); 90 min FA2019, FA2021; 110 min SP2021 |
-| size | not announced | 7–11 problems, 100 points (SP2025: 12 + 10 + 12 + 10 + 16 + 12 + 12 + 6 + 10) |
-| notes | one handwritten sheet, 8.5 × 11 in, two-sided; no printed notes | two sheets (FA2019, FA2023, FA2024, SP2025); one (SP2021, SP2023); FA2021 online, open notes |
+| when | Wed Nov 4, 7–9 pm; conflict exam: the MT2-specific request form on the course website (the MT1 and MT2 forms differ, Oct 30) | fall: evenings, Nov 1–9 (2019, 2021, 2023, 2024, 2025); spring: early April |
+| length | 2 hours | 2 hours (SP2023–FA2025); 90 min FA2019, FA2021; 110 min SP2021 |
+| size | not announced | 7–11 problems, 100 points (FA2025: 12 + 14 + 12 + 12 + 16 + 10 + 10 + 14; SP2025: 12 + 10 + 12 + 10 + 16 + 12 + 12 + 6 + 10) |
+| notes | one handwritten sheet, 8.5 × 11 in, two-sided; no printed notes | two sheets (FA2019, FA2023, FA2024, SP2025, FA2025); one (SP2021, SP2023); FA2021 online, open notes |
 | calculator | none | none |
-| answers, T/F | closed form; show all work | T/F is problem 1, 10–20 points; +2 / −1 / 0 on SP2023, SP2025; reasons on FA2024 |
+| answers, T/F | closed form; show all work | T/F is problem 1, 10–20 points; +2 / −1 / 0 on SP2023, SP2025; reasons on FA2024; plain T/F on FA2025 (no penalty stated) |
 
 ## 3. Problem types × past exams
 
-| problem type | [[exams/midterm-2/past-exams/spring-2025\|SP25]] | [[exams/midterm-2/past-exams/fall-2024\|FA24]] | [[exams/midterm-2/past-exams/fall-2023\|FA23]] | [[exams/midterm-2/past-exams/spring-2023\|SP23]] | [[exams/midterm-2/past-exams/fall-2021\|FA21]] | [[exams/midterm-2/past-exams/spring-2021\|SP21]] | [[exams/midterm-2/past-exams/fall-2019\|FA19]] | exams |
-|---|---|---|---|---|---|---|---|---|
-| ***Unit 3*** | | | | | | | | |
-| T/F on DTFT → [[exams/midterm-2/true-false-bank\|bank]] §1–3 | #1(a,d) | #1(a,b,d) | #1(a–c,f) | #1(c) | #1(a) | — | #1(a–e) | 6/7 |
-| [[problems/dtft-and-inverse-dtft\|DTFTs and inverse DTFTs]] | #2 | #2 | #2 | #2, #3, #4 | #2 | #3, #6(a), #7 | #3, #5, #6 | 7/7 |
-| [[problems/lti-response-to-sinusoids\|Response to sinusoids]] | #4 | #4 | #4(b) | #6 | — | — | #7 | 5/7 |
-| [[problems/magnitude-phase-and-group-delay\|Magnitude, phase, group delay]] | #3 | #3 | #4(a) | #5 | — | #2 | — | 5/7 |
-| *Unit 3 points* | 36 | 41 | 32 | 35 | 18 | 36 | 42 | 18–42 |
-| ***Unit 4*** | | | | | | | | |
-| T/F on sampling, D/A → [[exams/midterm-2/true-false-bank\|bank]] §4–5 | #1(c) | #1(c) | #1(d,e) | #1(a,b,e) | #1(c,e) | #1(a,b,d) | — | 6/7 |
-| [[problems/sampling-and-the-nyquist-rate\|Sampling, Nyquist, aliasing, ideal D/A]] | #6 | #5(a,b) | #3 | #8 | — | #8, #9 | #8 | 6/7 |
-| [[problems/digital-filtering-of-analog-signals\|A/D → filter → D/A]] | #5 | #5(b), (c) | #5 | #7 | #4, #5 | — | #9 | 6/7 |
-| ***Unit 5*** | | | | | | | | |
-| T/F on the DFT, spectral analysis → [[exams/midterm-2/true-false-bank\|bank]] §6–7 | #1(b,e,f) | #1(d) | #1(f,g,h) | #1(d) | #1(b,d) | #1(c,e) | #1(f), (i) | 7/7 |
-| [[problems/dft-values-and-zero-padding\|DFT values and zero padding]] | #7(a), (c) | #6, #7 | #7(a), (b) | #9(a), (c) | #3(a) | #5, #6 | #2 | 7/7 |
-| [[problems/circular-convolution-and-dft-properties\|DFT properties]]: shift, reversal, modulation, conjugation | #7(b), #8 | #8 | #7 | #9(b) | #3(b) | #4 | #4 | 7/7 |
-| *circular-convolution computation: not on Fall 2026 MT2* | — | — | — | — | #6 | — | #1(g, h), #11 | 2/7 |
-| [[problems/dft-spectral-analysis\|DFT spectral analysis]] | #9 | #9 | #1(g), #6 | #10 | #7 | — | #1(c), (f) | 6/7 |
+| problem type | [[exams/midterm-2/past-exams/fall-2025\|FA25]] | [[exams/midterm-2/past-exams/spring-2025\|SP25]] | [[exams/midterm-2/past-exams/fall-2024\|FA24]] | [[exams/midterm-2/past-exams/fall-2023\|FA23]] | [[exams/midterm-2/past-exams/spring-2023\|SP23]] | [[exams/midterm-2/past-exams/fall-2021\|FA21]] | [[exams/midterm-2/past-exams/spring-2021\|SP21]] | [[exams/midterm-2/past-exams/fall-2019\|FA19]] | exams |
+|---|---|---|---|---|---|---|---|---|---|
+| ***Unit 3*** | | | | | | | | | |
+| T/F on DTFT → [[exams/midterm-2/true-false-bank\|bank]] §1–3 | #1(c,f) | #1(a,d) | #1(a,b,d) | #1(a–c,f) | #1(c) | #1(a) | — | #1(a–e) | 7/8 |
+| [[problems/dtft-and-inverse-dtft\|DTFTs and inverse DTFTs]] | #2 | #2 | #2 | #2 | #2, #3, #4 | #2 | #3, #6(a), #7 | #3, #5, #6 | 8/8 |
+| [[problems/lti-response-to-sinusoids\|Response to sinusoids]] | #2(b), #1(c) | #4 | #4 | #4(b) | #6 | — | — | #7 | 6/8 |
+| [[problems/magnitude-phase-and-group-delay\|Magnitude, phase, group delay]] | #3 | #3 | #3 | #4(a) | #5 | — | #2 | — | 6/8 |
+| *Unit 3 points* | 30 | 36 | 41 | 32 | 35 | 18 | 36 | 42 | 18–42 |
+| ***Unit 4*** | | | | | | | | | |
+| T/F on sampling, D/A → [[exams/midterm-2/true-false-bank\|bank]] §4–5 | #1(d,e) | #1(c) | #1(c) | #1(d,e) | #1(a,b,e) | #1(c,e) | #1(a,b,d) | — | 7/8 |
+| [[problems/sampling-and-the-nyquist-rate\|Sampling, Nyquist, aliasing, ideal D/A]] | #4 | #6 | #5(a,b) | #3 | #8 | — | #8, #9 | #8 | 7/8 |
+| [[problems/digital-filtering-of-analog-signals\|A/D → filter → D/A]] | #5 | #5 | #5(b), (c) | #5 | #7 | #4, #5 | — | #9 | 7/8 |
+| ***Unit 5*** | | | | | | | | | |
+| T/F on the DFT, spectral analysis → [[exams/midterm-2/true-false-bank\|bank]] §6–7 | #1(a,b) | #1(b,e,f) | #1(d) | #1(f,g,h) | #1(d) | #1(b,d) | #1(c,e) | #1(f), (i) | 8/8 |
+| [[problems/dft-values-and-zero-padding\|DFT values and zero padding]] | #6 | #7(a), (c) | #6, #7 | #7(a), (b) | #9(a), (c) | #3(a) | #5, #6 | #2 | 8/8 |
+| [[problems/circular-convolution-and-dft-properties\|DFT properties]]: shift, reversal, modulation, conjugation | #7 | #7(b), #8 | #8 | #7 | #9(b) | #3(b) | #4 | #4 | 8/8 |
+| *circular-convolution computation: not on Fall 2026 MT2* | — | — | — | — | — | #6 | — | #1(g, h), #11 | 2/8 |
+| [[problems/dft-spectral-analysis\|DFT spectral analysis]] | #8 | #9 | #9 | #1(g), #6 | #10 | #7 | — | #1(c), (f) | 7/8 |
 
-A problem counts in every row it uses. Zero-padding T/F statements only about the DTFT count as Unit 3. Every A/D → $H_d$ → D/A problem also samples, so sampling is on 7/7. FFT (FA2019 #1(j), #10): not on Fall 2026 MT2. Per-problem detail: [[exams/midterm-2/past-exams/index|past exams]].
+A problem counts in every row it uses. Zero-padding T/F statements only about the DTFT count as Unit 3. Every A/D → $H_d$ → D/A problem also samples, so sampling is on 8/8. FFT (FA2019 #1(j), #10): not on Fall 2026 MT2. Per-problem detail: [[exams/midterm-2/past-exams/index|past exams]].
 
 > [!exam] Patterns
-> - Every exam: a DTFT or inverse DTFT. Snyder's four (SP2023–SP2025) add a magnitude/phase sketch and a sinusoid response.
-> - Sampling and DFT properties: 7/7; DFT spectral analysis: 6/7.
-> - T/F: 16 of 43 statements Unit 3, 12 sampling and D/A, 15 DFT (Q41–Q43 not on Fall 2026).
-> - Snyder exams, points: T/F 10–16 · DTFT 6–11 · magnitude/phase 12–14 · sinusoids 8–12 · sampling-and-filtering 16–22 · sampling puzzle 6–12 · DFT properties 14–18 · spectral analysis 10–20.
+> - Every exam: a DTFT or inverse DTFT. Snyder's five (SP2023–FA2025) add a magnitude/phase sketch and a sinusoid response.
+> - Sampling and DFT properties: 8/8; DFT spectral analysis: 7/8.
+> - T/F: 18 of 49 statements Unit 3, 14 sampling and D/A, 17 DFT (Q41–Q43 not on Fall 2026).
+> - Snyder exams, points: T/F 10–16 · DTFT 6–14 · magnitude/phase 12–14 · sinusoids 8–12 · sampling-and-filtering 16–22 · sampling puzzle 6–12 · DFT values and properties 14–20 · spectral analysis 10–20.
+> - New on FA2025 (Do & Snyder, the Fall 2026 pair): a DFT proof from the definitions (#7) and matching four DFT plots — 16-point, zero-padded, 32-point, Hamming (#8).
 
 ## 4. Day-by-day plan
 
-Topic days: topic page → family recipe → past problems, closed book → repair misses. Keep SP2025 unseen until Monday.
+Topic days: topic page → family recipe → past problems, closed book → repair misses. Keep FA2025 unseen until Monday (SP2025 is the backup if you have already seen it).
 
 | day | do | families · past problems |
 |---|---|---|
 | **Fri Oct 30** | Submit HW9 (11:59 pm): DFT properties, zero padding, spectral analysis. Then the DTFT | [[problems/dtft-and-inverse-dtft\|DTFTs]]: FA2024 #2, FA2023 #2, SP2023 #2–#4, SP2021 #3, #7 · T/F bank §1 |
 | **Sat Oct 31** | Unit 3 frequency response, then Unit 4 (fresh from Quiz 2); redo HW8 | [[problems/magnitude-phase-and-group-delay\|magnitude/phase]]: FA2024 #3, FA2023 #4, SP2023 #5 · [[problems/lti-response-to-sinusoids\|sinusoids]]: FA2024 #4, SP2023 #6 · [[problems/sampling-and-the-nyquist-rate\|sampling]]: FA2023 #3, SP2023 #8, SP2021 #9 · [[problems/digital-filtering-of-analog-signals\|A/D → filter → D/A]]: FA2024 #5, FA2023 #5, FA2021 #4–#5 · T/F §2–5 |
 | **Sun Nov 1** | Unit 5. Evening: **write the sheet** (checklist below) | [[problems/dft-values-and-zero-padding\|DFT values]]: FA2024 #6–#7, SP2023 #9(a, c) · [[problems/circular-convolution-and-dft-properties\|DFT properties]]: FA2024 #8, FA2023 #7, SP2023 #9(b), FA2021 #3(b) · [[problems/dft-spectral-analysis\|spectral analysis]]: FA2024 #9, FA2023 #6, SP2023 #10, FA2021 #7 · T/F §6–7 |
-| **Mon Nov 2** | **Timed full exam:** [[exams/midterm-2/past-exams/spring-2025\|SP2025]], 2 h, your sheet, no calculator — before class, in case he works its problems. **3 pm class: in-class review of past-exam problems** (§5) | grade; tag each lost point by family; repair; fix the sheet |
+| **Mon Nov 2** | **Timed full exam:** [[exams/midterm-2/past-exams/fall-2025\|FA2025]] (newest; Do & Snyder, the Fall 2026 pair; one sheet instead of its two), 2 h, no calculator — before class, in case he works its problems. Backup if you have already seen FA2025: [[exams/midterm-2/past-exams/spring-2025\|SP2025]]. **3 pm class: in-class review of past-exam problems** (§5) | grade; tag each lost point by family; repair; fix the sheet |
 | **Tue Nov 3** | **[[exams/midterm-2/practice-exam\|Practice midterm]]**, timed 2 h | grade, repair; weakest family: its practice problems |
 | **Wed Nov 4** | Rest. Reread the sheet and the trap callouts; no new problems | exam 7–9 pm, your NetID's room |
 
@@ -110,7 +111,7 @@ Condensed from the recordings, Oct 7–30; quotes lightly edited. The official l
 - **Oct 23 · L22–23.** "Finishing up those lecture 23 slides will be the last of your content for midterm two." On how the quizzes are written: the work "is, in effect, the same as what you did on very specific homework questions."
   → Said of Quiz 2, not promised for MT2 — still, HW5–9 are the closest template, and a Quiz 2 miss marks a topic to repair first ([[exams/quiz-2|Quiz 2 review]]).
 - **Oct 26 · L23.** "Cover lectures 13 through 23 … which corresponds to homework five through nine." "I will upload midterm two practice exams, just like we had for midterm one" (with solutions). Part 3: "optional content … things that we can't really test you on."
-  → Past exams with keys are on the course site; §3 maps them to families; SP2025 timed on Monday (§4).
+  → Past exams with keys are on the course site; §3 maps them to families; FA2025 timed on Monday, SP2025 as the backup (§4).
 - **Oct 28 · L23 wrap-up.** Computing circular convolution: "You have not had anything like that on your homeworks thus far." Responsible for the properties "like circular time shifting, circular frequency shifting, windowing." Practice exams: items with circular convolution "we strike it out."
   → Properties yes — shifts, modulation, the $x[n]w[n]$ row included; computation no.
 - **Oct 28.** Email: homework and topic list, "one note sheet you can write for the exam"; HKN review "this Sunday from 3:30 to 6" (room heard as 1013 — check the email); Monday: "previous exam problems that I think are a good representation of your midterm content."
@@ -174,4 +175,4 @@ Condensed from the recordings, Oct 7–30; quotes lightly edited. The official l
 [[exams/midterm-2/practice-exam|practice midterm]] · [[exams/midterm-2/past-exams/index|past exams]] · [[exams/midterm-2/true-false-bank|T/F bank]] · [[exams/quiz-2|Quiz 2 review]] · [[problems/index|problem families]] · [[concepts/index|topic pages]] · [[supplements/transform-tables|transform tables]] · [[0-toolkit/05-errata|errata]] · [[exams/index|all exams]]
 
 ### Sources for this page
-Course website and instructor announcement (Oct 30, 2026); HW5–HW9 and HW8 key; Lectures 12–23 notes; the seven past Midterm 2 exams with keys; numbers in `verify/MT2_MREV_formulas.py`; lecture recordings Oct 7, 16, 19, 21, 23, 26, 28 and 30 (condensed).
+Course website and instructor announcement (Oct 30, 2026); HW5–HW9 and HW8 key; Lectures 12–23 notes; the eight past Midterm 2 exams with keys (FA2019–FA2025); numbers in `verify/MT2_MREV_formulas.py`; lecture recordings Oct 7, 16, 19, 21, 23, 26, 28 and 30 (condensed).

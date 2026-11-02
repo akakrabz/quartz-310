@@ -1,20 +1,21 @@
 ---
 title: "Past Midterm 2 exams"
-description: "Seven past ECE 310 Midterm 2 exams (FA2019–SP2025) with folded solutions: what each is good for, a problem-by-problem map of all 62 problems with topic and family, and key slips."
+description: "Eight past ECE 310 Midterm 2 exams (FA2019–FA2025) with folded solutions: what each is good for, a problem-by-problem map of all 70 problems with topic and family, and key slips."
 tags: [exam, midterm-2]
 ---
 
-*Seven past Midterm 2 exams, newest first · 62 problems, folded solutions · [[exams/midterm-2/index|Midterm 2 overview]]*
+*Eight past Midterm 2 exams, newest first · 70 problems, folded solutions · [[exams/midterm-2/index|Midterm 2 overview]]*
 
 > [!abstract] In one breath
 > - 2 hours (90–110 min in 2019–2021), 7–11 problems, 100 points, no calculator. Unit 3: 18–42 points; rest: sampling, filtering, DFT.
-> - Self-test by unit with the other exams; save SP2025 for one timed run ([[exams/midterm-2/index|plan]]: Mon Nov 2). Fall 2026 drops circular-convolution computation and the FFT.
+> - Self-test by unit with the other exams; save FA2025 (newest, Do & Snyder) for one timed run ([[exams/midterm-2/index|plan]]: Mon Nov 2; SP2025 is the backup). Fall 2026 drops circular-convolution computation and the FFT.
 
-## The seven exams
+## The eight exams
 
 | exam | date | instructors | probs / pts | Unit 3 pts | notes |
 |---|---|---|---|---|---|
-| [[exams/midterm-2/past-exams/spring-2025\|Spring 2025]] | Apr 9, 2025 | Liang, Snyder | 9 / 100 | 36 | T/F +2/−1/0; first full run |
+| [[exams/midterm-2/past-exams/fall-2025\|Fall 2025]] | Nov 5, 2025 | Do, Snyder | 8 / 100 | 30 | plain T/F; a proof (#7), plot matching (#8); the timed run |
+| [[exams/midterm-2/past-exams/spring-2025\|Spring 2025]] | Apr 9, 2025 | Liang, Snyder | 9 / 100 | 36 | T/F +2/−1/0; backup full run |
 | [[exams/midterm-2/past-exams/fall-2024\|Fall 2024]] | Nov 6, 2024 | Do, Shomorony, Snyder | 9 / 100 | 41 | T/F with reasons; second full run |
 | [[exams/midterm-2/past-exams/fall-2023\|Fall 2023]] | Nov 1, 2023 | Do, Snyder, Moustakides | 7 / 100 | 32 | #4: complex $h$ |
 | [[exams/midterm-2/past-exams/spring-2023\|Spring 2023]] | Apr 5, 2023 | Liang, Moon, Snyder | 10 / 100 | 35 | T/F +2/−1/0 |
@@ -27,9 +28,9 @@ Unit 3 points count zero-padding T/F as Unit 3 (exam pages: 30, 38, 34 for FA202
 ## How to use these exams
 
 > [!tip] By unit
-> - **Unit 3:** SP2025 #2–#4 and FA2024 #2–#4 timed (~50 min). Bank: FA2023 #2, #4; SP2023 #2–#6; FA2021 #2; SP2021 #2, #3, #7; FA2019 #3, #5–#7. [[exams/midterm-2/true-false-bank|T/F bank]] Q1–Q16.
-> - **Unit 4:** SP2025 #5, #6; FA2024 #5; FA2023 #3, #5; SP2023 #7, #8; FA2021 #4, #5; SP2021 #8, #9; FA2019 #8(b), #9. T/F Q18–Q29.
-> - **Unit 5 ([[5-dft-and-fft/index|DFT]]):** SP2025 #7–#9; FA2024 #6–#9; FA2023 #6, #7; SP2023 #9, #10; FA2021 #3, #7; SP2021 #4–#6; FA2019 #2, #4. T/F Q30–Q40. Not on Fall 2026: FA2021 #6, FA2019 #11, Q41–Q43.
+> - **Unit 3:** SP2025 #2–#4 and FA2024 #2–#4 timed (~50 min). Bank: FA2025 #2, #3 (after Monday's timed run); FA2023 #2, #4; SP2023 #2–#6; FA2021 #2; SP2021 #2, #3, #7; FA2019 #3, #5–#7. [[exams/midterm-2/true-false-bank|T/F bank]] Q1–Q16, Q46, Q49.
+> - **Unit 4:** FA2025 #4, #5 (after Monday); SP2025 #5, #6; FA2024 #5; FA2023 #3, #5; SP2023 #7, #8; FA2021 #4, #5; SP2021 #8, #9; FA2019 #8(b), #9. T/F Q18–Q29, Q47, Q48.
+> - **Unit 5 ([[5-dft-and-fft/index|DFT]]):** FA2025 #6–#8 (after Monday); SP2025 #7–#9; FA2024 #6–#9; FA2023 #6, #7; SP2023 #9, #10; FA2021 #3, #7; SP2021 #4–#6; FA2019 #2, #4. T/F Q30–Q40, Q44, Q45. Not on Fall 2026: FA2021 #6, FA2019 #11, Q41–Q43.
 > - Repair each lost point by [[problems/index|family]].
 
 > [!trap] Unit 3 traps
@@ -38,10 +39,24 @@ Unit 3 points count zero-padding T/F as Unit 3 (exam pages: 30, 38, 34 for FA202
 > - $X_d(\omega)=X(e^{j\omega})$ needs the unit circle in the ROC: FA2023 #1(a), FA2024 #1(a), FA2021 #2.
 > - $2\pi$ factors: $\int X_d=2\pi x[0]$ (FA2019 #3); $\delta(\omega-\omega_0)\leftrightarrow\frac{1}{2\pi}e^{j\omega_0n}$ (SP2023 #4).
 > - Copies wrap around $\pm\pi$ (SP2025 #2b); every DTFT is $2\pi$-periodic (FA2019 #1(b), (e)).
+> - Stacked rectangles add their sincs, $\frac34+\frac14$ (FA2025 #2a); a non-causal tap $e^{+j3\omega}$ gives phase slope $+\frac32$ (FA2025 #3); the cosine rule needs real $h$, not one value of $H_d$ (FA2025 #1(c)).
 
 ## Problem by problem
 
 Families: [[problems/dtft-and-inverse-dtft|DTFT]] · [[problems/lti-response-to-sinusoids|sinusoids]] · [[problems/magnitude-phase-and-group-delay|mag/phase]] (Unit 3); [[problems/sampling-and-the-nyquist-rate|sampling]] · [[problems/digital-filtering-of-analog-signals|A/D–D/A]] (Unit 4); [[problems/dft-values-and-zero-padding|DFT values]] · [[problems/circular-convolution-and-dft-properties|DFT properties]] · [[problems/dft-spectral-analysis|spectral analysis]] (Unit 5); the FFT (FA2019 #10) is later.
+
+### [[exams/midterm-2/past-exams/fall-2025|Fall 2025]]
+
+| # | pts | asks | family |
+|---|---|---|---|
+| 1 | 12 | six T/F: DFT of a length-5 DTFT, inverse DFT of $\{4,0,0,0\}$, cosine rule from one $H_d$ value, ideal D/A of $3\delta[n-2]$, aliasing of $\cos^2(40\pi t)$, fractional delay | DTFT · [[problems/lti-response-to-sinusoids\|sinusoids]] · [[problems/sampling-and-the-nyquist-rate\|sampling]] · [[problems/dft-values-and-zero-padding\|DFT values]] |
+| 2 | 14 | real $h[n]$ from plotted $\lvert H_d\rvert$ (2 on $\lvert\omega\rvert\le\frac{\pi}{4}$, 1 to $\frac{3\pi}{4}$) and $\angle H_d=-\omega$; output for $4+\cos(\frac{\pi}{6}n)+3j^n+(-1)^n$ | [[problems/dtft-and-inverse-dtft\|DTFT]] · [[problems/lti-response-to-sinusoids\|sinusoids]] |
+| 3 | 12 | $H_d$, $\lvert H_d\rvert$, $\angle H_d$ of the non-causal $y[n]=x[n+3]-x[n]$ | [[problems/magnitude-phase-and-group-delay\|mag/phase]] |
+| 4 | 12 | $\sin(20\pi t)+\sin(90\pi t)$: A/D at $T_1$, D/A at $T_2$; $x[n]$, $y_a(t)$ at two rate pairs; $T$ returning $\sin(20\pi t)$ | [[problems/sampling-and-the-nyquist-rate\|sampling]] |
+| 5 | 16 | A/D → LPF $\frac{\pi}{3}$ → D/A at $T=\frac{1}{60}$: $X_d$, $Y_d$ on $[-3\pi,3\pi]$, $Y_a$ for $B=20$ Hz; largest $B$ without aliasing in $Y_d$ | [[problems/digital-filtering-of-analog-signals\|A/D–D/A]] |
+| 6 | 10 | length-32 real $x$: five T/F on $X[k]$ vs $X_d$; which $L$ zeros let $Y[k]$ hit $X_d(\frac{\pi}{3})$ and $X_d(\frac{4\pi}{9})$ | [[problems/dft-values-and-zero-padding\|DFT values]] |
+| 7 | 10 | proof: $X[k]$ written twice as a length-$2N$ DFT gives $y[2n]=x[n]$, $y[2n+1]=0$ | [[problems/circular-convolution-and-dft-properties\|DFT properties]] |
+| 8 | 14 | match four $\lvert X[k]\rvert$ plots to a 16-point DFT, zero-padded to 32, 32 samples, Hamming; $A_1,A_2,\Omega_1,\Omega_2$ | [[problems/dft-spectral-analysis\|spectral analysis]] |
 
 ### [[exams/midterm-2/past-exams/spring-2025|Spring 2025]]
 
@@ -154,4 +169,4 @@ Full list: [[0-toolkit/05-errata|errata]].
 [[exams/midterm-2/index|Midterm 2 overview]] · [[exams/midterm-2/true-false-bank|T/F bank]] · [[problems/index|problem families]] · [[exams/midterm-1/past-exams/index|past Midterm 1 exams]] · [[exams/index|all exams]]
 
 ### Sources for this page
-The seven past Midterm 2 exams with keys (FA2019–SP2025); the exam pages' problem maps.
+The eight past Midterm 2 exams with keys (FA2019–FA2025); the exam pages' problem maps.

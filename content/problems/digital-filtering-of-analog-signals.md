@@ -2,12 +2,12 @@
 title: "Digital filtering of analog signals: A/D → H_d → D/A"
 description: "Midterm 2 problems with a digital filter between ideal A/D and D/A: the sketches X_d → Y_d → Y_a, the chain as one analog filter H_a(Ω) = H_d(ΩT), and the largest T for a wanted filter."
 tags: [problem-family, problem, sampling, midterm-2]
-family_frequency: "6 of 7 Midterm 2 exams"
+family_frequency: "7 of 8 Midterm 2 exams"
 typical_points: "15–22"
 lectures: [17, 18, 19]
 ---
 
-*Problem family · one 15–22-point problem on six of seven past Midterm 2 exams (not SP2021) · [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]], [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] · in the course: HW7 #4, Lecture 18 slides 10–11*
+*Problem family · one 15–22-point problem on seven of eight past Midterm 2 exams (not SP2021) · [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|Lecture 17]], [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|Lecture 18]], [[4-sampling-and-reconstruction/19-aliasing|Lecture 19]] · in the course: HW7 #4, Lecture 18 slides 10–11*
 
 ## What it looks like on the exam
 
@@ -27,6 +27,7 @@ Opening parts ($T_N$, $X_d$) belong to the [[problems/sampling-and-the-nyquist-r
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023]] #5 | triangle on $\lvert f\rvert\le10$ kHz → largest $T$ and $H_d$: (a) low-pass to 5 kHz; (b) high-pass above 5 kHz |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #5(b),(c) | triangle on $\lvert\Omega\rvert\le1000\pi$ → (b) no filter: $Y_c$ at $T_N$, $2T_N$; (c) largest $T$ and $\omega_c$ removing $\lvert\Omega\rvert\gt500\pi$ |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #5 | triangle on $\lvert\Omega\rvert\le200\pi$ → (a) $T=\frac{1}{300}$ s, $\omega_c=\frac{\pi}{3}$: $X_d$, $Y_d$, $Y_a$; (b) largest $T$ and $\omega_c$ removing everything above 50 Hz |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #5 | triangle of height 1 on $\lvert\Omega\rvert\le2\pi B$; $T=\frac{1}{60}$ s, low-pass $\omega_c=\frac{\pi}{3}$ → (a) $B=20$ Hz: $X_d$, $Y_d$ on $[-3\pi,3\pi]$, $Y_a$; (b) largest $B$ with no aliasing in $Y_d$ |
 | course | HW7 #4 ([[exams/quiz-2\|Quiz 2 review]]): triangle to $50\pi$, low-pass $\frac{\pi}{2}$, $T=\frac{1}{50}$, $\frac{1}{40}$ s · [[homework/hw8\|HW8]] #5–6: low-pass $\frac{\pi}{8}$ (max $T$; max bandwidth for LTI at $f_s=10$ kHz), band-pass 300 Hz–6 kHz with aliasing allowed outside the passband · Lecture 18: semicircle to $60\pi$, low-pass $\frac{\pi}{2}$, $T=\frac{1}{80}$, $\frac{1}{50}$ s |
 
 > [!success]- Answers
@@ -39,6 +40,7 @@ Opening parts ($T_N$, $X_d$) belong to the [[problems/sampling-and-the-nyquist-r
 > | FA2023 #5 | (a) $f_s\ge10+5=15$ kHz: $T=\frac{1}{15000}$ s, $\omega_c=\frac{2\pi}{3}$. (b) No aliasing: $T=\frac{1}{20000}$ s, $H_d=1$ on $\frac{\pi}{2}\lt\lvert\omega\rvert\le\pi$ |
 > | FA2024 #5 | (b) $T_N$: $Y_c=X_c$. $2T_N$: $X_d=500$, so $Y_c=1$ on $\lvert\Omega\rvert\lt500\pi$. (c) $f_s\ge500+250=750$ Hz: $T=\frac{1}{750}$ s, $\omega_c=\frac{2\pi}{3}$ |
 > | SP2025 #5 | (a) $X_d$: height 300, edges $\pm\frac{2\pi}{3}$; $Y_d$: cut at $\pm\frac{\pi}{3}$ (150 there); $Y_a$: height 1, cut at $\pm100\pi$ ($\frac12$ there). (b) $f_s\ge100+50=150$ Hz: $T=\frac{1}{150}$ s, $\omega_c=\frac{2\pi}{3}$ |
+> | FA2025 #5 | (a) $X_d$: height 60, edges $\pm\frac{2\pi}{3}$, a copy every $2\pi$; $Y_d$: the same cut at $\pm\frac{\pi}{3}$ (30 there), a copy every $2\pi$; $Y_a$: height 1, cut at $\pm20\pi$ rad/s ($\frac12$ there), one copy. (b) the next copy starts at $2\pi-2\pi BT$; keep it past $\frac{\pi}{3}$: $B\lt50$ Hz, answer $B=50$ Hz (not the Nyquist 30 Hz: aliasing outside the passband is harmless) |
 > | HW7, Lecture 18 | $Y_a$ is $X_a$ cut at $\frac{\omega_c}{T}$: $25\pi$, $20\pi$ (HW7); $40\pi$, $25\pi$ (Lecture 18). Overlap starts at $\frac{3\pi}{4}$ or $\frac{4\pi}{5}$, beyond $\frac{\pi}{2}$: undistorted |
 
 ## The recipe
@@ -58,7 +60,7 @@ Opening parts ($T_N$, $X_d$) belong to the [[problems/sampling-and-the-nyquist-r
 > 6. **Check:** $\frac1T$ in $X_d$, $Y_d$; $X_a$'s height back in $Y_a$; $Y_a=0$ beyond $\frac{\pi}{T}$. Keys box $T\lt\dots$ but quote the bound.
 
 > [!trap] Where the points go
-> - **"Below Nyquist, so not LTI."** Compare the passband edge with $2\pi-\Omega_{\max}T$, not $\Omega_{\max}T$ with $\pi$ (FA2019 #9(c), HW7 #4(c)).
+> - **"Below Nyquist, so not LTI."** Compare the passband edge with $2\pi-\Omega_{\max}T$, not $\Omega_{\max}T$ with $\pi$ (FA2019 #9(c), HW7 #4(c); FA2025 #5(b) asks it for $B$ at fixed $T$: 50 Hz, not 30).
 > - **Wrong rule.** A low-pass "largest $T$" is not the Nyquist period (FA2023 #5(a), FA2024 #5(c), SP2025 #5(b)); a high-pass's is (FA2023 #5(b)).
 > - **Units.** $\omega_c$ is rad/sample: FA2019 #9(b) wants $\frac{\pi}{3T}$, not $\frac{\pi}{3}$.
 > - **Heights.** $\frac1T$ in $X_d$, $Y_d$; the D/A's gain $T$ restores it.
@@ -105,4 +107,4 @@ Opening parts ($T_N$, $X_d$) belong to the [[problems/sampling-and-the-nyquist-r
 
 ### Sources for this page
 
-Lectures 17–19 notes, Lecture 18 slides 10–11; HW7 #4 with solution; past Midterm 2 exams FA2019–SP2025 with keys. Practice problems are new.
+Lectures 17–19 notes, Lecture 18 slides 10–11; HW7 #4 with solution; past Midterm 2 exams FA2019–FA2025 with keys. Practice problems are new.

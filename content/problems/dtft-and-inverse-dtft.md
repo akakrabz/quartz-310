@@ -2,16 +2,16 @@
 title: "Computing DTFTs and inverse DTFTs"
 description: "Midterm 2 DTFT problems: a DTFT from the definition, values without the transform, inverse DTFTs of trigonometric polynomials, impulses and rectangles, symmetry versus periodicity, modulation that wraps around ±π, and when X_d(ω) = X(e^{jω})."
 tags: [problem-family, problem, dtft, inverse-dtft, midterm-2]
-family_frequency: "7 of 7 Midterm 2 exams"
+family_frequency: "8 of 8 Midterm 2 exams"
 typical_points: "6–23"
 lectures: [13, 14]
 ---
 
-*Problem family · all seven past Midterm 2 exams, one to three short problems each · 6–23 points plus 2–9 points of True/False · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · drill: [DTFT values](/static/demos/drills/#dtftv)*
+*Problem family · all eight past Midterm 2 exams, one to three short problems each · 6–23 points plus 2–9 points of True/False · [[3-fourier-analysis/13-fourier-analysis-and-the-dtft|Lecture 13]], [[3-fourier-analysis/14-dtft-properties|Lecture 14]] · drill: [DTFT values](/static/demos/drills/#dtftv)*
 
 ## What it looks like on the exam
 
-Short problems of 3–15 points, one move each. 14 of the 43 past T/F statements are DTFT facts.
+Short problems of 3–15 points, one move each; FA2025 #2 asks for $h[n]$ from plotted magnitude and phase. 15 of the 49 past T/F statements are DTFT facts.
 
 | instance | asked |
 |---|---|
@@ -26,7 +26,8 @@ Short problems of 3–15 points, one move each. 14 of the 43 past T/F statements
 | [[exams/midterm-2/past-exams/fall-2023\|FA2023]] #2 (6) | $X_d(0)$, $X_d(\pi)$ for $x[n]=u[n+2]-u[n-3]$ |
 | [[exams/midterm-2/past-exams/fall-2024\|FA2024]] #2 (8) | real $x[n]$ from an ideal high-pass ($X_d=1$ for $\frac{\pi}{2}\lt\lvert\omega\rvert\le\pi$) |
 | [[exams/midterm-2/past-exams/spring-2025\|SP2025]] #2 (10) | DTFTs of $x[n]\cos(\frac{2\pi}{5}n)$, $x[n]\cos^2(\frac{2\pi}{5}n)$ for a low-pass $X_d$ of cutoff $\frac{\pi}{3}$ |
-| T/F | FA2019 #1(a, b, c, e) · SP2023 #1(c) · FA2023 #1(a, b, c, f) · FA2024 #1(a, b, d) · SP2025 #1(a, d) → [[exams/midterm-2/true-false-bank\|T/F bank]] Q1–Q9, Q12–Q16 |
+| [[exams/midterm-2/past-exams/fall-2025\|FA2025]] #2(a) (14 with (b)) | real $h[n]$ from plots: $\lvert H_d\rvert=2$ on $\lvert\omega\rvert\le\frac{\pi}{4}$, $1$ out to $\frac{3\pi}{4}$, $0$ beyond; $\angle H_d=-\omega$ on the passband |
+| T/F | FA2019 #1(a, b, c, e) · SP2023 #1(c) · FA2023 #1(a, b, c, f) · FA2024 #1(a, b, d) · SP2025 #1(a, d) · FA2025 #1(f) → [[exams/midterm-2/true-false-bank\|T/F bank]] Q1–Q9, Q12–Q16, Q49 |
 | old Midterm 1s | [[exams/midterm-1/past-exams/spring-2023\|SP2023 MT1]] #8 ($x$ with $X_d=1+2\cos2\omega-2j\sin4\omega$), #9 ($X_d(0)$, $X_d(\frac{\pi}{2})$ of $\{1-j,\ \underset{\uparrow}{1},\ -1-j,\ 2j\}$); [[exams/midterm-1/past-exams/fall-2019\|FA2019 MT1]] #8 (DTFT of $\{1,\ \underset{\uparrow}{0},\ 0,\ 2\}$), #9 (DTFT of $\frac{z}{z-3}$, $\lvert z\rvert\gt3$) |
 | homework | [[homework/hw5\|HW5]] #1–2 (definition; values of a plotted signal); [[homework/hw6\|HW6]] #2–4 ($x^*[n]$, $x^*[-n]$; inverses of $e^{-j3\omega}+2e^{-j10\omega}$, $e^{-j3.5\omega}$, $\cos^2\omega$; DTFT vs z-transform) |
 
@@ -44,6 +45,7 @@ Short problems of 3–15 points, one move each. 14 of the 43 past T/F statements
 > | FA2023 #2 | $X_d(0)=5$, $X_d(\pi)=1$ |
 > | FA2024 #2 | $\delta[n]-\dfrac{\sin(\frac{\pi}{2}n)}{\pi n}=(-1)^n\dfrac{\sin(\frac{\pi}{2}n)}{\pi n}$, $x[0]=\frac12$ |
 > | SP2025 #2 | (a) $\frac12$ on $\frac{\pi}{15}\lt\lvert\omega\rvert\lt\frac{11\pi}{15}$; (b) $\frac12$ on $\lvert\omega\rvert\le\frac{\pi}{3}$, $\frac14$ on $\frac{7\pi}{15}\lt\lvert\omega\rvert\lt\frac{13\pi}{15}$, $\frac12$ on $\frac{13\pi}{15}\lt\lvert\omega\rvert\le\pi$ |
+> | FA2025 #2(a) | two stacked low-passes (cutoffs $\frac{3\pi}{4}$, $\frac{\pi}{4}$, height 1 each) delayed by 1: $h[n]=\frac34\,\mathrm{sinc}\big(\frac{3\pi}{4}(n-1)\big)+\frac14\,\mathrm{sinc}\big(\frac{\pi}{4}(n-1)\big)$, course $\mathrm{sinc}\,x=\frac{\sin x}{x}$; $h[1]=1$. T/F (f): F, a half-sample delay is a sinc |
 > | SP2023 MT1 #8, #9 | $\{-1,\ 0,\ 1,\ 0,\ \underset{\uparrow}{1},\ 0,\ 1,\ 0,\ 1\}$; $X_d(0)=1$, $X_d(\frac{\pi}{2})=1$ |
 > | FA2019 MT1 #8, #9 | $X_d=e^{j\omega}+2e^{-j2\omega}$; no DTFT (ROC misses the unit circle) |
 
@@ -64,7 +66,7 @@ Short problems of 3–15 points, one move each. 14 of the 43 past T/F statements
 > 2. **Short sequence:** pull out $e^{-jM\omega}$, $M$ the centre; equal pairs give $2\cos(m\omega)$, opposite pairs $2j\sin(m\omega)$.
 > 3. **Values:** $X_d(0)=\sum x$; $X_d(\pi)=\sum(-1)^nx[n]$; $\int_{-\pi}^{\pi}X_d=2\pi x[0]$; $\int_{-\pi}^{\pi}\lvert X_d\rvert^2=2\pi\sum\lvert x\rvert^2$; $X_d(\frac{\pi}{2})=\sum x[n]\,(-j)^n$.
 > 4. **Trigonometric polynomial:** expand into $e^{\pm j\omega m}$, read off coefficients. Non-integer delay $e^{-j\omega d}$: $\frac{\sin(\pi(n-d))}{\pi(n-d)}$.
-> 5. **Sketched spectrum:** rectangles. Height $A$ on $\lvert\omega\rvert\le W$: $A\frac{\sin Wn}{\pi n}$. Band: difference of low-passes, or low-pass times $2\cos(\text{centre}\cdot n)$; band at $\pi$: times $(-1)^n$. $\delta(\omega-\omega_0)\leftrightarrow\frac{1}{2\pi}e^{j\omega_0n}$. Answer real-valued; $x[0]$ = average height.
+> 5. **Sketched spectrum:** rectangles. Height $A$ on $\lvert\omega\rvert\le W$: $A\frac{\sin Wn}{\pi n}$. Band: difference of low-passes, or low-pass times $2\cos(\text{centre}\cdot n)$; band at $\pi$: times $(-1)^n$; stacked rectangles: sum of low-passes, and a phase $-M\omega$ delays by $M$ (FA2025 #2a). $\delta(\omega-\omega_0)\leftrightarrow\frac{1}{2\pi}e^{j\omega_0n}$. Answer real-valued; $x[0]$ = average height.
 > 6. **Symmetry, periodicity, modulation.** Real $x$: $X_d(-\omega)=X_d^*(\omega)$. Any $x$: period $2\pi$ only. $x[n]\cos\omega_0n\leftrightarrow\frac12X_d(\omega-\omega_0)+\frac12X_d(\omega+\omega_0)$, copies wrapping around $\pm\pi$; $\cos^2$: $\frac12X_d$ plus $\frac14$ copies at $\pm2\omega_0$.
 
 > [!trap] Where the points go
@@ -112,4 +114,4 @@ Short problems of 3–15 points, one move each. 14 of the 43 past T/F statements
 
 ### Sources for this page
 
-Lectures 13–14 notes and slides; HW5 #1–2, HW6 #2–4 with solutions; past Midterm 2 exams FA2019–SP2025 and two Midterm 1 exams, with keys. Practice problems are new.
+Lectures 13–14 notes and slides; HW5 #1–2, HW6 #2–4 with solutions; past Midterm 2 exams FA2019–FA2025 and two Midterm 1 exams, with keys. Practice problems are new.

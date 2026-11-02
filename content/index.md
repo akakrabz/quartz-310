@@ -111,7 +111,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 > [!success]- Answer
 > Folded solution.
 
-*Status (Nov 1, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content), with the Oct 2–30 lecture recordings folded in as `lecture` callouts; walkthroughs HW1–HW6, [[homework/hw8|HW8]], [[homework/hw9|HW9]]. **Midterm 2: Wed Nov 4, 7–9 pm** (HW5–9, L13–23): [[exams/midterm-2/index|review guide]] (§5: what he said in lecture about the exam) · [[exams/midterm-2/practice-exam|practice midterm]].*
+*Status (Nov 1, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content), with the Oct 2–30 lecture recordings folded in as `lecture` callouts; walkthroughs HW1–HW6, [[homework/hw8|HW8]], [[homework/hw9|HW9]]. **Midterm 2: Wed Nov 4, 7–9 pm** (HW5–9, L13–23): [[exams/midterm-2/index|review guide]] (§5: what he said in lecture about the exam) · [[exams/midterm-2/practice-exam|practice midterm]] · eight past exams, newest [[exams/midterm-2/past-exams/fall-2025|Fall 2025]] (Do & Snyder; added Nov 1).*
 
 ### Sources for this page
 Snyder, ECE 310 notes and slides L1–23 (Fall 2026); lecture recordings Oct 2–30 (condensed); notation supplement; exam cover pages.

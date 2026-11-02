@@ -77,4 +77,4 @@ Live table from each page's `family_frequency`, `typical_points`, `lectures` (*B
 Key errors: [[0-toolkit/05-errata|errata]].
 
 ### Sources for this page
-Seven past Midterm 1 exams (FA2019–FA2025) and seven past Midterm 2 exams (FA2019–SP2025) with keys; Lectures 1–23 notes; Midterm 1 review lecture (Sep 28, 2026).
+Seven past Midterm 1 exams (FA2019–FA2025) and eight past Midterm 2 exams (FA2019–FA2025) with keys; Lectures 1–23 notes; Midterm 1 review lecture (Sep 28, 2026).
