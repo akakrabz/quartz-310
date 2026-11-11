@@ -5,7 +5,7 @@ tags: [lecture, midterm-2, dft, spectral-analysis]
 lecture: 23
 ---
 
-*Lecture 23 · Fri Oct 23 (§1), Mon Oct 26 (§2–3), demos Oct 28, 2026 · "Spectral analysis and window functions" · prev: [[5-dft-and-fft/22-spectral-analysis|Lecture 22]] · next: Lecture 24 (beyond Midterm 2) · last Midterm 2 lecture*
+*Lecture 23 · Fri Oct 23 (§1), Mon Oct 26 (§2–3), demos Oct 28, 2026 · "Spectral analysis and window functions" · prev: [[5-dft-and-fft/22-spectral-analysis|Lecture 22]] · next: [[5-dft-and-fft/24-short-time-fourier-transform-and-spectrograms|Lecture 24]] (bonus, beyond Midterm 2) · last Midterm 2 lecture*
 
 > [!abstract] In one breath
 > - Two equal tones are resolved when their main lobes separate: $N\gt\frac{4\pi}{\Delta\omega}$ (full), $N\gt\frac{2\pi}{\Delta\omega}$ (half); padding does not help.

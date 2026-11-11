@@ -1,10 +1,10 @@
 ---
 title: "Concepts · topic map"
-description: "The topic map of ECE 310: 52 topic pages (Units 1–5), one per idea, each with definitions, key equations, worked examples, figures, traps and the exam problems that use it. The primary study pages."
+description: "The topic map of ECE 310: 59 topic pages (Units 1–6), one per idea, each with definitions, key equations, worked examples, figures, traps and the exam problems that use it. The primary study pages."
 tags: [concept]
 ---
 
-*Concepts (topic pages) · 52 pages, one idea each · the primary study pages: definitions, key equations, worked examples (folded answers), figures, traps, exam problems · lectures: [[index|home]] · [[concepts/concept-map.canvas|concept map]] (Units 1–2) · graph view, top right*
+*Concepts (topic pages) · 59 pages, one idea each · the primary study pages: definitions, key equations, worked examples (folded answers), figures, traps, exam problems · lectures: [[index|home]] · [[concepts/concept-map.canvas|concept map]] (Units 1–2) · graph view, top right*
 
 Each topic page absorbs what the lectures said about it: the notes' definitions and equations (with lecture and equation numbers), the worked examples, the figures and the recipe. The lecture pages only say what each lecture covered and point here. Study a topic here, then its problem family.
 
@@ -84,7 +84,20 @@ Each topic page absorbs what the lectures said about it: the notes' definitions 
 - [[concepts/frequency-resolution|Lobe separation and frequency resolution]]: full-lobe $N\gt4\pi/\Delta\omega$ (record time $2/\Delta f$), half-lobe $N\gt2\pi/\Delta\omega$; a longer record resolves, zero padding does not.
 - [[concepts/window-functions|Window functions]]: $x[n]w[n]\leftrightarrow\frac{1}{2\pi}X_d*W_d$; rectangular: half-width $2\pi/N$, side lobes $-13$ dB; Hamming $0.54-0.46\cos\frac{2\pi n}{N-1}$: half-width $4\pi/N$, $-42$ dB; windowing is multiplication, not an LTI system.
 
+### Spectra that change with time (Lecture 24, bonus)
+- [[concepts/short-time-fourier-transform|Short-time Fourier transform and spectrograms]]: $X[t,k]$, a length-$L$ windowed DFT every $S$ samples; one window covers $L/f_s$ seconds; long windows resolve frequency, short windows resolve time; not tested.
+
+### FFT and fast convolution (Lectures 25–26, after Midterm 2)
+- [[concepts/fast-fourier-transform|Fast Fourier transform]]: the same DFT in $N\log_2N$ multiply-adds instead of $N^2$; twiddle factor $W_N^k=e^{-j2\pi k/N}$; merging equations $X[k]=A[k]+W_N^kB[k]$, $X[k+\frac N2]=A[k]-W_N^kB[k]$.
+- [[concepts/butterfly-diagram|Butterfly diagram]]: one butterfly per pair of merging equations; branch weights $1$, $1$, $W_L^k$, $-W_L^k$; reading weights from a partial length-16 diagram.
+- [[concepts/fast-convolution|Fast convolution via the DFT]]: zero-pad both sequences to $M\ge N+L-1$, FFT, multiply, inverse FFT; $O(N\log N)$ instead of $O(N^2)$.
+
+## Unit 6 · Filter design (Lecture 27 onward, after Midterm 2)
+- [[concepts/ideal-filters|Ideal filters]]: low-pass, high-pass, band-pass, band-stop; $h_{lpf}[n]=\frac{\sin(\omega_cn)}{\pi n}$ is infinite, non-causal and not summable; $h_{hpf}[n]=\delta[n]-h_{lpf}[n]$.
+- [[concepts/filter-specifications|Filter specifications]]: passband ripple, stopband attenuation in dB, transition bandwidth; narrower transition ⇔ weaker attenuation; scenario → filter type and band edges.
+- [[concepts/direct-form-structures|Direct form I and II]]: flow graphs of an LCCDE; direct form II shares one delay line, $\max(K,M-1)$ delays instead of $K+M-1$.
+
 Most tested: [[exams/midterm-1/index|Midterm 1 review guide]] · [[exams/midterm-2/index|Midterm 2 overview]] · [[problems/index|problem families]].
 
 ### Sources for this page
-Snyder, Lectures 1–23 notes (Fall 2026); [[supplements/course-summary|course summary]]; [[exams/midterm-1/past-exams/index|past Midterm 1]] and [[exams/midterm-2/past-exams/index|Midterm 2]] exams.
+Snyder, Lectures 1–27 notes (Fall 2026); [[supplements/course-summary|course summary]]; [[exams/midterm-1/past-exams/index|past Midterm 1]] and [[exams/midterm-2/past-exams/index|Midterm 2]] exams.

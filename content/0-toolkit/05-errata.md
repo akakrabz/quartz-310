@@ -82,6 +82,12 @@ Slips that change a number, sign, label or definition; the site's pages use the 
 | L22 notes eq. 14 | "$0\le n\lt\le21$" | $0\le n\le21$ | Typo. |
 | L22 notes §1.2 | $\lvert X_2[k]\rvert$ largest "close to $\frac{\pi}{3}$ and $\frac{5\pi}{6}$" | $\frac{5\pi}{3}$ ($k=18$ of $22$, $\omega_k\approx1.64\pi$) | The mirror lobe sits at $2\pi-\frac{\pi}{3}$. |
 | L23 notes §1 | "Recall from lecture 23", "identified in lecture 24" | Lecture 22 | Numbering slip; the previous lecture is 22. |
+| L24 notes eq. 3, slide 6 | range "$0\le k\le N$" | $0\le k\le L-1$ | Each DFT of the STFT has length $L$. See [[concepts/short-time-fourier-transform\|STFT]]. |
+| L24 slide 10 | larger $S$: "Pros: poor temporal resolution …", "Cons: fewer DFTs computed …" | the two labels swapped | Fewer DFTs is the advantage of a larger stride. |
+| L25 notes eq. 37 | "$A[k+2]=E[k]-W_4^kF[k]$" | $B[k+2]=E[k]-W_4^kF[k]$ | $E$ and $F$ merge into $B$; $A$ comes from $C$ and $D$ (eq. 36). See [[concepts/fast-fourier-transform\|FFT]]. |
+| L26 notes §2 | "We showed in the next lecture that the fast Fourier transform …" | the previous lecture (25) | Wording slip. |
+| L26 slide 6 | "$y[n]=\{-1,-1,-3,-3,2,-2,\ ,8\}$" | $\{-1,-1,-3,-3,2,-2,8\}$, seven samples | Stray comma; $4+4-1=7$. See [[concepts/fast-convolution\|fast convolution]]. |
+| L27 notes §3.2 | direct form II needs "seven multiplies, six additions multiplies" | seven multiplications, six additions, three delays | Typo. See [[concepts/direct-form-structures\|direct form I and II]]. |
 
 ## Homework solutions
 
@@ -94,6 +100,7 @@ Slips that change a number, sign, label or definition; the site's pages use the 
 | HW4 #2 (necessity) | bounded input $x[n] = \mathrm{sgn}(h[-n]) = h[-n]/\lvert h[-n]\rvert$ | $x[n] = h^*[-n]/\lvert h[-n]\rvert$ (and $0$ where $h[-n]=0$). For real $h$ the two agree; complex $h$ needs the conjugate. See [[homework/hw4\|HW4]] and [[concepts/bibo-stability\|BIBO stability]]. |
 | HW4 #3(d) | the output grows like $n\cos(\tfrac{\pi}{4}n+\varphi)$ | $H$ has complex coefficients, so only the $e^{-j\pi n/4}$ half of the cosine resonates: the growing part is $C(n+1)e^{-j\pi n/4}$ with $\lvert C\rvert = \tfrac12\sin\tfrac{\pi}{8} \approx 0.19$. Verdict unchanged. See [[homework/hw4\|HW4]]. |
 | HW5 header (and HW2 statement) | due "Oct. 4, 2025"; HW2 #1 says "two systems" and lists three | due Sun Oct 4, **2026**; three systems (typos only) |
+| HW11 header | due "Friday, Nov. 13, 2025" | Fri Nov 13, **2026** (typo only) |
 
 ## The official transform table
 
@@ -116,7 +123,8 @@ Slips that change a number, sign, label or definition; the site's pages use the 
 - **$X_d(\omega)$ vs $X(e^{j\omega})$, $(x*h)[n]$ vs $x[n]*h[n]$.** Course vs textbook notation.
 - **Two sincs.** Lectures 14 and 18 and the Midterm 2 keys (FA2019 #5, FA2024 #1(c), #2) use $\mathrm{sinc}(x)=\frac{\sin x}{x}$; `transform_tables.pdf` and `np.sinc` use $\frac{\sin\pi x}{\pi x}$: $\frac{\sin(Wn)}{\pi n}=\frac{W}{\pi}\mathrm{sinc}(Wn)$ vs $\frac{W}{\pi}\mathrm{sinc}\big(\frac{Wn}{\pi}\big)$. See [[concepts/dtft-pairs|DTFT pairs]] and [[supplements/transform-tables|transform tables]].
 - **SP2021 MT2 #2: unwrapped phase.** $-4\omega$ drawn down to $-2\pi$, not wrapped into $[-\pi,\pi]$: equal mod $2\pi$. See [[exams/midterm-2/past-exams/spring-2021|SP2021 MT2]].
+- **Lecture 27 §1.2: band-pass by modulation.** $h_{bpf}[n]=\cos(\omega_0n)\,h_{lpf}[n]$ is a band-pass filter, but of height $\frac12$: the cosine splits the low-pass box into two half-height copies at $\pm\omega_0$. The unit-height filter of eq. 3 needs $2\cos(\omega_0n)\,h_{lpf}[n]$. See [[concepts/ideal-filters|ideal filters]].
 
 ### Sources for this page
 
-Past Midterm 1 and 2 keys; Lecture 2–21 notes and slides (rendered where ambiguous); HW1–HW5 solutions and statements; `transform_tables.pdf` Tables 5 and 10; `review.pdf` p. 3.
+Past Midterm 1 and 2 keys; Lecture 2–27 notes and slides (rendered where ambiguous); HW1–HW5 solutions and statements, HW11 statement; `transform_tables.pdf` Tables 5 and 10; `review.pdf` p. 3.

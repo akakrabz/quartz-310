@@ -99,7 +99,7 @@ aliases: ["zero padding", "zero-padding", "zero-padded DFT", "padding", "padded 
 **Where it appears:** [[5-dft-and-fft/20-discrete-fourier-transform|L20]] §2.3 (eqs. 20–31, Exercise 1, slides 11–13) · [[5-dft-and-fft/22-spectral-analysis|L22]] §2.1 · [[problems/dft-values-and-zero-padding|DFT values and zero padding]] · [[exams/midterm-2/true-false-bank|T/F bank]] §3.
 
 ## Related
-[[concepts/dft|DFT]] · [[concepts/dtft|DTFT]] · [[concepts/spectral-analysis|spectral analysis]] · [[concepts/frequency-resolution|frequency resolution]] · [[concepts/circular-convolution|circular convolution]]
+[[concepts/dft|DFT]] · [[concepts/dtft|DTFT]] · [[concepts/spectral-analysis|spectral analysis]] · [[concepts/frequency-resolution|frequency resolution]] · [[concepts/circular-convolution|circular convolution]] · [[concepts/fast-convolution|fast convolution]]
 
 ### Sources for this page
 Snyder, Lecture 20 notes §2.3 (eqs. 20–31, Exercise 1) and slides 11–13 (Examples 1–2), Lecture 22 notes §2.1, Oct 16–21, 2026; past Midterm 2 exams; lecture recording Oct 19 (guest lecture, condensed); lecture recording Oct 21 (condensed); lecture recording Oct 30 (condensed).

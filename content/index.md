@@ -1,6 +1,6 @@
 ---
 title: "ECE 310 · Digital Signal Processing"
-description: "Study notes for ECE 310 (DSP, UIUC Fall 2026), organised by topic: 52 topic pages with definitions, worked examples and traps; lecture pages pointing to them; problem families, homework walkthroughs, demos, drills, past exams with folded solutions."
+description: "Study notes for ECE 310 (DSP, UIUC Fall 2026), organised by topic: 59 topic pages with definitions, worked examples and traps; lecture pages pointing to them; problem families, homework walkthroughs, demos, drills, past exams with folded solutions."
 ---
 
 Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Snyder and Kamalabadi), from Prof. Snyder's notes and slides, homework and past exams. By **topic**: one page per idea ([[concepts/index|all topics]]).
@@ -44,11 +44,17 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 
 *Lectures: [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion|17]] · [[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion|18]] · [[4-sampling-and-reconstruction/19-aliasing|19]]*
 
-### [[5-dft-and-fft/index|Unit 5 · The DFT and FFT]] — Lectures 20–23
+### [[5-dft-and-fft/index|Unit 5 · The DFT and FFT]] — Lectures 20–26
 - **DFT:** [[concepts/dft|DFT]] · [[concepts/zero-padding|zero padding]] · [[concepts/circular-shift-and-reversal|circular shift and reversal]] · [[concepts/dft-properties|DFT properties]] · [[concepts/circular-convolution|circular convolution]]
 - **Spectral analysis:** [[concepts/periodic-sinc|periodic sinc]] · [[concepts/spectral-leakage|spectral leakage]] · [[concepts/spectral-analysis|spectral analysis]] · [[concepts/frequency-resolution|frequency resolution]] · [[concepts/window-functions|window functions]]
+- **After Midterm 2:** [[concepts/short-time-fourier-transform|STFT and spectrograms]] (bonus, not tested) · [[concepts/fast-fourier-transform|FFT]] · [[concepts/butterfly-diagram|butterfly diagram]] · [[concepts/fast-convolution|fast convolution]]
 
-*Lectures: [[5-dft-and-fft/20-discrete-fourier-transform|20]] · [[5-dft-and-fft/21-dft-properties|21]] · [[5-dft-and-fft/22-spectral-analysis|22]] · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|23]]*
+*Lectures: [[5-dft-and-fft/20-discrete-fourier-transform|20]] · [[5-dft-and-fft/21-dft-properties|21]] · [[5-dft-and-fft/22-spectral-analysis|22]] · [[5-dft-and-fft/23-spectral-analysis-and-window-functions|23]] · [[5-dft-and-fft/24-short-time-fourier-transform-and-spectrograms|24]] (not tested) · [[5-dft-and-fft/25-fast-fourier-transform|25]] · [[5-dft-and-fft/26-fast-convolution-via-the-dft|26]]*
+
+### [[6-filter-design/index|Unit 6 · Filter design]] — Lecture 27 onward
+- [[concepts/ideal-filters|ideal filters]] · [[concepts/filter-specifications|filter specifications]] · [[concepts/direct-form-structures|direct form I and II]]
+
+*Lectures: [[6-filter-design/27-practical-filter-design|27]]*
 
 ### Practice
 [[problems/index|Problem families]] (18) · [[homework/index|Homework]] (HW7: [[exams/quiz-2|Quiz 2]]) · [[demos/practice-drills|Practice drills]] · [[demos/index|Demos]]
@@ -58,6 +64,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 - **Midterm 1** (L1–11, Sep 30): [[exams/midterm-1/index|review guide]] · [[exams/midterm-1/cheat-sheet|cheat sheet]] · [[exams/midterm-1/true-false-bank|T/F]] and [[exams/midterm-1/system-property-bank|system-property]] banks · [[exams/midterm-1/past-exams/index|past exams]]
 - **Quiz 2** (L13–18): [[exams/quiz-2|review]]
 - **Midterm 2** (Units 3–5, L13–23, **Wed Nov 4, 7–9 pm**): [[exams/midterm-2/index|review guide]] · [[exams/midterm-2/practice-exam|practice midterm]] · [[exams/midterm-2/true-false-bank|T/F bank]] · [[exams/midterm-2/past-exams/index|past exams]]
+- **Final exam:** expected to be one third Midterm 1 content, one third Midterm 2 content and one third post-Midterm 2 content (HW10–HW13), as announced in lecture on Nov 9: [[exams/index|exams hub]]
 
 ### Reference
 [[concepts/index|All topics]], one line each ([[concepts/concept-map.canvas|concept map]], Units 1–2) · [[supplements/index|Supplements]] (summary, tables, notation)
@@ -111,7 +118,7 @@ Notes for **ECE 310 — Digital Signal Processing** (UIUC, Fall 2026, Profs. Sny
 > [!success]- Answer
 > Folded solution.
 
-*Status (Nov 1, 2026): Lectures 1–23 (Lecture 23 = last Midterm 2 content), with the Oct 2–30 lecture recordings folded in as `lecture` callouts; walkthroughs HW1–HW6, [[homework/hw8|HW8]], [[homework/hw9|HW9]]. **Midterm 2: Wed Nov 4, 7–9 pm** (HW5–9, L13–23): [[exams/midterm-2/index|review guide]] (§5: what he said in lecture about the exam) · [[exams/midterm-2/practice-exam|practice midterm]] · eight past exams, newest [[exams/midterm-2/past-exams/fall-2025|Fall 2025]] (Do & Snyder; added Nov 1).*
+*Status (Nov 10, 2026): Lectures 1–27. New since Midterm 2 (Nov 4): [[concepts/short-time-fourier-transform|STFT]] (bonus), [[concepts/fast-fourier-transform|FFT]], [[concepts/butterfly-diagram|butterfly diagrams]], [[concepts/fast-convolution|fast convolution]] and the start of [[6-filter-design/index|Unit 6 · Filter design]], with the Oct 28 – Nov 9 lecture recordings folded in as `lecture` callouts; walkthrough [[homework/hw10|HW10]] (matches the official key); [[homework/hw11|HW11]] (due Fri Nov 13) as a study guide without answers. Direct form II was scheduled for the Nov 11 lecture, after the last recording used here.*
 
 ### Sources for this page
-Snyder, ECE 310 notes and slides L1–23 (Fall 2026); lecture recordings Oct 2–30 (condensed); notation supplement; exam cover pages.
+Snyder, ECE 310 notes and slides L1–27 (Fall 2026); lecture recordings Oct 2 – Nov 9 (condensed); notation supplement; exam cover pages.

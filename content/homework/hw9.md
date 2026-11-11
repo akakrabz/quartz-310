@@ -4,7 +4,7 @@ description: "ECE 310 Homework 9 (due Oct 30) with folded solutions: a circular 
 tags: [homework, midterm-2, dft, spectral-analysis]
 ---
 
-*Homework 9 · due Fri Oct 30, 2026, 11:59 pm (Gradescope) · [[5-dft-and-fft/20-discrete-fourier-transform|Lectures 20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|23]] · topics: [[concepts/circular-shift-and-reversal|circular shift]], [[concepts/dft-properties|DFT properties]], [[concepts/zero-padding|zero padding]], [[concepts/spectral-analysis|spectral analysis]] · 5 problems · prev: [[homework/hw8|HW8]] · [[homework/index|all homework]]*
+*Homework 9 · due Fri Oct 30, 2026, 11:59 pm (Gradescope) · [[5-dft-and-fft/20-discrete-fourier-transform|Lectures 20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions|23]] · topics: [[concepts/circular-shift-and-reversal|circular shift]], [[concepts/dft-properties|DFT properties]], [[concepts/zero-padding|zero padding]], [[concepts/spectral-analysis|spectral analysis]] · 5 problems, 100 points · official solutions v1.0 (posted after this page was written) agree with every answer here · prev: [[homework/hw8|HW8]] · next: [[homework/hw10|HW10]] · [[homework/index|all homework]]*
 
 > [!abstract] In one breath
 > - Circular shift by $m$ ↔ phase ramp $e^{-j\frac{2\pi mk}{N}}$; ramp $(-1)^n$ in time ↔ $X[k]$ shifted by $\frac N2$.
@@ -211,4 +211,4 @@ tags: [homework, midterm-2, dft, spectral-analysis]
 
 ### Sources for this page
 
-ECE 310 Fall 2026 HW9 (plots redrawn from the handout); Lecture 20–23 notes (Snyder); past Midterm 2 exams cited above. Worked here, not from the official key.
+ECE 310 Fall 2026 HW9 (plots redrawn from the handout); Lecture 20–23 notes (Snyder); past Midterm 2 exams cited above. Worked here before the key existed; compared afterwards with the official solutions v1.0, and every answer agrees.

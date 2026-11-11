@@ -34,7 +34,7 @@ Notes example (eq. 12, Fig. 4): $y[n] = \tfrac12 y[n-1] + \tfrac12 y[n-2] + 3x[n
 > 2. Write the adder: $y[n]=$ (gain $\times$ labelled signal), summed over every branch entering it; one equation per adder, eliminate internal labels. Above: $y[n]=\frac12y[n-1]+\frac12y[n-2]+3x[n]-2x[n-1]+x[n-2]$.
 > 3. Move the $y$ terms left, $y[n]-\frac12y[n-1]-\frac12y[n-2]=3x[n]-2x[n-1]+x[n-2]$, and read off $H(z)=\dfrac{3-2z^{-1}+z^{-2}}{1-\frac12z^{-1}-\frac12z^{-2}}$ ([[concepts/lccde|LCCDE]], [[concepts/transfer-function|transfer function]]). A gain on a delayed $y$ is feedback: same sign in Lecture 5 form, flipped in Lecture 9 form.
 >
-> Other forms (direct form II, cascades) come later in the course.
+> Direct form II, which shares one delay line between the two halves, is on [[concepts/direct-form-structures|direct form I and II]] (Lecture 27).
 
 ## 3. Boxes in series and parallel
 
@@ -53,7 +53,7 @@ Lecture 10 ([[concepts/system-algebra|system algebra]]): a cascade of LTI boxes 
 **Where it appears:** [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] §2 (Figs. 1–4, eq. 12), [[2-z-transform/10-improper-transfer-functions-and-system-algebra|Lecture 10]] (series and parallel); [[demos/difference-equation-simulator|difference-equation simulator]].
 
 ## Related
-[[concepts/lccde|LCCDE]] · [[concepts/fir-and-iir|FIR and IIR]] · [[concepts/transfer-function|transfer function]] · [[concepts/system-algebra|system algebra]] · [[concepts/lti-system|LTI system]]
+[[concepts/lccde|LCCDE]] · [[concepts/fir-and-iir|FIR and IIR]] · [[concepts/transfer-function|transfer function]] · [[concepts/system-algebra|system algebra]] · [[concepts/lti-system|LTI system]] · [[concepts/direct-form-structures|direct form I and II]]
 
 ### Sources for this page
 Lecture 5 §2 (Figs. 1–4, eq. 12) and slides; Lecture 10 Table 1; FA2024 #3, SP2025 #3.

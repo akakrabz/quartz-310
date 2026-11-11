@@ -101,7 +101,21 @@ Mermaid diagram). The demos and drills are fully self-contained.
 as targets) and compiles every equation with KaTeX in strict mode. Run it before every push; every build has passed it (build 1: 90 pages,
 2,827 links, 12,321 equations).
 
-## 6. What's here (build 7, November 2026 — Lectures 1–23, organised by topic, with the lecture recordings folded in)
+## 6. What's here (build 8, Nov 10, 2026 — Lectures 1–27, organised by topic, with the lecture recordings folded in)
+
+- **Build 8 (Nov 10): Lectures 24–27, HW10, HW11.** Seven new concept pages: `short-time-fourier-transform` (Lecture 24, bonus, not
+  tested), `fast-fourier-transform`, `butterfly-diagram`, `fast-convolution` (Lectures 25–26) and, for the new unit folder
+  `6-filter-design/`, `ideal-filters`, `filter-specifications`, `direct-form-structures` (Lecture 27); lecture pages 24–27; a Unit 6 index;
+  `homework/hw10.md` against the official key (v1.0); `homework/hw11.md` as a study guide without answers (open until Fri Nov 13: replace
+  it with a walkthrough once the key is posted). Recordings used: Oct 28, Oct 30, Nov 6, the makeup recording posted Nov 6 and Nov 9
+  (the Nov 2 recording is the Midterm 2 review). Direct form II and Lecture 27's Example 2 were scheduled for the Nov 11 lecture and are
+  written from the notes and slides alone; Example 1(b)'s posted solution was not available either. The 14 new figures come from
+  `tools/figs_l24_27.py` (`python3 -B tools/figs_l24_27.py OUTDIR` writes one `<name>.html` per figure for the `<!-- fig:name -->`
+  markers), and every number on the new pages is recomputed by `python3 -B tools/verify_l24_27.py` (78 checks, numpy only, ends with
+  ALL OK). `tools/check.py` passes on all 170 pages (5,011 links and anchors, 19,875 KaTeX expressions) and `npx quartz build` runs
+  clean. New topic tags: `fft`, `filter-design`. Slips found in the Lecture 24–27 materials are on `0-toolkit/05-errata`; the final-exam
+  announcement of Nov 9 (thirds: Midterm 1, Midterm 2, post-Midterm 2 = HW10–HW13) is on `exams/index` and the home page.
+  The HW9 walkthrough was compared with the official key v1.0, posted after build 7: every answer agrees.
 
 - **The lecture-recording layer (build 7, Nov 1).** Twelve recordings (Oct 2–30: L14–L23 plus the Oct 28/30 wrap-up and FFT start) were
   transcribed, digested and folded into the Midterm 2 pages as `lecture` callouts: 60 of them on 21 concept pages (≤ 3 each) and on the

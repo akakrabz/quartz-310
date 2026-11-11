@@ -5,7 +5,7 @@ tags: [concept, lccde, stability, systems, midterm-1]
 aliases: ["FIR", "IIR", "finite impulse response", "infinite impulse response", "moving average", "FIR filter", "IIR filter", "recursive moving average"]
 ---
 
-*Lectures 5 (Wed Sep 2) §1.1–1.2 and 9 (Mon Sep 14) §1.2 · [[homework/hw3|HW3]] #3a · [[homework/hw4|HW4]] #6 · family: [[problems/lccde-to-transfer-function-and-response|LCCDE → transfer function → response]] · demo: [[demos/difference-equation-simulator|simulator]]*
+*Lectures 5 (Wed Sep 2) §1.1–1.2 and 9 (Mon Sep 14) §1.2 · [[homework/hw3|HW3]] #3a · [[homework/hw4|HW4]] #6 · [[homework/hw11|HW11]] #2 · family: [[problems/lccde-to-transfer-function-and-response|LCCDE → transfer function → response]] · demo: [[demos/difference-equation-simulator|simulator]]*
 
 > [!abstract] In one breath
 > - No feedback ($K = 0$): $h[n]$ is the list of input coefficients, finite (FIR), always BIBO stable.
@@ -98,7 +98,7 @@ Second-order feedback needs the z-transform and partial fractions ([[concepts/tr
 **Where it appears:** [[1-signals-and-systems/05-difference-equations-and-block-diagrams|Lecture 5]] §1.1–1.2 (eqs. 2–11, Exercise 1, slides Examples 1–2), [[2-z-transform/09-transfer-functions|Lecture 9]] §1.2 (Fig. 1); [[homework/hw3|HW3]] #3a (an FIR $H_1(z)$ with ROC $z\neq0$), [[homework/hw4|HW4]] #6; [[problems/lccde-to-transfer-function-and-response|LCCDE → transfer function → response]]; [[demos/difference-equation-simulator|difference-equation simulator]].
 
 ## Related
-[[concepts/lccde|LCCDE]] · [[concepts/impulse-response|impulse response]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[concepts/block-diagram|block diagram]] · [[concepts/transfer-function|transfer function]]
+[[concepts/lccde|LCCDE]] · [[concepts/impulse-response|impulse response]] · [[concepts/bibo-stability|BIBO stability]] · [[concepts/poles-and-zeros|poles and zeros]] · [[concepts/pole-zero-cancellation|pole-zero cancellation]] · [[concepts/block-diagram|block diagram]] · [[concepts/transfer-function|transfer function]] · [[concepts/direct-form-structures|direct form I and II]] · [[concepts/ideal-filters|ideal filters]]
 
 ### Sources for this page
 Lecture 5 §1.1–1.2 (eqs. 2–11, Exercise 1) and slides (Examples 1–2); Lecture 9 §1.2 and Fig. 1; HW3 #3a, HW4 #6; FA2025 #4, FA2019 #1e and #3.

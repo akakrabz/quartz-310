@@ -1,10 +1,10 @@
 ---
 title: "Exams"
-description: "Past ECE 310 exams as a self-test layer: Midterm 1 review guide, cheat sheet, banks and seven past exams; Quiz 2 review; Midterm 2 (Wed Nov 4, Lectures 13–23) review, practice midterm, T/F bank, eight past exams."
+description: "Past ECE 310 exams as a self-test layer: Midterm 1 review guide, cheat sheet, banks and seven past exams; Quiz 2 review; Midterm 2 (Wed Nov 4, Lectures 13–23) review, practice midterm, T/F bank, eight past exams; what has been announced about the final."
 tags: [exam]
 ---
 
-*Exams · Midterm 1 (L1–11) · Quiz 2 (L13–18) · Midterm 2 (Wed Nov 4, L13–23) · fifteen past exams with folded solutions*
+*Exams · Midterm 1 (L1–11) · Quiz 2 (L13–18) · Midterm 2 (Wed Nov 4, L13–23) · final exam: in thirds (announced Nov 9) · fifteen past exams with folded solutions*
 
 > [!recipe] Self-test, then repair
 > 1. Finish the unit first: its topic pages, folded questions, homework.
@@ -32,6 +32,11 @@ Held Wed Sep 30, 2026: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/i
 - [[exams/midterm-2/true-false-bank|True/False bank]]
 - [[exams/midterm-2/past-exams/index|Past Midterm 2 exams]] — eight, problem by problem; newest [[exams/midterm-2/past-exams/fall-2025|FA2025]] (Do & Snyder), the Monday timed run.
 - Families: [[problems/dtft-and-inverse-dtft|DTFTs]] · [[problems/lti-response-to-sinusoids|response to sinusoids]] · [[problems/magnitude-phase-and-group-delay|magnitude and phase]] · [[problems/sampling-and-the-nyquist-rate|sampling]] · [[problems/digital-filtering-of-analog-signals|A/D → filter → D/A]] · [[problems/dft-values-and-zero-padding|DFT values and zero padding]] · [[problems/circular-convolution-and-dft-properties|circular convolution and DFT properties]] · [[problems/dft-spectral-analysis|DFT spectral analysis]].
+
+## Final exam — everything, in thirds
+Announced in lecture on Mon Nov 9, 2026: the final is expected to be one third Midterm 1 content, one third Midterm 2 content and one third post-Midterm 2 content. The post-midterm third is HW10–HW13: fewer topics for the same weight, so "there is a slight lean towards the post midterm two content." Study and practice material was promised closer to the date, with more detail after fall break.
+- Post-Midterm 2 so far: [[concepts/fast-fourier-transform|FFT]] · [[concepts/butterfly-diagram|butterfly diagrams]] · [[concepts/fast-convolution|fast convolution]] ([[homework/hw10|HW10]]) · [[6-filter-design/index|Unit 6 · Filter design]] ([[homework/hw11|HW11]]). Still to come: FIR and IIR filter design, multirate signal processing.
+- Not tested: [[concepts/short-time-fourier-transform|STFT and spectrograms]] (Lecture 24) and [[concepts/template-matching|template matching]] (Lecture 12).
 
 ## All past exams by term
 

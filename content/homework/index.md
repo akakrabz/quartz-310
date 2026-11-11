@@ -1,10 +1,10 @@
 ---
 title: "Homework"
-description: "ECE 310 homework sets HW1–HW9: due dates, lectures, topics, exam skills and walkthroughs (HW7 on the Quiz 2 page)."
+description: "ECE 310 homework sets HW1–HW11: due dates, lectures, topics, exam skills and walkthroughs (HW7 on the Quiz 2 page; HW11 as a study guide while it is open)."
 tags: [homework]
 ---
 
-*Homework HW1–HW9 · HW1–HW4: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/index|Unit 2]] · HW5–HW6: [[3-fourier-analysis/index|Unit 3]] · HW7: [[exams/quiz-2|Quiz 2 page]] · HW8: [[4-sampling-and-reconstruction/index|Unit 4]] · HW9: [[5-dft-and-fft/index|Unit 5]] · Midterm 1 = HW1–HW4, [[exams/midterm-2/index|Midterm 2]] = HW5–HW9 · [[exams/index|Exams]]*
+*Homework HW1–HW11 · HW1–HW4: [[1-signals-and-systems/index|Unit 1]], [[2-z-transform/index|Unit 2]] · HW5–HW6: [[3-fourier-analysis/index|Unit 3]] · HW7: [[exams/quiz-2|Quiz 2 page]] · HW8: [[4-sampling-and-reconstruction/index|Unit 4]] · HW9–HW10: [[5-dft-and-fft/index|Unit 5]] · HW11: [[6-filter-design/index|Unit 6]] · Midterm 1 = HW1–HW4, [[exams/midterm-2/index|Midterm 2]] = HW5–HW9, after Midterm 2 = HW10–HW13 · [[exams/index|Exams]]*
 
 Solve on paper, then open the folded solution. Each problem's **On the exam** line names past problems that reuse the idea.
 
@@ -21,6 +21,8 @@ Solve on paper, then open the folded solution. Each problem's **On the exam** li
 | HW7 | Fri Oct 16 | [[3-fourier-analysis/15-frequency-response\|L15]]–[[4-sampling-and-reconstruction/18-ideal-digital-to-analog-conversion\|L18]] | magnitude and phase; sinusoid response; sampled spectrum; A/D → $H_d$ → D/A | [[exams/quiz-2\|Quiz 2 page]] |
 | HW8 | Fri Oct 23 | [[4-sampling-and-reconstruction/17-ideal-analog-to-digital-conversion\|L17]]–[[4-sampling-and-reconstruction/19-aliasing\|L19]] | aliased sinusoids; choosing $T$; sampled spectra, $T_{\max}$; zero-order hold and ideal D/A; largest $T$ or bandwidth for A/D → $H_d$ → D/A | [[homework/hw8\|HW8]] |
 | HW9 | Fri Oct 30 | [[5-dft-and-fft/20-discrete-fourier-transform\|L20]]–[[5-dft-and-fft/23-spectral-analysis-and-window-functions\|L23]] | circular shift from stem plots; DFT shifted by $N/2$; zero padding 18 → 30; cosines from $\lvert X[k]\rvert$; piano notes from a 256-point DFT | [[homework/hw9\|HW9]] |
+| HW10 | Sun Nov 8 | [[5-dft-and-fft/25-fast-fourier-transform\|L25]]–[[5-dft-and-fft/26-fast-convolution-via-the-dft\|L26]] | branch weights in a 16-point FFT diagram; linear against circular convolution; zeros to pad for DFT- and FFT-based convolution | [[homework/hw10\|HW10]] |
+| HW11 | Fri Nov 13 | [[6-filter-design/27-practical-filter-design\|L27]] | filter type and band edges from a scenario; FIR or IIR from $H(z)$; direct form I and II; a direct form II diagram → $H(z)$ | [[homework/hw11\|HW11]] (study guide, no answers yet) |
 
 ## Homework × exam families
 
@@ -46,4 +48,4 @@ Solve on paper, then open the folded solution. Each problem's **On the exam** li
 | [[problems/dft-spectral-analysis\|DFT spectral analysis]] | MT2 | HW9 #4, #5 |
 
 ### Sources for this page
-ECE 310 Fall 2026 HW1–HW9 and official solutions for HW1–HW8 (HW6 key posted Oct 16, HW8 key v1.1); slide-deck lecture dates.
+ECE 310 Fall 2026 HW1–HW11 and official solutions for HW1–HW10 (HW6 key posted Oct 16, HW8 key v1.1, HW9 and HW10 keys v1.0); slide-deck lecture dates.
